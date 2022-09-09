@@ -1,20 +1,22 @@
-import Head from 'next/head' 
-import styles from '../styles/loginRegis.module.css'
 import Nav from '../components/Navbar'
-import Nav2 from '../components/Navbar2'
+import Head from 'next/head'
+import style from '../styles/RegisLogin.module.css'
 export default function Login() {
     return(
         <div>
             <Head>
                 <title>Login</title>
-                <link rel="icon" href="/image/ttmLogo.png"/>
+                <link rel="icon" href="/ttmLogo.png"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-                <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+                <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <main>
-                <Nav2></Nav2>
+                <Nav class={style.nav}></Nav>
+
+                
             </main>
         </div>
     )
 }
+

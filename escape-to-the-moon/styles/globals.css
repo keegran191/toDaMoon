@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: 'Kanit', sans-serif;
   color: #ECEBE8;
   background-color: #ECEBE8;
 }

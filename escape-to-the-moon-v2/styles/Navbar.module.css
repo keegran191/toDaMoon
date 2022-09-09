@@ -1,0 +1,4 @@
+.list {
+    @apply block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:text-[#ECEBE8] md:p-0 dark:text-[#ECEBE8] ;
+    font-family: 'Kanit', sans-serif;
+}
