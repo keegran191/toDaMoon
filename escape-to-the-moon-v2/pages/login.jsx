@@ -2,6 +2,7 @@ import Nav from '../components/Navbar'
 import Head from 'next/head'
 import style from '../styles/RegisLogin.module.css'
 import Link from 'next/link'
+
 export default function Login() {
     return(
         <div>

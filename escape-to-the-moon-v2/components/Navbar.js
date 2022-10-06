@@ -10,7 +10,7 @@ function Navbar() {
             <div class="container flex flex-wrap justify-between items-center mx-auto">
                 <Link href="/">
                     <a class="flex items-center">
-                        <span class="text-white ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">Escape to the moon</span>
+                        <span class="text-white sm:ml-0 ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">Escape to the moon</span>
                     </a>
                 </Link>
                 <div class="flex md:order-2">
