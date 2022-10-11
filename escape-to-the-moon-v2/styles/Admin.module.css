@@ -1,0 +1,24 @@
+.adminContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 15vh;
+}
+
+.leftContent{
+    position: relative;
+    width: 30%;
+    height: 65vh;
+    border-right: 1px solid #252525;
+}
+
+.dropDown1{
+    width : 100%;
+    height: auto;
+}
+
+.rightContent{
+    width: 100%;
+    height: 100%;
+}
+
