@@ -26,7 +26,7 @@ export default function admin({ categorys }) {
                     <input type="text" id="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#ECEBE8] rounded-full border border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
                     <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">เพิ่ม</button>
                 </div>
-
+                <span id="dataDuplicate" className="text-[#ff0000] block hidden">ประเภทสินค้าเคยถูกเพิ่มไปแล้ว</span>
                 {/* {categorys.map((post) => (
                     <li>{post.title}</li>
                 ))} */}

@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import style from '../styles/Navbar.module.css'
 import {useState} from 'react'
 
 function Navbar() {
@@ -34,7 +33,7 @@ function Navbar() {
                                 <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
                                     <li>
                                         <Link href="/adminpage">
-                                            <a href="#" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไข / เพิ่มประเภทสินค้า</a>
+                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไข / เพิ่มประเภทสินค้า</h1>
                                         </Link>
                                     </li>
                                     <li>
