@@ -6,7 +6,7 @@ import NavAdmin from '../components/NavbarAdmin.js'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-export default function admin() {
+export default function admin({ categorys }) {
 
     return(
         <div>
@@ -26,10 +26,27 @@ export default function admin() {
                     <input type="text" id="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#ECEBE8] rounded-full border border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
                     <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">เพิ่ม</button>
                 </div>
+
+                {/* {categorys.map((post) => (
+                    <li>{post.title}</li>
+                ))} */}
+
             </div>
         </div>
     )
 }
+
+// export async function getStaticProps() {
+
+//     const res = await fetch('https://.../posts')
+//     const posts = await res.json()
+
+//     return {
+//       props: {
+//         posts,
+//       },
+//     }
+//   }
 
 function toggleBtn(toggle, setToggle) {
     if (toggle === true) {
