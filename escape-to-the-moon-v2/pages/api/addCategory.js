@@ -35,7 +35,7 @@ export default async function handler(req, res) {
           con.query(insert_query, (err, result) => {
   
             if (err) throw (err)
-            console.log("--------> Created new User")
+            console.log("--------> Added new Category")
             res.redirect(307, '/adminpage')
             console.log(result.insertId)
             res.status(201)
