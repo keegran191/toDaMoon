@@ -43,9 +43,25 @@ function Admin({Categoly}) {
 
                 <div className="w-full border border-b-[#252525] mt-10"></div>
 
-                <div className="w-full h-auto mt-10">
+                <div className="w-fit h-auto mt-10">
                     {Categoly && Categoly.results && Categoly.results.length > 0 && Categoly.results.map((post) => {
-                        return <p key={post.cat_id}>{post.cat_label}</p>
+                        return <div className="">
+                            <div className="hidden sm:flex PhoneContent justify-between items-baseline">
+                                <p className="2xl:text-lg md:text-md sm:text-md mr-4" key={post.cat_id}>{post.cat_label}</p>
+                                <div className="buttonGroup">
+                                    <button type="button" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                    <button type="button" className="text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                </div>
+                            </div>
+
+                            <div className="block sm:hidden PcContent">
+                                <p className="text-center 2xl:text-lg md:text-md sm:text-md mr-4 mb-2" key={post.cat_id}>{post.cat_label}</p>
+                                <div className="buttonGroup flex">
+                                    <button type="button" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                    <button type="button" className="w-full text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                </div>
+                            </div>
+                        </div> 
                     })}
                 </div>
             </div>
