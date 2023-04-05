@@ -23,7 +23,7 @@ function Navbar() {
                     </button>
                 </div>
                 <div className = {toggle? "hidden md:block": "" + "w-full md:block md:w-auto h-screen"} id="navbar-default">
-                    <ul className="flex flex-col p-4 mt-4 bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-[#252525] md:bg-[#252525] dark:border-[#252525]">
+                    <ul className="flex flex-col p-4 mt-4 bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-[#252525] md:bg-[#252525] dark:border-[#252525]">
                         <li>
                             <Link href="/">
                                 <a className={style.list}>หน้าหลัก</a>

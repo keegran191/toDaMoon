@@ -42,16 +42,17 @@ function Admin({Categoly}) {
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เเก้ไข / เพิ่มประเภทสินค้า</span>
                 </div>
+                
                 <form className="relative mt-10" action="/api/addCategory" method='POST'>
-                    <input type="text" id="AddCategory" name="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#ECEBE8] rounded-full border border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
+                    <input type="text" maxLength="20" id="AddCategory" name="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
                     <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">เพิ่ม</button>
                 </form>
 
                 <div className="w-full border border-b-[#252525] mt-10"></div>
-
+                
                 <div className="w-full h-auto mt-10 ">
                     {Categoly && Categoly.results && Categoly.results.length > 0 && Categoly.results.map((post) => {
-                        return <div className="">
+                        return <div className="" key={post.cat_id}>
                             <div className="hidden sm:flex PhoneContent justify-between items-baseline">
                                 <p className="2xl:text-lg md:text-md sm:text-md" key={post.cat_id}>{post.cat_label}</p>
                                 <div className="buttonGroup">
@@ -85,10 +86,13 @@ function Admin({Categoly}) {
                 
                 { IsDelete && targetDeleteId &&
                     <UniversalModal
-                        message="คณต้องการลบประเภทสินค้าชนิดนี้?"
+                        message="คุณต้องการลบประเภทสินค้าชนิดนี้?"
                         txtApply="ลบ"
                         onApply={()=>{
+                            fetch(`http://localhost:3000/api/deleteCategory/${targetDeleteId}`)
                             alert('I want to delete this id: ' + targetDeleteId)
+                            setDelete(false);
+                            setTargetDeleteId(null);
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
@@ -99,13 +103,14 @@ function Admin({Categoly}) {
                     </UniversalModal>
                 }
 
-
                 { IsChange && targetChangeId &&
                     <UniversalModal
-                        message="คณต้องการแก้ไขประเภทสินค้าชนิดนี้?"
+                        message="คุณต้องการแก้ไขประเภทสินค้าชนิดนี้เป็น?"
                         txtApply="แก้ไข"
                         onApply={()=>{
                             alert('I want to Change this id: ' + targetChangeId)
+                            setChange(false);
+                            setTargetChangeId(null);
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
@@ -114,7 +119,7 @@ function Admin({Categoly}) {
                         }}
                     >
                         <div>
-                            <input type="text"/>
+                            <input type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
                         </div>
                     </UniversalModal>
                 }
