@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       user: "root",
       password: "",
       database: "to_da_moon"
-    }); 
+    });
 
     const newCategory = req.body.AddCategory
 

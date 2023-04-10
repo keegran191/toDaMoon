@@ -15,7 +15,12 @@ function Subcategory() {
         { value: 'chocolate', label: 'Chocolate' },
         { value: 'strawberry', label: 'Strawberry' },
         { value: 'vanilla', label: 'Vanilla' },
-      ]
+    ]
+
+    // let tempList = []
+    // for (let i = 0; i < array.lenght; i++) {
+    //     tempList.push({ value: array[i].id, label: array[i].label})
+    // }
 
     const [value, setValue] = useState("");
 
@@ -73,7 +78,7 @@ function Subcategory() {
                 <title>Admin</title>
                 <link rel="icon" href="/ttmLogo.png"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <NavAdmin></NavAdmin>
@@ -94,9 +99,9 @@ function Subcategory() {
                         placeholder="เลือกประเภทสินค้า"
                     />
                 </form>
-
+                    
                 <div className="w-full border border-b-[#252525] mt-10"></div>
-
+                    
                 <div className="w-full h-auto mt-10 ">
                     
                 </div>

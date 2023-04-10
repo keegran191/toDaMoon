@@ -4,28 +4,21 @@ import Link from 'next/link'
 import NavAdmin from '../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
 import { AppUrl } from '../config'
 
 import UniversalModal from '../components/Modal.js';
 
 function Admin({Categoly}) {
     
-    const [posts, setPosts] = useState(null);
+    const [categoryList, setCategoryList] = useState([]);
     const [IsChange, setChange] = useState(false);
     const [IsDelete, setDelete] = useState(false);
     const [targetDeleteId, setTargetDeleteId] = useState(null);
     const [targetChangeId, setTargetChangeId] = useState(null);
-
-    const fetchData = async() =>{
-        Axios.get('/api/getCategory').then((res) => {
-            const newPosts = res.data;
-            setPosts(newPosts);
-        });
-    }
-
+    const [Label, setLabel] = useState("");
     useEffect(() => {
-        setPosts(Categoly);
+        console.log(Categoly);
+        setCategoryList(Categoly);
     }, []);
         
     return(
@@ -34,12 +27,12 @@ function Admin({Categoly}) {
                 <title>Admin</title>
                 <link rel="icon" href="/ttmLogo.png"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <NavAdmin></NavAdmin>
             <div className={style.adminContainer}>
-                <div className="w-full shadow-lg">
+                <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เเก้ไข / เพิ่มประเภทสินค้า</span>
                 </div>
                 
@@ -51,7 +44,7 @@ function Admin({Categoly}) {
                 <div className="w-full border border-b-[#252525] mt-10"></div>
                 
                 <div className="w-full h-auto mt-10 ">
-                    {Categoly && Categoly.results && Categoly.results.length > 0 && Categoly.results.map((post) => {
+                    {Categoly && Categoly.map((post) => {
                         return <div className="" key={post.cat_id}>
                             <div className="hidden sm:flex PhoneContent justify-between items-baseline">
                                 <p className="2xl:text-lg md:text-md sm:text-md" key={post.cat_id}>{post.cat_label}</p>
@@ -88,11 +81,11 @@ function Admin({Categoly}) {
                     <UniversalModal
                         message="คุณต้องการลบประเภทสินค้าชนิดนี้?"
                         txtApply="ลบ"
-                        onApply={()=>{
-                            fetch(`http://localhost:3000/api/deleteCategory/${targetDeleteId}`)
-                            alert('I want to delete this id: ' + targetDeleteId)
+                        onApply={ async () =>{
+                            await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
                             setDelete(false);
                             setTargetDeleteId(null);
+                            location.reload()
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
@@ -107,10 +100,11 @@ function Admin({Categoly}) {
                     <UniversalModal
                         message="คุณต้องการแก้ไขประเภทสินค้าชนิดนี้เป็น?"
                         txtApply="แก้ไข"
-                        onApply={()=>{
-                            alert('I want to Change this id: ' + targetChangeId)
+                        onApply={ async () =>{
+                            await Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${targetChangeId}`)
                             setChange(false);
                             setTargetChangeId(null);
+                            location.reload()
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
@@ -119,7 +113,7 @@ function Admin({Categoly}) {
                         }}
                     >
                         <div>
-                            <input type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
+                            <input onChange={(event) => {setLabel(event.target.value)}} type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
                         </div>
                     </UniversalModal>
                 }
@@ -134,11 +128,10 @@ Admin.getInitialProps = async (context) => {
     if (req) {
         host = "http://" + req.headers.host // will give you localhost:3000
     }
-    const resCat = await Axios.get(host+'/api/getCategory');
-    const posts = resCat.data;
-    
+    const resCat = await Axios.get(host+'/api/category/get');
+    const categoryList = resCat.data || [];
     return {
-        Categoly: posts,
+        Categoly: categoryList,
     };
 }
 
