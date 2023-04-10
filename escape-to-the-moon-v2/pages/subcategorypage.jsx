@@ -2,7 +2,7 @@ import Head from 'next/head'
 import style from '../styles/Admin.module.css'
 import Link from 'next/link'
 import NavAdmin from '../components/NavbarAdmin.js'
-import axios from 'axios';
+import Axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { AppUrl } from '../config'
@@ -10,22 +10,10 @@ import UniversalModal from '../components/Modal.js';
 import React from 'react'
 import Select from 'react-select'
 
-function Subcategory() {
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ]
+function Subcategory({options}) {
 
-    // let tempList = []
-    // for (let i = 0; i < array.lenght; i++) {
-    //     tempList.push({ value: array[i].id, label: array[i].label})
-    // }
-
+    // const option = {}
     const [value, setValue] = useState("");
-
-    const [menuIsOpen, setMenuIsOpen] = useState(false);
-
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
@@ -72,6 +60,12 @@ function Subcategory() {
           }),
     }
 
+    // Axios.get("http://localhost:3000/api/category/get").then((response) => {
+    //     for (let i = 0; i < response.length; i++) {
+    //         option.push({value: response[i].cat_id, label: response[i].cat_label});
+    //     }
+    // })
+
     return (
         <div>
             <Head>
@@ -108,6 +102,27 @@ function Subcategory() {
             </div>
         </div>
     )
+}
+
+Subcategory.getInitialProps = async (context) => {
+    const { req, query, res, asPath, pathname } = context;
+    let host = ""
+    if (req) {
+        host = "http://" + req.headers.host // will give you localhost:3000
+    }
+    const resCat = await Axios.get(host+'/api/category/get');
+    const categoryList = resCat.data || [];
+
+    let List = []
+
+    for (let i = 0; i < categoryList.length; i++) {
+        List.push({value: categoryList[i].cat_id, label: categoryList[i].cat_label});
+    }
+
+    return {
+        options: List
+    };
+
 }
 
 export default Subcategory
