@@ -2,7 +2,7 @@ import Head from 'next/head'
 import style from '../styles/Admin.module.css'
 import Link from 'next/link'
 import NavAdmin from '../components/NavbarAdmin.js'
-import axios from 'axios';
+import Axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { AppUrl } from '../config'
@@ -18,7 +18,7 @@ function Admin({Categoly}) {
     const [targetChangeId, setTargetChangeId] = useState(null);
 
     const fetchData = async() =>{
-        axios.get('/api/getCategory').then((res) => {
+        Axios.get('/api/getCategory').then((res) => {
             const newPosts = res.data;
             setPosts(newPosts);
         });
@@ -39,7 +39,7 @@ function Admin({Categoly}) {
             </Head>
             <NavAdmin></NavAdmin>
             <div className={style.adminContainer}>
-                <div className="w-full">
+                <div className="w-full shadow-lg">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เเก้ไข / เพิ่มประเภทสินค้า</span>
                 </div>
                 
@@ -134,7 +134,7 @@ Admin.getInitialProps = async (context) => {
     if (req) {
         host = "http://" + req.headers.host // will give you localhost:3000
     }
-    const resCat = await axios.get(host+'/api/getCategory');
+    const resCat = await Axios.get(host+'/api/getCategory');
     const posts = resCat.data;
     
     return {
