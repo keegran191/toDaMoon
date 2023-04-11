@@ -10,10 +10,13 @@ import UniversalModal from '../components/Modal.js';
 import React from 'react'
 import Select from 'react-select'
 
-function Subcategory({options}) {
+function Subcategory() {
+    let option = [];
 
-    // const option = {}
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState();
+    const [isNew, setNew] = useState();
+    const [subCategoryLabel, setSubCategoryLabel] = useState();
+    const [subCategoryList, setSubCategoryList] = useState();
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
@@ -60,11 +63,17 @@ function Subcategory({options}) {
           }),
     }
 
-    // Axios.get("http://localhost:3000/api/category/get").then((response) => {
-    //     for (let i = 0; i < response.length; i++) {
-    //         option.push({value: response[i].cat_id, label: response[i].cat_label});
-    //     }
-    // })
+    Axios.get("http://localhost:3000/api/category/get").then((response) => {
+        for (let i = 0; i < response.data.length; i++) {
+            option.push({value: response.data[i].cat_id, label: response.data[i].cat_label});
+        }
+    })
+
+    const GetSubCategory = () => {
+        Axios.get(`http://localhost:3000/api/subcategory/get/${value}`).then((response) => {
+            setSubCategoryList(response.data);
+        })
+    }
 
     return (
         <div>
@@ -85,9 +94,10 @@ function Subcategory({options}) {
                 <form className="relative mt-10">
                     <Select
                         inputId='subCategort'
-                        options={options}
+                        options={option}
                         onChange={(newValue,meta) => {
                             setValue(newValue.value)
+                            GetSubCategory()
                         }}
                         styles={customStyles}
                         placeholder="เลือกประเภทสินค้า"
@@ -97,32 +107,41 @@ function Subcategory({options}) {
                 <div className="w-full border border-b-[#252525] mt-10"></div>
                     
                 <div className="w-full h-auto mt-10 ">
-                    
+                    <div className="button-container text-right">
+                        <button onClick={()=>{setNew(true)}} className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-base px-9 py-2">เพิ่ม</button>
+                    </div>
+
+                    {subCategoryList && subCategoryList.map((post) => {
+                        return <div className="" key={post.sub_id}>
+                            <span>{post.sub_label}</span>
+                        </div> 
+                    })}
                 </div>
+
+                { isNew &&
+                    <UniversalModal
+                        message="เพิ่มประเภทหมวดหมู่สินค้า"
+                        txtApply="เพิ่ม"
+                        onApply={ async () =>{
+                            // await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
+                            setNew(false);
+                            setSubCategoryLabel("");
+                            location.reload()
+                        }}
+                        txtClose="ยกเลิก"
+                        onClose={()=>{
+                            setNew(false);
+                            setSubCategoryLabel("");
+                        }}
+                    >
+                        <div>
+                            <input onChange={(event) => {setSubCategoryLabel(event.target.value)}} type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
+                        </div>
+                    </UniversalModal>
+                }
             </div>
         </div>
     )
-}
-
-Subcategory.getInitialProps = async (context) => {
-    const { req, query, res, asPath, pathname } = context;
-    let host = ""
-    if (req) {
-        host = "http://" + req.headers.host // will give you localhost:3000
-    }
-    const resCat = await Axios.get(host+'/api/category/get');
-    const categoryList = resCat.data || [];
-
-    let List = []
-
-    for (let i = 0; i < categoryList.length; i++) {
-        List.push({value: categoryList[i].cat_id, label: categoryList[i].cat_label});
-    }
-
-    return {
-        options: List
-    };
-
 }
 
 export default Subcategory

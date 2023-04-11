@@ -12,16 +12,13 @@ export default async function handler(req, res) {
 
     con.connect(function(err) {
     con.query("SELECT * FROM category", 
-    function(err, results, fields) {
+    function(err, results) {
       if(err) {
         res.status(500).json({message: "Database Error"})
         return
       }
-        console.log(results); 
-        console.log(fields);
         res.status(200).json(results);
     })
-    console.log(req.body)
   });
 
 }
