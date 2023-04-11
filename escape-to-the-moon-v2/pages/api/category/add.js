@@ -39,6 +39,7 @@ export default async function handler(req, res) {
             res.redirect(307, '/adminpage')
             console.log(result.insertId)
             res.status(201)
+            con.end();
           })
         }
       }) //end of connection.query()

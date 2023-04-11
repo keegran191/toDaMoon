@@ -1,26 +1,25 @@
-var mysql = require('mysql2');
-const bcrypt = require("bcrypt")
+import mysql from 'mysql2/promise';
+import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
+  try {
+    const { cid } = req.query;
 
-    const { cid } = req.query
-
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "to_da_moon"
+    const con = await mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'to_da_moon'
     });
 
-        con.connect(function(err) {
-        con.query("SELECT * FROM subcategory WHERE category_id = ? OR category_id IS NULL" , cid, 
-        function(err, results, fields) {
-        if(err) {
-            res.status(500).json({message: "Database Error"})
-            return
-        }
-            res.status(200).json(results);
-        })
-    });
+    const [results, fields] = await con.execute('SELECT * FROM subcategory WHERE category_id = ?', [cid]);
 
+    res.status(200).json(results);
+    con.end();
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Database Error' });
+    con.end();
+  }
 }

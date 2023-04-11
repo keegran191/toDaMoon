@@ -1,24 +1,29 @@
-var mysql = require('mysql2');
-const bcrypt = require("bcrypt")
+import mysql from 'mysql2/promise';
+import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
+  try {
+    const con = await mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'to_da_moon'
+    });
 
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "to_da_moon"
-  });
+    const [results,] = await con.execute('SELECT * FROM category');
 
-    con.connect(function(err) {
-    con.query("SELECT * FROM category", 
-    function(err, results) {
-      if(err) {
-        res.status(500).json({message: "Database Error"})
-        return
-      }
-        res.status(200).json(results);
-    })
-  });
+    if (!results || results.length === 0) {
+      res.status(404).json({ message: 'No categories found' });
+      con.end();
+      return;
+    }
 
+    res.status(200).json(results);
+    con.end();
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Database Error' });
+    con.end();
+  }
 }

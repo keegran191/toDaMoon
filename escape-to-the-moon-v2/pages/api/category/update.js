@@ -19,6 +19,7 @@ export default async function handler(req, res) {
       if (err) throw err
       console.log(rs)
       res.status(201).json({"Status": "Category Updated"})
+      con.end();
     })
   })
 }

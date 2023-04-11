@@ -17,6 +17,12 @@ function Subcategory() {
     const [isNew, setNew] = useState();
     const [subCategoryLabel, setSubCategoryLabel] = useState();
     const [subCategoryList, setSubCategoryList] = useState();
+
+    const [IsChange, setChange] = useState(false);
+    const [IsDelete, setDelete] = useState(false);
+    const [targetDeleteId, setTargetDeleteId] = useState(null);
+    const [targetChangeId, setTargetChangeId] = useState(null);
+
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
@@ -111,11 +117,41 @@ function Subcategory() {
                         <button onClick={()=>{setNew(true)}} className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-base px-9 py-2">เพิ่ม</button>
                     </div>
 
-                    {subCategoryList && subCategoryList.map((post) => {
-                        return <div className="" key={post.sub_id}>
-                            <span>{post.sub_label}</span>
-                        </div> 
-                    })}
+                    <div className="list-container mt-10">
+                        {subCategoryList && subCategoryList.map((post) => {
+                            return <div className="" key={post.sub_id}>
+                                <div className="hidden sm:flex PhoneContent justify-between items-baseline">
+                                    <p className="2xl:text-lg md:text-md sm:text-md" key={post.sub_id}>{post.sub_label}</p>
+                                    <div className="buttonGroup">
+                                        <button onClick={()=>{
+                                            setChange(true);
+                                            setTargetChangeId(post.sub_id);
+                                        }} type="button" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                        <button onClick={()=>{
+                                            setDelete(true);
+                                            setTargetDeleteId(post.sub_id);
+                                        }} type="button" className="text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                    </div>
+                                </div>
+
+                                <div className="block sm:hidden PcContent">
+                                    <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.sub_id}>{post.sub_label}</p>
+                                    <div className="buttonGroup flex">
+                                        <button onClick={()=>{
+                                            setChange(true);
+                                            setTargetChangeId(post.sub_id);
+                                        }} type="button" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                        <button onClick={()=>{
+                                            setDelete(true);
+                                            setTargetDeleteId(post.sub_id);
+                                        }} type="button" className="w-full text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                    </div>
+                                </div>
+
+                            </div> 
+                        })}
+                    </div>
+                    
                 </div>
 
                 { isNew &&
