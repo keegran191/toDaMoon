@@ -101,10 +101,14 @@ function Admin({Categoly}) {
                         message="คุณต้องการแก้ไขประเภทสินค้าชนิดนี้เป็น?"
                         txtApply="แก้ไข"
                         onApply={ async () =>{
-                            await Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${targetChangeId}`)
-                            setChange(false);
-                            setTargetChangeId(null);
-                            location.reload()
+                            if (Label != "") {
+                                await Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${targetChangeId}`)
+                                setChange(false);
+                                setTargetChangeId(null);
+                                location.reload()
+                            } {
+                                alert("กรุณาใส่ข้อมูล")
+                            }
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{

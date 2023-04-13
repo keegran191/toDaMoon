@@ -12,12 +12,6 @@ export default async function handler(req, res) {
 
     const [results,] = await con.execute('SELECT * FROM category');
 
-    if (!results || results.length === 0) {
-      res.status(404).json({ message: 'No categories found' });
-      con.end();
-      return;
-    }
-
     res.status(200).json(results);
     con.end();
 

@@ -1,9 +1,8 @@
 import Head from 'next/head'
 import style from '../styles/Admin.module.css'
-import Link from 'next/link'
 import NavAdmin from '../components/NavbarAdmin.js'
 import Axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router'
 import { AppUrl } from '../config'
 import UniversalModal from '../components/Modal.js';
@@ -11,13 +10,13 @@ import React from 'react'
 import Select from 'react-select'
 
 function Subcategory() {
-    let option = [];
+    const [option, setOption] = useState([]);
 
+    const [subCategoryList, setSubCategoryList] = useState(null);
     const [value, setValue] = useState();
-    const [isNew, setNew] = useState();
-    const [subCategoryLabel, setSubCategoryLabel] = useState();
-    const [subCategoryList, setSubCategoryList] = useState();
 
+    const [isNew, setNew] = useState();
+    const [subCategoryLabel, setSubCategoryLabel] = useState("");
     const [IsChange, setChange] = useState(false);
     const [IsDelete, setDelete] = useState(false);
     const [targetDeleteId, setTargetDeleteId] = useState(null);
@@ -70,17 +69,19 @@ function Subcategory() {
     }
 
     Axios.get("http://localhost:3000/api/category/get").then((response) => {
-        for (let i = 0; i < response.data.length; i++) {
-            option.push({value: response.data[i].cat_id, label: response.data[i].cat_label});
+        setOption(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
+    });
+
+    const GetSubCategory = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setSubCategoryList(response.data);
+            })
+        } else {
+            setSubCategoryList([]);
         }
-    })
-
-    const GetSubCategory = () => {
-        Axios.get(`http://localhost:3000/api/subcategory/get/${value}`).then((response) => {
-            setSubCategoryList(response.data);
-        })
     }
-
+    
     return (
         <div>
             <Head>
@@ -98,16 +99,17 @@ function Subcategory() {
                 </div>
 
                 <form className="relative mt-10">
-                    <Select
-                        inputId='subCategort'
-                        options={option}
-                        onChange={(newValue,meta) => {
-                            setValue(newValue.value)
-                            GetSubCategory()
-                        }}
-                        styles={customStyles}
-                        placeholder="เลือกประเภทสินค้า"
-                    />
+                <Select
+                    inputId='subCategory'
+                    options={option}
+                    onChange={(newValue,meta) => {
+                        setValue(newValue.value);
+                        GetSubCategory(newValue.value);      
+                    }}
+                    styles={customStyles}
+                    placeholder="เลือกประเภทสินค้า"
+                />
+
                 </form>
                     
                 <div className="w-full border border-b-[#252525] mt-10"></div>
@@ -159,10 +161,14 @@ function Subcategory() {
                         message="เพิ่มประเภทหมวดหมู่สินค้า"
                         txtApply="เพิ่ม"
                         onApply={ async () =>{
-                            // await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
-                            setNew(false);
-                            setSubCategoryLabel("");
-                            location.reload()
+                            if (subCategoryLabel != "") {
+                                await Axios.get(`http://localhost:3000/api/subcategory/add?label=${subCategoryLabel}&cid=${value}`)
+                                setNew(false);
+                                setSubCategoryLabel("");
+                                GetSubCategory(value)
+                            } else {
+                                alert("กรุณาใส่ข้อมูล")
+                            }
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
@@ -173,6 +179,25 @@ function Subcategory() {
                         <div>
                             <input onChange={(event) => {setSubCategoryLabel(event.target.value)}} type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
                         </div>
+                    </UniversalModal>
+                }
+
+                { IsDelete && targetDeleteId &&
+                    <UniversalModal
+                        message="คุณต้องการลบประเภทสินค้าชนิดนี้?"
+                        txtApply="ลบ"
+                        onApply={ async () =>{
+                            await Axios.get(`http://localhost:3000/api/subcategory/delete/${targetDeleteId}`)
+                            setDelete(false);
+                            setTargetDeleteId(null);
+                            location.reload()
+                        }}
+                        txtClose="ยกเลิก"
+                        onClose={()=>{
+                            setDelete(false);
+                            setTargetDeleteId(null);
+                        }}
+                    >
                     </UniversalModal>
                 }
             </div>
