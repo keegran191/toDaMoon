@@ -99,16 +99,16 @@ function Subcategory() {
                 </div>
 
                 <form className="relative mt-10">
-                <Select
-                    inputId='subCategory'
-                    options={option}
-                    onChange={(newValue,meta) => {
-                        setValue(newValue.value);
-                        GetSubCategory(newValue.value);      
-                    }}
-                    styles={customStyles}
-                    placeholder="เลือกประเภทสินค้า"
-                />
+                    <Select
+                        inputId='subCategory'
+                        options={option}
+                        onChange={(newValue,meta) => {
+                            setValue(newValue.value);
+                            GetSubCategory(newValue.value);      
+                        }}
+                        styles={customStyles}
+                        placeholder="เลือกประเภทสินค้า"
+                    />
 
                 </form>
                     
