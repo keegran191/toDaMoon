@@ -46,7 +46,7 @@ function Admin({Categoly}) {
                 <div className="w-full h-auto mt-10 ">
                     {Categoly && Categoly.map((post) => {
                         return <div className="" key={post.cat_id}>
-                            <div className="hidden sm:flex PhoneContent justify-between items-baseline">
+                            <div className="hidden sm:flex PhoneContent justify-between items-baseline PcContent">
                                 <p className="2xl:text-lg md:text-md sm:text-md" key={post.cat_id}>{post.cat_label}</p>
                                 <div className="buttonGroup">
                                     <button onClick={()=>{
@@ -60,17 +60,17 @@ function Admin({Categoly}) {
                                 </div>
                             </div>
 
-                            <div className="block sm:hidden PcContent">
+                            <div className="flex sm:hidden justify-between items-baseline PhoneContent">
                                 <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.cat_id}>{post.cat_label}</p>
-                                <div className="buttonGroup flex">
+                                <div className="buttonGroup flex justify-center">
                                     <button onClick={()=>{
                                         setChange(true);
                                         setTargetChangeId(post.cat_id);
-                                    }} type="button" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                    }} type="button" className="w-20 text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm py-2 mr-2 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
                                     <button onClick={()=>{
                                         setDelete(true);
                                         setTargetDeleteId(post.cat_id);
-                                    }} type="button" className="w-full text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                    }} type="button" className="w-20 text-[#252525] border border-[#252525] font-medium rounded-lg text-sm py-2 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
                                 </div>
                             </div>
                         </div> 
@@ -106,7 +106,7 @@ function Admin({Categoly}) {
                                 setChange(false);
                                 setTargetChangeId(null);
                                 location.reload()
-                            } {
+                            } else {
                                 alert("กรุณาใส่ข้อมูล")
                             }
                         }}

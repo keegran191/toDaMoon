@@ -22,6 +22,8 @@ function Subcategory() {
     const [targetDeleteId, setTargetDeleteId] = useState(null);
     const [targetChangeId, setTargetChangeId] = useState(null);
 
+    const [Label, setLabel] = useState("");
+
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
@@ -115,9 +117,9 @@ function Subcategory() {
                 <div className="w-full border border-b-[#252525] mt-10"></div>
                     
                 <div className="w-full h-auto mt-10 ">
-                    <div className="button-container text-right">
+                    {value && <div className="button-container text-right">
                         <button onClick={()=>{setNew(true)}} className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-base px-9 py-2">เพิ่ม</button>
-                    </div>
+                    </div>}
 
                     <div className="list-container mt-10">
                         {subCategoryList && subCategoryList.map((post) => {
@@ -136,17 +138,17 @@ function Subcategory() {
                                     </div>
                                 </div>
 
-                                <div className="block sm:hidden PcContent">
+                                <div className="flex sm:hidden justify-between items-baseline PhoneContent">
                                     <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.sub_id}>{post.sub_label}</p>
-                                    <div className="buttonGroup flex">
+                                    <div className="buttonGroup flex justify-center">
                                         <button onClick={()=>{
                                             setChange(true);
                                             setTargetChangeId(post.sub_id);
-                                        }} type="button" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                        }} type="button" className="w-20 text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm py-2 mr-2 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
                                         <button onClick={()=>{
                                             setDelete(true);
                                             setTargetDeleteId(post.sub_id);
-                                        }} type="button" className="w-full text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                        }} type="button" className="w-20 text-[#252525] border border-[#252525] font-medium rounded-lg text-sm py-2 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
                                     </div>
                                 </div>
 
@@ -190,7 +192,7 @@ function Subcategory() {
                             await Axios.get(`http://localhost:3000/api/subcategory/delete/${targetDeleteId}`)
                             setDelete(false);
                             setTargetDeleteId(null);
-                            location.reload()
+                            GetSubCategory(value)
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
@@ -198,6 +200,32 @@ function Subcategory() {
                             setTargetDeleteId(null);
                         }}
                     >
+                    </UniversalModal>
+                }
+
+                { IsChange && targetChangeId &&
+                    <UniversalModal
+                        message="คุณต้องการแก้ไขประเภทสินค้าชนิดนี้เป็น?"
+                        txtApply="แก้ไข"
+                        onApply={ async () =>{
+                            if (Label != "") {
+                                await Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${targetChangeId}`)
+                                setChange(false);
+                                setTargetChangeId(null);
+                                GetSubCategory(value)
+                            } else {
+                                alert("กรุณาใส่ข้อมูล")
+                            }
+                        }}
+                        txtClose="ยกเลิก"
+                        onClose={()=>{
+                            setChange(false);
+                            setTargetChangeId(null);
+                        }}
+                    >
+                        <div>
+                            <input onChange={(event) => {setLabel(event.target.value)}} type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
+                        </div>
                     </UniversalModal>
                 }
             </div>
