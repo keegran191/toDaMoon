@@ -20,7 +20,7 @@ function Admin({Categoly}) {
     useEffect(() => {
         setCategoryList(Categoly);
     }, []);
-        
+    
     return(
         <div>
             <Head>
