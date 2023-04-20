@@ -1,24 +1,26 @@
-var mysql = require('mysql2');
+import { query } from "../../../lib/database";
 
 export default async function handler(req, res) {
 
-    var con = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "to_da_moon"
-    });
+    try {
+      const newCategory = req.body.AddCategory
+      const addCat = await query({ 
+        query:'INSERT INTO `category`(`cat_label`) VALUES(?)',
+        values:[newCategory]
+      });
+      if (addCat.insertId){
+        console.log("insert category success")
+      } else {
+        console.log("insert category fail")
+      }
+      res.redirect(307, '/adminpage')
+      res.status(200)
 
-    const newCategory = req.body.AddCategory
-
-    con.connect(async (err) => {
-      if (err) throw (err)
-      const sqlSearch = 'SELECT * FROM category WHERE cat_label = ?'
-      
-      const search_query = mysql.format(sqlSearch, [newCategory])
-      const sqlInsert = 'INSERT INTO `category`(`cat_label`) VALUES(?)'
-      const insert_query = mysql.format(sqlInsert, [newCategory])
-
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Database Error' });
+    }
+    /*
       con.query(search_query, (err, result) => {
         if (err) throw (err)
         console.log("------> Search Results")
@@ -43,6 +45,5 @@ export default async function handler(req, res) {
           })
         }
       }) //end of connection.query()
-   
-  })
-}
+   */
+  }
