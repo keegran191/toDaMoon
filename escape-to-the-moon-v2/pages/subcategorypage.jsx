@@ -2,7 +2,7 @@ import Head from 'next/head'
 import style from '../styles/Admin.module.css'
 import NavAdmin from '../components/NavbarAdmin.js'
 import Axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { AppUrl } from '../config'
 import UniversalModal from '../components/Modal.js';
@@ -70,9 +70,12 @@ function Subcategory() {
           }),
     }
 
-    Axios.get("http://localhost:3000/api/category/get").then((response) => {
-        setOption(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
-    });
+
+    const GetCategory = () => {
+        Axios.get("http://localhost:3000/api/category/get").then((response) => {
+            setOption(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
+        });
+    }
 
     const GetSubCategory = (categoryId) => {
         if (categoryId) {
@@ -84,6 +87,10 @@ function Subcategory() {
         }
     }
     
+    useEffect(() => {
+        GetCategory()
+    }, []);
+
     return (
         <div>
             <Head>
@@ -97,7 +104,7 @@ function Subcategory() {
 
             <div className={style.adminContainer}>
                 <div className="w-full">
-                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เเก้ไข / เพิ่มประเภทหมวดหมู่สินค้า</span>
+                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เเก้ไข / เพิ่มหมวดหมู่สินค้า</span>
                 </div>
 
                 <form className="relative mt-10">
@@ -116,7 +123,7 @@ function Subcategory() {
                     
                 <div className="w-full border border-b-[#252525] mt-10"></div>
                     
-                <div className="w-full h-auto mt-10 ">
+                <div className="w-full h-auto mt-10">
                     {value && <div className="button-container text-right">
                         <button onClick={()=>{setNew(true)}} className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-base px-9 py-2">เพิ่ม</button>
                     </div>}
@@ -124,7 +131,7 @@ function Subcategory() {
                     <div className="list-container mt-10">
                         {subCategoryList && subCategoryList.map((post) => {
                             return <div className="" key={post.sub_id}>
-                                <div className="hidden sm:flex PhoneContent justify-between items-baseline">
+                                <div className="hidden sm:flex PcContent justify-between items-baseline">
                                     <p className="2xl:text-lg md:text-md sm:text-md" key={post.sub_id}>{post.sub_label}</p>
                                     <div className="buttonGroup">
                                         <button onClick={()=>{

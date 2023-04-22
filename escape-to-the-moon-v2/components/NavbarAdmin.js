@@ -38,7 +38,7 @@ function Navbar() {
                                     </li>
                                     <li>
                                         <Link href="/subcategorypage">
-                                            <a href="#" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไข / เพิ่มประเภทหมวดสินค้า</a>
+                                            <a href="#" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไข / เพิ่มหมวดหมู่สินค้า</a>
                                         </Link>
                                     </li>
                                 </ul>

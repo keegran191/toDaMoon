@@ -82,10 +82,14 @@ function Admin({Categoly}) {
                         message="คุณต้องการลบประเภทสินค้าชนิดนี้?"
                         txtApply="ลบ"
                         onApply={ async () =>{
-                            await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
-                            setDelete(false);
-                            setTargetDeleteId(null);
-                            location.reload()
+                            if (targetDeleteId == 40 || targetDeleteId == 41 || targetDeleteId == 42) {
+                                alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
+                            } else {
+                                await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
+                                setDelete(false);
+                                setTargetDeleteId(null);
+                                location.reload()
+                            }
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
@@ -101,13 +105,17 @@ function Admin({Categoly}) {
                         message="คุณต้องการแก้ไขประเภทสินค้าชนิดนี้เป็น?"
                         txtApply="แก้ไข"
                         onApply={ async () =>{
-                            if (Label != "") {
-                                await Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${targetChangeId}`)
-                                setChange(false);
-                                setTargetChangeId(null);
-                                location.reload()
+                            if (targetChangeId == 40 || targetChangeId == 41 || targetChangeId == 42) {
+                                alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
                             } else {
-                                alert("กรุณาใส่ข้อมูล")
+                                if (Label != "") {
+                                    await Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${targetChangeId}`)
+                                    setChange(false);
+                                    setTargetChangeId(null);
+                                    location.reload()
+                                } else {
+                                    alert("กรุณาใส่ข้อมูล")
+                                }
                             }
                         }}
                         txtClose="ยกเลิก"
