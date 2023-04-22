@@ -29,6 +29,9 @@ function Stock() {
 
     const [IsAdviseItem, setIsAdviseItem] = useState(false);
 
+    const [images, setImages] = useState([]);
+    const [imagesURLs, setImagesURLs] = useState([]);
+
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
@@ -123,7 +126,17 @@ function Stock() {
         GetProcess(42)
         GetRoast(40)
         GetFlavor(41)
-    }, []);
+
+        if(images.length < 1) return
+        const newImageUrls = [];
+        images.forEach(image => newImageUrls.push(URL.createObjectURL(image)));
+        setImagesURLs(newImageUrls);
+
+    }, [images]);
+
+    function onImageChanged(event) {
+        setImages([...event.target.files]);
+    }
 
     return (
         <div>
@@ -140,24 +153,37 @@ function Stock() {
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มสินค้า</span>
                 </div>
-
-                <div className="relative mt-10 sm:flex sm:space-x-14">
-                    <div className="hidden sm:block border-2 border-[#252525] h-64 w-52 text-center">
-                        <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
-                            <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>
+                <form>
+                    <div className="relative mt-10 sm:flex sm:space-x-14">
+                        <div className="hidden sm:block border-2 border-[#252525] h-64 w-52 text-center">
+                            <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
+                                {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
+                                {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
+                                    <div className="img ">
+                                        <img key={idx} className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
+                                            document.getElementById('image').click();
+                                        }} src={imageSrc}></img>
+                                    </div>
+                                )}
+                            </div>
+                            <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/>
                         </div>
-                        <input className="hidden" type="file" id='image' accept='image/*'/>
-                    </div>
 
-                    <div className="sm:hidden m-auto border-2 border-[#252525] h-64 w-52 text-center">
-                        <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
-                            <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>
+                        <div className="sm:hidden m-auto border-2 border-[#252525] h-64 w-52 text-center">
+                            <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
+                                {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
+                                {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
+                                    <div className="img ">
+                                        <img key={idx} className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
+                                            document.getElementById('image').click();
+                                        }} src={imageSrc}></img>
+                                    </div>
+                                )}
+                            </div>
+                            <input className="hidden" type="file" id='image' accept='image/*'/>
                         </div>
-                        <input className="hidden" type="file" id='image' accept='image/*'/>
-                    </div>
 
-                    <div className="ContentContainer sm:w-6/12 w-64 mt-1 m-auto">
-                        <form>
+                        <div className="ContentContainer sm:w-6/12 w-64 mt-1 m-auto">
                             <div className="name-container">
                                 <label className="">ชื่อสินค้า</label>
                                 <input type="text" id="stockName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required></input>
@@ -282,9 +308,9 @@ function Stock() {
                             <div className="button-container mt-11 text-center">
                                 <button onClick={()=>{}} type="submit" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">เพิ่มสินค้า</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )
