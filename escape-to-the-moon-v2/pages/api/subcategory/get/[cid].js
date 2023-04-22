@@ -1,25 +1,13 @@
-import mysql from 'mysql2/promise';
-import bcrypt from 'bcrypt';
+import pool from "../../../../lib/database";
 
 export default async function handler(req, res) {
-  try {
-    const { cid } = req.query;
 
-    const con = await mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'to_da_moon'
-    });
+  const { cid } = req.query;
+  const [results] = await pool.query('SELECT * FROM subcategory WHERE category_id = ?', [cid]).catch((err) => {
+    res.status(500).json({ "Status": "Database Error" });
+    console.error(err);
+    return null;
+  });
 
-    const [results, fields] = await con.execute('SELECT * FROM subcategory WHERE category_id = ?', [cid]);
-
-    res.status(200).json(results);
-    con.end();
-    
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Database Error' });
-    con.end();
-  }
+  res.status(200).json(results);
 }

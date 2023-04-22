@@ -1,25 +1,14 @@
-import mysql from 'mysql2';
+import pool from "../../../../lib/database";
 
 export default async function handler(req, res) {
   const { scid } = req.query;
 
-  const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "to_da_moon"
+  const [results] = await pool.query('DELETE FROM subcategory WHERE sub_id = ?',[scid]).catch((err) => {
+    res.status(500).json({ "Status": "Database Error" });
+    console.error(err);
+    return null;
   });
 
-  try {
-    await con.promise().connect();
-    await con.promise().query('DELETE FROM subcategory WHERE sub_id = ?', scid);
-
-    res.status(201).json({"Status": "SubCategory Removed"});
-    con.end();
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({"Status": "Internal Server Error"});
-    con.end();
-  }
+  console.log("Delete success")
+  res.status(201).json({"Status": "Sub Category Deleted"});
 }
