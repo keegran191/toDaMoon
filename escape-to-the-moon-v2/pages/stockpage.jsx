@@ -153,13 +153,13 @@ function Stock() {
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มสินค้า</span>
                 </div>
-                <form>
+                <form enctype="multipart/form-data" action="/api/stock/add" method="POST">
                     <div className="relative mt-10 sm:flex sm:space-x-14">
                         <div className="hidden sm:block border-2 border-[#252525] h-64 w-52 text-center">
                             <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
                                 {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
                                 {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
-                                    <div className="img ">
+                                    <div className="img">
                                         <img key={idx} className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
                                             document.getElementById('image').click();
                                         }} src={imageSrc}></img>
@@ -306,7 +306,7 @@ function Stock() {
                             </div>
 
                             <div className="button-container mt-11 text-center">
-                                <button onClick={()=>{}} type="submit" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">เพิ่มสินค้า</button>
+                                <button type="submit" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">เพิ่มสินค้า</button>
                             </div>
                         </div>
                     </div>
