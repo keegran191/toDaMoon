@@ -19,4 +19,3 @@ export default async function handler(req, res) {
   console.log("Delete success")
   res.status(201).json({"Status": "Sub Category Deleted"});
 }
-

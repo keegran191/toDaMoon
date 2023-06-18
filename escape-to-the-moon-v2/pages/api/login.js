@@ -18,11 +18,10 @@ export default function handler(req, res) {
     if(floating_email == 'admin' && floating_password == 'admin'){
       console.log('yay')
       Cookies.set("loggedin" ,"true")
-      res.redirect(307, '/adminpage')
-      res.status(201)}
+      res.redirect(301, '/adminpage')
+    }
     else{
-      res.redirect(307, '/login?errorMsg=WrongEmailOrPassword&errObj=')
-      res.status(409)
+      res.redirect(301, '/login?errorMsg=WrongEmailOrPassword&errObj=')
     }
     
 }

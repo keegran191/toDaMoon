@@ -3,7 +3,7 @@ import style from '../styles/Admin.module.css'
 import Link from 'next/link'
 import NavAdmin from '../components/NavbarAdmin.js'
 import Axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createRef } from 'react';
 import { AppUrl } from '../config'
 
 import UniversalModal from '../components/Modal.js';
@@ -31,6 +31,12 @@ function Stock() {
 
     const [images, setImages] = useState([]);
     const [imagesURLs, setImagesURLs] = useState([]);
+
+    const [stockCount, setStockCount] = useState();
+    const [stockPrice, setStockPrice] = useState();
+
+    const inputStockname = createRef();
+    const inputDetail = createRef();
 
     const customStyles = {
         control: (provided, state) => ({
@@ -83,7 +89,7 @@ function Stock() {
     }
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/category/get").then((response) => {
+        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
@@ -120,6 +126,18 @@ function Stock() {
         }
     }
 
+    const handleStockCountChange = (e) => {
+        const value = e.target.value;
+        const sanitizedValue = value.replace(/[^0-9]/g, '');
+        setStockCount(sanitizedValue);
+    }
+
+    const handleStockPriceChange = (e) => {
+        const value = e.target.value;
+        const sanitizedValue = value.replace(/[^0-9]/g, '');
+        setStockPrice(sanitizedValue);
+    }
+
     useEffect(() => {
         GetCoffee()
         GetCategory()
@@ -138,6 +156,61 @@ function Stock() {
         setImages([...event.target.files]);
     }
 
+    function addStock() {
+        console.log('ImageNameasd', images);
+        const data = new FormData()
+        if (images.length >= 0) {
+            data.append('image', images[0])
+        }
+        if (inputStockname.current.value != "") {
+            data.append('stockName', inputStockname.current.value)
+        }
+        if (inputDetail.current.value != "") {
+            data.append('stockDetail', inputDetail.current.value)
+        }
+        if (stockCount !== undefined) {
+            data.append('stockAmount', stockCount)
+        }
+        if (stockPrice !== undefined) {
+            data.append('stockPrice', stockPrice)
+        }   
+        if (valueCoffee !== undefined) {
+            data.append('stockType', valueCoffee)
+        }
+        if (process !== undefined) {
+            data.append('coffeeProcess', process)
+        }
+        if (roast !== undefined) {
+            data.append('coffeeRoast', roast)
+        }
+        if (flavor !== undefined) {
+            data.append('coffeeFlavor', flavor)
+        }
+        if (categoryValue !== undefined) {
+            data.append('category', categoryValue)
+        }   
+        if (subCategoryValue !== undefined) {
+            data.append('subCategory', subCategoryValue)
+        }
+        data.append('IsAdviseItem', IsAdviseItem)
+        postData("/api/stock/add", data).then((data) => {
+          console.log(data); // JSON data parsed by `data.json()` call
+
+          if(data.success) {
+            location.reload();
+          }
+        });
+    }
+
+    async function postData(url = "", data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            body: data, // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      }
+
     return (
         <div>
             <Head>
@@ -153,7 +226,7 @@ function Stock() {
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มสินค้า</span>
                 </div>
-                <form enctype="multipart/form-data" action="/api/stock/add" method="POST">
+                {/* <form encType="multipart/form-data" action="/api/stock/add" method="POST"> */}
                     <div className="relative mt-10 sm:flex sm:space-x-14">
                         <div className="hidden sm:block border-2 border-[#252525] h-64 w-52 text-center">
                             <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
@@ -180,29 +253,45 @@ function Stock() {
                                     </div>
                                 )}
                             </div>
-                            <input className="hidden" type="file" id='image' accept='image/*'/>
+                            <input className="hidden" type="file" id='image' accept='image/*' />
                         </div>
 
                         <div className="ContentContainer sm:w-6/12 w-64 mt-1 m-auto">
                             <div className="name-container">
                                 <label className="">ชื่อสินค้า</label>
-                                <input type="text" id="stockName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required></input>
+                                <input ref={inputStockname} type="text" id="stockName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required></input>
                             </div>
 
                             <div className="detail-container mt-2">
                                 <label className="">ลายละเอียดสินค้า</label>
-                                <textarea id="stockDetail" rows="4" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..."></textarea>
+                                <textarea ref={inputDetail} id="stockDetail" rows="4" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..."></textarea>
                             </div>
 
                             <div className="container sm:flex sm:space-x-2 mt-2">
                                 <div className="name-container">
                                     <label className="">จำนวนสินค้า</label>
-                                    <input type="text" id="stocCount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="จำนวนสินค้า" required></input>
+                                    <input 
+                                        type="text" 
+                                        id="stocCount" 
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" 
+                                        placeholder="จำนวนสินค้า"
+                                        value={stockCount}
+                                        onChange={handleStockCountChange}
+                                        required
+                                    />
                                 </div>
 
                                 <div className="name-container">
                                     <label className="">ราคาสินค้า</label>
-                                    <input type="number" id="stockPrice" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 appearance-none" placeholder="ราคาสินค้า ฿" required></input>
+                                    <input
+                                        type="text"
+                                        id="stockPrice"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 appearance-none"
+                                        placeholder="ราคาสินค้า ฿"
+                                        value={stockPrice}
+                                        onChange={handleStockPriceChange}
+                                        required
+                                    />
                                 </div>
 
                                 <div className="name-container top-1/2 transform translate-y-1/2">                  
@@ -306,11 +395,11 @@ function Stock() {
                             </div>
 
                             <div className="button-container mt-11 text-center">
-                                <button type="submit" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">เพิ่มสินค้า</button>
+                                <button type="submit" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125" onClick={addStock}>เพิ่มสินค้า</button>
                             </div>
                         </div>
                     </div>
-                </form>
+                {/* </form> */}
             </div>
         </div>
     )
