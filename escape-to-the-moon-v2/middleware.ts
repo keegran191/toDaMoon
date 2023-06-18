@@ -1,17 +1,28 @@
-import { NextRequest, NextResponse } from "next/server";
+// import { NextRequest, NextResponse } from "next/server";
 
+// export default function middleware(req:NextRequest){
 
-export default function middleware(req:NextRequest){
-    let verify = req.cookies.get("loggedin");
-    let url = req.url
+//     let verify = req.cookies.get("loggedin")
+//     let url = req.url
     
-    //if(!verify && url.includes('/adminpage')){
-    //    return NextResponse.redirect("http://localhost:3000/login");
-    //}
+//     if(!verify && url.includes('/adminpage')){
+//       return NextResponse.redirect("http://localhost:3000/login");
+//     }
 
-    if (verify && url === "http://localhost:3000/login") {
-      return NextResponse.redirect("http://localhost:3000/");
-    }
+//     if(!verify && url.includes('/home')){
+//       return NextResponse.redirect("http://localhost:3000/login");
+//     }
 
+//     if (verify != "abc"  && url.includes('/adminpage')){
+//         return NextResponse.redirect("http://localhost:3000/");
+//     }
 
-}
+//     if (verify != "123"  && url.includes('/home')){
+//       return NextResponse.redirect("http://localhost:3000/");
+//     }
+
+//     if (verify && url === "http://localhost:3000/login") {
+//       return NextResponse.redirect("http://localhost:3000/");
+//     }
+
+// }
