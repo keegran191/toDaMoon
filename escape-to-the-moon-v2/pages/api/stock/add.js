@@ -64,6 +64,7 @@ export default function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Subcategory Require'});
       }
     }
+    
     await pool.query('INSERT INTO stock (Title, Detail, Amount, Price, IsAdvise, StockType, Process, Roast, Flavor, CategoryId, SubCategoryId, Image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
     ,[Stock.stockName, Stock.stockDetail, Stock.stockAmount, Stock.stockPrice, Stock.IsAdviseItem, Stock.stockType, Stock.coffeeProcess, Stock.coffeeRoast, 
     Stock.coffeeFlavor, Stock.category, Stock.subCategory, fileName]).catch((err) => {
