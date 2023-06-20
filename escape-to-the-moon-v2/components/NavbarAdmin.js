@@ -50,12 +50,12 @@ function Navbar() {
                             <div id="dropdownNavbar" className={toggle2? "hidden": "" + "md:absolute z-10 w-50 mt-0.5 font-normal bg-[#333333] rounded divide-y divide-gray-100 shadow"}>
                                 <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
                                     <li>
-                                        <Link href="/stockpage">
+                                        <Link href="/addstockpage">
                                             <a href="#" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่มสินค้า</a>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/">
+                                        <Link href="/stockpagelist">
                                             <a href="#" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เเก้ไขสินค้า</a>
                                         </Link>
                                     </li>
