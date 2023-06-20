@@ -37,7 +37,7 @@ function Navbar() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/adminpage/subcategorypage">
+                                        <Link href="/adminpage/subcategory">
                                             <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไข / เพิ่มหมวดหมู่สินค้า</h1>
                                         </Link>
                                     </li>
@@ -50,12 +50,12 @@ function Navbar() {
                             <div id="dropdownNavbar" className={toggle2? "hidden": "" + "md:absolute z-10 w-50 mt-0.5 font-normal bg-[#333333] rounded divide-y divide-gray-100 shadow"}>
                                 <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
                                     <li>
-                                        <Link href="/adminpage/addstockpage" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
+                                        <Link href="/adminpage/addstock" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
                                             <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่มสินค้า</h1>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/adminpage/stockpagelist" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
+                                        <Link href="/adminpage/stocklist" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
                                             <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เเก้ไขสินค้า</h1>
                                         </Link>
                                     </li>

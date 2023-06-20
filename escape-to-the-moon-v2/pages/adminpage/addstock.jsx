@@ -1,12 +1,9 @@
 import Head from 'next/head'
 import style from '../../styles/Admin.module.css'
-import Link from 'next/link'
 import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
-import { AppUrl } from '../../config'
 
-import UniversalModal from '../../components/Modal.js';
 import Select from 'react-select'
 function Stock() {
     const [optionCoffee, setOptionCoffee] = useState([]);
