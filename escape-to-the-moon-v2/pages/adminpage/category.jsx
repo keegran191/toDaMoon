@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import style from '../styles/Admin.module.css'
+import style from '../../styles/Admin.module.css'
 import Link from 'next/link'
 import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';

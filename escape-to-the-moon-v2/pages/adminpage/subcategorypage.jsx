@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import style from '../styles/Admin.module.css'
-import NavAdmin from '../components/NavbarAdmin.js'
+import style from '../../styles/Admin.module.css'
+import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
-import { AppUrl } from '../config'
-import UniversalModal from '../components/Modal.js';
+import { AppUrl } from '../../config'
+import UniversalModal from '../../components/Modal.js';
 import React from 'react'
 import Select from 'react-select'
 
