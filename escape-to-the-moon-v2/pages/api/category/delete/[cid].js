@@ -4,18 +4,26 @@ export default async function handler(req, res) {
 
   const { cid } = req.query;
 
-  const [resultsSubCategory] = await pool.query('DELETE FROM subcategory WHERE category_id = ?',[cid]).catch((err) => {
+  const [results] = await pool.query('SELECT * FROM stock WHERE CategoryId = ? ',[cid]).catch((err) => {
     res.status(500).json({ "Status": "Database Error" });
     console.error(err);
-    return null;
   });
+  if (results.length > 0) {
+    console.log('using')
+    res.redirect(307, "/adminpage/category?errorMsg=CaregoryIdIsUsing=");
 
-  const [resultsCategory] = await pool.query('DELETE FROM category WHERE cat_id = ?',[cid]).catch((err) => {
-    res.status(500).json({ "Status": "Database Error" });
-    console.error(err);
-    return null;
-  });
-
-  console.log("Delete success")
-  res.status(201).json({"Status": "Sub Category Deleted"});
+  } else {
+    // const [resultsSubCategory] = await pool.query('DELETE FROM subcategory WHERE category_id = ?',[cid]).catch((err) => {
+    //   res.status(500).json({ "Status": "Database Error" });
+    //   console.error(err);
+    // });
+  
+    // const [resultsCategory] = await pool.query('DELETE FROM category WHERE cat_id = ?',[cid]).catch((err) => {
+    //   res.status(500).json({ "Status": "Database Error" });
+    //   console.error(err);
+    // });
+    console.log("Delete success")
+    res.redirect(307, "/adminpage/category");
+  }
+  
 }
