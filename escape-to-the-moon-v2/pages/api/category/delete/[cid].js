@@ -13,15 +13,15 @@ export default async function handler(req, res) {
     res.redirect(307, "/adminpage/category?errorMsg=CaregoryIdIsUsing=");
 
   } else {
-    // const [resultsSubCategory] = await pool.query('DELETE FROM subcategory WHERE category_id = ?',[cid]).catch((err) => {
-    //   res.status(500).json({ "Status": "Database Error" });
-    //   console.error(err);
-    // });
+    const [resultsSubCategory] = await pool.query('DELETE FROM subcategory WHERE category_id = ?',[cid]).catch((err) => {
+      res.status(500).json({ "Status": "Database Error" });
+      console.error(err);
+    });
   
-    // const [resultsCategory] = await pool.query('DELETE FROM category WHERE cat_id = ?',[cid]).catch((err) => {
-    //   res.status(500).json({ "Status": "Database Error" });
-    //   console.error(err);
-    // });
+    const [resultsCategory] = await pool.query('DELETE FROM category WHERE cat_id = ?',[cid]).catch((err) => {
+      res.status(500).json({ "Status": "Database Error" });
+      console.error(err);
+    });
     console.log("Delete success")
     res.redirect(307, "/adminpage/category");
   }
