@@ -25,5 +25,4 @@ export default async function handler(req, res) {
     console.log("Delete success")
     res.redirect(307, "/adminpage/category");
   }
-  
 }

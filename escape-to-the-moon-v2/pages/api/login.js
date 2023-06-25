@@ -30,7 +30,7 @@ export default async function handler(req, res) {
             sameSite: "strict",
             path: "/"          
           }))
-          res.redirect(307, "/adminpage");}
+          res.redirect(307, "/adminpage/category");}
           else{
             res.setHeader("Set-Cookie", cookie.serialize("loggedin", "123" ,{
               httpOnly: true,
