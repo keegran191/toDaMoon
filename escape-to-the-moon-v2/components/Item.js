@@ -1,5 +1,5 @@
 function UniverSalItem({
-    id
+    IdStock
 }) {
 
     const GetStock = () => {
@@ -12,7 +12,7 @@ function UniverSalItem({
     
     return(
         <div className="">
-            {id}
+            {IdStock}
         </div>
     )
 }

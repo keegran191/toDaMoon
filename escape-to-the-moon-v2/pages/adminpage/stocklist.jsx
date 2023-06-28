@@ -3,8 +3,9 @@ import style from '../../styles/Admin.module.css'
 import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
-
+import Item from '../../components/Item.js';
 import Select from 'react-select'
+
 function Stock() {
     
     useEffect(() => {
@@ -23,7 +24,7 @@ function Stock() {
             </Head>
             <NavAdmin></NavAdmin>
 
-            
+
         </div>
     )
 }
