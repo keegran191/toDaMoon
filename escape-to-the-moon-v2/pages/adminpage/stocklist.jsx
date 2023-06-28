@@ -8,8 +8,16 @@ import Select from 'react-select'
 
 function Stock() {
     
-    useEffect(() => {
+    const [stockList, setStockList] = useState([])
 
+    const GetStokList = () => {
+        Axios.get("http://localhost:3000/api/stock/getallstock").then((response) => {
+            setStockList(response.data);
+        })
+    }
+
+    useEffect(() => {
+        GetStokList()
     });
 
 
