@@ -31,7 +31,7 @@ export default async function handler(req, res) {
             path: "/"          
           }))
           res.redirect(307, "/adminpage/category");}
-          else{
+        else{
             res.setHeader("Set-Cookie", cookie.serialize("loggedin", "123" ,{
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
               sameSite: "strict",
               path: "/"          
             }))
-            res.redirect(307, "/home");
+            res.redirect(307, "/adminpage/category");
           }
         console.log(isAdmin)
       } else {
