@@ -1,9 +1,3 @@
-import NavAdmin from '../components/NavbarAdmin.js'
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-import Head from 'next/head'
-import style from '../styles/Admin.module.css'
-
 function UniversalModal({
     children, // the html children
 
