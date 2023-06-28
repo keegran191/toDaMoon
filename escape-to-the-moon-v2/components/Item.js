@@ -3,7 +3,9 @@ function UniverSalItem({
 }) {
 
     const GetStock = () => {
-        Console.log(id)
+        Axios.get(`http://localhost:3000/api/stock/get/${IdStock}`).then((response) => {
+            setSubCategoryList(response.data);
+        })
     }
     
     useEffect(() => {
