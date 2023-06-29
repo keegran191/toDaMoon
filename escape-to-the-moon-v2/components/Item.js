@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Item = ({ image, name, price }) => {
+const Item = ({ key, image, name, price }) => {
   return (
     <motion.div
       className="select-none w-48 h-52 bg-white rounded-xl shadow-lg flex flex-col justify-between p-4 cursor-pointer"
