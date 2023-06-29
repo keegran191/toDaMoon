@@ -5,7 +5,6 @@ import Axios from 'axios';
 import { useState, useEffect } from 'react';
 import UniversalModal from '../../components/Modal.js';
 import React from 'react'
-import Select from 'react-select'
 import Item from '../../components/Item.js'
 function Stock() {
     
