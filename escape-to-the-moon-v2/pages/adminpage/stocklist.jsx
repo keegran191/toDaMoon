@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import UniversalModal from '../../components/Modal.js';
 import React from 'react'
 import Select from 'react-select'
-
+import Item from '../../components/Item.js'
 function Stock() {
     
     const [stockList, setStockList] = useState([])
@@ -37,21 +37,28 @@ function Stock() {
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <NavAdmin></NavAdmin>
-            <div className="px-80">
-                <div className="px-80 mt-24">
-                    <div className="relative mt-10">
-                        <input onChange={searchItem} id="Search" name="Search" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]" placeholder="ค้าหาสินค้า"></input>
-                        <button className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">ค้นหา</button>
-                    </div>
+            <div className={style.adminContainer}>
+                <div className="w-full">
+                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">แก้ไขสินค้า</span>
+                </div>
+                
+                <div className="relative mt-10">
+                    <input onChange={searchItem} id="Search" name="Search" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]" placeholder="ค้าหาสินค้า"></input>
+                    <button className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">ค้นหา</button>
                 </div>
 
-                {stockList && stockList.map((post) => {
-                        return <div className="" key={post.id}>
-                            {post.Title}
-                        </div> 
-                })}
+                <div className="mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-6 justify-items-center">
+                    {stockList.map((post) => (
+                        <Item
+                        key={post.Id}
+                        image={post.Image}
+                        name={post.Title}
+                        price={post.Price}
+                        />
+                    ))}
+                </div>
+
             </div>
-            
         </div>
     )
 }

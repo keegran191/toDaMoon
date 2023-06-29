@@ -4,7 +4,7 @@ import pool from "../../../lib/database";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, join(process.cwd(), 'uploads'));
+    cb(null, join(process.cwd(), '/public/uploads'));
   },
   filename: function (req, file, cb) {
     let name = file.fieldname + '-' + Date.now() + '-' + Math.round(Math.random() * 1E9) + extname(file.originalname)
@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
 
 export default function handler(req, res) {
   upload.single('image')(req, res, async function (err) {
@@ -29,6 +30,7 @@ export default function handler(req, res) {
     }
 
     const fileName = req.file.filename;
+    console.log(req.file.destination + '/' + fileName);
     console.log('Uploaded file:', fileName);
 
     let formData = req.body;
