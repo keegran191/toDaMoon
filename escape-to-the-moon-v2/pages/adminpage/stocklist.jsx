@@ -221,6 +221,7 @@ function StockConfig() {
                                 setFlavor(post.Flavor)
                                 setCategoryId(post.CategoryId)
                                 setSubCategoryId(post.SubCategoryId)
+                                GetSubCategory(post.CategoryId)
                             }}
                         >
                             <div className="flex justify-center items-center">
@@ -361,6 +362,7 @@ function StockConfig() {
                                                 <label className="">วิธีการคั่ว</label>
                                                 <Select
                                                     inputId='roastId'
+                                                    defaultValue={coffeeRoast[coffeeRoast.map(e => e.value).indexOf(Roast)]}
                                                     options={coffeeRoast}
                                                     onChange={(newValue,meta) => {
                                                         setRoast(newValue.value)
@@ -376,6 +378,7 @@ function StockConfig() {
                                                 <label className="">กลื่น รส</label>
                                                 <Select
                                                     inputId='flavorId'
+                                                    defaultValue={coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(Flavor)]}
                                                     options={coffeeFlavor}
                                                     onChange={(newValue,meta) => {
                                                         setFlavor(newValue.value)
@@ -391,9 +394,10 @@ function StockConfig() {
                                                 <label className="">ประเภทสินค้า</label>
                                                 <Select
                                                     inputId='categoryId'
+                                                    defaultValue={optionCategory[optionCategory.map(e => e.value).indexOf(CategolyId)]}
                                                     options={optionCategory}
                                                     onChange={(newValue,meta) => {
-                                                        setCategoryId(newValue.value)
+                                                        setCategoryId(newValue.value);
                                                         GetSubCategory(newValue.value);
                                                     }}
                                                     styles={customStyles}
@@ -407,6 +411,7 @@ function StockConfig() {
                                                 <label className="">หมวดหมู่สินค้า</label>
                                                 <Select
                                                     inputId='categoryId'
+                                                    defaultValue={optionSubCategory[optionSubCategory.map(e => e.value).indexOf(subCategoryId)]}
                                                     options={optionSubCategory}
                                                     onChange={(newValue,meta) => {
                                                         setSubCategoryId(newValue.value)
