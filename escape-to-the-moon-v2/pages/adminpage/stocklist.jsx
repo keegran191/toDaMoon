@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import UniversalModal from '../../components/Modal.js';
 import React from 'react'
 import Item from '../../components/Item.js'
+import { motion } from 'framer-motion';
 function Stock() {
     
     const [stockList, setStockList] = useState([])
@@ -43,7 +44,13 @@ function Stock() {
                 
                 <div className="relative mt-10">
                     <input onChange={searchItem} id="Search" name="Search" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]" placeholder="ค้าหาสินค้า"></input>
-                    <button className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">ค้นหา</button>
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
+                    >
+                        ค้นหา
+                    </motion.button>
                 </div>
 
                 <div className="mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-6 justify-items-center">

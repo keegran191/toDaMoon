@@ -10,7 +10,7 @@ const Item = ({ key, image, name, price }) => {
       <div className="flex justify-center items-center">
         <img src={"/uploads/" + image} alt={name} className="w-32 h-32" />
       </div>
-      <div className="text-center mt-1">
+      <div className="px-4 mt-1">
         <h3 className="text-lg font-semibold">{name}</h3>
         <p className="text-gray-600 overflow-hidden overflow-ellipsis whitespace-nowrap">฿{price}</p>
       </div>
