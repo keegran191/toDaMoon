@@ -9,42 +9,160 @@ import Item from '../../components/Item.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function StockConfig() {
+    //Stock List
     const [stockList, setStockList] = useState([]);
-    const [search, setSearch] = useState('');
     const [selectedId, setSelectedId] = useState(null);
 
+    // Filter
+    const [search, setSearch] = useState('');
+
+    //Value of Item
     const [Title, setTitle] = useState('');
     const [Detail, setDetail] = useState('');
     const [Amount, setAmount] = useState(0);
     const [Price, setPrice] = useState(0);
     const [IsAdvise, setIsAdvise] = useState(0);
+    const [StockType, setStockType] = useState(0);
+    const [Process, setProcess] = useState(0);
+    const [Roast, setRoast] = useState(0);
+    const [Flavor, setFlavor] = useState(0);
+    const [CategolyId, setCategoryId] = useState(0);
+    const [subCategoryId, setSubCategoryId] = useState(0);
+    const [images, setImages] = useState([]);
+    const [imagesURLs, setImagesURLs] = useState([]);
 
+    //Option Value
+    const [optionCoffee, setOptionCoffee] = useState([]);
+    const [optionCategory, setOptionCategory] = useState([]);
+    const [optionSubCategory, setOptionSubCategory] = useState([]);
+    const [coffeeProcess, setCoffeeProcess] = useState([]);
+    const [coffeeRoast, setCoffeeRoast] = useState([]);
+    const [coffeeFlavor, setCoffeFlavor] = useState([]);
+
+    //Select Value
+    const GetCoffee = () => {
+        Axios.get("http://localhost:3000/api/coffee/get").then((response) => {
+            setOptionCoffee(response.data.map((coffee) => ({ value: coffee.id, label: coffee.label })));
+        });
+    }
+    const GetCategory = () => {
+        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+            setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
+        });
+    }
+    const GetSubCategory = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
+            })
+        }
+    }
+    const GetProcess = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
+            })
+        }
+    }
+    const GetRoast = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
+            })
+        }
+    }
+    const GetFlavor = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
+            })
+        }
+    }
+    //StockList
     const GetStokcList = () => {
       Axios.get('http://localhost:3000/api/stock/getallstock').then((response) => {
         setStockList(response.data);
       });
     };
 
+    //Filtter
     const searchItem = (e) => {
       const value = e.target.value;
       setSearch(value);
     };
 
+    //Validate and Utilities Function
     const handleStockCountChange = (e) => {
         const value = e.target.value;
         const sanitizedValue = value.replace(/[^0-9]/g, '');
         setAmount(sanitizedValue);
     }
-
     const handleStockPriceChange = (e) => {
         const value = e.target.value;
         const sanitizedValue = value.replace(/[^0-9]/g, '');
         setPrice(sanitizedValue);
     }
+    function onImageChanged(e) {
+        setImages([...e.target.files]);
+    }
+    //Select Style
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            boxShadow: state.isFocused ? "0 0 0 2px #252525" : "0 0 0 1px #252525",
+            borderColor: state.isFocused ? "none" : "none",
+            padding: "4px 4px",
+            "&:hover": {
+                outline: "none",
+            },
+        }),
+
+        input: (provided, state) => ({
+            ...provided,
+            boxShadow: state.isFocused ? "none" : "none",
+            borderColor: state.isFocused ? "none" : "none",
+        }),
+
+        menu: (provided, state) => ({
+            ...provided,
+            borderRadius: "10px",
+            padding: "10px",
+        }),
+
+        menuList: (provided, state) => ({
+            ...provided,
+            borderRadius: "10px",
+          }),
+
+        option: (provided, state) => ({
+        ...provided,
+        color: state.isFocused ? "#FFFFFF" : "#252525",
+        backgroundColor: state.isFocused ? "#666" : "transparent",
+        "&:hover": {
+            backgroundColor: "#666",
+            color: "#FFFFFF",
+        },
+        "&:active": {
+            backgroundColor: "#252525",
+            color: "#FFFFFF",
+        },
+        ...(state.isSelected && { color: "#FFFFFF" , backgroundColor: "#252525"}), // add this line to change the text color of the selected option
+        }),
+    }
 
     useEffect(() => {
-      GetStokcList();
-    }, []);
+        GetStokcList();
+        GetCategory()
+        GetProcess(42)
+        GetRoast(40)
+        GetFlavor(41)
+
+        if(images.length < 1) return
+        const newImageUrls = [];
+        images.forEach(image => newImageUrls.push(URL.createObjectURL(image)));
+        setImagesURLs(newImageUrls);
+        
+    }, [images]);
 
 
     const selectedPost = stockList.find((post) => post.Id === selectedId);
@@ -95,6 +213,12 @@ function StockConfig() {
                         setAmount(post.Amount)
                         setPrice(post.Price)
                         setIsAdvise(post.IsAdvise)
+                        setStockType(post.StockType)
+                        setProcess(post.Process)
+                        setRoast(post.Roast)
+                        setFlavor(post.Flavor)
+                        setCategoryId(post.CategoryId)
+                        setSubCategoryId(post.SubCategoryId)
                     }}
                 >
                     <div className="flex justify-center items-center">
@@ -117,11 +241,22 @@ function StockConfig() {
                         }}
                         className="self-end text-gray-600 text-sm font-medium"
                         >
-                        X
+                            X
                         </motion.button>
                     <div className="flex px-4">
                         <div className="flex px-4 py-10">
                             <img src={`/uploads/${selectedPost.Image}`} alt={selectedPost.Title} className="w-64 h-64" />
+                            {/* <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
+                                {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
+                                {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
+                                    <div className="img">
+                                        <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
+                                            document.getElementById('image').click();
+                                        }} src={imageSrc}></img>
+                                    </div>
+                                )}
+                            </div> */}
+                            {/* <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/> */}
                         </div> 
                         <div className="px-4 mt-1 ml-4">
                                 <div className="D">
@@ -165,9 +300,9 @@ function StockConfig() {
                                         <label className="relative inline-flex items-center cursor-pointer">
                                             <input
                                                 type="checkbox"
-                                                checked={IsAdvise} // Set checkbox checked based on IsAdviseItem value
+                                                checked={IsAdvise}
                                                 onChange={(e) => {
-                                                    setIsAdvise(e.target.checked ? 1 : 0); // Update IsAdviseItem based on checkbox checked state
+                                                    setIsAdvise(e.target.checked ? 1 : 0);
                                                 }}
                                                 className="sr-only peer"
                                             />
