@@ -3,7 +3,6 @@ import style from '../../styles/Admin.module.css'
 import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
-
 import Select from 'react-select'
 function Stock() {
     const [optionCoffee, setOptionCoffee] = useState([]);
@@ -24,7 +23,7 @@ function Stock() {
     const [optionSubCategory, setOptionSubCategory] = useState([]);
     const [subCategoryValue, setSubCategoryValue] = useState();
 
-    const [IsAdviseItem, setIsAdviseItem] = useState(false);
+    const [IsAdviseItem, setIsAdviseItem] = useState(0);
 
     const [images, setImages] = useState([]);
     const [imagesURLs, setImagesURLs] = useState([]);
@@ -243,7 +242,7 @@ function Stock() {
                             <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
                                 {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
                                 {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
-                                    <div className="img ">
+                                    <div className="img">
                                         <img key={idx} className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
                                             document.getElementById('image').click();
                                         }} src={imageSrc}></img>
@@ -261,7 +260,7 @@ function Stock() {
 
                             <div className="detail-container mt-2">
                                 <label className="">ลายละเอียดสินค้า</label>
-                                <textarea ref={inputDetail} id="stockDetail" rows="4" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..."></textarea>
+                                <textarea ref={inputDetail} id="stockDetail" rows="4" maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..."></textarea>
                             </div>
 
                             <div className="container sm:flex sm:space-x-2 mt-2">
@@ -293,11 +292,19 @@ function Stock() {
 
                                 <div className="name-container top-1/2 transform translate-y-1/2">                  
                                     <label className="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" value="" onClick={(e) => {setIsAdviseItem(e.target.checked)}} className="sr-only peer"/>
+                                        <input
+                                        type="checkbox"
+                                        checked={IsAdviseItem === 1} // Set checkbox checked based on IsAdviseItem value
+                                        onChange={(e) => {
+                                            setIsAdviseItem(e.target.checked ? 1 : 0); // Update IsAdviseItem based on checkbox checked state
+                                        }}
+                                        className="sr-only peer"
+                                        />
                                         <div className="w-11 h-6 bg-[#252525] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#0ab134]"></div>
                                         <span className="ml-3 text-sm font-medium text-[#252525]">สินค้าแนะนำ</span>
                                     </label>
                                 </div>
+
                             </div>
 
                             <div className="mt-4 flex flex-wrap justify-between">

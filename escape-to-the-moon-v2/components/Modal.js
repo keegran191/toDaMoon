@@ -10,7 +10,7 @@ function UniversalModal({
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex p-4 items-center justify-center z-50 sm:top-1/2 sm:left-1/2 sm:transform sm:-translate-x-1/2 sm:-translate-y-1/2">
-            <div className="relative w-full shadow-lg rounded-lg max-w-md md:h-auto">
+            <div className="relative w-full shadow-2xl rounded-lg max-w-md md:h-auto">
                 <div className="relative bg-[#252525] rounded-lg shadow">
                     <button onClick={() => {
                             if(onClose) onClose();
