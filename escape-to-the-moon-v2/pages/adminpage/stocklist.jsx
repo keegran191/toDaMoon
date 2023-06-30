@@ -406,7 +406,7 @@ function StockConfig() {
                                             </div>
                                         }
 
-                                        {StockType == 2 && CategolyId &&
+                                        {StockType == 2 && CategolyId && setOptionSubCategory != [] &&
                                             <div className="w-full md:w-1/2 sm:pr-2 sm:mt-2">
                                                 <label className="">หมวดหมู่สินค้า</label>
                                                 <Select
