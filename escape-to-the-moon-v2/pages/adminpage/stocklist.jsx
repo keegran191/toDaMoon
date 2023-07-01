@@ -8,6 +8,7 @@ import React from 'react';
 import Item from '../../components/Item.js';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
+
 function StockConfig() {
     //Stock List
     const [stockList, setStockList] = useState([]);
@@ -102,6 +103,7 @@ function StockConfig() {
         const sanitizedValue = value.replace(/[^0-9]/g, '');
         setPrice(sanitizedValue);
     }
+    
     function onImageChanged(e) {
         setImages([...e.target.files]);
     }
@@ -165,9 +167,6 @@ function StockConfig() {
         
     }, [images]);
 
-
-    const selectedPost = stockList.find((post) => post.Id === selectedId);
-
     return (
 
         <div>
@@ -180,32 +179,32 @@ function StockConfig() {
             </Head>
             <NavAdmin></NavAdmin>
             <div className={style.adminContainer}>
-            <div className="w-full">
-                <span className="2xl:text-xl md:text-lg sm:text-md mr-2">แก้ไขสินค้า</span>
-            </div>
+                <div className="w-full">
+                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">แก้ไขสินค้า</span>
+                </div>
 
-            <div className="relative mt-10">
-                <input
-                onChange={searchItem}
-                id="Search"
-                name="Search"
-                className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
-                placeholder="ค้าหาสินค้า"
-                ></input>
-                <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
-                >
-                ค้นหา
-                </motion.button>
-            </div>
+                <div className="relative mt-10">
+                    <input
+                    onChange={searchItem}
+                    id="Search"
+                    name="Search"
+                    className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
+                    placeholder="ค้าหาสินค้า"
+                    ></input>
+                    <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
+                    >
+                    ค้นหา
+                    </motion.button>
+                </div>
 
                 <div className={`overflow-y-auto overflow-x-hidden h-4/6 w-fill mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
                     {stockList.map((post) => (
                         <motion.div
                             key={post.Id}
-                            className="select-none w-48 h-52 bg-white rounded-xl shadow-lg flex flex-col justify-between p-4 cursor-pointer"
+                            className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-lg flex flex-col justify-between p-4 cursor-pointer"
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             layoutId={post.Id}
                             onClick={() => {
@@ -253,35 +252,49 @@ function StockConfig() {
                                     setCategoryId(null)
                                     setSubCategoryId(null)
                                     GetStokcList();
+                                    setImages([]);
+                                    setImagesURLs([]);
                                 }}
-                                className="self-end text-gray-600 text-sm font-medium"
-                                >
-                                    X
+                                className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-full hover:bg-[#252525] hover:text-white">
+                                <span className="text-xl bold">✕</span>
                             </motion.button>
                             <div className="flex px-4">
                                 <div className="flex px-4 py-10">
-                                    <img src={`/uploads/${selectedPost.Image}`} alt={selectedPost.Title} className="w-64 h-64" />
-                                    {/* <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
-                                        {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
+                                    <div className="w-64 h-64 border-2 border-[#252525] overflow-hidden flex justify-center items-center">
+                                        {imagesURLs.length < 1 && 
+                                            <motion.div
+                                                whileHover={{ scale: 1.25 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <label className="hover:cursor-pointer" htmlFor="image">
+                                                    <span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="50" height="50">
+                                                            <circle cx="12" cy="12" r="10" />
+                                                            <path d="M12 7v10M7 12h10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                        </svg>
+                                                    </span>
+                                                </label>
+                                            </motion.div>
+                                        }
                                         {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
                                             <div className="img">
-                                                <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
+                                                <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
                                                     document.getElementById('image').click();
                                                 }} src={imageSrc}></img>
                                             </div>
                                         )}
                                     </div>
-                                    <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/> */}
+                                    <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/>
                                 </div> 
                                 <div className="px-4 mt-1 ml-4">
                                     <div className="D">
                                         <label className="">ชื่อสินค้า</label>
-                                        <input value={Title} maxLength={20} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required onChange={(event) => {setTitle(event.target.value)}}></input>
+                                        <input value={Title} maxLength={20} className="bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required onChange={(event) => {setTitle(event.target.value)}}></input>
                                     </div>
                                     <div className="mt-2">
                                         <label className="">ลายละเอียดสินค้า</label>
                                         <div className="w-96">
-                                            <textarea value={Detail} rows="4"maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..." onChange={(event) => {setDetail(event.target.value)}}></textarea>
+                                            <textarea value={Detail} rows="4"maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..." onChange={(event) => {setDetail(event.target.value)}}></textarea>
                                         </div>
                                     </div>
                                     <div className="container sm:flex sm:space-x-2 mt-2">
@@ -290,7 +303,7 @@ function StockConfig() {
                                             <input 
                                                 type="text" 
                                                 id="stocCount" 
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" 
+                                                className="bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5" 
                                                 placeholder="จำนวนสินค้า"
                                                 value={Amount}
                                                 onChange={handleStockCountChange}
@@ -303,7 +316,7 @@ function StockConfig() {
                                             <input
                                                 type="text"
                                                 id="stockPrice"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 appearance-none"
+                                                className="bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5 appearance-none"
                                                 placeholder="ราคาสินค้า ฿"
                                                 value={Price}
                                                 onChange={handleStockPriceChange}
@@ -312,7 +325,7 @@ function StockConfig() {
                                         </div>
 
                                         <div className="name-container top-1/2 transform translate-y-1/2">                  
-                                            <label className="relative inline-flex items-center cursor-pointer">
+                                            <label className="relative inline-flex items-center">
                                                 <input
                                                     type="checkbox"
                                                     checked={IsAdvise}
@@ -321,7 +334,7 @@ function StockConfig() {
                                                     }}
                                                     className="sr-only peer"
                                                 />
-                                                <div className="w-11 h-6 bg-[#252525] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#0ab134]"></div>
+                                                <div className="cursor-pointer w-11 h-6 bg-[#252525] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#0ab134]"></div>
                                                 <span className="ml-3 text-sm font-medium text-[#252525]">สินค้าแนะนำ</span>
                                             </label>
                                         </div>
@@ -423,7 +436,31 @@ function StockConfig() {
                                         }
                                     </div>
                                     <div className="button-container mt-5 text-center">
-                                        <button type="submit" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">เพิ่มสินค้า</button>
+                                        <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="text-white absolute bg-[#252525] hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm "
+                                            onClick={() => {
+                                                setSelectedId(null)
+                                                setSelectedId(null)
+                                                setTitle(null)
+                                                setDetail(null)
+                                                setAmount(null)
+                                                setPrice(null)
+                                                setIsAdvise(null)
+                                                setStockType(null)
+                                                setProcess(null)
+                                                setRoast(null)
+                                                setFlavor(null)
+                                                setCategoryId(null)
+                                                setSubCategoryId(null)
+                                                GetStokcList();
+                                                setImages([]);
+                                                setImagesURLs([]);
+                                            }}
+                                        >
+                                            เพิ่มสินค้า
+                                        </motion.button>
                                     </div>
                                 </div>
                             </div>
