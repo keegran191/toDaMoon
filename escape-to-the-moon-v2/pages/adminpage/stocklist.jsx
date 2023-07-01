@@ -185,26 +185,26 @@ function StockConfig() {
 
                 <div className="relative mt-10">
                     <input
-                    onChange={searchItem}
-                    id="Search"
-                    name="Search"
-                    className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
-                    placeholder="ค้าหาสินค้า"
+                        onChange={searchItem}
+                        id="Search"
+                        name="Search"
+                        className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
+                        placeholder="ค้าหาสินค้า"
                     ></input>
                     <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
                     >
                     ค้นหา
                     </motion.button>
                 </div>
 
-                <div className={`overflow-y-auto overflow-x-hidden h-4/6 w-fill mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
+                <div className={`px-4 overflow-y-auto overflow-x-hidden h-4/6 w-fill mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
                     {stockList.map((post) => (
                         <motion.div
                             key={post.Id}
-                            className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-lg flex flex-col justify-between p-4 cursor-pointer"
+                            className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer"
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             layoutId={post.Id}
                             onClick={() => {
@@ -224,11 +224,11 @@ function StockConfig() {
                             }}
                         >
                             <div className="flex justify-center items-center">
-                            <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
+                                <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
                             </div>
                             <div className="px-4 mt-1">
-                            <h3 className="text-lg font-semibold">{post.Title}</h3>
-                            <p className="text-gray-600 overflow-hidden overflow-ellipsis whitespace-nowrap">฿{post.Price}</p>
+                                <h3 className="text-lg font-semibold">{post.Title}</h3>
+                                <p className="text-gray-600 overflow-hidden overflow-ellipsis whitespace-nowrap">฿{post.Price}</p>
                             </div>
                         </motion.div>
                     ))}
@@ -435,7 +435,7 @@ function StockConfig() {
                                             </div>
                                         }
                                     </div>
-                                    <div className="button-container mt-5 text-center">
+                                    <div className="relative button-container mt-5 ml-52">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
