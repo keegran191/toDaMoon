@@ -200,7 +200,7 @@ function StockConfig() {
                     </motion.button>
                 </div>
 
-                <div className={`px-4 overflow-y-auto overflow-x-hidden h-4/6 w-fill mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
+                <div className={`px-4 pt-4 overflow-y-auto overflow-x-hidden h-4/6 w-fill mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
                     {stockList.map((post) => (
                         <motion.div
                             key={post.Id}
@@ -235,7 +235,7 @@ function StockConfig() {
                     <AnimatePresence>
                     {selectedId && (
                     //<motion.div layoutId={selectedId} className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center select-none bg-white rounded-xl shadow-lg ${style.selectedItem}`}></motion.div>
-                        <motion.div layoutId={selectedId} className={`absolute top-36 select-none w-4/6 h-4/6 bg-white rounded-xl shadow-lg flex flex-col p-4 ${style.selectedItem}`}>
+                        <motion.div layoutId={selectedId} className={`hidden sm:flex absolute top-36 select-none xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 bg-white rounded-xl shadow-lg flex-col p-4 ${style.selectedItem}`}>
                             <motion.button
                                 onClick={() => {
                                     setSelectedId(null)
