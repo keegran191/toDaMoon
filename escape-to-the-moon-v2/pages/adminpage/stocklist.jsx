@@ -441,7 +441,7 @@ function StockConfig() {
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.85 }}
-                                            className="text-white bg-[#252525] hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm"
+                                            className="text-white bg-[#252525]  border-[#252525] border-2 hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm"
                                             onClick={() => {
                                                 setSelectedId(null)
                                                 setSelectedId(null)
@@ -469,7 +469,7 @@ function StockConfig() {
                                                 scale: 1.05,
                                                 backgroundColor: "#ff0000",
                                                 color: "white",
-                                                border: "none"
+                                                borderColor: "#ff0000"
                                                 
                                             }}
                                             whileTap={{ scale: 0.85 }}
