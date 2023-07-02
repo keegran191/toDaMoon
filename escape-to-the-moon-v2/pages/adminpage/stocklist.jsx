@@ -32,6 +32,8 @@ function StockConfig() {
     const [images, setImages] = useState([]);
     const [imagesURLs, setImagesURLs] = useState([]);
 
+    const [imageName, setImageName] = useState('');
+
     //Option Value
     const [optionCoffee, setOptionCoffee] = useState([]);
     const [optionCategory, setOptionCategory] = useState([]);
@@ -208,7 +210,6 @@ function StockConfig() {
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             layoutId={post.Id}
                             onClick={() => {
-                                setSelectedId(post.Id)
                                 setTitle(post.Title)
                                 setDetail(post.Detail)
                                 setAmount(post.Amount)
@@ -221,6 +222,8 @@ function StockConfig() {
                                 setCategoryId(post.CategoryId)
                                 setSubCategoryId(post.SubCategoryId)
                                 GetSubCategory(post.CategoryId)
+                                setImageName(post.Image)
+                                setSelectedId(post.Id)
                             }}
                         >
                             <div className="flex justify-center items-center">
@@ -263,7 +266,7 @@ function StockConfig() {
                             <div className="flex px-4">
                                 <div className="flex px-4 py-10">
                                     <div className="w-64 h-64 border-2 border-[#252525] overflow-hidden flex justify-center items-center">
-                                        {imagesURLs.length < 1 && 
+                                        {imagesURLs.length < 1 && imageName == '' &&
                                             <motion.div
                                                 whileHover={{ scale: 1.25 }}
                                                 whileTap={{ scale: 0.95 }}
@@ -285,6 +288,13 @@ function StockConfig() {
                                                 }} src={imageSrc}></img>
                                             </div>
                                         )}
+                                        {imagesURLs.length == 0 && imageName != '' && 
+                                            <div className="img">
+                                                <img className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
+                                                    document.getElementById('image').click();
+                                                }} src={'/uploads/'+ imageName}></img>
+                                            </div>
+                                        }
                                     </div>
                                     <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/>
                                 </div> 
@@ -421,7 +431,8 @@ function StockConfig() {
                                             </div>
                                         }
 
-                                        {StockType == 2 && CategolyId && setOptionSubCategory != [] &&
+                                        {StockType == 2 && CategolyId && setOptionSubCategory.length > 0 && subCategoryId != 0 &&
+                                        optionSubCategory[optionSubCategory.map(e => e.value).indexOf(subCategoryId)] &&
                                             <div className="w-full md:w-1/2 sm:pr-2 sm:mt-2">
                                                 <label className="">หมวดหมู่สินค้า</label>
                                                 <Select

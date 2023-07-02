@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 function Foot() {
     return (
-        <div className="hidden sm:block mt-60 h-36 w-full relative bottom-0 bg-[#252525] text-[#ECEBE8] py-5 px-96">
+        <div className="hidden sm:block mt-60 h-36 w-full relative bottom-0 bg-[#252525] text-[#ECEBE8] py-5 px-96 select-none">
             <div className='flex h-full pt-2 px-40'>
-                <div className='basis-1/4 h-full py-3.5 flex flex-col justify-between'>
+                <div className='basis-1/4 h-full py-3.5 flex flex-col justify-between px-10'>
                     <div className="whitespace-nowrap text-xs w-full mb-1">
                         คำถามที่พบบ่อย
                     </div>

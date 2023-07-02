@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Home() {
 
   const [stockList, setStockList] = useState([]);
-  
+
   const GetStokcList = () => {
     Axios.get('http://localhost:3000/api/stock/getallstock').then((response) => {
       setStockList(response.data);
@@ -31,6 +31,9 @@ export default function Home() {
         </Head>
 
         <Nav></Nav>
+
+        
+
         <Foot></Foot>
     </div>
   )
