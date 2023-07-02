@@ -4,6 +4,7 @@ import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
 import Select from 'react-select'
+import { motion, AnimatePresence } from 'framer-motion';
 function Stock() {
     const [optionCoffee, setOptionCoffee] = useState([]);
     const [valueCoffee, setValueCoffee] = useState();
@@ -224,12 +225,26 @@ function Stock() {
                 </div>
                 {/* <form encType="multipart/form-data" action="/api/stock/add" method="POST"> */}
                     <div className="relative mt-10 sm:flex sm:space-x-14">
-                        <div className="hidden sm:block border-2 border-[#252525] h-64 w-64 text-center">
-                            <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
-                                {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
+                        <div className="hidden sm:flex w-64 h-64 border-2 border-[#252525] overflow-hidden justify-center items-center">
+                            <div className="relative">
+                                {imagesURLs.length < 1 && 
+                                    <motion.div
+                                        whileHover={{ scale: 1.25 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <label className="hover:cursor-pointer" htmlFor="image">
+                                            <span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="50" height="50">
+                                                    <circle cx="12" cy="12" r="10" />
+                                                    <path d="M12 7v10M7 12h10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                            </span>
+                                        </label>
+                                    </motion.div>
+                                }
                                 {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
                                     <div className="img">
-                                        <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
+                                        <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
                                             document.getElementById('image').click();
                                         }} src={imageSrc}></img>
                                     </div>
@@ -399,7 +414,14 @@ function Stock() {
                             </div>
 
                             <div className="button-container mt-11 text-center">
-                                <button type="submit" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125" onClick={addStock}>เพิ่มสินค้า</button>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="text-white bg-[#252525] hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm"
+                                    onClick={addStock}
+                                >
+                                    เพิ่มสินค้า
+                                </motion.button>
                             </div>
                         </div>
                     </div>

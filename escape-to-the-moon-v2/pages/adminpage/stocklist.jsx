@@ -437,11 +437,11 @@ function StockConfig() {
                                             </div>
                                         }
                                     </div>
-                                    <div className="relative button-container mt-5 ml-52">
+                                    <div className="relative flex flex-row justify-center space-x-4 button-container mt-5 w-full">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="text-white absolute bg-[#252525] hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm "
+                                            whileTap={{ scale: 0.85 }}
+                                            className="text-white bg-[#252525] hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm"
                                             onClick={() => {
                                                 setSelectedId(null)
                                                 setSelectedId(null)
@@ -461,7 +461,39 @@ function StockConfig() {
                                                 setImagesURLs([]);
                                             }}
                                         >
-                                            เพิ่มสินค้า
+                                            เเก้ไขสินค้า
+                                        </motion.button>
+                                        
+                                        <motion.button
+                                            whileHover={{ 
+                                                scale: 1.05,
+                                                backgroundColor: "#ff0000",
+                                                color: "white",
+                                                border: "none"
+                                                
+                                            }}
+                                            whileTap={{ scale: 0.85 }}
+                                            className="text-[#252525] border-2 border-[#252525] bg-none px-5 py-2.5 rounded-lg font-medium text-sm"
+                                            onClick={() => {
+                                                setSelectedId(null)
+                                                setSelectedId(null)
+                                                setTitle(null)
+                                                setDetail(null)
+                                                setAmount(null)
+                                                setPrice(null)
+                                                setIsAdvise(null)
+                                                setStockType(null)
+                                                setProcess(null)
+                                                setRoast(null)
+                                                setFlavor(null)
+                                                setCategoryId(null)
+                                                setSubCategoryId(null)
+                                                GetStokcList();
+                                                setImages([]);
+                                                setImagesURLs([]);
+                                            }}
+                                        >
+                                            ลบสินค้า
                                         </motion.button>
                                     </div>
                                 </div>
