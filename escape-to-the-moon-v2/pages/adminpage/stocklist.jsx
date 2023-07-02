@@ -237,6 +237,8 @@ function StockConfig() {
                     //<motion.div layoutId={selectedId} className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center select-none bg-white rounded-xl shadow-lg ${style.selectedItem}`}></motion.div>
                         <motion.div layoutId={selectedId} className={`hidden sm:flex absolute top-36 select-none xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 bg-white rounded-xl shadow-lg flex-col p-4 ${style.selectedItem}`}>
                             <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                                 onClick={() => {
                                     setSelectedId(null)
                                     setSelectedId(null)
