@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 function Foot() {
     return (
-        <div className="hidden sm:block h-36 w-full absolute bottom-0 bg-[#252525] text-[#ECEBE8] py-5 px-96">
-            <div className='flex justify-evenly h-full pt-2'>
-                <div className='basis-1/4 h-full py-3.5'>
+        <div className="hidden sm:block mt-60 h-36 w-full relative bottom-0 bg-[#252525] text-[#ECEBE8] py-5 px-96">
+            <div className='flex h-full pt-2 px-40'>
+                <div className='basis-1/4 h-full py-3.5 flex flex-col justify-between'>
                     <div className="whitespace-nowrap text-xs w-full mb-1">
                         คำถามที่พบบ่อย
                     </div>
@@ -65,7 +65,6 @@ function Foot() {
                 </div>
             </div>
 
-            <div className="w-full border border-b-[#252525] mt-2"></div>
         </div>
     )
 }
