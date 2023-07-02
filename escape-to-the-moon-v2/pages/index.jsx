@@ -52,7 +52,7 @@ export default function Home() {
         </div>
 
 
-        <div className="text-center mt-5">
+        <div className="text-center mt-24">
           <div className='mb-5'>
             <span className="text-[#4B4946] text-xl font-bold">สินค้าเเนะนำ</span>
           </div>
