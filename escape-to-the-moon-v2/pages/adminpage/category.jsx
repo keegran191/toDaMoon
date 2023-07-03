@@ -157,9 +157,6 @@ function Admin() {
                                     </motion.div>
                                 </motion.div>
                             </motion.div>
-
-                            
-                                
                         )}
                     </AnimatePresence>
                 </div>
