@@ -46,7 +46,7 @@ function Admin() {
                 </div>
                 
                 <form className="relative mt-10" action="/api/category/add" method='POST'>
-                    <input type="text" maxLength="20" id="AddCategory" name="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
+                    <input type="text" maxLength="20" id="AddCategory" name="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full shadow-lg border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
                     <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">เพิ่ม</button>
                 </form>
 
@@ -101,7 +101,7 @@ function Admin() {
                             <motion.div className='absolute top-2/4 w-4/6 left-1/2 h-40 -translate-x-1/2'>
                                 <motion.div
                                     layoutId={selectedId}
-                                    className='hidden sm:flex flex-col items-baseline w-full h-full bg-white py-4 px-5 rounded-3xl shadow-md '
+                                    className='flex-col items-baseline w-full h-full bg-white py-4 px-5 rounded-3xl shadow-md '
                                 >
                                     <motion.div className='flex justify-between w-full'>
                                         <label className="ml-4">
@@ -157,11 +157,11 @@ function Admin() {
                                     </motion.div>
                                 </motion.div>
                             </motion.div>
+
+                            
                                 
                         )}
                     </AnimatePresence>
-
-
                 </div>
                 
                 { IsDelete && targetDeleteId &&
