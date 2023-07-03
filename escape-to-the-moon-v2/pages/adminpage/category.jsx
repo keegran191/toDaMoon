@@ -3,7 +3,7 @@ import style from '../../styles/Admin.module.css'
 import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
-
+import { motion, AnimatePresence } from 'framer-motion';
 import UniversalModal from '../../components/Modal.js';
 
 function Admin({Categoly}) {
@@ -14,13 +14,14 @@ function Admin({Categoly}) {
     const [targetDeleteId, setTargetDeleteId] = useState(null);
     const [targetChangeId, setTargetChangeId] = useState(null);
     const [Label, setLabel] = useState("");
-    
+
+    const [selectedId, setSelectedId] = useState(null);
     useEffect(() => {
         setCategoryList(Categoly);
     }, []);
     
     return(
-        <div>
+        <div className='select-none'>
             <Head>
                 <title>Admin</title>
                 <link rel="icon" href="/ttmLogo.png"/>
@@ -45,35 +46,53 @@ function Admin({Categoly}) {
                 </div>
                 <div className="w-full h-auto mt-10 ">
                     {Categoly && Categoly.map((post) => {
-                        return <div className="" key={post.cat_id}>
-                            <div className="hidden sm:flex PhoneContent justify-between items-baseline PcContent border-b border-gray-500 mb-2">
-                                <p className="2xl:text-lg md:text-md sm:text-md" key={post.cat_id}>{post.cat_label}</p>
-                                <div className="buttonGroup ">
-                                    <button onClick={()=>{
-                                        setChange(true);
-                                        setTargetChangeId(post.cat_id);
-                                    }} type="button" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
-                                    <button onClick={()=>{
-                                        setDelete(true);
-                                        setTargetDeleteId(post.cat_id);
-                                    }} type="button" className="text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
-                                </div>
-                            </div>
+                        return <motion.div
+                            key={post.cat_id}
+                            className='hidden sm:flex items-baseline justify-between w-full h-auto bg-white mb-3 py-4 px-4 rounded-full shadow-md hover:cursor-pointer'
+                            layoutId={post.Id}
+                            whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                        >
+                            <p key={post.cat_id} className='2xl:text-md md:text-md sm:text-md"'>{post.cat_label}</p>
+                            <motion.div className='buttonGroup'>
+                                <motion.button
+                                    className='mr-4'
+                                >
+                                    แก้ไข
+                                </motion.button>
+                                <motion.button>
+                                    ลบ
+                                </motion.button>
+                            </motion.div>
+                        </motion.div>
+                        // <div className="" key={post.cat_id}>
+                        //     <div className="hidden sm:flex PhoneContent justify-between items-baseline PcContent mb-2 bg-white">
+                        //         <p className="2xl:text-lg md:text-md sm:text-md" key={post.cat_id}>{post.cat_label}</p>
+                        //         <div className="buttonGroup ">
+                        //             <button onClick={()=>{
+                        //                 setChange(true);
+                        //                 setTargetChangeId(post.cat_id);
+                        //             }} type="button" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                        //             <button onClick={()=>{
+                        //                 setDelete(true);
+                        //                 setTargetDeleteId(post.cat_id);
+                        //             }} type="button" className="text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                        //         </div>
+                        //     </div>
 
-                            <div className="flex sm:hidden justify-between items-baseline PhoneContent">
-                                <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.cat_id}>{post.cat_label}</p>
-                                <div className="buttonGroup flex justify-center">
-                                    <button onClick={()=>{
-                                        setChange(true);
-                                        setTargetChangeId(post.cat_id);
-                                    }} type="button" className="w-20 text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm py-2 mr-2 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
-                                    <button onClick={()=>{
-                                        setDelete(true);
-                                        setTargetDeleteId(post.cat_id);
-                                    }} type="button" className="w-20 text-[#252525] border border-[#252525] font-medium rounded-lg text-sm py-2 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
-                                </div>
-                            </div>
-                        </div> 
+                        //     <div className="flex sm:hidden justify-between items-baseline PhoneContent">
+                        //         <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.cat_id}>{post.cat_label}</p>
+                        //         <div className="buttonGroup flex justify-center">
+                        //             <button onClick={()=>{
+                        //                 setChange(true);
+                        //                 setTargetChangeId(post.cat_id);
+                        //             }} type="button" className="w-20 text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm py-2 mr-2 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                        //             <button onClick={()=>{
+                        //                 setDelete(true);
+                        //                 setTargetDeleteId(post.cat_id);
+                        //             }} type="button" className="w-20 text-[#252525] border border-[#252525] font-medium rounded-lg text-sm py-2 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                        //         </div>
+                        //     </div>
+                        // </div> 
                     })}
                 </div>
                 
