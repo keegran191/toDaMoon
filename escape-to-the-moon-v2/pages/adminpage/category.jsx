@@ -31,7 +31,7 @@ function Admin({Categoly}) {
             <NavAdmin></NavAdmin>
             <div className={style.adminContainer}>
                 <div className="w-full">
-                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เเก้ไข / เพิ่มประเภทสินค้า</span>
+                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มประเภทสินค้า</span>
                 </div>
                 
                 <form className="relative mt-10" action="/api/category/add" method='POST'>
@@ -39,14 +39,16 @@ function Admin({Categoly}) {
                     <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">เพิ่ม</button>
                 </form>
 
-                <div className="w-full border border-b-[#252525] mt-10"></div>
-                
+                <div className="w-full border border-b-[#252525] mt-10 mb-10"></div>
+                <div className="w-full ">
+                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">แก้ไข /ลบ ประเภทสินค้า</span>
+                </div>
                 <div className="w-full h-auto mt-10 ">
                     {Categoly && Categoly.map((post) => {
                         return <div className="" key={post.cat_id}>
-                            <div className="hidden sm:flex PhoneContent justify-between items-baseline PcContent">
+                            <div className="hidden sm:flex PhoneContent justify-between items-baseline PcContent border-b border-gray-500 mb-2">
                                 <p className="2xl:text-lg md:text-md sm:text-md" key={post.cat_id}>{post.cat_label}</p>
-                                <div className="buttonGroup">
+                                <div className="buttonGroup ">
                                     <button onClick={()=>{
                                         setChange(true);
                                         setTargetChangeId(post.cat_id);

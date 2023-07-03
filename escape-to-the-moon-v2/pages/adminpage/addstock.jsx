@@ -221,7 +221,7 @@ function Stock() {
 
             <div className={style.adminContainer}>
                 <div className="w-full">
-                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มสินค้า</span>
+                    <span className="2xl:text-2xl md:text-lg sm:text-md mr-2">เพิ่มสินค้า</span>
                 </div>
                 {/* <form encType="multipart/form-data" action="/api/stock/add" method="POST"> */}
                     <div className="relative mt-10 sm:flex sm:space-x-14">

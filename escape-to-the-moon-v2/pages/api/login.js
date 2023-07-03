@@ -41,7 +41,6 @@ export default async function handler(req, res) {
             }))
             res.redirect(307, "/adminpage/category");
           }
-        console.log(isAdmin)
       } else {
         console.log("Password does not match!");
         res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");

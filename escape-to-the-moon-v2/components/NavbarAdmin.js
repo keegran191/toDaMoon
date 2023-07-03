@@ -33,12 +33,12 @@ function Navbar() {
                                 <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
                                     <li>
                                         <Link href="/adminpage/category">
-                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไข / เพิ่มประเภทสินค้า</h1>
+                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่ม /แก้ไข ประเภทสินค้า</h1>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/adminpage/subcategory">
-                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไข / เพิ่มหมวดหมู่สินค้า</h1>
+                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่ม /แก้ไข หมวดหมู่ย่อยประเภทสินค้า</h1>
                                         </Link>
                                     </li>
                                 </ul>
