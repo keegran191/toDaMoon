@@ -47,7 +47,15 @@ function Admin() {
                 
                 <form className="relative mt-10" action="/api/category/add" method='POST'>
                     <input type="text" maxLength="20" id="AddCategory" name="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full shadow-lg border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
-                    <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2">เพิ่ม</button>
+                    <motion.button 
+                        className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
+                        type="submit"
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        เพิ่ม
+                    </motion.button>
+                    {/* <button type="submit" >เพิ่ม</button> */}
                 </form>
 
                 <div className="w-full border border-b-[#252525] mt-10 mb-10"></div>
@@ -86,6 +94,8 @@ function Admin() {
                                         setTargetDeleteId(post.cat_id);
                                         setLabel(post.cat_label)
                                     }}
+                                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     <svg className='mr-1' xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 448 512">
                                     <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
@@ -98,7 +108,7 @@ function Admin() {
 
                     <AnimatePresence>
                         {selectedId && (
-                            <motion.div className='absolute top-2/4 w-4/6 left-1/2 h-40 -translate-x-1/2'>
+                            <motion.div className='z-50 absolute top-2/4 w-4/6 left-1/2 h-40 -translate-x-1/2'>
                                 <motion.div
                                     layoutId={selectedId}
                                     className='flex-col items-baseline w-full h-full bg-white py-4 px-5 rounded-3xl shadow-md '
