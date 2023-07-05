@@ -83,7 +83,7 @@ function StockConfig() {
     }
     //StockList
     const GetStokcList = () => {
-      Axios.get('http://localhost:3000/api/stock/getallstock').then((response) => {
+      Axios.get(`http://localhost:3000/api/stock/getallstock/${search}`).then((response) => {
         setStockList(response.data);
       });
     };
