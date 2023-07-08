@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import UniversalModal from '../../components/Modal.js';
 import React from 'react'
 import Select from 'react-select'
+import { motion, AnimatePresence } from 'framer-motion';
 
 function Subcategory() {
     const [option, setOption] = useState([]);
@@ -25,8 +26,9 @@ function Subcategory() {
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
+            width: "100%",
             borderRadius: "50px",
-            boxShadow: state.isFocused ? "0 0 0 2px #252525" : "0 0 0 1px #252525",
+            boxShadow: state.isFocused ? "0 0 0 0px #252525" : "0 0 0 0px #252525",
             borderColor: state.isFocused ? "none" : "none",
             padding: "9px 10px",
             "&:hover": {
@@ -105,8 +107,9 @@ function Subcategory() {
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มหมวดหมู่สินค้า</span>
                 </div>
 
-                <form className="relative mt-10">
+                <div className="relative mt-10 flex items-baseline">
                     <Select
+                        className='w-full shadow-lg rounded-full'
                         inputId='subCategory'
                         options={option}
                         onChange={(newValue,meta) => {
@@ -117,53 +120,64 @@ function Subcategory() {
                         placeholder="เลือกประเภทสินค้า"
                     />
 
-                </form>
-                <div className="w-full h-auto mt-10">
-                    {value && <div className="button-container text-right">
-                        <button onClick={()=>{setNew(true)}} className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-base px-9 py-2">เพิ่ม</button>
-                    </div>}
-                <div className="w-full border border-b-[#252525] mt-10 mb-10"></div>
-                    
-                <div className="w-full">
-                    <span className="2xl:text-l md:text-lg sm:text-md mr-2 ">แก้ไข /ลบ หมวดหมู่สินค้า</span>
+                    {value && <motion.div
+                        className='relative button-container text-right ml-5'
+                    >
+                        <motion.button 
+                            onClick={()=>{setNew(true)}} 
+                            className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-base px-9 py-2"
+                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            เพิ่ม
+                        </motion.button >
+                    </motion.div>}
+
                 </div>
+                <div className="w-full h-auto mt-10">
 
-                    <div className="list-container mt-10  ">
-                        {subCategoryList && subCategoryList.map((post) => {
-                           
-                            return <div className="" key={post.sub_id}>
-                                <div className="hidden sm:flex PcContent justify-between items-baseline border-b border-gray-500 mb-2">
-                                    <p className="2xl:text-lg md:text-md sm:text-md " key={post.sub_id}>{post.sub_label}</p>
-                                    <div className="buttonGroup ">
-                                        <button onClick={()=>{
-                                            setChange(true);
-                                            setTargetChangeId(post.sub_id);
-                                        }} type="button" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
-                                        <button onClick={()=>{
-                                            setDelete(true);
-                                            setTargetDeleteId(post.sub_id);
-                                        }} type="button" className="text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                    <div className="w-full border border-b-[#252525] mt-10 mb-10"></div>
+                        
+                        <div className="w-full">
+                            <span className="2xl:text-l md:text-lg sm:text-md mr-2 ">แก้ไข /ลบ หมวดหมู่สินค้า</span>
+                        </div>
+
+                        <div className="list-container mt-10  ">
+                            {subCategoryList && subCategoryList.map((post) => {
+                            
+                                return <div className="" key={post.sub_id}>
+                                    <div className="hidden sm:flex PcContent justify-between items-baseline border-b border-gray-500 mb-2">
+                                        <p className="2xl:text-lg md:text-md sm:text-md " key={post.sub_id}>{post.sub_label}</p>
+                                        <div className="buttonGroup ">
+                                            <button onClick={()=>{
+                                                setChange(true);
+                                                setTargetChangeId(post.sub_id);
+                                            }} type="button" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                            <button onClick={()=>{
+                                                setDelete(true);
+                                                setTargetDeleteId(post.sub_id);
+                                            }} type="button" className="text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="flex sm:hidden justify-between items-baseline PhoneContent">
-                                    <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.sub_id}>{post.sub_label}</p>
-                                    <div className="buttonGroup flex justify-center">
-                                        <button onClick={()=>{
-                                            setChange(true);
-                                            setTargetChangeId(post.sub_id);
-                                        }} type="button" className="w-20 text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm py-2 mr-2 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
-                                        <button onClick={()=>{
-                                            setDelete(true);
-                                            setTargetDeleteId(post.sub_id);
-                                        }} type="button" className="w-20 text-[#252525] border border-[#252525] font-medium rounded-lg text-sm py-2 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                    <div className="flex sm:hidden justify-between items-baseline PhoneContent">
+                                        <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.sub_id}>{post.sub_label}</p>
+                                        <div className="buttonGroup flex justify-center">
+                                            <button onClick={()=>{
+                                                setChange(true);
+                                                setTargetChangeId(post.sub_id);
+                                            }} type="button" className="w-20 text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm py-2 mr-2 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
+                                            <button onClick={()=>{
+                                                setDelete(true);
+                                                setTargetDeleteId(post.sub_id);
+                                            }} type="button" className="w-20 text-[#252525] border border-[#252525] font-medium rounded-lg text-sm py-2 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div> 
-                        })}
-                    </div>
-                    
+                                </div> 
+                            })}
+                        </div>
+                        
                 </div>
 
                 { isNew &&
