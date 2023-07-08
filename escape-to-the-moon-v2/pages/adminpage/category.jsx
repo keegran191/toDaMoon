@@ -108,7 +108,7 @@ function Admin() {
 
                     <AnimatePresence>
                         {selectedId && (
-                            <motion.div className='z-50 absolute top-2/4 w-4/6 left-1/2 h-40 -translate-x-1/2'>
+                            <motion.div className='z-50 absolute top-2/4 w-5/6 h-48 sm:w-4/6 sm:h-40 left-1/2 -translate-x-1/2'>
                                 <motion.div
                                     layoutId={selectedId}
                                     className='flex-col items-baseline w-full h-full bg-white py-4 px-5 rounded-3xl shadow-md '
@@ -132,38 +132,40 @@ function Admin() {
                                             <span className="text-xl bold">✕</span>
                                         </motion.button>
                                     </motion.div>
-                                    <motion.div className='w-full flex items-baseline'>
+                                    <motion.div className='w-full relative  sm:flex sm:items-baseline'>
                                         <motion.div className='w-full'>
                                             <input maxLength="40" className='ml-4 px-4 py-2 rounded-full w-11/12 mt-5 border-2 border-[#252525]' value={Label} onChange={(e) => {setLabel(e.target.value)}}></input>
                                         </motion.div>
 
-                                        <motion.button 
-                                            className='text-blue-500 border-2 border-blue-500 w-fit ml-5 py-2 px-4 rounded-lg'
-                                            whileHover={{ 
-                                                scale: 1.05, 
-                                                transition: { duration: 0.2 },
-                                                backgroundColor: '#3B82F6',
-                                                color: '#FFFFFF'
-                                            }}
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={() => {
-                                                if (selectedId == 40 || selectedId == 41 || selectedId == 42) {
-                                                    alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
-                                                } else {
-                                                    if(Label != '') {
-                                                        Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${selectedId}`)
-                                                        setSelectedId(null)
-                                                        setLabel('')
-                                                        setItemSelected(false);
-                                                        GetCategory()
+                                        <motion.div className='sm:flex flex justify-center'>
+                                            <motion.button 
+                                                className='text-blue-500 border-2 border-blue-500 w-fit ml-5 py-2 px-4 rounded-lg mt-5 sm:mt-0'
+                                                whileHover={{ 
+                                                    scale: 1.05, 
+                                                    transition: { duration: 0.2 },
+                                                    backgroundColor: '#3B82F6',
+                                                    color: '#FFFFFF'
+                                                }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() => {
+                                                    if (selectedId == 40 || selectedId == 41 || selectedId == 42) {
+                                                        alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
                                                     } else {
-                                                        alert("กรุณาใส่ข้อมูล")
+                                                        if(Label != '') {
+                                                            Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${selectedId}`)
+                                                            setSelectedId(null)
+                                                            setLabel('')
+                                                            setItemSelected(false);
+                                                            GetCategory()
+                                                        } else {
+                                                            alert("กรุณาใส่ข้อมูล")
+                                                        }
                                                     }
-                                                }
-                                            }}
-                                        >
-                                            <span className='whitespace-nowrap'>แก้ไขสินค้า</span>
-                                        </motion.button>
+                                                }}
+                                            >
+                                                <span className='whitespace-nowrap'>แก้ไขสินค้า</span>
+                                            </motion.button>
+                                        </motion.div>
                                     </motion.div>
                                 </motion.div>
                             </motion.div>
