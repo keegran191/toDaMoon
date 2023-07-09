@@ -30,7 +30,7 @@ export default async function handler(req, res) {
             sameSite: "strict",
             path: "/"          
           }))
-          res.redirect(307, "/adminpage/category");}
+          res.redirect(307, `/adminpage/category?name=${user.user_fname}`);}
         else{
             res.setHeader("Set-Cookie", cookie.serialize("loggedin", "123" ,{
               httpOnly: true,
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
               sameSite: "strict",
               path: "/"          
             }))
-            res.redirect(307, "/adminpage/category");
+            res.redirect(307, "/");
           }
       } else {
         console.log("Password does not match!");
