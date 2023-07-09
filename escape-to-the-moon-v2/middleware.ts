@@ -13,11 +13,11 @@ export default function middleware(req:NextRequest){
       return NextResponse.redirect("http://localhost:3000/login");
     }
 
-    if (verify != "abc"  && url.includes('/adminpage')){
+    if (verify != "1"  && url.includes('/adminpage')){
         return NextResponse.redirect("http://localhost:3000/");
     }
 
-    if (verify != "123"  && url.includes('/home')){
+    if (verify != "0"  && url.includes('/home')){
       return NextResponse.redirect("http://localhost:3000/");
     }
 
