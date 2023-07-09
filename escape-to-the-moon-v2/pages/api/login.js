@@ -22,6 +22,7 @@ export default async function handler(req, res) {
 
       if (match){
         console.log("Password match!");
+        console.log("Password match!");
         if (isAdminValue === 1) {
           res.setHeader("Set-Cookie", cookie.serialize("loggedin", "abc" ,{
             httpOnly: true,
