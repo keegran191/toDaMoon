@@ -26,7 +26,7 @@ function Admin() {
 
     useEffect(() => {
         GetCategory()
-    }, []);
+    }, [categoryList]);
     
     return(
         <div className='select-none'>
@@ -55,7 +55,6 @@ function Admin() {
                     >
                         เพิ่ม
                     </motion.button>
-                    {/* <button type="submit" >เพิ่ม</button> */}
                 </form>
 
                 <div className="w-full border border-b-[#252525] mt-10 mb-10"></div>
@@ -70,7 +69,7 @@ function Admin() {
                             layoutId={post.cat_id}
                             whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
                         >
-                            <p key={post.cat_id} className='2xl:text-md md:text-md sm:text-md"'>{post.cat_label}</p>
+                            <p key={post.cat_id} className='2xl:text-md md:text-md sm:text-md'>{post.cat_label}</p>
                             <motion.div className='buttonGroup flex items-baseline'>
                                 <motion.div 
                                     className='flex items-center text-blue-500 mr-4'
@@ -184,7 +183,7 @@ function Admin() {
                                 await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
                                 setDelete(false);
                                 setTargetDeleteId(null);
-                                location.reload()
+                                GetCategory()
                             }
                         }}
                         txtClose="ยกเลิก"

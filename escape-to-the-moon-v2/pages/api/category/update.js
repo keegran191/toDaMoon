@@ -1,4 +1,3 @@
-import { query } from "../../../lib/database";
 import pool from "../../../lib/database";
 
 export default async function handler(req, res) {

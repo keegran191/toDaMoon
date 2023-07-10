@@ -20,8 +20,10 @@ function Subcategory() {
     const [IsDelete, setDelete] = useState(false);
     const [targetDeleteId, setTargetDeleteId] = useState(null);
     const [targetChangeId, setTargetChangeId] = useState(null);
-
     const [Label, setLabel] = useState("");
+
+    const [selectedId, setSelectedId] = useState(null);
+    const [isItemSelected, setItemSelected] = useState(false);
 
     const customStyles = {
         control: (provided, state) => ({
@@ -82,14 +84,13 @@ function Subcategory() {
             Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
                 setSubCategoryList(response.data);
             })
-        } else {
-            setSubCategoryList([]);
         }
     }
     
     useEffect(() => {
         GetCategory()
-    }, []);
+        GetSubCategory(value)
+    }, [subCategoryList]);
 
     return (
         <div>
@@ -142,42 +143,112 @@ function Subcategory() {
                             <span className="2xl:text-l md:text-lg sm:text-md mr-2 ">แก้ไข /ลบ หมวดหมู่สินค้า</span>
                         </div>
 
-                        <div className="list-container mt-10  ">
+                        <div className="w-full h-auto mt-10 ">
                             {subCategoryList && subCategoryList.map((post) => {
-                            
-                                return <div className="" key={post.sub_id}>
-                                    <div className="hidden sm:flex PcContent justify-between items-baseline border-b border-gray-500 mb-2">
-                                        <p className="2xl:text-lg md:text-md sm:text-md " key={post.sub_id}>{post.sub_label}</p>
-                                        <div className="buttonGroup ">
-                                            <button onClick={()=>{
-                                                setChange(true);
-                                                setTargetChangeId(post.sub_id);
-                                            }} type="button" className="text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-4 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
-                                            <button onClick={()=>{
+                                return <motion.div
+                                    key={post.sub_id}
+                                    className='flex items-baseline justify-between w-full h-auto bg-white mb-4 py-4 px-5 rounded-full shadow-md hover:cursor-pointer'
+                                    layoutId={post.sub_id}
+                                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                                >
+                                    <p key={post.sub_id} className='2xl:text-md md:text-md sm:text-md'>{post.sub_label}</p>
+                                    <motion.div className='buttonGroup flex items-baseline'>
+                                        <motion.div
+                                            className='flex items-center text-blue-500 mr-4'
+                                            onClick={() => {
+                                                setSelectedId(post.sub_id)
+                                                setLabel(post.sub_label)
+                                                setItemSelected(true);
+                                            }}
+                                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <svg className='mr-1' xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 512 512">
+                                                <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
+                                            </svg>
+                                            <p>แก้ไข</p>
+                                        </motion.div>
+                                        <motion.button
+                                            className='flex items-center text-red-500'
+                                            onClick={() => {
                                                 setDelete(true);
                                                 setTargetDeleteId(post.sub_id);
-                                            }} type="button" className="text-[#252525] border border-[#252525] font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex sm:hidden justify-between items-baseline PhoneContent">
-                                        <p className="text-center 2xl:text-lg md:text-md sm:text-md mb-2" key={post.sub_id}>{post.sub_label}</p>
-                                        <div className="buttonGroup flex justify-center">
-                                            <button onClick={()=>{
-                                                setChange(true);
-                                                setTargetChangeId(post.sub_id);
-                                            }} type="button" className="w-20 text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm py-2 mr-2 mb-4 transition duration-300 ease-in-out transform hover:scale-125">แก้ไข</button>
-                                            <button onClick={()=>{
-                                                setDelete(true);
-                                                setTargetDeleteId(post.sub_id);
-                                            }} type="button" className="w-20 text-[#252525] border border-[#252525] font-medium rounded-lg text-sm py-2 text-center mb-4 transition duration-300 ease-in-out transform hover:scale-125">ลบ</button>
-                                        </div>
-                                    </div>
-
-                                </div> 
+                                                setLabel(post.sub_label)
+                                            }}
+                                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >  
+                                            <svg className='mr-1' xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 448 512">
+                                                <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                            </svg>
+                                            <p>ลบ</p>
+                                        </motion.button>
+                                    </motion.div>
+                                </motion.div>
                             })}
-                        </div>
-                        
+
+                            <AnimatePresence>
+                                {selectedId && (
+                                    <motion.div className='z-50 absolute top-2/4 w-5/6 h-48 sm:w-4/6 sm:h-40 left-1/2 -translate-x-1/2'>
+                                        <motion.div
+                                            layoutId={selectedId}
+                                            className='flex-col items-baseline w-full h-full bg-white py-4 px-5 rounded-3xl shadow-md'
+                                        >
+                                            <motion.div className='flex justify-between w-full'>
+                                                <label className="ml-4">
+                                                    <span>แก้ไขหมวดหมู่สินค้า</span>
+                                                </label>
+                                                <motion.button
+                                                    whileHover={{ 
+                                                        scale: 1.05,
+                                                        backgroundColor: '#252525',
+                                                        color: 'white'
+                                                    }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() => {
+                                                        setSelectedId(null)
+                                                        setLabel('')
+                                                    }}
+                                                    className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
+                                                    <span className="text-xl bold">✕</span>
+                                                </motion.button>
+                                            </motion.div>
+                                            <motion.div className='w-full relative  sm:flex sm:items-baseline'>
+                                                <motion.div className='w-full'>
+                                                    <input maxLength="40" className='ml-4 px-4 py-2 rounded-full w-11/12 mt-5 border-2 border-[#252525]' value={Label} onChange={(e) => {setLabel(e.target.value)}}></input>
+                                                </motion.div>
+
+                                                <motion.div className='sm:flex flex justify-center'>
+                                                    <motion.button
+                                                        className='text-blue-500 border-2 border-blue-500 w-fit ml-5 py-2 px-4 rounded-lg mt-5 sm:mt-0'
+                                                        whileHover={{ 
+                                                            scale: 1.05, 
+                                                            transition: { duration: 0.2 },
+                                                            backgroundColor: '#3B82F6',
+                                                            color: '#FFFFFF'
+                                                        }}
+                                                        whileTap={{ scale: 0.95 }}
+                                                        onClick={() => {
+                                                            if (Label != "") {
+                                                                Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${targetChangeId}`)
+                                                                setSelectedId(null)
+                                                                setLabel('')
+                                                                setItemSelected(false);
+                                                                GetSubCategory(value)
+                                                            } else {
+                                                                alert("กรุณาใส่ข้อมูล")
+                                                            }
+                                                        }}
+                                                    >
+                                                        <span className='whitespace-nowrap'>แก้ไขสินค้า</span>
+                                                    </motion.button>
+                                                </motion.div>
+                                            </motion.div>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>     
                 </div>
 
                 { isNew &&
@@ -222,32 +293,6 @@ function Subcategory() {
                             setTargetDeleteId(null);
                         }}
                     >
-                    </UniversalModal>
-                }
-
-                { IsChange && targetChangeId &&
-                    <UniversalModal
-                        message="คุณต้องการแก้ไขประเภทสินค้าชนิดนี้เป็น?"
-                        txtApply="แก้ไข"
-                        onApply={ async () =>{
-                            if (Label != "") {
-                                await Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${targetChangeId}`)
-                                setChange(false);
-                                setTargetChangeId(null);
-                                GetSubCategory(value)
-                            } else {
-                                alert("กรุณาใส่ข้อมูล")
-                            }
-                        }}
-                        txtClose="ยกเลิก"
-                        onClose={()=>{
-                            setChange(false);
-                            setTargetChangeId(null);
-                        }}
-                    >
-                        <div>
-                            <input onChange={(event) => {setLabel(event.target.value)}} type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
-                        </div>
                     </UniversalModal>
                 }
             </div>

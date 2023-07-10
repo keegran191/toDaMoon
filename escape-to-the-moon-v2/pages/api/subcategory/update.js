@@ -1,4 +1,3 @@
-import mysql from 'mysql2';
 import pool from "../../../lib/database";
 
 export default async function handler(req, res) {
@@ -11,6 +10,5 @@ export default async function handler(req, res) {
     return null;
   });
 
-  res.redirect(307, '/subcategorypage')
-  res.status(200)
+  res.redirect(307, '/adminpage/subcategorypage')
 }
