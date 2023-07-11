@@ -14,10 +14,10 @@ export default function Home() {
   const [stockList, setStockList] = useState([]);
 
   const GetStokcList = () => {
-    Axios.get('http://localhost:3000/api/stock/getallstock').then((response) => {
-      setStockList(response.data);
+    Axios.get(`http://localhost:3000/api/stock/getallstock?search=${""}`).then((response) => {
+        setStockList(response.data);
     });
-  };
+};
 
 
   useEffect(() => {
