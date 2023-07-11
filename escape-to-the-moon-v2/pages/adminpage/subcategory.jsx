@@ -23,7 +23,6 @@ function Subcategory() {
     const [Label, setLabel] = useState("");
 
     const [selectedId, setSelectedId] = useState(null);
-    const [isItemSelected, setItemSelected] = useState(false);
 
     const customStyles = {
         control: (provided, state) => ({
@@ -90,7 +89,7 @@ function Subcategory() {
     useEffect(() => {
         GetCategory()
         GetSubCategory(value)
-    }, [subCategoryList]);
+    }, [subCategoryList]); //subCategoryList
 
     return (
         <div>
@@ -158,7 +157,6 @@ function Subcategory() {
                                             onClick={() => {
                                                 setSelectedId(post.sub_id)
                                                 setLabel(post.sub_label)
-                                                setItemSelected(true);
                                             }}
                                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                             whileTap={{ scale: 0.95 }}
@@ -230,10 +228,9 @@ function Subcategory() {
                                                         whileTap={{ scale: 0.95 }}
                                                         onClick={() => {
                                                             if (Label != "") {
-                                                                Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${targetChangeId}`)
+                                                                Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${selectedId}`)
                                                                 setSelectedId(null)
                                                                 setLabel('')
-                                                                setItemSelected(false);
                                                                 GetSubCategory(value)
                                                             } else {
                                                                 alert("กรุณาใส่ข้อมูล")

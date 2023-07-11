@@ -12,5 +12,5 @@ export default async function handler(req, res) {
     return null;
   });
 
-  res.redirect(307, '/adminpage/subcategorypage')
+  res.redirect(307, '/adminpage/subcategory')
 }

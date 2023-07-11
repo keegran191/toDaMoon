@@ -83,9 +83,9 @@ function StockConfig() {
     }
     //StockList
     const GetStokcList = () => {
-      Axios.get(`http://localhost:3000/api/stock/getallstock/${search}`).then((response) => {
-        setStockList(response.data);
-      });
+        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}`).then((response) => {
+            setStockList(response.data);
+        });
     };
 
     //Filtter
@@ -169,6 +169,7 @@ function StockConfig() {
         
     }, [images]);
 
+
     return (
 
         <div>
@@ -187,7 +188,10 @@ function StockConfig() {
 
                 <div className="relative mt-10">
                     <input
-                        onChange={searchItem}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            console.log(search)
+                        }}
                         id="Search"
                         name="Search"
                         className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
@@ -197,6 +201,9 @@ function StockConfig() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
+                        onClick={() => {
+                            GetStokcList()
+                        }}
                     >
                     ค้นหา
                     </motion.button>
@@ -225,16 +232,19 @@ function StockConfig() {
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
                             }}
+                            
+                            exit={{scale: 0, transition: { duration: 0.2}}}
                         >
                             <div className="flex justify-center items-center">
                                 <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
                             </div>
                             <div className="px-4 mt-1">
-                                <h3 className="text-lg font-semibold">{post.Title}</h3>
+                                <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{post.Title}</h3>
                                 <p className="text-gray-600 overflow-hidden overflow-ellipsis whitespace-nowrap">฿{post.Price}</p>
                             </div>
                         </motion.div>
                     ))}
+
                     <AnimatePresence>
                     {selectedId && (
                     //<motion.div layoutId={selectedId} className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center select-none bg-white rounded-xl shadow-lg ${style.selectedItem}`}></motion.div>

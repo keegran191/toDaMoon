@@ -1,7 +1,7 @@
 import pool from "../../../lib/database";
 
-export default async function handler(req, res) {
-  const searchItem = 'test';
+export default async function handler(req, res) {  
+  const searchItem = req.query.search
 
   try {
     const [results] = await pool.query('SELECT * FROM stock WHERE Title LIKE ?', [`%${searchItem}%`]);
