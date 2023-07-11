@@ -149,6 +149,9 @@ function Subcategory() {
                                     className='flex items-baseline justify-between w-full h-auto bg-white mb-4 py-4 px-5 rounded-full shadow-md hover:cursor-pointer'
                                     layoutId={post.sub_id}
                                     whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                                    style={{
+                                        opacity: selectedId == post.sub_id ? 0 : 1,
+                                    }}
                                 >
                                     <p key={post.sub_id} className='2xl:text-md md:text-md sm:text-md'>{post.sub_label}</p>
                                     <motion.div className='buttonGroup flex items-baseline'>
@@ -185,7 +188,33 @@ function Subcategory() {
                                 </motion.div>
                             })}
 
-                            <AnimatePresence>
+                            <AnimatePresence mode='wait' key={'block-content'}>
+                                {selectedId && <motion.div
+                                    style={{
+                                        position: 'fixed',
+                                        top: '0',
+                                        left: '0',
+                                        width: '100vw',
+                                        height: '100vh',
+                                        backgroundColor: 'rgba(0, 0, 0, .25)'
+                                    }}
+                                    initial={{
+                                        opacity: 0,
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                    }}
+                                    exit={{
+                                        opacity: 0
+                                    }}
+                                    transition={{
+                                        duration: .5
+                                    }}
+                                ></motion.div>}
+                            </AnimatePresence>
+
+                            <AnimatePresence key={'modalItems'}>
+                                
                                 {selectedId && (
                                     <motion.div className='z-50 absolute top-2/4 w-5/6 h-48 sm:w-4/6 sm:h-40 left-1/2 -translate-x-1/2'>
                                         <motion.div
