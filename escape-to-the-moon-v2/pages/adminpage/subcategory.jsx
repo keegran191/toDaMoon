@@ -277,49 +277,146 @@ function Subcategory() {
                         </div>     
                 </div>
 
+                <AnimatePresence key={'modalNew'} mode='wait'>
+                    { isNew && <motion.div
+                        style={{
+                            position: 'fixed',
+                            top: '0',
+                            left: '0',
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(0, 0, 0, .25)'
+                        }}
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        transition={{
+                            duration: .5
+                        }}
+                    ></motion.div>}
+                </AnimatePresence>
+
                 { isNew &&
-                    <UniversalModal
-                        message="เพิ่มประเภทหมวดหมู่สินค้า"
-                        txtApply="เพิ่ม"
-                        onApply={ async () =>{
-                            if (subCategoryLabel != "") {
-                                await Axios.get(`http://localhost:3000/api/subcategory/add?label=${subCategoryLabel}&cid=${value}`)
+                    <motion.div
+                        style={{
+                            position: 'fixed',
+                            top: '0',
+                            left: '0',
+                            width: '100vw',
+                            height: '100vh',
+                        }}
+
+                        initial={{
+                            scale: 0.0,
+                        }}
+                        animate={{
+                            scale: 0.95,
+                        }}
+                        exit={{
+                            scale: 0.0
+                        }}
+                        transition={{
+                            duration: .2
+                        }}
+                    >
+                        <UniversalModal
+                            message="เพิ่มประเภทหมวดหมู่สินค้า"
+                            txtApply="เพิ่ม"
+                            onApply={ async () =>{
+                                if (subCategoryLabel != "") {
+                                    await Axios.get(`http://localhost:3000/api/subcategory/add?label=${subCategoryLabel}&cid=${value}`)
+                                    setNew(false);
+                                    setSubCategoryLabel("");
+                                    GetSubCategory(value)
+                                } else {
+                                    alert("กรุณาใส่ข้อมูล")
+                                }
+                            }}
+                            txtClose="ยกเลิก"
+                            onClose={()=>{
                                 setNew(false);
                                 setSubCategoryLabel("");
-                                GetSubCategory(value)
-                            } else {
-                                alert("กรุณาใส่ข้อมูล")
-                            }
-                        }}
-                        txtClose="ยกเลิก"
-                        onClose={()=>{
-                            setNew(false);
-                            setSubCategoryLabel("");
-                        }}
-                    >
-                        <div>
-                            <input onChange={(event) => {setSubCategoryLabel(event.target.value)}} type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
-                        </div>
-                    </UniversalModal>
+                            }}
+                        >
+                            <div>
+                                <input onChange={(event) => {setSubCategoryLabel(event.target.value)}} type="text" maxLength="20" className="text-center border-2 py-2 px-10 rounded-lg mb-4 focus:outline-none"></input>
+                            </div>
+                        </UniversalModal>
+                    </motion.div>
                 }
 
-                { IsDelete && targetDeleteId &&
-                    <UniversalModal
-                        message="คุณต้องการลบประเภทสินค้าชนิดนี้?"
-                        txtApply="ลบ"
-                        onApply={ async () =>{
-                            await Axios.get(`http://localhost:3000/api/subcategory/delete/${targetDeleteId}`)
-                            setDelete(false);
-                            setTargetDeleteId(null);
-                            GetSubCategory(value)
+                <AnimatePresence key={'modalDelete'} mode='wait'>
+                    { IsDelete && targetDeleteId && <motion.div
+                        style={{
+                            position: 'fixed',
+                            top: '0',
+                            left: '0',
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(0, 0, 0, .25)'
                         }}
-                        txtClose="ยกเลิก"
-                        onClose={()=>{
-                            setDelete(false);
-                            setTargetDeleteId(null);
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        transition={{
+                            duration: .5
+                        }}
+                    ></motion.div>}
+                </AnimatePresence>
+
+                { IsDelete && targetDeleteId &&
+
+                    <motion.div
+                        style={{
+                            position: 'fixed',
+                            top: '0',
+                            left: '0',
+                            width: '100vw',
+                            height: '100vh',
+                        }}
+
+                        initial={{
+                            scale: 0.0,
+                        }}
+                        animate={{
+                            scale: 0.95,
+                        }}
+                        exit={{
+                            scale: 0.0
+                        }}
+                        transition={{
+                            duration: .2
                         }}
                     >
-                    </UniversalModal>
+                        <UniversalModal
+                            message="คุณต้องการลบประเภทสินค้าชนิดนี้?"
+                            txtApply="ลบ"
+                            onApply={ async () =>{
+                                await Axios.get(`http://localhost:3000/api/subcategory/delete/${targetDeleteId}`)
+                                setDelete(false);
+                                setTargetDeleteId(null);
+                                GetSubCategory(value)
+                            }}
+                            txtClose="ยกเลิก"
+                            onClose={()=>{
+                                setDelete(false);
+                                setTargetDeleteId(null);
+                            }}
+                        >
+                        </UniversalModal>
+                    </motion.div>
                 }
             </div>
         </div>

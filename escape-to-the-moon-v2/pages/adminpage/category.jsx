@@ -200,27 +200,77 @@ function Admin() {
                     </AnimatePresence>
                 </div>
                 
-                { IsDelete && targetDeleteId &&
-                    <UniversalModal
-                        message={"คุณต้องการลบประเภทสินค้า " + Label + " ?"}
-                        txtApply="ลบ"
-                        onApply={ async () =>{
-                            if (targetDeleteId == 40 || targetDeleteId == 41 || targetDeleteId == 42) {
-                                alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
-                            } else {
-                                await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
-                                setDelete(false);
-                                setTargetDeleteId(null);
-                                GetCategory()
-                            }
+                    
+                <AnimatePresence key={'modalDelete'} mode='wait'>
+                    { IsDelete && targetDeleteId && <motion.div
+                        style={{
+                            position: 'fixed',
+                            top: '0',
+                            left: '0',
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(0, 0, 0, .25)'
                         }}
-                        txtClose="ยกเลิก"
-                        onClose={()=>{
-                            setDelete(false);
-                            setTargetDeleteId(null);
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        transition={{
+                            duration: .5
+                        }}
+                    ></motion.div>}
+                </AnimatePresence>
+
+
+                { IsDelete && targetDeleteId &&
+                    <motion.div
+                        style={{
+                            position: 'fixed',
+                            top: '0',
+                            left: '0',
+                            width: '100vw',
+                            height: '100vh',
+                        }}
+
+                        initial={{
+                            scale: 0.0,
+                        }}
+                        animate={{
+                            scale: 0.95,
+                        }}
+                        exit={{
+                            scale: 0.0
+                        }}
+                        transition={{
+                            duration: .2
                         }}
                     >
-                    </UniversalModal>
+                        <UniversalModal
+                            message={"คุณต้องการลบประเภทสินค้า " + Label + " ?"}
+                            txtApply="ลบ"
+                            onApply={ async () =>{
+                                if (targetDeleteId == 40 || targetDeleteId == 41 || targetDeleteId == 42) {
+                                    alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
+                                } else {
+                                    await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
+                                    setDelete(false);
+                                    setTargetDeleteId(null);
+                                    GetCategory()
+                                }
+                            }}
+                            txtClose="ยกเลิก"
+                            onClose={()=>{
+                                setDelete(false);
+                                setTargetDeleteId(null);
+                            }}
+                        >
+                        </UniversalModal>
+                    </motion.div>
                 }
             </div>
         </div>

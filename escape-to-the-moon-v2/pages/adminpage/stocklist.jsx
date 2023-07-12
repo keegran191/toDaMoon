@@ -5,7 +5,6 @@ import Axios from 'axios';
 import { useState, useEffect } from 'react';
 import UniversalModal from '../../components/Modal.js';
 import React from 'react';
-import Item from '../../components/Item.js';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
 
@@ -106,9 +105,6 @@ function StockConfig() {
         setPrice(sanitizedValue);
     }
     
-    function onImageChanged(e) {
-        setImages([...e.target.files]);
-    }
     //Select Style
     const customStyles = {
         control: (provided, state) => ({
@@ -169,6 +165,64 @@ function StockConfig() {
         
     }, [images]);
 
+    function onImageChanged(e) {
+        setImages([...e.target.files]);
+    }
+
+    function UpdateStock(stockId) {
+        const data = new FormData()
+        if (images.length >= 0) {
+            data.append('images', images[0])
+        }
+        if (Title != '') {
+            data.append('stockName', Title)
+        }
+        if (Detail != '') {
+            data.append('stockDetail', Detail)
+        }
+        if (Amount !== 0) {
+            data.append('stockAmount',Amount )
+        }
+        if (Price !== 0) {
+            data.append('stockPrice', Price)
+        }
+        if (StockType !== 0) {
+            data.append('stockType', StockType)
+        }
+        if (Process !== 0) {
+            data.append('coffeeProcess', Process)
+        }
+        if (Roast !== 0) {
+            data.append('coffeeRoast', Roast)
+        }
+        if (Flavor !==0) {
+            data.append('coffeeFlavor', Flavor)
+        }
+        if (CategolyId !== 0 ) {
+            data.append('category', CategolyId)
+        }
+        if (subCategoryId !== 0) {
+            data.append('subCategory', subCategoryId)
+        }
+        data.append('stockId', stockId)
+        data.append('IsAdviseItem', IsAdvise)
+        postData("/api/stock/update", data).then((data) => {
+            console.log(data); // JSON data parsed by `data.json()` call
+  
+            // if(data.success) {
+            //   location.reload();
+            // }
+        });
+    }
+
+    async function postData(url = "", data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            body: data, // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+    }
 
     return (
 
@@ -495,6 +549,7 @@ function StockConfig() {
                                                 whileTap={{ scale: 0.85 }}
                                                 className="text-white bg-[#252525]  border-[#252525] border-2 hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm"
                                                 onClick={() => {
+                                                    UpdateStock(selectedId)
                                                     setSelectedId(null)
                                                     setSelectedId(null)
                                                     setTitle(null)
