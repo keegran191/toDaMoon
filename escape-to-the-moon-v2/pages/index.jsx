@@ -18,7 +18,9 @@ export default function Home() {
 
   const GetStokcList = () => {
     Axios.get(`http://localhost:3000/api/stock/getadviseItem?startIndex=${currentIndex}&offset=${offset}`).then((response) => {
+      if(response.data.length > 0) {
         setStockList(response.data);
+      }
     });
 };
 
@@ -94,7 +96,9 @@ export default function Home() {
             <motion.div 
               className="flex items-center cursor-pointer"
               onClick={() => {
-                setCurrentIndex(currentIndex + offset - 1)
+                if(stockList.length == offset) {
+                  setCurrentIndex(currentIndex + offset - 1)
+                }
               }}  
             >
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
