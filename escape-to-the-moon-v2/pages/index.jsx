@@ -56,7 +56,6 @@ export default function Home() {
           </div>
         </div>
 
-
         <div className="text-center mt-24">
           <div className='mb-5'>
             <span className="text-[#4B4946] text-xl font-bold">สินค้าเเนะนำ</span>
@@ -84,6 +83,18 @@ export default function Home() {
                     className="select-none w-36 h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer"
                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     layoutId={post.Id}
+                    initial={{
+                      scale: 0,
+                    }}
+                    animate={{
+                      scale: 1,
+                    }}
+                    exit={{
+                      scale: 0
+                    }}
+                    transition={{
+                      duration: .5
+                    }}
                   >
                     <img
                       src={`/uploads/${post.Image}`}
@@ -93,6 +104,7 @@ export default function Home() {
                   </motion.div>
                 );
               })}
+
             <motion.div 
               className="flex items-center cursor-pointer"
               onClick={() => {
