@@ -12,7 +12,7 @@ export default function Home() {
 
   const [stockList, setStockList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(1);
-  const [offset, setOffset] = useState(4)
+  const [offset, setOffset] = useState(5)
 
   let nowIndex = 0
 
@@ -46,13 +46,13 @@ export default function Home() {
           <img className="w-full h-full brightness-50 z-0" src="/coffee.png" alt="Coffee"></img>
           <div className="absolute top-40 left-20 z-10">
             <h1 className="text-7xl text-white">Lorem Ipsum is <br/>simply dummy text of the </h1>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className='mt-7 text-center border-2 px-4 py-2 w-40'
-              >
-                <span className='text-white text-2xl'>อ่านเพิ่มเติม</span>
-              </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className='mt-7 text-center border-2 px-4 py-2 w-40'
+            >
+              <span className='text-white text-2xl'>อ่านเพิ่มเติม</span>
+            </motion.div>
           </div>
         </div>
 
@@ -123,11 +123,124 @@ export default function Home() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-lg text-sm px-6 py-3"
+            className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-lg text-sm px-6 py-3 mb-20"
           >
               ดูสินค้นอื่นเพิ่ม
           </motion.button>
         </div>
+
+        <motion.div className='flex flex-col sm:flex-row justify-center gap-5'>
+          {/* Process */}
+          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-2/12 h-2/6'>
+            <motion.div
+              initial={{
+                scale: 1.05,
+              }}
+              whileHover={{
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.4,
+              }}
+            >
+              <motion.div className='relative'>
+                <img className="brightness-50 z-0 icon-img" src="/ProcessBG.png" alt="Coffee" />
+                <motion.div
+                  initial={{
+                    scale: 1,
+                  }}
+                  whileHover={{
+                    scale: 1.08,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                  }}
+                  className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                >
+                  <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                  <motion.div className='relative top-36 w-8'>
+                    <img className="icon-img" src="/ProcessIcon.png" alt="Icon" />
+                  </motion.div>
+                  <span className="relative top-40">กระบวนการคั่ว</span>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* Havest */}
+          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-2/12 h-2/6'>
+            <motion.div
+              initial={{
+                scale: 1.05,
+              }}
+              whileHover={{
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.4,
+              }}
+            >
+              <motion.div className='relative'>
+                <img className="brightness-50 z-0 icon-img" src="/HavestBG.png" alt="Coffee" />
+                <motion.div
+                  initial={{
+                    scale: 1,
+                  }}
+                  whileHover={{
+                    scale: 1.08,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                  }}
+                  className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                >
+                  <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                  <motion.div className='relative top-36'>
+                    <img className="icon-img w-10" src="/HavestIcon.png" alt="Icon" />
+                  </motion.div>
+                  <span className="relative top-40">กระบวนการเก็บเกี่ยว</span>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* Info */}
+          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-2/12 h-2/6'>
+            <motion.div
+              initial={{
+                scale: 1.05,
+              }}
+              whileHover={{
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.4,
+              }}
+            >
+              <motion.div className='relative'>
+                <img className="brightness-50 z-0 icon-img" src="/InfoBG.png" alt="Coffee" />
+                <motion.div
+                  initial={{
+                    scale: 1,
+                  }}
+                  whileHover={{
+                    scale: 1.08,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                  }}
+                  className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                >
+                  <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                  <motion.div className='relative top-36'>
+                    <img className="icon-img w-10" src="/InfoIcon.png" alt="Icon" />
+                  </motion.div>
+                  <span className="relative top-40">เกี่ยวกับเรา</span>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         <Foot></Foot>
     </div>
