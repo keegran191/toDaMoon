@@ -223,209 +223,209 @@ function Stock() {
                 <div className="w-full">
                     <span className="2xl:text-2xl md:text-lg sm:text-md mr-2">เพิ่มสินค้า</span>
                 </div>
-                {/* <form encType="multipart/form-data" action="/api/stock/add" method="POST"> */}
-                    <div className="relative mt-10 sm:flex sm:space-x-14">
-                        <div className="hidden sm:flex w-64 h-64 border-2 border-[#252525] overflow-hidden justify-center items-center">
-                            <div className="relative">
-                                {imagesURLs.length < 1 && 
-                                    <motion.div
-                                        whileHover={{ scale: 1.25 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <label className="hover:cursor-pointer" htmlFor="image">
-                                            <span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="50" height="50">
-                                                    <circle cx="12" cy="12" r="10" />
-                                                    <path d="M12 7v10M7 12h10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg>
-                                            </span>
-                                        </label>
-                                    </motion.div>
-                                }
-                                {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
-                                    <div className="img">
-                                        <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
-                                            document.getElementById('image').click();
-                                        }} src={imageSrc}></img>
-                                    </div>
-                                )}
-                            </div>
-                            <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/>
-                        </div>
-
-                        <div className="sm:hidden m-auto border-2 border-[#252525] h-64 w-52 text-center">
-                            <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
-                                {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
-                                {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
-                                    <div className="img">
-                                        <img key={idx} className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
-                                            document.getElementById('image').click();
-                                        }} src={imageSrc}></img>
-                                    </div>
-                                )}
-                            </div>
-                            <input className="hidden" type="file" id='image' accept='image/*' />
-                        </div>
-
-                        <div className="ContentContainer sm:w-6/12 w-64 mt-1 m-auto">
-                            <div className="name-container">
-                                <label className="">ชื่อสินค้า</label>
-                                <input ref={inputStockname} type="text" id="stockName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required></input>
-                            </div>
-
-                            <div className="detail-container mt-2">
-                                <label className="">ลายละเอียดสินค้า</label>
-                                <textarea ref={inputDetail} id="stockDetail" rows="4" maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..."></textarea>
-                            </div>
-
-                            <div className="container sm:flex sm:space-x-2 mt-2">
-                                <div className="name-container">
-                                    <label className="">จำนวนสินค้า</label>
-                                    <input 
-                                        type="text" 
-                                        id="stocCount" 
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" 
-                                        placeholder="จำนวนสินค้า"
-                                        value={stockCount}
-                                        onChange={handleStockCountChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="name-container">
-                                    <label className="">ราคาสินค้า</label>
-                                    <input
-                                        type="text"
-                                        id="stockPrice"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 appearance-none"
-                                        placeholder="ราคาสินค้า ฿"
-                                        value={stockPrice}
-                                        onChange={handleStockPriceChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="name-container top-1/2 transform translate-y-1/2">                  
-                                    <label className="relative inline-flex items-center cursor-pointer">
-                                        <input
-                                        type="checkbox"
-                                        checked={IsAdviseItem === 1} // Set checkbox checked based on IsAdviseItem value
-                                        onChange={(e) => {
-                                            setIsAdviseItem(e.target.checked ? 1 : 0); // Update IsAdviseItem based on checkbox checked state
-                                        }}
-                                        className="sr-only peer"
-                                        />
-                                        <div className="w-11 h-6 bg-[#252525] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#0ab134]"></div>
-                                        <span className="ml-3 text-sm font-medium text-[#252525]">สินค้าแนะนำ</span>
+                <div className="relative mt-10 sm:flex sm:space-x-14">
+                    <div className="hidden sm:flex w-64 h-64 border-2 border-[#252525] overflow-hidden justify-center items-center">
+                        <div className="relative">
+                            {imagesURLs.length < 1 && 
+                                <motion.div
+                                    whileHover={{ scale: 1.25 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <label className="hover:cursor-pointer" htmlFor="image">
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="50" height="50">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <path d="M12 7v10M7 12h10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </span>
                                     </label>
+                                </motion.div>
+                            }
+                            {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
+                                <div className="img">
+                                    <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
+                                        document.getElementById('image').click();
+                                    }} src={imageSrc}></img>
                                 </div>
+                            )}
+                        </div>
+                        <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/>
+                    </div>
 
+                    <div className="sm:hidden m-auto border-2 border-[#252525] h-64 w-52 text-center">
+                        <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
+                            {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
+                            {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
+                                <div className="img">
+                                    <img key={idx} className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
+                                        document.getElementById('image').click();
+                                    }} src={imageSrc}></img>
+                                </div>
+                            )}
+                        </div>
+                        <input className="hidden" type="file" id='image' accept='image/*' />
+                    </div>
+
+                    <div className="ContentContainer sm:w-6/12 w-64 mt-1 m-auto">
+                        <div className="name-container">
+                            <label className="">ชื่อสินค้า</label>
+                            <input ref={inputStockname} type="text" id="stockName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required></input>
+                        </div>
+
+                        <div className="detail-container mt-2">
+                            <label className="">ลายละเอียดสินค้า</label>
+                            <textarea ref={inputDetail} id="stockDetail" rows="4" maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..."></textarea>
+                        </div>
+
+                        <div className="container sm:flex sm:space-x-2 mt-2">
+                            <div className="name-container">
+                                <label className="">จำนวนสินค้า</label>
+                                <input 
+                                    type="text" 
+                                    id="stocCount" 
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" 
+                                    placeholder="จำนวนสินค้า"
+                                    value={stockCount}
+                                    onChange={handleStockCountChange}
+                                    required
+                                />
                             </div>
 
-                            <div className="mt-4 flex flex-wrap justify-between">
-                                <div className="w-full md:w-1/2 sm:pr-2">
-                                    <label className="">ชนิดสินค้า</label>
+                            <div className="name-container">
+                                <label className="">ราคาสินค้า</label>
+                                <input
+                                    type="text"
+                                    id="stockPrice"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 appearance-none"
+                                    placeholder="ราคาสินค้า ฿"
+                                    value={stockPrice}
+                                    onChange={handleStockPriceChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="name-container top-1/2 transform translate-y-1/2">                  
+                                <label className="relative inline-flex items-center cursor-pointer">
+                                    <input
+                                    type="checkbox"
+                                    checked={IsAdviseItem === 1} // Set checkbox checked based on IsAdviseItem value
+                                    onChange={(e) => {
+                                        setIsAdviseItem(e.target.checked ? 1 : 0); // Update IsAdviseItem based on checkbox checked state
+                                    }}
+                                    className="sr-only peer"
+                                    />
+                                    <div className="w-11 h-6 bg-[#252525] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#0ab134]"></div>
+                                    <span className="ml-3 text-sm font-medium text-[#252525]">สินค้าแนะนำ</span>
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <div className="mt-4 flex flex-wrap justify-between">
+                            <div className="w-full md:w-1/2 sm:pr-2">
+                                <label className="">ชนิดสินค้า</label>
+                                <Select
+                                    inputId='coffeeId'
+                                    options={optionCoffee}
+                                    onChange={(newValue,meta) => {
+                                        setValueCoffee(newValue.value); 
+                                    }}
+                                    styles={customStyles}
+                                    placeholder="เลือกชนิดสินค้า"
+                                />
+                            </div>
+                            
+                            {valueCoffee == 1 && 
+                                <div className="w-full md:w-1/2 sm:pl-2">
+                                    <label className="">วิธีการแปรรูป</label>
                                     <Select
-                                        inputId='coffeeId'
-                                        options={optionCoffee}
+                                        inputId='processId'
+                                        options={coffeeProcess}
                                         onChange={(newValue,meta) => {
-                                            setValueCoffee(newValue.value); 
+                                            setProcess(newValue.value)
                                         }}
                                         styles={customStyles}
-                                        placeholder="เลือกชนิดสินค้า"
+                                        placeholder="เลือกวิธีการแปรรูป"
                                     />
                                 </div>
-                                
-                                {valueCoffee == 1 && 
-                                    <div className="w-full md:w-1/2 sm:pl-2">
-                                        <label className="">วิธีการแปรรูป</label>
-                                        <Select
-                                            inputId='processId'
-                                            options={coffeeProcess}
-                                            onChange={(newValue,meta) => {
-                                                setProcess(newValue.value)
-                                            }}
-                                            styles={customStyles}
-                                            placeholder="เลือกวิธีการแปรรูป"
-                                        />
-                                    </div>
-                                }
+                            }
 
-                                {valueCoffee == 1 && 
-                                    <div className="w-full md:w-1/2 sm:pr-2 sm:mt-2">
-                                        <label className="">วิธีการคั่ว</label>
-                                        <Select
-                                            inputId='roastId'
-                                            options={coffeeRoast}
-                                            onChange={(newValue,meta) => {
-                                                setRoast(newValue.value)
-                                            }}
-                                            styles={customStyles}
-                                            placeholder="เลือกวิธีการคั่ว"
-                                        />
-                                    </div>
-                                }
+                            {valueCoffee == 1 && 
+                                <div className="w-full md:w-1/2 sm:pr-2 sm:mt-2">
+                                    <label className="">วิธีการคั่ว</label>
+                                    <Select
+                                        inputId='roastId'
+                                        options={coffeeRoast}
+                                        onChange={(newValue,meta) => {
+                                            setRoast(newValue.value)
+                                        }}
+                                        styles={customStyles}
+                                        placeholder="เลือกวิธีการคั่ว"
+                                    />
+                                </div>
+                            }
 
-                                {valueCoffee == 1 && 
-                                    <div className="w-full md:w-1/2 sm:pl-2 sm:mt-2">
-                                        <label className="">กลื่น รส</label>
-                                        <Select
-                                            inputId='flavorId'
-                                            options={coffeeFlavor}
-                                            onChange={(newValue,meta) => {
-                                                serFlavor(newValue.value)
-                                            }}
-                                            styles={customStyles}
-                                            placeholder="เลือกกลิ่น รส"
-                                        />
-                                    </div>
-                                }
+                            {valueCoffee == 1 && 
+                                <div className="w-full md:w-1/2 sm:pl-2 sm:mt-2">
+                                    <label className="">กลื่น รส</label>
+                                    <Select
+                                        inputId='flavorId'
+                                        options={coffeeFlavor}
+                                        onChange={(newValue,meta) => {
+                                            serFlavor(newValue.value)
+                                        }}
+                                        styles={customStyles}
+                                        placeholder="เลือกกลิ่น รส"
+                                    />
+                                </div>
+                            }
 
-                                {valueCoffee == 2 &&
-                                    <div className="w-full md:w-1/2 sm:pl-2">
-                                        <label className="">ประเภทสินค้า</label>
-                                        <Select
-                                            inputId='categoryId'
-                                            options={optionCategory}
-                                            onChange={(newValue,meta) => {
-                                                setCategoryValue(newValue.value)
-                                                GetSubCategory(newValue.value);
-                                            }}
-                                            styles={customStyles}
-                                            placeholder="เลือกประเภทสินค้า"
-                                        />
-                                    </div>
-                                }
+                            {valueCoffee == 2 &&
+                                <div className="w-full md:w-1/2 sm:pl-2">
+                                    <label className="">ประเภทสินค้า</label>
+                                    <Select
+                                        inputId='categoryId'
+                                        options={optionCategory}
+                                        onChange={(newValue,meta) => {
+                                            setCategoryValue(newValue.value)
+                                            GetSubCategory(newValue.value);
+                                        }}
+                                        styles={customStyles}
+                                        placeholder="เลือกประเภทสินค้า"
+                                    />
+                                </div>
+                            }
 
-                                {valueCoffee == 2 && categoryValue &&
-                                    <div className="w-full md:w-1/2 sm:pr-2 sm:mt-2">
-                                        <label className="">หมวดหมู่สินค้า</label>
-                                        <Select
-                                            inputId='categoryId'
-                                            options={optionSubCategory}
-                                            onChange={(newValue,meta) => {
-                                                setSubCategoryValue(newValue.value)
-                                            }}
-                                            styles={customStyles}
-                                            placeholder="เลือกหมวดหมู่สินค้า"
-                                        />
-                                    </div>
-                                }
-                            </div>
-
-                            <div className="button-container mt-11 text-center">
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="text-white bg-[#252525] hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm"
-                                    onClick={addStock}
-                                >
-                                    เพิ่มสินค้า
-                                </motion.button>
-                            </div>
+                            {valueCoffee == 2 && categoryValue &&
+                                <div className="w-full md:w-1/2 sm:pr-2 sm:mt-2">
+                                    <label className="">หมวดหมู่สินค้า</label>
+                                    <Select
+                                        inputId='categoryId'
+                                        options={optionSubCategory}
+                                        onChange={(newValue,meta) => {
+                                            setSubCategoryValue(newValue.value)
+                                        }}
+                                        styles={customStyles}
+                                        placeholder="เลือกหมวดหมู่สินค้า"
+                                    />
+                                </div>
+                            }
                         </div>
+
+                        <div className="button-container mt-11 text-center">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="text-white bg-[#252525] hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm"
+                                onClick={addStock}
+                            >
+                                เพิ่มสินค้า
+                            </motion.button>
+                        </div>
+
+                        <div className="h-5"></div>
                     </div>
-                {/* </form> */}
+                </div>
             </div>
         </div>
     )

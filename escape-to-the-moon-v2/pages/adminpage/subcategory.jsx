@@ -401,7 +401,7 @@ function Subcategory() {
                         }}
                     >
                         <UniversalModal
-                            message="คุณต้องการลบประเภทสินค้าชนิดนี้?"
+                            message={"คุณต้องการลบประเภทสินค้า " + Label + " ?"}
                             txtApply="ลบ"
                             onApply={ async () =>{
                                 await Axios.get(`http://localhost:3000/api/subcategory/delete/${targetDeleteId}`)
