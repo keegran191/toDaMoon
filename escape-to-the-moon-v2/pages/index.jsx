@@ -94,30 +94,32 @@ export default function Home() {
             {stockList &&
               stockList.map((post) => {
                 return (
-                  <motion.div
-                    key={post.Id}
-                    className="select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer"
-                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                    layoutId={post.Id}
-                    initial={{
-                      scale: 0,
-                    }}
-                    animate={{
-                      scale: 1,
-                    }}
-                    exit={{
-                      scale: 0
-                    }}
-                    transition={{
-                      duration: .5
-                    }}
-                  >
-                    <img
-                      src={`/uploads/${post.Image}`}
-                      alt={post.Title}
-                      className="w-auto h-auto rounded-full"
-                    />
-                  </motion.div>
+                  <Link href={`/store?id=${post.Id}`}>
+                    <motion.div
+                      key={post.Id}
+                      className="select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative" // Add 'relative' class
+                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                      layoutId={post.Id}
+                      initial={{
+                        scale: 0,
+                      }}
+                      animate={{
+                        scale: 1,
+                      }}
+                      exit={{
+                        scale: 0
+                      }}
+                      transition={{
+                        duration: .5
+                      }}
+                    >
+                      <img
+                        src={`/uploads/${post.Image}`}
+                        alt={post.Title}
+                        className="w-auto h-auto rounded-full"
+                      />
+                    </motion.div>
+                  </Link>
                 );
               })}
 
@@ -135,14 +137,15 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-lg text-sm px-6 py-3 mb-20"
-          >
-              ดูสินค้นอื่นเพิ่ม
-          </motion.button>
+          <Link href="/store">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-lg text-sm px-6 py-3 mb-20"
+            >
+                ดูสินค้นอื่นเพิ่ม
+            </motion.button>
+          </Link>
         </div>
 
         <motion.div className='flex flex-col sm:flex-row justify-center gap-5 items-center mb-10'>

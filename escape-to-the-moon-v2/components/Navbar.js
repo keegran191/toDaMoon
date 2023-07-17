@@ -14,7 +14,7 @@ function Navbar() {
                     </a>
                 </Link>
                 <div className="flex md:order-2">
-                <svg className="w-4 h-4 m-auto mr-2 fill-[#ECEBE8]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                <svg className="sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 mr-1 m-auto fill-[#ECEBE8]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
                     <Link href="/login">
                         <a id="user" className="flex items-center text-[#ECEBE8] text-sm">ลงชื่อเข้าใช้</a>
                     </Link>

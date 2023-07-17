@@ -333,7 +333,7 @@ function StockConfig() {
                                 className={
                                     `
                                         fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
-                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 rounded-xl shadow-lg ${style.selectedItem}
+                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
                                     `
                                 }>
                                 <motion.button
