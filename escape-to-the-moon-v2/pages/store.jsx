@@ -31,6 +31,8 @@ export default function Store() {
     const [subCategoryId, setSubCategoryId] = useState(0);
     const [imageName, setImageName] = useState('');
 
+    const [ItemAmount, setItemAmount] = useState(0);
+
     // Filter Values
     const [search, setSearch] = useState('');
     const [optionCoffee, setOptionCoffee] = useState([]);
@@ -162,6 +164,13 @@ export default function Store() {
         }
     }, []);
 
+    //Validate and Utilities Function
+    const TotalItem = (e) => {
+        const value = e.target.value;
+        const sanitizedValue = value.replace(/[^0-9]/g, '');
+        setItemAmount(sanitizedValue);
+    }
+
     return(
         <div className='select-none'>
             <Head>
@@ -266,14 +275,14 @@ export default function Store() {
 
                     <AnimatePresence key={'modalItems'}>
                         {selectedId && (
-                            <motion.div
-                            layoutId={selectedId}
-                            className={
-                                `
-                                    fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
-                                    lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
-                                `
-                            }>
+                            <motion.div layoutId={selectedId}
+                                className={
+                                    `
+                                        fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
+                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
+                                    `
+                                }
+                            >
                                 <motion.button
                                     whileHover={{ 
                                         scale: 1.05,
@@ -317,7 +326,7 @@ export default function Store() {
                                             </div>
                                         </div>
                                         <div className="mt-2">
-                                            {<div className='w-full overflow-hidden'>
+                                            {<div className='w-full lg:w-96 overflow-hidden'>
                                                 {Detail}
                                             </div>}
                                         </div>
@@ -358,21 +367,57 @@ export default function Store() {
                                                     <span className='whitespace-nowrap'>{optionSubCategory[optionSubCategory.map(e => e.value).indexOf(subCategoryId)].label}</span>
                                                 </div>
                                             }
-
-                                            <div className='flex items-center mt-3'>
-                                                <span className="mr-4">จำนวน: </span>
-                                                <input 
-                                                    type="text"
-                                                    id="amount"
-                                                    className="bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full px-4 py-1 appearance-none"
-                                                />
-                                            </div>
-
                                         </div>
-                                    </div>
+                                        
+                                        <div className='flex justify-center xl:justify-start mt-3 xl:mt-10 items-baseline'>
+                                            <span className="hidden xl:block mr-3">จำนวน: </span>
+                                            <div className="amountContainer flex items-baseline">
+                                                <motion.div
+                                                    className='cursor-pointer w-7 h-7 py-2'
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() => {
+                                                        if(ItemAmount >= 1) {
+                                                            setItemAmount(ItemAmount - 1)
+                                                            setAmount(Amount + 1)
+                                                        }
+                                                    }}
+                                                >
+                                                    <svg className='w-auto h-auto' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/>
+                                                    </svg>
+                                                </motion.div>
+                                                <input value={ItemAmount} className='block p-1 w-11 text-center text-md text-[#252525] bg-[#FFFFFF] rounded-lg border border-[#252525] mx-5'/>
+                                                <motion.div
+                                                    className='cursor-pointer w-7 h-7 py-2'
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() => {
+                                                        if(Amount != 0) {
+                                                            setItemAmount(ItemAmount + 1)
+                                                            setAmount(Amount - 1)
+                                                        }
+                                                    }}
+                                                >
+                                                    <svg className='w-auto h-auto' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>      
+                                                    </svg>
+                                                </motion.div>
+                                            </div>
+                                        </div>
 
-                                    <div className="relative flex flex-row justify-center space-x-4 button-container mt-5 w-full">
-
+                                        <div className='flex mt-10'>
+                                            <motion.button
+                                                className="text-white bg-[#252525] border-[#252525] border-2 hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm flex items-center" // Added 'flex' and 'items-center' classes
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 1.00 }}
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" className="mr-2 fill-current">
+                                                    <path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
+                                                </svg>
+                                                ใส่ตระกร้า
+                                            </motion.button>
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>
