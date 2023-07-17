@@ -30,7 +30,7 @@ function Navbar() {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/">
+                            <Link href="/store">
                                 <a className={style.list}>ร้านค้า</a>
                             </Link>
                         </li>

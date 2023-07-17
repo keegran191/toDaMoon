@@ -27,7 +27,23 @@ export default function Home() {
 
   useEffect(() => {
     GetStokcList();
-  }, [currentIndex]);
+  }, [currentIndex,offset]);
+
+  const updateOffset = () => {
+    if (window.innerWidth < 768) {
+      setOffset(2); // Update offset for smaller screens
+    } else {
+      setOffset(5); // Update offset for larger screens
+    }
+  };
+
+  useEffect(() => {
+    updateOffset();
+
+    window.addEventListener('resize', updateOffset);
+
+    return () => window.removeEventListener('resize', updateOffset);
+  }, []);
 
   return (
 
@@ -42,16 +58,16 @@ export default function Home() {
 
         <Nav></Nav>
 
-        <div className="relative h-4/6">
+        <div className="relative h-2/6 sm:h-4/6">
           <img className="w-full h-full brightness-50 z-0" src="/coffee.png" alt="Coffee"></img>
-          <div className="absolute top-40 left-20 z-10">
-            <h1 className="text-7xl text-white">Lorem Ipsum is <br/>simply dummy text of the </h1>
+          <div className="absolute top-10 left-5 sm:top-40 sm:left-20 z-10">
+            <h1 className="text-3xl sm:text-7xl text-white">กาแฟอราบิก้า 100%<br/>คั่วสดใหม่ เมล็ดเกรด A</h1>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className='mt-7 text-center border-2 px-4 py-2 w-40'
+              className='py-1 w-32 sm:w-40 sm:px-4 sm:py-2 mt-7 text-center border-2 '
             >
-              <span className='text-white text-2xl'>อ่านเพิ่มเติม</span>
+              <span className='text-white text-lg whitespace-nowrap sm:text-2xl'>อ่านเพิ่มเติม</span>
             </motion.div>
           </div>
         </div>
@@ -61,7 +77,7 @@ export default function Home() {
             <span className="text-[#4B4946] text-xl font-bold">สินค้าเเนะนำ</span>
           </div>
 
-          <motion.div className="relative p-5 left-1/2 -translate-x-1/2 flex justify-center gap-5 mb-5 w-6/12">
+          <motion.div className="relative p-5 left-1/2 -translate-x-1/2 flex justify-center gap-5 mb-5 w-full lg:w-6/12">
             <motion.div 
               className="flex items-center cursor-pointer"
               onClick={() => {
@@ -80,7 +96,7 @@ export default function Home() {
                 return (
                   <motion.div
                     key={post.Id}
-                    className="select-none w-36 h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer"
+                    className="select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer"
                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     layoutId={post.Id}
                     initial={{
@@ -129,9 +145,9 @@ export default function Home() {
           </motion.button>
         </div>
 
-        <motion.div className='flex flex-col sm:flex-row justify-center gap-5'>
+        <motion.div className='flex flex-col sm:flex-row justify-center gap-5 items-center mb-10'>
           {/* Process */}
-          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-2/12 h-2/6'>
+          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
             <motion.div
               initial={{
                 scale: 1.05,
@@ -140,7 +156,7 @@ export default function Home() {
                 scale: 1,
               }}
               transition={{
-                duration: 0.4,
+                duration: 0.3,
               }}
             >
               <motion.div className='relative'>
@@ -153,7 +169,7 @@ export default function Home() {
                     scale: 1.08,
                   }}
                   transition={{
-                    duration: 0.4,
+                    duration: 0.3,
                   }}
                   className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
                 >
@@ -168,7 +184,7 @@ export default function Home() {
           </motion.div>
 
           {/* Havest */}
-          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-2/12 h-2/6'>
+          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
             <motion.div
               initial={{
                 scale: 1.05,
@@ -177,7 +193,7 @@ export default function Home() {
                 scale: 1,
               }}
               transition={{
-                duration: 0.4,
+                duration: 0.3,
               }}
             >
               <motion.div className='relative'>
@@ -190,7 +206,7 @@ export default function Home() {
                     scale: 1.08,
                   }}
                   transition={{
-                    duration: 0.4,
+                    duration: 0.3,
                   }}
                   className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
                 >
@@ -205,7 +221,7 @@ export default function Home() {
           </motion.div>
 
           {/* Info */}
-          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-2/12 h-2/6'>
+          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
             <motion.div
               initial={{
                 scale: 1.05,
@@ -214,7 +230,7 @@ export default function Home() {
                 scale: 1,
               }}
               transition={{
-                duration: 0.4,
+                duration: 0.3,
               }}
             >
               <motion.div className='relative'>
@@ -227,7 +243,7 @@ export default function Home() {
                     scale: 1.08,
                   }}
                   transition={{
-                    duration: 0.4,
+                    duration: 0.3,
                   }}
                   className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
                 >

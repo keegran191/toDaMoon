@@ -1,6 +1,7 @@
 import pool from "../../../lib/database";
 
 export default async function handler(req, res) {
+  
   const startIndex = parseInt(req.query.startIndex, 10) || 0;
   const offset = parseInt(req.query.offset, 10) || 10;
 
