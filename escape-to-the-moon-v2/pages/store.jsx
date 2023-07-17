@@ -134,11 +134,20 @@ export default function Store() {
 
     const GetStock = (stockId) => {
         Axios.get(`http://localhost:3000/api/stock/get/${stockId}`).then((response) => {
-          console.log(response.data.Title);
+            setTitle(response.data[0].Title);
+            setDetail(response.data[0].Detail)
+            setAmount(response.data[0].Amount)
+            setPrice(response.data[0].Price)
+            setStockType(response.data[0].StockType)
+            setProcess(response.data[0].Process)
+            setRoast(response.data[0].Roast)
+            setFlavor(response.data[0].Flavor)
+            setCategoryId(response.data[0].CategoryId)
+            GetSubCategory(response.data[0].CategoryId)
+            setSubCategoryId(response.data[0].SubCategoryId)
+            setImageName(response.data[0].Image)
         });
     };
-      
-      
 
     useEffect(() => {
         GetStokcList();
@@ -289,7 +298,7 @@ export default function Store() {
                                     className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
                                     <span className="text-xl bold">✕</span>
                                 </motion.button>
-                                <div className="lg:flex sm:px-4">
+                                <div className="lg:flex sm:px-4 overflow-y-auto h-full">
                                     <div className="flex justify-center lg:px-4 py-10">
                                         <div className="w-64 h-64 overflow-hidden flex justify-center items-center">
                                             <div className="img">
@@ -297,7 +306,7 @@ export default function Store() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="px-4 mt-1 h-96 lg:h-auto overflow-y-auto lg:ml-4 lg:overflow-hidden">
+                                    <div className="px-4 mt-1 w-96 sm:w-full sm:h-96 lg:h-auto overflow-x-hidden overflow-y-auto lg:ml-4 lg:overflow-hidden">
                                         <div className="Title">
                                             <h1 className="text-3xl font-bold">{Title}</h1>
                                             <span>สินค้าคงเหลือ: <span className='font-semibold'>{Amount}</span></span>
@@ -307,7 +316,7 @@ export default function Store() {
                                             </div>
                                         </div>
                                         <div className="mt-2">
-                                            {<div className='w-96'>
+                                            {<div className='w-full overflow-hidden'>
                                                 {Detail}
                                             </div>}
                                         </div>
@@ -315,22 +324,22 @@ export default function Store() {
                                             {StockType == 1 &&
                                                 <div className="w-full">
                                                     <label className="">วิธีการแปรรูป: </label>
-                                                    <span className='whitespace-nowrap'>{coffeeProcess[coffeeProcess.map(e => e.value).indexOf(Process)].label}</span>
+
+                                                    {Process != 0 && <span className='whitespace-nowrap'>{coffeeProcess[coffeeProcess.map(e => e.value).indexOf(Process)].label}</span>}
                                                 </div>
                                             }
 
                                             {StockType == 1 &&
                                                 <div className="w-full mt-2">
                                                     <label className="">วิธีการคั่ว: </label>
-                                                    <span className='whitespace-nowrap'>{coffeeRoast[coffeeRoast.map(e => e.value).indexOf(Roast)].label}</span>
+                                                    {Roast != 0 && <span className='whitespace-nowrap'>{coffeeRoast[coffeeRoast.map(e => e.value).indexOf(Roast)].label}</span>}
                                                 </div>
                                             }
 
-                                            
                                             {StockType == 1 &&
                                                 <div className="w-full mt-2">
                                                     <label className="">กลื่น รส: </label>
-                                                    <span className='whitespace-nowrap'>{coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(Flavor)].label}</span>
+                                                    {Flavor != 0 && <span className='whitespace-nowrap'>{coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(Flavor)].label}</span>}
                                                 </div>
                                             }
 
