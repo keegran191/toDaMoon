@@ -198,7 +198,7 @@ export default function Store() {
             </div>
 
             <div className='flex px-10'>
-                <div class="w-2/12"> Filter
+                <div className="w-2/12"> Filter
                     
                 </div>
                 <div className={`px-4 pt-4 h-auto w-8/12 mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
@@ -267,6 +267,7 @@ export default function Store() {
                     <AnimatePresence key={'modalItems'}>
                         {selectedId && (
                             <motion.div
+                            layoutId={selectedId}
                             className={
                                 `
                                     fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
@@ -357,7 +358,21 @@ export default function Store() {
                                                     <span className='whitespace-nowrap'>{optionSubCategory[optionSubCategory.map(e => e.value).indexOf(subCategoryId)].label}</span>
                                                 </div>
                                             }
+
+                                            <div className='flex items-center mt-3'>
+                                                <span className="mr-4">จำนวน: </span>
+                                                <input 
+                                                    type="text"
+                                                    id="amount"
+                                                    className="bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full px-4 py-1 appearance-none"
+                                                />
+                                            </div>
+
                                         </div>
+                                    </div>
+
+                                    <div className="relative flex flex-row justify-center space-x-4 button-container mt-5 w-full">
+
                                     </div>
                                 </div>
                             </motion.div>
