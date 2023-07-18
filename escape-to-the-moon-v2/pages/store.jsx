@@ -232,6 +232,7 @@ export default function Store() {
                                 GetSubCategory(post.CategoryId)
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
+                                setItemAmount(0)
                             }}
                             style={{
                                 opacity: selectedId == post.Id ? 0 : 1,
@@ -335,21 +336,21 @@ export default function Store() {
                                                 <div className="w-full">
                                                     <label className="">วิธีการแปรรูป: </label>
 
-                                                    {Process != 0 && <span className='whitespace-nowrap'>{coffeeProcess[coffeeProcess.map(e => e.value).indexOf(Process)].label}</span>}
+                                                    {Process != 0 && coffeeProcess.length > 0 && <span className='whitespace-nowrap'>{coffeeProcess[coffeeProcess.map(e => e.value).indexOf(Process)].label}</span>}
                                                 </div>
                                             }
 
                                             {StockType == 1 &&
                                                 <div className="w-full mt-2">
                                                     <label className="">วิธีการคั่ว: </label>
-                                                    {Roast != 0 && <span className='whitespace-nowrap'>{coffeeRoast[coffeeRoast.map(e => e.value).indexOf(Roast)].label}</span>}
+                                                    {Roast != 0 && coffeeRoast.length> 0 && <span className='whitespace-nowrap'>{coffeeRoast[coffeeRoast.map(e => e.value).indexOf(Roast)].label}</span>}
                                                 </div>
                                             }
 
                                             {StockType == 1 &&
                                                 <div className="w-full mt-2">
                                                     <label className="">กลื่น รส: </label>
-                                                    {Flavor != 0 && <span className='whitespace-nowrap'>{coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(Flavor)].label}</span>}
+                                                    {Flavor != 0 && coffeeFlavor.length > 0 &&<span className='whitespace-nowrap'>{coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(Flavor)].label}</span>}
                                                 </div>
                                             }
 
@@ -406,7 +407,7 @@ export default function Store() {
                                             </div>
                                         </div>
 
-                                        <div className='flex mt-10'>
+                                        <div className='flex mt-5 lg:mt-10 justify-center lg:justify-start'>
                                             <motion.button
                                                 className="text-white bg-[#252525] border-[#252525] border-2 hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm flex items-center" // Added 'flex' and 'items-center' classes
                                                 whileHover={{ scale: 1.05 }}
