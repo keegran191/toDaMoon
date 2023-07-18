@@ -46,7 +46,7 @@ function Admin() {
                 </div>
                 
                 <form className="relative mt-10" action="/api/category/add" method='POST'>
-                    <input type="text" maxLength="20" id="AddCategory" name="AddCategory" className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full shadow-lg border-[#252525]" placeholder="เพิ่มประเภทสินค้า" required></input>
+                    <input type="text" maxLength="20" id="AddCategory" name="AddCategory" className="outline-none block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full shadow-lg " placeholder="เพิ่มประเภทสินค้า" required></input>
                     <motion.button 
                         className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
                         type="submit"

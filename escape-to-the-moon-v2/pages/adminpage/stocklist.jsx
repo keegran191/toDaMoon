@@ -226,7 +226,7 @@ function StockConfig() {
 
     return (
 
-        <div>
+        <div className='select-none'>
             <Head>
             <title>Admin</title>
             <link rel="icon" href="/ttmLogo.png" />
@@ -241,16 +241,17 @@ function StockConfig() {
                 </div>
 
                 <div className="relative mt-10">
-                    <input
-                        onChange={(e) => {
-                            setSearch(e.target.value);
-                            console.log(search)
-                        }}
-                        id="Search"
-                        name="Search"
-                        className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
-                        placeholder="ค้าหาสินค้า"
-                    ></input>
+                <input
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                        console.log(search);
+                    }}
+                    id="Search"
+                    name="Search"
+                    className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full shadow-lg outline-none"
+                    placeholder="ค้าหาสินค้า"
+                ></input>
+
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -264,6 +265,9 @@ function StockConfig() {
                 </div>
 
                 <div className={`px-4 pt-4 overflow-y-auto overflow-x-hidden h-4/6 w-fill mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
+                    {stockList.length == 0 && <span className='text-1xl'>
+                        ไม่พบรายการสินค้า    
+                    </span>}
                     {stockList.map((post) => {
                         return <motion.div
                             key={post.Id}
@@ -289,7 +293,6 @@ function StockConfig() {
                             style={{
                                 opacity: selectedId == post.Id ? 0 : 1,
                             }}
-                            exit={{scale: 0, transition: { duration: 0.2}}}
                         >
                             <div className="flex justify-center items-center">
                                 <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
