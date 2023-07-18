@@ -34,7 +34,7 @@ export default function Store() {
 
     const [ItemAmount, setItemAmount] = useState(0);
 
-    // Filter Values
+    // Filter Values List
     const [search, setSearch] = useState('');
     const [optionCoffee, setOptionCoffee] = useState([]);
     const [optionCategory, setOptionCategory] = useState([]);
@@ -42,6 +42,9 @@ export default function Store() {
     const [coffeeProcess, setCoffeeProcess] = useState([]);
     const [coffeeRoast, setCoffeeRoast] = useState([]);
     const [coffeeFlavor, setCoffeFlavor] = useState([]);
+
+    const [StockTypeFilter, setStockTypeFilter] = useState(0);
+    const [TempCategoryFilter, setTempCategoryFilter] = useState(0);
 
     //Select Style
     const customStyles = {
@@ -165,6 +168,11 @@ export default function Store() {
         }
     }, []);
 
+    useEffect(() => {
+        // Fetch subcategories initially when the component mounts
+        GetSubCategory(CategolyId);
+    }, [CategolyId]);
+
     //Validate and Utilities Function
     const TotalItem = (e) => {
         const value = e.target.value;
@@ -215,9 +223,12 @@ export default function Store() {
                             inputId="coffeeId"
                             options={optionCoffee}
                             onChange={(newValue,meta) => {
-                                setStockType(newValue.value);
+                                setStockTypeFilter(newValue.value);
                                 setProcess(0); 
                                 setRoast(0);
+                                setFlavor(0);
+                                setCategoryId(0);
+                                setSubCategoryId(0)
                             }}
                             styles={customStyles}
                             placeholder="เลือกชนิดสินค้า"
@@ -225,7 +236,7 @@ export default function Store() {
                         </Select>
                     </div>
 
-                    {StockType == 1 && 
+                    {StockTypeFilter == 1 && 
                         <div className='w-full mt-2'>
                             <label className="">วิธีการแปรรูป</label>
                             <Select
@@ -241,7 +252,7 @@ export default function Store() {
                         </div>
                     }
 
-                    {StockType == 1 && 
+                    {StockTypeFilter == 1 && 
                         <div className='w-full mt-2'>
                             <label className="">วิธีการคั่ว</label>
                             <Select
@@ -257,7 +268,7 @@ export default function Store() {
                         </div>
                     }
 
-                    {StockType == 1 && 
+                    {StockTypeFilter == 1 && 
                         <div className='w-full mt-2'>
                             <label className="">เลือกกลิ่น รส</label>
                             <Select
@@ -273,37 +284,36 @@ export default function Store() {
                         </div>
                     }
 
-                    {StockType == 2 &&
+                    {StockTypeFilter == 2 && (
                         <div className='w-full mt-2'>
-                            <label className="">ประเภทสินค้า</label>
+                            <label>ประเภทสินค้า</label>
                             <Select
                                 inputId="categoryId"
                                 options={optionCategory}
-                                onChange={(newValue,meta) => {
+                                onChange={(newValue, meta) => {
                                     setCategoryId(newValue.value);
-                                    GetSubCategory(newValue.value);
+                                    setSubCategoryId(0); // Reset subCategoryId when the category changes
                                 }}
                                 styles={customStyles}
                                 placeholder="เลือกประเภทสินค้า"
-                            >
-                            </Select>
-                        </div>
-                    }
-
-                    {StockType == 2 &&
-                        <div className="w-full mt-2">
-                            <label className="">หมวดหมู่สินค้า</label>
-                            <Select
-                                inputId='subcategoryId'
-                                options={optionSubCategory}
-                                onChange={(newValue,meta) => {
-                                    setSubCategoryId(newValue.value)
-                                }}
-                                styles={customStyles}
-                                placeholder="เลือกหมวดหมู่สินค้า"
                             />
-                        </div>
-                    }
+                            </div>
+                        )}
+
+                        {StockTypeFilter == 2 && (
+                            <div className="w-full mt-2">
+                                <label>หมวดหมู่สินค้า</label>
+                                <Select
+                                    inputId='subcategoryId'
+                                    options={optionSubCategory}
+                                    onChange={(newValue, meta) => {
+                                        setSubCategoryId(newValue.value);
+                                    }}
+                                    styles={customStyles}
+                                    placeholder="เลือกหมวดหมู่สินค้า"
+                                />
+                            </div>
+                        )}
                 </div>
 
                 <div className='hidden lg:block w-2 h-auto border-l-2 border-[#252525]'></div>
