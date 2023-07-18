@@ -64,7 +64,7 @@ export default function Home() {
             <h1 className="text-3xl sm:text-7xl text-white">กาแฟอราบิก้า 100%<br/>คั่วสดใหม่ เมล็ดเกรด A</h1>
             <motion.div
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 1.00 }}
               className='py-1 w-32 sm:w-40 sm:px-4 sm:py-2 mt-7 text-center border-2 '
             >
               <span className='text-white text-lg whitespace-nowrap sm:text-2xl'>อ่านเพิ่มเติม</span>
@@ -94,33 +94,33 @@ export default function Home() {
             {stockList &&
               stockList.map((post) => {
                 return (
-                  <Link href={`/store?id=${post.Id}`}>
-                    <motion.div
-                      key={post.Id}
-                      className="select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative" // Add 'relative' class
-                      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                      layoutId={post.Id}
-                      initial={{
-                        scale: 0,
-                      }}
-                      animate={{
-                        scale: 1,
-                      }}
-                      exit={{
-                        scale: 0
-                      }}
-                      transition={{
-                        duration: .5
-                      }}
-                    >
+                  <motion.div
+                    key={post.Id}
+                    className="select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative" // Add 'relative' class
+                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                    layoutId={post.Id}
+                    initial={{
+                      scale: 0,
+                    }}
+                    animate={{
+                      scale: 1,
+                    }}
+                    exit={{
+                      scale: 0
+                    }}
+                    transition={{
+                      duration: .3
+                    }}
+                  >
+                    <Link href={`/store?id=${post.Id}`} className="w-full h-full rounded-full">
                       <img
                         src={`/uploads/${post.Image}`}
                         alt={post.Title}
                         className="w-auto h-auto rounded-full"
                       />
-                    </motion.div>
-                  </Link>
-                );
+                    </Link>
+                  </motion.div>
+              );
               })}
 
             <motion.div 
