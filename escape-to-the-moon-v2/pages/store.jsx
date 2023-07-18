@@ -7,6 +7,7 @@ import Foot from '../components/Foot'
 import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Select from 'react-select'
 
 export default function Store() {
 
@@ -206,11 +207,108 @@ export default function Store() {
                 </div>
             </div>
 
-            <div className='flex px-10'>
-                <div className="w-2/12"> Filter
-                    
+            <div className='flex px-10 justify-center lg:justify-start'>
+                <div className="hidden lg:block w-2/12 px-4">
+                    <div className='w-full'>
+                        <label className="">ชนิดสินค้า</label>
+                        <Select
+                            inputId="coffeeId"
+                            options={optionCoffee}
+                            onChange={(newValue,meta) => {
+                                setStockType(newValue.value);
+                                setProcess(0); 
+                                setRoast(0);
+                            }}
+                            styles={customStyles}
+                            placeholder="เลือกชนิดสินค้า"
+                        >
+                        </Select>
+                    </div>
+
+                    {StockType == 1 && 
+                        <div className='w-full mt-2'>
+                            <label className="">วิธีการแปรรูป</label>
+                            <Select
+                                inputId="processId"
+                                options={coffeeProcess}
+                                onChange={(newValue,meta) => {
+                                    setProcess(newValue.value); 
+                                }}
+                                styles={customStyles}
+                                placeholder="เลือกวิธีการแปรรูป"
+                            >
+                            </Select>
+                        </div>
+                    }
+
+                    {StockType == 1 && 
+                        <div className='w-full mt-2'>
+                            <label className="">วิธีการคั่ว</label>
+                            <Select
+                                inputId="roastId"
+                                options={coffeeRoast}
+                                onChange={(newValue,meta) => {
+                                    setRoast(newValue.value); 
+                                }}
+                                styles={customStyles}
+                                placeholder="เลือกวิธีการคั่ว"
+                            >
+                            </Select>
+                        </div>
+                    }
+
+                    {StockType == 1 && 
+                        <div className='w-full mt-2'>
+                            <label className="">เลือกกลิ่น รส</label>
+                            <Select
+                                inputId="flavorId"
+                                options={coffeeFlavor}
+                                onChange={(newValue,meta) => {
+                                    setFlavor(newValue.value); 
+                                }}
+                                styles={customStyles}
+                                placeholder="เลือกกลิ่น รส"
+                            >
+                            </Select>
+                        </div>
+                    }
+
+                    {StockType == 2 &&
+                        <div className='w-full mt-2'>
+                            <label className="">ประเภทสินค้า</label>
+                            <Select
+                                inputId="categoryId"
+                                options={optionCategory}
+                                onChange={(newValue,meta) => {
+                                    setCategoryId(newValue.value);
+                                    GetSubCategory(newValue.value);
+                                }}
+                                styles={customStyles}
+                                placeholder="เลือกประเภทสินค้า"
+                            >
+                            </Select>
+                        </div>
+                    }
+
+                    {StockType == 2 &&
+                        <div className="w-full mt-2">
+                            <label className="">หมวดหมู่สินค้า</label>
+                            <Select
+                                inputId='subcategoryId'
+                                options={optionSubCategory}
+                                onChange={(newValue,meta) => {
+                                    setSubCategoryId(newValue.value)
+                                }}
+                                styles={customStyles}
+                                placeholder="เลือกหมวดหมู่สินค้า"
+                            />
+                        </div>
+                    }
                 </div>
-                <div className={`px-4 pt-4 h-auto w-8/12 mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
+
+                <div className='hidden lg:block w-2 h-auto border-l-2 border-[#252525]'></div>
+
+                <div className={`border-[#252525] px-4 pt-4 h-auto w-8/12 mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
                     {stockList.map((post) => {
                         return <motion.div
                             key={post.Id}
