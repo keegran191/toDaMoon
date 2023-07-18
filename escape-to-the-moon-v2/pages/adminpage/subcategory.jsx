@@ -88,6 +88,9 @@ function Subcategory() {
     
     useEffect(() => {
         GetCategory()
+    }, []); //subCategoryList
+
+    useEffect(() => {
         GetSubCategory(value)
     }, [subCategoryList]); //subCategoryList
 
