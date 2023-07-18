@@ -22,7 +22,7 @@ export default function Home() {
         setStockList(response.data);
       }
     });
-};
+  };
 
 
   useEffect(() => {
