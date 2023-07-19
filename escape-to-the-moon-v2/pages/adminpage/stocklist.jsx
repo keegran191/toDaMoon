@@ -7,6 +7,7 @@ import UniversalModal from '../../components/Modal.js';
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
+import { parse } from 'cookie';
 
 function StockConfig() {
     //Stock List

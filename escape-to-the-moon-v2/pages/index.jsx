@@ -7,12 +7,15 @@ import Foot from '../components/Foot'
 import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { parse } from 'cookie';
 
-export default function Home() {
+export default function Home({ cookies }) {
+  const { fname, userId } = cookies;
 
   const [stockList, setStockList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [offset, setOffset] = useState(5)
+  const [stockAmount, setStockAmount] = useState(0)
 
   let nowIndex = 0
 
@@ -24,10 +27,26 @@ export default function Home() {
     });
   };
 
+  const GetBasketAmount = (userId) => {
+    Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+      .then((response) => {
+        const { data } = response;
+        setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount
+      })
+      .catch((error) => {
+        console.error('Error fetching basket amount:', error);
+        setStockAmount(0); // Set a default value in case of an error
+      });
+  };  
 
   useEffect(() => {
     GetStokcList();
   }, [currentIndex,offset]);
+
+  
+  useEffect(() => {
+    GetBasketAmount(userId)
+  }, [userId]);
 
   const updateOffset = () => {
     if (window.innerWidth < 768) {
@@ -56,7 +75,7 @@ export default function Home() {
           <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
         </Head>
 
-        <Nav></Nav>
+        <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
 
         <div className="relative h-2/6 sm:h-4/6">
           <img className="w-full h-full brightness-50 z-0" src="/coffee.png" alt="Coffee"></img>
@@ -264,4 +283,13 @@ export default function Home() {
         <Foot></Foot>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const cookies = parse(context.req.headers.cookie || '');
+  return {
+    props: {
+      cookies,
+    },
+  };
 }

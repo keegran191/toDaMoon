@@ -7,6 +7,7 @@ import UniversalModal from '../../components/Modal.js';
 import React from 'react'
 import Select from 'react-select'
 import { motion, AnimatePresence } from 'framer-motion';
+import { parse } from 'cookie';
 
 function Subcategory() {
     const [option, setOption] = useState([]);

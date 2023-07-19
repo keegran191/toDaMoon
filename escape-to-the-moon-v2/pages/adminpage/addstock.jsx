@@ -5,6 +5,8 @@ import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
 import Select from 'react-select'
 import { motion, AnimatePresence } from 'framer-motion';
+import { parse } from 'cookie';
+
 function Stock() {
     const [optionCoffee, setOptionCoffee] = useState([]);
     const [valueCoffee, setValueCoffee] = useState();

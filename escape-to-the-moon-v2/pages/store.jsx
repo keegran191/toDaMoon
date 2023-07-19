@@ -8,8 +8,10 @@ import Axios from 'axios';
 import { useState, useEffect, createRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
+import { parse } from 'cookie';
 
-export default function Store() {
+export default function Store({ cookies }) {
+    const { fname, userId } = cookies;
 
     const router = useRouter();
     const itemId = router.query.id;
@@ -45,7 +47,8 @@ export default function Store() {
 
     const [StockTypeFilter, setStockTypeFilter] = useState(0);
     const [TempCategoryFilter, setTempCategoryFilter] = useState(0);
-
+    
+    const [stockAmount, setStockAmount] = useState(0)
     //Select Style
     const customStyles = {
         control: (provided, state) => ({
@@ -155,6 +158,18 @@ export default function Store() {
         });
     };
 
+    const GetBasketAmount = (userId) => {
+        Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+            .then((response) => {
+                const { data } = response;
+                setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount
+            })
+            .catch((error) => {
+                console.error('Error fetching basket amount:', error);
+                setStockAmount(0); // Set a default value in case of an error
+            });
+    };  
+
     useEffect(() => {
         GetStokcList();
         GetCoffee();
@@ -173,6 +188,10 @@ export default function Store() {
         GetSubCategory(CategolyId);
     }, [CategolyId]);
 
+    useEffect(() => {
+        GetBasketAmount(userId)
+    }, [userId]);
+
     //Validate and Utilities Function
     const TotalItem = (e) => {
         const value = e.target.value;
@@ -189,7 +208,7 @@ export default function Store() {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <Nav></Nav>
+            <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
 
             <div className="w-4/5 lg:w-1/2 relative left-1/2 -translate-x-1/2 mt-28">
                 <div className="relative mt-10">
@@ -486,9 +505,8 @@ export default function Store() {
                                                     whileHover={{ scale: 1.05 }}
                                                     whileTap={{ scale: 0.95 }}
                                                     onClick={() => {
-                                                        if(ItemAmount >= 1) {
+                                                        if(Amount >= ItemAmount && ItemAmount != 0) {
                                                             setItemAmount(ItemAmount - 1)
-                                                            setAmount(Amount + 1)
                                                         }
                                                     }}
                                                 >
@@ -502,9 +520,8 @@ export default function Store() {
                                                     whileHover={{ scale: 1.05 }}
                                                     whileTap={{ scale: 0.95 }}
                                                     onClick={() => {
-                                                        if(Amount != 0) {
+                                                        if(ItemAmount < Amount) {
                                                             setItemAmount(ItemAmount + 1)
-                                                            setAmount(Amount - 1)
                                                         }
                                                     }}
                                                 >
@@ -520,6 +537,27 @@ export default function Store() {
                                                 className="text-white bg-[#252525] border-[#252525] border-2 hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm flex items-center" // Added 'flex' and 'items-center' classes
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 1.00 }}
+                                                onClick={ async () => {
+                                                    if (ItemAmount != 0) {
+                                                        await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`)      
+                                                        setSelectedId(null)
+                                                        setTitle('')
+                                                        setDetail('')
+                                                        setAmount(0)
+                                                        setPrice(0)
+                                                        setIsAdvise(0)
+                                                        setStockType(0)
+                                                        setProcess(0)
+                                                        setRoast(0)
+                                                        setFlavor(0)
+                                                        setCategoryId(0)
+                                                        setSubCategoryId(0)
+                                                        GetStokcList();
+                                                        GetBasketAmount(userId)
+                                                    } else {
+                                                        alert("โปรดใส่จำนวนให้ถูกต้อง")
+                                                    }
+                                                }}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" className="mr-2 fill-current">
                                                     <path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
@@ -538,4 +576,13 @@ export default function Store() {
             <Foot></Foot>
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+    const cookies = parse(context.req.headers.cookie || '');
+    return {
+      props: {
+        cookies,
+      },
+    };
 }
