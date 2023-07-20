@@ -19,14 +19,14 @@ export default function handler(req, res) {
   upload.single('image')(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
       console.log('Multer error:', err);
-      return res.status(500).json({ error: 'Failed to upload file.' });
+      return res.status(500).json({ success: false, message: 'Failed to upload file.' });
     } else if (err) {
       console.log('Unknown error:', err);
-      return res.status(500).json({ error: 'Unknown error occurred.' });
+      return res.status(500).json({ success: false, message: 'Unknown error occurred.' });
     }
 
     if (!req.file) {
-      return res.status(400).json({ error: 'Image Required' });
+      return res.status(400).json({ success: false, message: 'Image Required' });
     }
 
     const fileName = req.file.filename;

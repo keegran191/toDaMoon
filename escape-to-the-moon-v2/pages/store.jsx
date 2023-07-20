@@ -46,7 +46,6 @@ export default function Store({ cookies }) {
     const [coffeeFlavor, setCoffeFlavor] = useState([]);
 
     const [StockTypeFilter, setStockTypeFilter] = useState(0);
-    const [TempCategoryFilter, setTempCategoryFilter] = useState(0);
     
     const [stockAmount, setStockAmount] = useState(0)
     //Select Style

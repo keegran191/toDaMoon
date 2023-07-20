@@ -197,6 +197,8 @@ function Stock() {
 
           if(data.success) {
             location.reload();
+          } else {
+            alert(data.message);
           }
         });
     }

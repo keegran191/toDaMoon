@@ -9,7 +9,9 @@ import Select from 'react-select'
 import { motion, AnimatePresence } from 'framer-motion';
 import { parse } from 'cookie';
 
-function Subcategory() {
+function Subcategory({ cookies }) {
+    const { fname, userId } = cookies;
+
     const [option, setOption] = useState([]);
 
     const [subCategoryList, setSubCategoryList] = useState(null);
@@ -104,7 +106,8 @@ function Subcategory() {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <NavAdmin></NavAdmin>
+            <NavAdmin name={fname} userid={userId} overCount={0}></NavAdmin>
+
 
             <div className={style.adminContainer}>
                 <div className="w-full">
@@ -428,3 +431,12 @@ function Subcategory() {
 }
 
 export default Subcategory
+
+export async function getServerSideProps(context) {
+    const cookies = parse(context.req.headers.cookie || '');
+    return {
+      props: {
+        cookies,
+      },
+    };
+  }

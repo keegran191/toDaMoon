@@ -49,7 +49,7 @@ function Foot() {
                     <Link href="/">
                         <h1 className="text-xs hover:cursor-pointer mb-1">หน้าหลัก</h1>
                     </Link>
-                    <Link href="/">
+                    <Link href="/store">
                         <h1 className="text-xs hover:cursor-pointer mb-1">ร้านค้า</h1>
                     </Link>
                     <Link href="/">

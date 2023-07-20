@@ -7,8 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import UniversalModal from '../../components/Modal.js';
 import { parse } from 'cookie';
 
-function Admin() {
-    
+export default function Admin({ cookies }) {
+    const { fname, userId } = cookies;
+
     const [categoryList, setCategoryList] = useState([]);
     const [IsChange, setChange] = useState(false);
     const [IsDelete, setDelete] = useState(false);
@@ -40,7 +41,7 @@ function Admin() {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
             </Head>
-            <NavAdmin></NavAdmin>
+            <NavAdmin name={fname} userid={userId} overCount={0}></NavAdmin>
             <div className={style.adminContainer}>
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มประเภทสินค้า</span>
@@ -278,4 +279,11 @@ function Admin() {
     )
 }
 
-export default Admin
+export async function getServerSideProps(context) {
+    const cookies = parse(context.req.headers.cookie || '');
+    return {
+      props: {
+        cookies,
+      },
+    };
+}
