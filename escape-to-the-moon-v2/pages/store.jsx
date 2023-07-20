@@ -405,7 +405,7 @@ export default function Store({ cookies }) {
                             <motion.div layoutId={selectedId}
                                 className={
                                     `
-                                        fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
+                                        z-50 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
                                         lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
                                     `
                                 }
