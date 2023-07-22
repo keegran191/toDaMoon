@@ -537,24 +537,28 @@ export default function Store({ cookies }) {
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 1.00 }}
                                                 onClick={ async () => {
-                                                    if (ItemAmount != 0) {
-                                                        await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`)      
-                                                        setSelectedId(null)
-                                                        setTitle('')
-                                                        setDetail('')
-                                                        setAmount(0)
-                                                        setPrice(0)
-                                                        setIsAdvise(0)
-                                                        setStockType(0)
-                                                        setProcess(0)
-                                                        setRoast(0)
-                                                        setFlavor(0)
-                                                        setCategoryId(0)
-                                                        setSubCategoryId(0)
-                                                        GetStokcList();
-                                                        GetBasketAmount(userId)
+                                                    if(userId != undefined) {
+                                                        if (ItemAmount != 0) {
+                                                            await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`)      
+                                                            setSelectedId(null)
+                                                            setTitle('')
+                                                            setDetail('')
+                                                            setAmount(0)
+                                                            setPrice(0)
+                                                            setIsAdvise(0)
+                                                            setStockType(0)
+                                                            setProcess(0)
+                                                            setRoast(0)
+                                                            setFlavor(0)
+                                                            setCategoryId(0)
+                                                            setSubCategoryId(0)
+                                                            GetStokcList();
+                                                            GetBasketAmount(userId)
+                                                        } else {
+                                                            alert("โปรดใส่จำนวนให้ถูกต้อง")
+                                                        }
                                                     } else {
-                                                        alert("โปรดใส่จำนวนให้ถูกต้อง")
+                                                        alert("กรุณาลงชื่อเข้าใช้เพื่อหยิบของใส่ตระกร้า")
                                                     }
                                                 }}
                                             >

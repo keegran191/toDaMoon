@@ -9,6 +9,7 @@ import { useState, useEffect, createRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
 import { parse } from 'cookie';
+import UniversalModal from '../components/Modal.js';
 
 export default function Store({ cookies }) {
     const { fname, userId } = cookies;
@@ -16,30 +17,26 @@ export default function Store({ cookies }) {
     const [stockAmount, setStockAmount] = useState(0)
     const [basketList, setBasketList] = useState([])
 
-        
-    const [optionCoffee, setOptionCoffee] = useState([]);
+    //Delete Stage
+    const [baksetId, setBasketId] = useState(0)
+    const [isDelete, setIsDelete] = useState(false)
+    const [basketTitle, setBasketTitle] = useState("")    
+
     const [optionCategory, setOptionCategory] = useState([]);
     const [optionSubCategory, setOptionSubCategory] = useState([]);
     const [coffeeProcess, setCoffeeProcess] = useState([]);
     const [coffeeRoast, setCoffeeRoast] = useState([]);
     const [coffeeFlavor, setCoffeFlavor] = useState([]);
 
-    const GetCoffee = () => {
-        Axios.get("http://localhost:3000/api/coffee/get").then((response) => {
-            setOptionCoffee(response.data.map((coffee) => ({ value: coffee.id, label: coffee.label })));
-        });
-    }
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
-    const GetSubCategory = (categoryId) => {
-        if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
-                setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
-            })
-        }
+    const GetSubCategory = () => {
+        Axios.get(`http://localhost:3000/api/subcategory/get/${0}`).then((response) => {
+            setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
+        })
     }
     const GetProcess = (categoryId) => {
         if (categoryId) {
@@ -110,8 +107,8 @@ export default function Store({ cookies }) {
     useEffect(() => {
         GetBasketAmount(userId)
         GetBasket(userId)
-        GetCoffee();
         GetCategory();
+        GetSubCategory(0);
         GetProcess(42);
         GetRoast(40);
         GetFlavor(41);
@@ -141,21 +138,58 @@ export default function Store({ cookies }) {
                 </div>
 
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
-                {basketList.length == 0 && <span className='text-1xl'>
+                {basketList.length == 0 && <span className='text-2xl my-32'>
                     ไม่พบรายการสินค้า
                 </span>}
 
-                {basketList.map((stock, index) => {
-                    return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 rounded-lg shadow-lg'>
+                {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0&& basketList.map((stock, index) => {
+                    return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]'>
                         <div class='text-lg text-left col-span-2 flex'>
                             <div className='w-36 h-36 '>
                                 <img className='w-full h-full rounded-lg' src={`/uploads/${stock.Image}`}></img>
                             </div>
-                            <div className='ml-5'>
+                            <div className='ml-5' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
                                 <span className='font-semibold'>
                                     {stock.Title}
                                 </span>
+
+                                {stock.StockType == 1 && 
+                                <div className='text-sm mt-2'>
+                                    <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>
+                                    <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>
+                                    <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>
+                                </div>}
+
+                                {stock.StockType == 2 && 
+                                <div className='text-sm mt-2'>
+                                    <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(stock.CategoryId)].label}</p>
+                                    <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(stock.SubCategoryId)].label}</p>
+                                </div>}
+
+                                <div className='mt-1'>
+                                    <motion.button 
+                                        className='flex items-center bottom-0 text-sm border-2 border-[#252525] px-2 py-1 rounded-sm' 
+                                        whileHover={{ 
+                                            scale: 1.05, 
+                                            transition: { duration: 0.2 },
+                                            backgroundColor: '#252525',
+                                            color: '#FFFFFF'
+                                        }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => {
+                                            setBasketId(stock.id)
+                                            setIsDelete(true)
+                                            setBasketTitle(stock.Title)
+                                        }}
+                                    >
+                                    <svg className='mr-1' xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 448 512">
+                                        <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                    </svg>
+                                    <p>ลบสินค้า</p>
+                                    </motion.button>
+                                </div>
                             </div>
+
                         </div> 
                         <div class='text-lg flex items-center justify-center text-center col-start-3'>
                             ฿ {stock.Price}
@@ -169,7 +203,9 @@ export default function Store({ cookies }) {
                                     onClick={() => {
                                         console.log(stock.stockAmount)
                                         if(stock.stockAmount == 1) {
-                                            alert("คุณต้องการลบรายการนี้ใช่หรือม่")
+                                            setBasketId(stock.id)
+                                            setIsDelete(true)
+                                            setBasketTitle(stock.Title)
                                         } else if(stock.stockAmount > 0) {
                                             handleDecreaseStockAmount(index)
                                         } 
@@ -204,6 +240,74 @@ export default function Store({ cookies }) {
                 
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
             </div>
+
+            <AnimatePresence key={'modalDelete'} mode='wait'>
+                { isDelete && baksetId && <motion.div
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100vw',
+                        height: '100vh',
+                        backgroundColor: 'rgba(0, 0, 0, .25)'
+                    }}
+                    initial={{
+                        opacity: 0,
+                    }}
+                    animate={{
+                        opacity: 1,
+                    }}
+                    exit={{
+                        opacity: 0
+                    }}
+                    transition={{
+                        duration: .5
+                    }}
+                ></motion.div>}
+            </AnimatePresence>
+
+            { isDelete && baksetId &&
+                <motion.div
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100vw',
+                        height: '100vh',
+                    }}
+
+                    initial={{
+                        scale: 0.0,
+                    }}
+                    animate={{
+                        scale: 0.95,
+                    }}
+                    exit={{
+                        scale: 0.0
+                    }}
+                    transition={{
+                        duration: .2
+                    }}
+                >
+                    <UniversalModal
+                        message={"คุณต้องการลบสินค้า " + basketTitle + " ออกจากตระกร้า?"}
+                        txtApply="ลบ"
+                        onApply={ async () =>{
+                            await Axios.get(`http://localhost:3000/api/basket/delete/${baksetId}`)
+                            setIsDelete(false);
+                            setBasketId(0);
+                            GetBasketAmount(userId)
+                            GetBasket(userId)
+                        }}
+                        txtClose="ยกเลิก"
+                        onClose={()=>{
+                            setIsDelete(false);
+                            setBasketId(0);
+                        }}
+                    >
+                    </UniversalModal>
+                </motion.div>
+                }
             <Foot></Foot>
         </div>
     )
