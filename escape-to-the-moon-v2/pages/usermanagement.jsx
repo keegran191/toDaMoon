@@ -16,7 +16,6 @@ function UserManagement ({ cookies}) {
     const [stockAmount, setStockAmount] = useState(0)
 
     const [toggleUser, setToggleUser] = useState(false)
-    const [toggleOrder, setToggleOrder] = useState(false)
 
     const [changeUser, setChangeUser] = useState(false)
     const [changePassword, setChangePassword] = useState(false)
@@ -32,12 +31,15 @@ function UserManagement ({ cookies}) {
     const [confirmNewPassword, setConfirmNewPassword] = useState();
 
     //Address Value
-    const [addressNamem, setAddressNamem] = useState('');
+    const [addressName, setAddressName] = useState('');
     const [addressDetail, setAddressDetail] = useState('');
     const [subDistrict, setSubDistrict] = useState('');
     const [district, setDistrict] = useState('');
     const [province, setProvince] = useState('');
     const [zipCode, setZipCode] = useState('');
+
+    const [selectedId, setSelectedId] = useState();
+    const [Addaddress, setAddaddress] = useState(false);
 
     //Rotare State
     const [rotateUser, setRotateUser] = useState(0);
@@ -93,7 +95,7 @@ function UserManagement ({ cookies}) {
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
             
-            <div className='mt-40 flex px-10 justify-center lg:justify-start h-2/3'>
+            <div className='mt-40 flex px-10 justify-center lg:justify-start h-auto'>
                 <div className="hidden lg:block w-2/12">
                     <motion.div 
                         className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
@@ -107,7 +109,6 @@ function UserManagement ({ cookies}) {
                             } else {
                                 setRotateUser(180);
                                 setToggleUser(true);
-                                setToggleOrder(false);
                             }
                         }}
                     >
@@ -214,9 +215,7 @@ function UserManagement ({ cookies}) {
                         <span>เเก้ไขรหัสผ่าน</span>
                     </motion.div>}
 
-                    <motion.div 
-                        className='flex justify-center w-full cursor-pointer'
-                    >
+                    <div className='flex justify-center cursor-pointer mt-48'>
                         <motion.button 
                             className='bg-[#252525] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
@@ -224,7 +223,7 @@ function UserManagement ({ cookies}) {
                         >
                             ออกจากระบบ
                         </motion.button>
-                    </motion.div>
+                    </div>
                 </div>
                 <div className='hidden lg:block w-2 h-auto border-l-2 border-[#252525]'></div>
 
@@ -264,6 +263,149 @@ function UserManagement ({ cookies}) {
                     >
                             บันทึกข้อมูล
                     </motion.button>
+                </div>}
+
+                {address && <div className='w-6/12 lg:pl-10'>
+                    <h1 className=' text-xl'>เเก้ไขข้อมูลที่อยู่</h1>
+                    <div className={`mt-3 select-none w-full h-96 grid grid-cols-1 md:grid-cols-2 gap-9`}>
+                        <motion.div
+                            className="mb-3 select-none w-96 h-48 bg-[#BCBCBC] border border-[#252525] border-dashed rounded-xl shadow-md flex justify-center items-center p-4 cursor-pointer"
+                            layoutId={"Addaddress"}
+                        >
+                            <motion.button 
+                                className='bg-[#252525] text-[#FFFFFF] p-3 px-5 rounded-full'
+                                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => {
+                                    setAddaddress(true);
+                                }}
+                            >
+                                เพิ่มที่อยู่จัดส่ง
+                            </motion.button>
+                        </motion.div>
+                    </div>
+
+                    <AnimatePresence mode='wait' key={'block-shadow-addnewaddress'}>
+                        {Addaddress && <motion.div
+                            style={{
+                                position: 'fixed',
+                                top: '0',
+                                left: '0',
+                                width: '100vw',
+                                height: '100vh',
+                                backgroundColor: 'rgba(0, 0, 0, .25)'
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: .5
+                            }}
+                        ></motion.div>}
+                    </AnimatePresence>
+
+                    <AnimatePresence key={'addnewaddress'}>
+                        {Addaddress && (
+                            <motion.div 
+                                layoutId={"Addaddress"}
+                                className={
+                                    `
+                                        fixed top-0 bottom-0 p-4 bg-white select-none w-full items-center
+                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
+                                    `
+                                }
+                            >
+                                <motion.div className='w-full flex justify-end'>
+                                    <motion.button
+                                        whileHover={{ 
+                                            scale: 1.05,
+                                            backgroundColor: '#252525',
+                                            color: 'white'
+                                        }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => {
+                                            setAddaddress(false)
+                                        }}
+                                        className=" text-gray-600 text-sm px-2 py-0.5 rounded-lg">
+                                        <span className="text-xl bold">✕</span>
+                                    </motion.button>
+                                </motion.div>
+                                <motion.div className='w-full flex justify-center items-center flex-col'>
+                                    <h1 className='mb-5 text-xl'>เพิ่มที่อยู่ใหม่</h1>
+                                    <div className='w-full h-auto mt-5 flex justify-center'>
+                                        <div className="relative z-0 mb-6 w-3/6 group">
+                                            <input onChange={(e) => {
+                                                setAddressName(e.target.value)
+                                            }} value={addressName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อที่อยู่</label>
+                                        </div>
+                                    </div>
+
+                                    <div className='w-full h-auto mt-5 flex justify-center'>
+                                        <div className="relative z-0 mb-6 w-3/6 group">
+                                            <input onChange={(e) => {
+                                                setAddressDetail(e.target.value)
+                                            }} value={addressDetail} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ลายละเอียดที่อยู่</label>
+                                        </div>
+                                    </div>
+
+                                    <div className='w-3/6 h-auto mt-5 flex'>
+                                        <div className="relative z-0 mb-6 w-full group mr-2">
+                                            <input onChange={(e) => {
+                                                setSubDistrict(e.target.value)
+                                            }} value={subDistrict} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ตำบล / แขวง</label>
+                                        </div>
+
+                                        <div className="relative z-0 mb-6 w-full group ml-2">
+                                            <input onChange={(e) => {
+                                                setDistrict(e.target.value)
+                                            }} value={district} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">อำเภอ / เขต</label>
+                                        </div>
+                                    </div>
+
+                                    <div className='w-3/6 h-auto mt-5 flex'>
+                                        <div className="relative z-0 mb-6 w-full group mr-2">
+                                            <input onChange={(e) => {
+                                                setProvince(e.target.value)
+                                            }} value={province} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">จังหวัด</label>
+                                        </div>
+
+                                        <div className="relative z-0 mb-6 w-full group ml-2">
+                                            <input onChange={(e) => {
+                                                setProvince(e.target.value)
+                                            }} value={province} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รหัสไปรษณีย์</label>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                <motion.div
+                                    className='w-full flex justify-center mt-5'
+                                >
+                                    <motion.button 
+                                        className='bg-[#252525] text-[#FFFFFF] p-3 px-5 rounded-lg'
+                                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => {
+                                            setAddaddress(true);
+                                        }}
+                                    >
+                                        เพิ่มที่อยู่จัดส่ง
+                                    </motion.button>
+                                </motion.div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>}
 
                 {changePassword && <div className='w-8/12 mt9 lg:pl-10'>
