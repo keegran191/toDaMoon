@@ -20,7 +20,7 @@ function UserManagement ({ cookies}) {
 
     const [changeUser, setChangeUser] = useState(false)
     const [changePassword, setChangePassword] = useState(false)
-
+    const [address, setAddress] = useState(false)
 
     //User Value
     const [Fname, setFname] = useState('');
@@ -30,6 +30,14 @@ function UserManagement ({ cookies}) {
     const [password, setPassword] = useState();
     const [newPassword, setNewPassword] = useState();
     const [confirmNewPassword, setConfirmNewPassword] = useState();
+
+    //Address Value
+    const [addressNamem, setAddressNamem] = useState('');
+    const [addressDetail, setAddressDetail] = useState('');
+    const [subDistrict, setSubDistrict] = useState('');
+    const [district, setDistrict] = useState('');
+    const [province, setProvince] = useState('');
+    const [zipCode, setZipCode] = useState('');
 
     //Rotare State
     const [rotateUser, setRotateUser] = useState(0);
@@ -85,7 +93,7 @@ function UserManagement ({ cookies}) {
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
             
-            <div className='mt-40 flex px-10 justify-center lg:justify-start h-auto'>
+            <div className='mt-40 flex px-10 justify-center lg:justify-start h-2/3'>
                 <div className="hidden lg:block w-2/12">
                     <motion.div 
                         className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
@@ -93,6 +101,9 @@ function UserManagement ({ cookies}) {
                             if(toggleUser) {
                                 setToggleUser(false);
                                 setRotateUser(0)
+                                setChangeUser(false);
+                                setAddress(false)
+                                setChangePassword(false);
                             } else {
                                 setRotateUser(180);
                                 setToggleUser(true);
@@ -138,6 +149,7 @@ function UserManagement ({ cookies}) {
                         }}
                         onClick={() => {
                             setChangeUser(true);
+                            setAddress(false)
                             setChangePassword(false);
                         }}
                     >
@@ -146,7 +158,33 @@ function UserManagement ({ cookies}) {
                         </svg>
                         <span>เเก้ไขข้อมูลส่วนตัว</span>
                     </motion.div>}
-
+                    {toggleUser && <motion.div
+                        className={address ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
+                        whileHover={{
+                            border: '2px solid #252525',
+                        }}
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        transition={{
+                            duration: 0.2
+                        }}
+                        onClick={() => {
+                            setAddress(true)
+                            setChangePassword(false);
+                            setChangeUser(false);
+                        }}
+                    >
+                        <svg className={address ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path d="M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/>                        </svg>
+                        <span>เพิ่ม/เเก้ไขที่อยู่</span>
+                    </motion.div>}
                     {toggleUser && <motion.div
                         className={changePassword ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
                         whileHover={{
@@ -167,6 +205,7 @@ function UserManagement ({ cookies}) {
                         onClick={() => {
                             setChangePassword(true);
                             setChangeUser(false);
+                            setAddress(false)
                         }}
                     >
                         <svg className={changePassword ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -174,6 +213,18 @@ function UserManagement ({ cookies}) {
                         </svg>
                         <span>เเก้ไขรหัสผ่าน</span>
                     </motion.div>}
+
+                    <motion.div 
+                        className='flex justify-center w-full cursor-pointer'
+                    >
+                        <motion.button 
+                            className='bg-[#252525] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
+                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            ออกจากระบบ
+                        </motion.button>
+                    </motion.div>
                 </div>
                 <div className='hidden lg:block w-2 h-auto border-l-2 border-[#252525]'></div>
 
