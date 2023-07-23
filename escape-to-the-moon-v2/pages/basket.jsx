@@ -187,7 +187,7 @@ export default function Store({ cookies }) {
 
             <div className='block px-5 xl:px-44'>
                 <div className='w-full h-1 border-b-2 border-[#252525] '></div>
-                <div class='w-full h-auto grid grid-cols-5 px-5 py-5 xl:py-10 lg:px-10'>
+                <div class='w-full h-auto grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
                     <div class='text-lg text-center col-span-2'>สินค้า</div> 
                     <div class='text-lg text-center col-start-3'>ราคา</div>
                     <div class='text-lg text-center'>จำนวน</div>
