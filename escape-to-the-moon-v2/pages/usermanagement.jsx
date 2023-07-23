@@ -657,7 +657,7 @@ function UserManagement ({ cookies}) {
                                     className='w-full flex justify-center mt-5'
                                 >
                                     <motion.button 
-                                        className='bg-[#252525] text-[#FFFFFF] p-3 px-5 rounded-lg'
+                                        className='bg-[#252525] text-[#FFFFFF] p-3 px-5 rounded-lg mx-5'
                                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={async () => {
