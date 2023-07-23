@@ -28,6 +28,8 @@ export default function Store({ cookies }) {
     const [coffeeRoast, setCoffeeRoast] = useState([]);
     const [coffeeFlavor, setCoffeFlavor] = useState([]);
 
+    const [addressUser, setAddressUser] = useState([]);
+    const [selectAddressUser, setSelectAddressUser] = useState(0);
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
@@ -104,9 +106,64 @@ export default function Store({ cookies }) {
         }
     }
 
+    const GetAddress = (userId) => {
+        Axios.get(`http://localhost:3000/api/address/get/${userId}`).then((response) => {
+            setAddressUser(response.data.map((address) =>  ({ value: address.id, label: address.name})));
+        });
+    }
+
+    //Select Style
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            width: "100%",
+            borderRadius: "50px",
+            boxShadow: state.isFocused ? "0 0 0 0px #252525" : "0 0 0 0px #252525",
+            borderColor: state.isFocused ? "none" : "none",
+            padding: "9px 10px",
+            "&:hover": {
+                outline: "none",
+            },
+        }),
+
+        input: (provided, state) => ({
+            ...provided,
+            borderRadius: "50px",
+            boxShadow: state.isFocused ? "none" : "none",
+            borderColor: state.isFocused ? "none" : "none",
+        }),
+
+        menu: (provided, state) => ({
+            ...provided,
+            borderRadius: "10px",
+            padding: "10px",
+        }),
+
+        menuList: (provided, state) => ({
+            ...provided,
+            borderRadius: "10px",
+          }),
+
+          option: (provided, state) => ({
+            ...provided,
+            color: state.isFocused ? "#FFFFFF" : "#252525",
+            backgroundColor: state.isFocused ? "#666" : "transparent",
+            "&:hover": {
+              backgroundColor: "#666",
+              color: "#FFFFFF",
+            },
+            "&:active": {
+              backgroundColor: "#252525",
+              color: "#FFFFFF",
+            },
+            ...(state.isSelected && { color: "#FFFFFF" , backgroundColor: "#252525"}), // add this line to change the text color of the selected option
+          }),
+    }
+
     useEffect(() => {
         GetBasketAmount(userId)
         GetBasket(userId)
+        GetAddress(userId)
         GetCategory();
         GetSubCategory(0);
         GetProcess(42);
@@ -145,7 +202,7 @@ export default function Store({ cookies }) {
                 {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0&& basketList.map((stock, index) => {
                     return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]'>
                         <div class='text-lg text-left col-span-2 flex'>
-                            <div className='w-36 h-36 '>
+                            <div className='w-32 h-32 '>
                                 <img className='w-full h-full rounded-lg' src={`/uploads/${stock.Image}`}></img>
                             </div>
                             <div className='ml-5' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
@@ -238,6 +295,35 @@ export default function Store({ cookies }) {
                     </motion.div>
                 })}
                 
+                <div className='flex justify-end items-center my-5'>
+                    <span className='text-xl mr-5'>ที่อยู่จัดส่งสินค้า</span>
+                    <div className="w-full md:w-64 sm:pr-2">
+                        <Select
+                            className='shadow-lg rounded-full'
+                            inputId='coffeeId'
+                            options={addressUser}
+                            onChange={(newValue,meta) => {
+                                setSelectAddressUser(newValue.value); 
+                            }}
+                            styles={customStyles}
+                            placeholder="เลือกที่อยู่สำหรับจัดส่ง"
+                        />
+                    </div>
+
+                    <span className='text-xl ml-10 mr-5'>ราคารวมทั้งหมด</span>
+                </div>
+                <div className='flex justify-end items-center my-5'>
+                    <motion.button 
+                        className='bg-[#252525] text-[#FFFFFF] p-3 px-10 mr-5 rounded-lg'
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                            
+                        }}
+                    >
+                        ชำระเงิน
+                    </motion.button>
+                </div>
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
             </div>
 
