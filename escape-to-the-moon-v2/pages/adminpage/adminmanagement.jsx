@@ -210,7 +210,7 @@ function AdminManagement({ cookies }) {
                     </div>
                     <div className='w-full h-auto flex justify-start mt-5'>
                         <div className="relative z-0 mb-6 w-3/6 group">
-                            <input onChange={filterPhoneNumberInput} value={Phone} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                            <input onChange={filterPhoneNumberInput} value={Phone} type="tel" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทร</label>
                         </div>
                     </div>
@@ -226,7 +226,13 @@ function AdminManagement({ cookies }) {
                         className='bg-[#252525] text-[#FFFFFF] w-auto p-3 rounded-lg'
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
-
+                        onClick={async () => {
+                            if (Fname === "" || Sname === "" || Phone === undefined || Email === "") {
+                              alert("Please fill in all fields.");
+                            } else {
+                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Email=${Email}&Phone=${Phone}`);
+                            }
+                          }}
                     >
                             บันทึกข้อมูล
                     </motion.button>
@@ -260,6 +266,12 @@ function AdminManagement({ cookies }) {
                         className='bg-[#252525] text-[#FFFFFF] w-auto p-3 rounded-lg'
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={ async () => {
+                            
+                           await Axios.get(`http://localhost:3000/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`)
+                                
+                            
+                        }}
                     >
                             บันทึกข้อมูล
                     </motion.button>

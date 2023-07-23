@@ -38,7 +38,7 @@ export default async function handler(req, res) {
       Flavor: req.body.coffeeFlavor,
       CategoryId: req.body.category,
       SubCategoryId: req.body.subCategory,
-      Image: req.body.existingImages // Assuming the existing image value is passed as 'existingImages' in the request body
+      Image: req.body.existingImages 
     };
 
     if (req.file && req.file.filename !== req.body.existingImages) {

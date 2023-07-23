@@ -23,21 +23,21 @@ export default async function handler(req, res) {
           cookie.serialize("loggedin", user.is_admin, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
-            maxAge: 60 * 60,
+            maxAge: 24 * 60 * 60,
             sameSite: "strict",
             path: "/"
           }),
           cookie.serialize("fname", user.user_fname, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
-            maxAge: 60 * 60,
+            maxAge: 24 * 60 * 60,
             sameSite: "strict",
             path: "/"
           }),
           cookie.serialize("userId", user.id, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
-            maxAge: 60 * 60,
+            maxAge: 24 * 60 * 60,
             sameSite: "strict",
             path: "/"
           })
