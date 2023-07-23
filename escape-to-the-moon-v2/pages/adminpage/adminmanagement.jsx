@@ -11,7 +11,7 @@ import { parse } from 'cookie';
 
 function AdminManagement({ cookies }) {
     const { fname, userId } = cookies;
-    const [toggleUser, setToggleUser] = useState(true)
+    const [toggleUser, setToggleUser] = useState(false)
     const [toggleOrder, setToggleOrder] = useState(false)
 
     const [changeUser, setChangeUser] = useState(false)
@@ -28,7 +28,7 @@ function AdminManagement({ cookies }) {
     const [confirmNewPassword, setConfirmNewPassword] = useState();
 
     //Rotare State
-    const [rotateUser, setRotateUser] = useState(180);
+    const [rotateUser, setRotateUser] = useState(0);
 
     const filterFnameTextInput = (e) => {
         const value = e.target.value;
