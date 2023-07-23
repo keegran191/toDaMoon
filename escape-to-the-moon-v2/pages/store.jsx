@@ -135,7 +135,7 @@ export default function Store({ cookies }) {
 
     //StockList Api
     const GetStokcList = () => {
-        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}`).then((response) => {
+        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}&stocktype=${StockType}`).then((response) => {
             setStockList(response.data);
         });
     };
@@ -247,6 +247,7 @@ export default function Store({ cookies }) {
                                 setFlavor(0);
                                 setCategoryId(0);
                                 setSubCategoryId(0)
+
                             }}
                             styles={customStyles}
                             placeholder="เลือกชนิดสินค้า"
@@ -262,6 +263,7 @@ export default function Store({ cookies }) {
                                 options={coffeeProcess}
                                 onChange={(newValue,meta) => {
                                     setProcess(newValue.value); 
+                                    Axios.get(`http://localhost:3000/api/subcategory/filter?label=${subCategoryLabel}&cid=${value}`)
                                 }}
                                 styles={customStyles}
                                 placeholder="เลือกวิธีการแปรรูป"
@@ -276,7 +278,7 @@ export default function Store({ cookies }) {
                             <Select
                                 inputId="roastId"
                                 options={coffeeRoast}
-                                onChange={(newValue,meta) => {
+                                onChange={ (newValue,meta) => {
                                     setRoast(newValue.value); 
                                 }}
                                 styles={customStyles}
