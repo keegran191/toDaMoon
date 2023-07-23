@@ -22,6 +22,9 @@ function UserManagement ({ cookies}) {
     const [changePassword, setChangePassword] = useState(false)
     const [address, setAddress] = useState(false)
 
+    const [order, setOrder] = useState(false)
+    const [history, setHistory] = useState(false)
+
     //User Value
     const [Fname, setFname] = useState('');
     const [Sname, setSname] = useState('');
@@ -108,6 +111,8 @@ function UserManagement ({ cookies}) {
                                 setChangeUser(false);
                                 setAddress(false)
                                 setChangePassword(false);
+                                setOrder(false);
+                                setHistory(false);
                             } else {
                                 setRotateUser(180);
                                 setToggleUser(true);
@@ -152,8 +157,10 @@ function UserManagement ({ cookies}) {
                         }}
                         onClick={() => {
                             setChangeUser(true);
-                            setAddress(false)
+                            setAddress(false);
                             setChangePassword(false);
+                            setOrder(false);
+                            setHistory(false);
                         }}
                     >
                         <svg className={changeUser ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -182,6 +189,8 @@ function UserManagement ({ cookies}) {
                             setAddress(true)
                             setChangePassword(false);
                             setChangeUser(false);
+                            setOrder(false);
+                            setHistory(false);
                         }}
                     >
                         <svg className={address ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -209,6 +218,8 @@ function UserManagement ({ cookies}) {
                             setChangePassword(true);
                             setChangeUser(false);
                             setAddress(false)
+                            setOrder(false);
+                            setHistory(false);
                         }}
                     >
                         <svg className={changePassword ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -223,6 +234,8 @@ function UserManagement ({ cookies}) {
                             if(toggleHistory) {
                                 setToggleHistory(false);
                                 setRotateHistory(0)
+                                setOrder(false);
+                                setHistory(false)
                             } else {
                                 setRotateHistory(180);
                                 setToggleHistory(true);
@@ -247,6 +260,68 @@ function UserManagement ({ cookies}) {
                             </svg>
                         </motion.div>
                     </motion.div>
+
+                    {toggleHistory && <motion.div
+                        className={order ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
+                        whileHover={{
+                            border: '2px solid #252525',
+                        }}
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        transition={{
+                            duration: 0.2
+                        }}
+                        onClick={() => {
+                            setOrder(true);
+                            setHistory(false)
+                            setChangeUser(false);
+                            setAddress(false)
+                            setChangePassword(false);
+                        }}
+                    >
+                        <svg className={order ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path d="M101.5 64C114.6 26.7 150.2 0 192 0s77.4 26.7 90.5 64H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h37.5zM224 96c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM160 368c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 392c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24zm64-120c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 296c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"/>
+                        </svg>
+                        <span>รายการสั่งซื้อ</span>
+                    </motion.div>}
+
+                    {toggleHistory && <motion.div
+                        className={history ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
+                        whileHover={{
+                            border: '2px solid #252525',
+                        }}
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        transition={{
+                            duration: 0.2
+                        }}
+                        onClick={() => {
+                            setOrder(false);
+                            setHistory(true)
+                            setChangeUser(false);
+                            setAddress(false)
+                            setChangePassword(false);
+                        }}
+                    >
+                        <svg className={history ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/>
+                        </svg>
+                        <span>ประวัติการสั่งซื้อ</span>
+                    </motion.div>}
 
                     <div className='flex justify-center cursor-pointer mt-48'>
                         <motion.button 
@@ -415,8 +490,8 @@ function UserManagement ({ cookies}) {
 
                                         <div className="relative z-0 mb-6 w-full group ml-2">
                                             <input onChange={(e) => {
-                                                setProvince(e.target.value)
-                                            }} value={province} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                setZipCode(e.target.value)
+                                            }} value={zipCode} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รหัสไปรษณีย์</label>
                                         </div>
                                     </div>
@@ -472,6 +547,14 @@ function UserManagement ({ cookies}) {
                     >
                             บันทึกข้อมูล
                     </motion.button>
+                </div>}
+
+                {order && <div className='w-8/12 mt9 lg:pl-10'>
+                    <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
+                </div>}
+
+                {history && <div className='w-8/12 mt9 lg:pl-10'>
+                    <h1 className=' text-xl'>ประวิติการสั่งซื้อ</h1>
                 </div>}
             </div>
         </div>
