@@ -106,7 +106,7 @@ function Subcategory({ cookies }) {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <NavAdmin name={fname} userid={userId} overCount={0}></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
 
 
             <div className={style.adminContainer}>

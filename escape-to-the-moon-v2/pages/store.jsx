@@ -192,11 +192,11 @@ export default function Store({ cookies }) {
     }, [userId]);
 
     //Validate and Utilities Function
-    const TotalItem = (e) => {
-        const value = e.target.value;
-        const sanitizedValue = value.replace(/[^0-9]/g, '');
-        setItemAmount(sanitizedValue);
-    }
+    // const TotalItem = (e) => {
+    //     const value = e.target.value;
+    //     const sanitizedValue = value.replace(/[^0-9]/g, '');
+    //     setItemAmount(sanitizedValue);
+    // }
 
     return(
         <div className='select-none'>
