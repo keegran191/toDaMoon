@@ -24,7 +24,7 @@ function Navbar({
                 </Link>}
                 {userid != null && 
                 <div className='flex text-[#ECEBE8] items-center'>
-                    <Link href="/">
+                    <Link href="/usermanagement">
                         <a id="user" className="flex items-center text-[#ECEBE8] text-sm">{name}</a>
                     </Link>
                     <Link href="/basket">

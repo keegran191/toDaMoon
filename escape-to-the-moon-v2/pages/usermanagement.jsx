@@ -1,16 +1,20 @@
+import Nav from '../components/Navbar'
 import Head from 'next/head'
-import style from '../../styles/Admin.module.css'
-import NavAdmin from '../../components/NavbarAdmin.js'
+import style from '../styles/RegisLogin.module.css'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Foot from '../components/Foot'
 import Axios from 'axios';
-import { useState, useEffect } from 'react';
-import UniversalModal from '../../components/Modal.js';
-import React from 'react'
-import Select from 'react-select'
+import { useState, useEffect, createRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Select from 'react-select'
 import { parse } from 'cookie';
+import UniversalModal from '../components/Modal.js';
 
-function AdminManagement({ cookies }) {
+function UserManagement ({ cookies}) {
     const { fname, userId } = cookies;
+    const [stockAmount, setStockAmount] = useState(0)
+
     const [toggleUser, setToggleUser] = useState(false)
     const [toggleOrder, setToggleOrder] = useState(false)
 
@@ -54,18 +58,34 @@ function AdminManagement({ cookies }) {
         setNewPassword(sanitizedValue)
     }
 
+    const GetBasketAmount = (userId) => {
+        Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+            .then((response) => {
+                const { data } = response;
+                setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount
+            })
+            .catch((error) => {
+                console.error('Error fetching basket amount:', error);
+                setStockAmount(0); // Set a default value in case of an error
+            });
+    };  
+
+    useEffect(() => {
+        GetBasketAmount(userId)
+    }, [userId]);
+
     return (
         <div className='select-none'>
             <Head>
-            <title>Admin</title>
+                <title>Home</title>
                 <link rel="icon" href="/ttmLogo.png"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
-
-            <div className='mt-20 flex px-10 justify-center lg:justify-start h-auto'>
+            <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
+            
+            <div className='mt-40 flex px-10 justify-center lg:justify-start h-auto'>
                 <div className="hidden lg:block w-2/12">
                     <motion.div 
                         className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
@@ -97,7 +117,6 @@ function AdminManagement({ cookies }) {
                                 <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>            
                             </svg>
                         </motion.div>
-
                     </motion.div>
 
                     {toggleUser && <motion.div
@@ -155,43 +174,7 @@ function AdminManagement({ cookies }) {
                         </svg>
                         <span>เเก้ไขรหัสผ่าน</span>
                     </motion.div>}
-
-                    <motion.div 
-                        className={toggleOrder ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
-                        whileHover={{
-                            border: '2px solid #252525',
-                        }}
-                        transition={{
-                            duration: 0.2
-                        }}
-                        onClick={() => {
-                            setToggleOrder(true);
-                            setToggleUser(false);
-                            setChangeUser(false);
-                            setChangePassword(false);
-                            setRotateUser(0)
-                        }}
-                    >
-                        <svg className={toggleOrder ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-1 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-1 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                            <path d="M101.5 64C114.6 26.7 150.2 0 192 0s77.4 26.7 90.5 64H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h37.5zM224 96c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM160 368c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 392c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24zm64-120c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 296c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"/>
-                        </svg>
-                        <span>ออเดอร์</span>
-                    </motion.div>
-
-                    <motion.div 
-                        className='w-full flex justify-center cursor-pointer mt-48'
-                    >
-                        <motion.button 
-                            className='bg-[#252525] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
-                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                            whileTap={{ scale: 0.95 }}
-
-                        >
-                            ออกจากระบบ
-                        </motion.button>
-                    </motion.div>
                 </div>
-
                 <div className='hidden lg:block w-2 h-auto border-l-2 border-[#252525]'></div>
 
                 {changeUser && <div className='w-8/12 mt9 lg:pl-10'>
@@ -265,12 +248,11 @@ function AdminManagement({ cookies }) {
                     </motion.button>
                 </div>}
             </div>
-
         </div>
     )
 }
 
-export default AdminManagement
+export default UserManagement
 
 export async function getServerSideProps(context) {
     const cookies = parse(context.req.headers.cookie || '');
@@ -279,4 +261,4 @@ export async function getServerSideProps(context) {
         cookies,
       },
     };
-  }
+}
