@@ -25,6 +25,9 @@ function UserManagement ({ cookies}) {
     const [order, setOrder] = useState(false)
     const [history, setHistory] = useState(false)
 
+    const [IsDelete, setDelete] = useState(false);
+    const [targetDeleteId, setTargetDeleteId] = useState(0);
+
     //User Value
     const [Fname, setFname] = useState('');
     const [Sname, setSname] = useState('');
@@ -396,18 +399,21 @@ function UserManagement ({ cookies}) {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
-                                        setChangeAddress(true);
-                                        setAddressName(address.name)
-                                        setAddressDetail(address.detail)
-                                        setSubDistrict(address.subdistrict)
-                                        setDistrict(address.district)
-                                        setProvince(address.province)
-                                        setZipCode(address.zipCode)
-                                        setSelectedId(address.id)
-                                    }}
+                                    setChangeAddress(true);
+                                    setAddressName(address.name);
+                                    setAddressDetail(address.detail);
+                                    setSubDistrict(address.subdistrict);
+                                    setDistrict(address.district);
+                                    setProvince(address.province);
+                                    setZipCode(address.zipCode);
+                                    setSelectedId(address.id);
+                                }}
                                 >
                                     <p className='text-xl mb-5'>{address.name}</p>
-                                    <span className=''>{address.detail + " ตำบล " + address.subdistrict + " อำเภอ " + address.district + " จังหวัด " + address.province + " " + address.zipCode}</span>
+                                    <span className=''>
+                                        {address.detail + " ตำบล " + address.subdistrict + " อำเภอ " + address.district + " จังหวัด " + address.province + " " + address.zipCode}
+                                    </span>
+                                    
                                 </motion.div>
                             )
                         })}
@@ -657,7 +663,7 @@ function UserManagement ({ cookies}) {
                                     className='w-full flex justify-center mt-5'
                                 >
                                     <motion.button 
-                                        className='bg-[#252525] text-[#FFFFFF] p-3 px-5 rounded-lg mx-5'
+                                        className='bg-[#252525] text-[#FFFFFF] p-3 px-5 rounded-lg mx-5 border-2 border-[#252525]'
                                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={async () => {
@@ -675,6 +681,24 @@ function UserManagement ({ cookies}) {
                                         }}
                                     >
                                         เพิ่มที่อยู่จัดส่ง
+                                    </motion.button>
+
+                                    <motion.button 
+                                        className=' text-[#252525] p-3 px-5 rounded-lg mx-5 border-2 border-[#252525]'
+                                        whileHover={{ 
+                                            scale: 1.05, 
+                                            transition: { duration: 0.2 },
+                                            backgroundColor: '#E30000',
+                                            color: '#FFFFFF',
+                                            borderColor: '#E30000'
+                                        }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => {
+                                            setDelete(true)
+                                            setTargetDeleteId(selectedId)
+                                        }}
+                                    >
+                                        ลบที่อยู่จัดส่ง
                                     </motion.button>
                                 </motion.div>
                             </motion.div>
@@ -723,6 +747,76 @@ function UserManagement ({ cookies}) {
                     <h1 className=' text-xl'>ประวิติการสั่งซื้อ</h1>
                 </div>}
             </div>
+
+            <AnimatePresence key={'modalDelete'} mode='wait'>
+                { IsDelete && targetDeleteId && <motion.div
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100vw',
+                        height: '100vh',
+                        backgroundColor: 'rgba(0, 0, 0, .25)'
+                    }}
+                    initial={{
+                        opacity: 0,
+                    }}
+                    animate={{
+                        opacity: 1,
+                    }}
+                    exit={{
+                        opacity: 0
+                    }}
+                    transition={{
+                        duration: .5
+                    }}
+                ></motion.div>}
+            </AnimatePresence>
+
+
+            { IsDelete && targetDeleteId &&
+                <motion.div
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100vw',
+                        height: '100vh',
+                    }}
+
+                    initial={{
+                        scale: 0.0,
+                    }}
+                    animate={{
+                        scale: 0.95,
+                    }}
+                    exit={{
+                        scale: 0.0
+                    }}
+                    transition={{
+                        duration: .2
+                    }}
+                >
+                    <UniversalModal
+                        message={"คุณต้องการลบที่อยู่ " + addressName + " ?"}
+                        txtApply="ลบ"
+                        onApply={ async () =>{
+                            await Axios.get(`http://localhost:3000/api/address/delete/${targetDeleteId}`)
+                            setSelectedId(null);
+                            setChangeAddress(false);
+                            setDelete(false);
+                            setTargetDeleteId(null);
+                            GetAddress(userId);
+                        }}
+                        txtClose="ยกเลิก"
+                        onClose={()=>{
+                            setDelete(false);
+                            setTargetDeleteId(null);
+                        }}
+                    >
+                    </UniversalModal>
+                </motion.div>
+            }
         </div>
     )
 }
