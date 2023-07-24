@@ -418,7 +418,7 @@ export default function Store({ cookies }) {
                                 GetSubCategory(post.CategoryId)
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
-                                setItemAmount(getTotalStockAmount(basketList, post.Id))
+                                // console.log(basketList.map(e => e.stockId).indexOf(post.Id))
                             }}
                             style={{
                                 opacity: selectedId == post.Id ? 0 : 1,
@@ -600,7 +600,7 @@ export default function Store({ cookies }) {
                                                         if (ItemAmount !== 0) {
                                                             let totalStockAmount = getTotalStockAmount(basketList, selectedId);
                                                             let selectedIndex = basketList.findIndex(e => e.stockId == selectedId);
-                                                            console.log(selectedId, selectedIndex)
+                                                            // console.log(selectedId, selectedIndex)
                                                             if (selectedIndex !== -1) {
                                                                 const selectedItem = basketList[selectedIndex];
                                                                 if (selectedItem.stockAmount !== undefined) {
