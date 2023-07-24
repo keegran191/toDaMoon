@@ -20,6 +20,9 @@ export default function Store({ cookies }) {
     const [stockList, setStockList] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
 
+    //Basket Value
+    const [basketList, setBasketList] = useState([])
+
     //Value of Item
     const [Title, setTitle] = useState('');
     const [Detail, setDetail] = useState('');
@@ -135,7 +138,7 @@ export default function Store({ cookies }) {
 
     //StockList Api
     const GetStokcList = () => {
-        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}&stocktype=${StockType}`).then((response) => {
+        Axios.get(`http://localhost:3000/api/store/filter?search=${search}&Stocktype=${StockTypeFilter}`).then((response) => {
             setStockList(response.data);
         });
     };
@@ -169,6 +172,18 @@ export default function Store({ cookies }) {
             });
     };  
 
+    const GetBasket = (userId) => {
+        if (userId) {
+            Axios.get(`http://localhost:3000/api/basket/get/${userId}`)
+            .then((response) => {
+                setBasketList(response.data)
+            })
+            .catch((error)=> {
+                console.error('Error fetching basket amount:', error);
+            })
+        }
+    }
+
     useEffect(() => {
         GetStokcList();
         GetCoffee();
@@ -189,6 +204,7 @@ export default function Store({ cookies }) {
 
     useEffect(() => {
         GetBasketAmount(userId)
+        GetBasket(userId)
     }, [userId]);
 
     //Validate and Utilities Function
@@ -539,28 +555,58 @@ export default function Store({ cookies }) {
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 1.00 }}
                                                 onClick={ async () => {
-                                                    if(userId != undefined) {
-                                                        if (ItemAmount != 0) {
-                                                            await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`)      
-                                                            setSelectedId(null)
-                                                            setTitle('')
-                                                            setDetail('')
-                                                            setAmount(0)
-                                                            setPrice(0)
-                                                            setIsAdvise(0)
-                                                            setStockType(0)
-                                                            setProcess(0)
-                                                            setRoast(0)
-                                                            setFlavor(0)
-                                                            setCategoryId(0)
-                                                            setSubCategoryId(0)
-                                                            GetStokcList();
-                                                            GetBasketAmount(userId)
+                                                    if (userId !== undefined) {
+                                                        if (ItemAmount !== 0) {
+                                                            const selectedIndex = basketList.map(e => e.stockId).indexOf(selectedId);
+                                                            if (selectedIndex !== -1) {
+                                                                const selectedItem = basketList[selectedIndex];
+                                                                if (selectedItem.stockAmount !== undefined) {
+                                                                    if (ItemAmount > selectedItem.Amount) {
+                                                                        alert("จำนวนสินค้าของทางร้านไม่เพียงพอ");
+                                                                    } else {
+                                                                        await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`);
+                                                                        setSelectedId(null);
+                                                                        setTitle('');
+                                                                        setDetail('');
+                                                                        setAmount(0);
+                                                                        setPrice(0);
+                                                                        setIsAdvise(0);
+                                                                        setStockType(0);
+                                                                        setProcess(0);
+                                                                        setRoast(0);
+                                                                        setFlavor(0);
+                                                                        setCategoryId(0);
+                                                                        setSubCategoryId(0);
+                                                                        GetStokcList();
+                                                                        GetBasketAmount(userId);
+                                                                    }
+                                                                } else {
+                                                                    // Handle the case when stockAmount is undefined
+                                                                    alert("ไม่สามารถเพิ่มสินค้าได้ในขณะนี้");
+                                                                }
+                                                            } else {
+                                                                // Item is not found in basketList, you can add it directly
+                                                                await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`);
+                                                                setSelectedId(null);
+                                                                setTitle('');
+                                                                setDetail('');
+                                                                setAmount(0);
+                                                                setPrice(0);
+                                                                setIsAdvise(0);
+                                                                setStockType(0);
+                                                                setProcess(0);
+                                                                setRoast(0);
+                                                                setFlavor(0);
+                                                                setCategoryId(0);
+                                                                setSubCategoryId(0);
+                                                                GetStokcList();
+                                                                GetBasketAmount(userId);
+                                                            }
                                                         } else {
-                                                            alert("โปรดใส่จำนวนให้ถูกต้อง")
+                                                            alert("โปรดใส่จำนวนให้ถูกต้อง");
                                                         }
                                                     } else {
-                                                        alert("กรุณาลงชื่อเข้าใช้เพื่อหยิบของใส่ตระกร้า")
+                                                        alert("กรุณาลงชื่อเข้าใช้เพื่อหยิบของใส่ตระกร้า");
                                                     }
                                                 }}
                                             >
