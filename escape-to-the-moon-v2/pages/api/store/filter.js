@@ -8,7 +8,8 @@ export default async function handler(req, res) {
   const roast  = req.query.Roast
   const flavor  = req.query.Flavor
   const categoly  = req.query.CategolyId
-  
+  const subCategory = req.query.subCategoryId
+
   try {
     let query = 'SELECT * FROM stock WHERE Title LIKE ?';
     const queryParams = [`%${search}%`];
@@ -51,6 +52,14 @@ export default async function handler(req, res) {
       const categolyCondition = categolyPlaceholders.join(" OR ");
       query += ' AND (' + categolyCondition + ')';
       queryParams.push(...categolyArray);
+    }
+
+    if (subCategory && subCategory !== '0') {
+      const subCategoryArray = Array.isArray(subCategory) ? subCategory : [subCategory];
+      const subCategoryPlaceholders = subCategoryArray.map(() => "StockType = ?");
+      const subCategoryCondition = subCategoryPlaceholders.join(" OR ");
+      query += ' AND (' + subCategoryCondition + ')';
+      queryParams.push(...subCategoryArray);
     }
 
     const [results] = await pool.query(query, queryParams);
