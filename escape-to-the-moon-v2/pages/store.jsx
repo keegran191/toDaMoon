@@ -9,6 +9,7 @@ import { useState, useEffect, createRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
 import { parse } from 'cookie';
+import { getTsBuildInfoEmitOutputFilePath } from 'typescript'
 
 export default function Store({ cookies }) {
     const { fname, userId } = cookies;
@@ -138,7 +139,8 @@ export default function Store({ cookies }) {
 
     //StockList Api
     const GetStokcList = () => {
-        Axios.get(`http://localhost:3000/api/store/filter?search=${search}&Stocktype=${StockTypeFilter}`).then((response) => {
+        Axios.get(`http://localhost:3000/api/store/filter?search=${search}&StockType=${StockTypeFilter}&
+        Process=${Process}&Roast=${Roast}&Flavor=${Flavor}&CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`).then((response) => {
             setStockList(response.data);
         });
     };
@@ -207,6 +209,10 @@ export default function Store({ cookies }) {
         GetBasket(userId)
     }, [userId]);
 
+    useEffect(() => {
+        GetStokcList()
+
+    },[StockTypeFilter, Process, Roast, Flavor, CategolyId, subCategoryId]);
     //Validate and Utilities Function
     // const TotalItem = (e) => {
     //     const value = e.target.value;
@@ -258,11 +264,15 @@ export default function Store({ cookies }) {
                             options={optionCoffee}
                             onChange={(newValue,meta) => {
                                 setStockTypeFilter(newValue.value);
+                                Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
+                                    &search=${search}&StockType=${newValue.value}&Roast=${Roast}&Flavor=${Flavor}
+                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
                                 setProcess(0); 
                                 setRoast(0);
                                 setFlavor(0);
                                 setCategoryId(0);
                                 setSubCategoryId(0)
+                                GetStokcList()
 
                             }}
                             styles={customStyles}
@@ -279,7 +289,10 @@ export default function Store({ cookies }) {
                                 options={coffeeProcess}
                                 onChange={(newValue,meta) => {
                                     setProcess(newValue.value); 
-                                    Axios.get(`http://localhost:3000/api/subcategory/filter?label=${subCategoryLabel}&cid=${value}`)
+                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${newValue.value}
+                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${Flavor}
+                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
+                                    GetStokcList()
                                 }}
                                 styles={customStyles}
                                 placeholder="เลือกวิธีการแปรรูป"
@@ -295,7 +308,12 @@ export default function Store({ cookies }) {
                                 inputId="roastId"
                                 options={coffeeRoast}
                                 onChange={ (newValue,meta) => {
-                                    setRoast(newValue.value); 
+                                    setRoast(newValue.value);
+                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
+                                    &search=${search}&StockType=${StockType}&Roast=${newValue.value}&Flavor=${Flavor}
+                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
+                                    GetStokcList()
+                                 
                                 }}
                                 styles={customStyles}
                                 placeholder="เลือกวิธีการคั่ว"
@@ -312,6 +330,11 @@ export default function Store({ cookies }) {
                                 options={coffeeFlavor}
                                 onChange={(newValue,meta) => {
                                     setFlavor(newValue.value); 
+                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
+                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${newValue.value}
+                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
+                                    GetStokcList()
+                                
                                 }}
                                 styles={customStyles}
                                 placeholder="เลือกกลิ่น รส"
@@ -328,7 +351,12 @@ export default function Store({ cookies }) {
                                 options={optionCategory}
                                 onChange={(newValue, meta) => {
                                     setCategoryId(newValue.value);
+                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
+                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${Flavor}
+                                    &CategolyId=${newValue.value}&subCategoryId=${subCategoryId}`)
+                                
                                     setSubCategoryId(0); // Reset subCategoryId when the category changes
+                                    GetStokcList()
                                 }}
                                 styles={customStyles}
                                 placeholder="เลือกประเภทสินค้า"
@@ -344,6 +372,11 @@ export default function Store({ cookies }) {
                                     options={optionSubCategory}
                                     onChange={(newValue, meta) => {
                                         setSubCategoryId(newValue.value);
+                                        Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
+                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${Flavor}
+                                    &CategolyId=${CategolyId}&subCategoryId=${newValue.value}`)
+                                        GetStokcList()
+                                
                                     }}
                                     styles={customStyles}
                                     placeholder="เลือกหมวดหมู่สินค้า"
