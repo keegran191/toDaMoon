@@ -342,6 +342,11 @@ function UserManagement ({ cookies}) {
                             className='bg-[#252525] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             whileTap={{ scale: 0.95 }}
+                            onClick={async () => {
+                            
+                                await Axios.get(`http://localhost:3000/api/logout`);
+                                window.location.href = "/";
+                            }}
                         >
                             ออกจากระบบ
                         </motion.button>
@@ -381,7 +386,16 @@ function UserManagement ({ cookies}) {
                         className='bg-[#252525] text-[#FFFFFF] w-auto p-3 rounded-lg'
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={async () => {
+                            if (Fname === "" || Sname === "" || Phone === undefined || Email === "") {
+                              alert("Please fill in all fields.");
+                            } else {
 
+                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Email=${Email}&Phone=${Phone}`);
+                              window.location.reload();
+
+                            }
+                          }}
                     >
                             บันทึกข้อมูล
                     </motion.button>
@@ -734,6 +748,12 @@ function UserManagement ({ cookies}) {
                         className='bg-[#252525] text-[#FFFFFF] w-auto p-3 rounded-lg'
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={ async () => {
+                            
+                            await Axios.get(`http://localhost:3000/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`)
+                            window.location.reload();
+                             
+                         }}
                     >
                             บันทึกข้อมูล
                     </motion.button>
