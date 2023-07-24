@@ -1,7 +1,6 @@
 import pool from "../../../lib/database";
 
 export default async function handler(req, res) {
-  console.log(req.query)
   const search = req.query.search;
   const stocktype = req.query.Stocktype
   const process  = req.query.Process

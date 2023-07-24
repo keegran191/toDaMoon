@@ -139,8 +139,7 @@ export default function Store({ cookies }) {
 
     //StockList Api
     const GetStokcList = () => {
-        Axios.get(`http://localhost:3000/api/store/filter?search=${search}&StockType=${StockTypeFilter}&
-        Process=${Process}&Roast=${Roast}&Flavor=${Flavor}&CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`).then((response) => {
+        Axios.get(`http://localhost:3000/api/store/filter?search=${search}&StockType=${StockTypeFilter}&Process=${Process}&Roast=${Roast}&Flavor=${Flavor}&CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`).then((response) => {
             setStockList(response.data);
         });
     };
@@ -185,6 +184,16 @@ export default function Store({ cookies }) {
             })
         }
     }
+
+    const getTotalStockAmount = (data, selectedId) => {
+        let totalAmount = 0;
+        for (const item of data) {
+          if (item.stockId === selectedId) {
+            totalAmount += item.stockAmount;
+          }
+        }
+        return totalAmount;
+    };
 
     useEffect(() => {
         GetStokcList();
@@ -409,7 +418,7 @@ export default function Store({ cookies }) {
                                 GetSubCategory(post.CategoryId)
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
-                                setItemAmount(0)
+                                setItemAmount(getTotalStockAmount(basketList, post.Id))
                             }}
                             style={{
                                 opacity: selectedId == post.Id ? 0 : 1,
@@ -481,7 +490,6 @@ export default function Store({ cookies }) {
                                         setFlavor(0)
                                         setCategoryId(0)
                                         setSubCategoryId(0)
-                                        GetStokcList();
                                     }}
                                     className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
                                     <span className="text-xl bold">✕</span>
@@ -583,20 +591,20 @@ export default function Store({ cookies }) {
                                         </div>
 
                                         <div className='flex mt-5 lg:mt-10 justify-center lg:justify-start'>
-                                            <motion.button
+                                            {selectedId != 0 && <motion.button
                                                 className="text-white bg-[#252525] border-[#252525] border-2 hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm flex items-center" // Added 'flex' and 'items-center' classes
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 1.00 }}
                                                 onClick={ async () => {
                                                     if (userId !== undefined) {
                                                         if (ItemAmount !== 0) {
-                                                            const selectedIndex = basketList.map(e => e.stockId).indexOf(selectedId);
+                                                            let totalStockAmount = getTotalStockAmount(basketList, selectedId);
+                                                            let selectedIndex = basketList.findIndex(e => e.stockId == selectedId);
+                                                            console.log(selectedId, selectedIndex)
                                                             if (selectedIndex !== -1) {
                                                                 const selectedItem = basketList[selectedIndex];
                                                                 if (selectedItem.stockAmount !== undefined) {
-                                                                    if (ItemAmount > selectedItem.Amount) {
-                                                                        alert("จำนวนสินค้าของทางร้านไม่เพียงพอ");
-                                                                    } else {
+                                                                    if ((selectedItem.Amount - totalStockAmount) >= ItemAmount) {
                                                                         await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`);
                                                                         setSelectedId(null);
                                                                         setTitle('');
@@ -610,15 +618,14 @@ export default function Store({ cookies }) {
                                                                         setFlavor(0);
                                                                         setCategoryId(0);
                                                                         setSubCategoryId(0);
-                                                                        GetStokcList();
                                                                         GetBasketAmount(userId);
+                                                                    } else {
+                                                                        alert("จำนวนสินค้าของทางร้านไม่เพียงพอ");
                                                                     }
                                                                 } else {
-                                                                    // Handle the case when stockAmount is undefined
                                                                     alert("ไม่สามารถเพิ่มสินค้าได้ในขณะนี้");
                                                                 }
                                                             } else {
-                                                                // Item is not found in basketList, you can add it directly
                                                                 await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`);
                                                                 setSelectedId(null);
                                                                 setTitle('');
@@ -632,7 +639,6 @@ export default function Store({ cookies }) {
                                                                 setFlavor(0);
                                                                 setCategoryId(0);
                                                                 setSubCategoryId(0);
-                                                                GetStokcList();
                                                                 GetBasketAmount(userId);
                                                             }
                                                         } else {
@@ -647,7 +653,7 @@ export default function Store({ cookies }) {
                                                     <path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
                                                 </svg>
                                                 ใส่ตระกร้า
-                                            </motion.button>
+                                            </motion.button>}
                                         </div>
                                     </div>
                                 </div>
