@@ -12,7 +12,7 @@ function Navbar({
     const [toggle3, setToggle3] = useState(true)
 
     return (
-        <nav className="bg-[#252525] sm:px-4 py-2.5 dark:bg-[#252525]">
+        <nav className="fixed top-0 w-full z-20 bg-[#252525] sm:px-4 py-2.5 dark:bg-[#252525]">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <Link href="/">
                     <a className="flex items-center">
