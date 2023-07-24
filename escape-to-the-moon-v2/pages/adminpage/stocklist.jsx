@@ -335,9 +335,8 @@ function StockConfig() {
                         //<motion.div layoutId={selectedId} className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center select-none bg-white rounded-xl shadow-lg ${style.selectedItem}`}></motion.div>
                             <motion.div layoutId={selectedId} 
                                 className={
-                                    `
-                                        fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
-                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
+                                    `z-50 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
+                                    lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
                                     `
                                 }>
                                 <motion.button
@@ -368,9 +367,9 @@ function StockConfig() {
                                     className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
                                     <span className="text-xl bold">✕</span>
                                 </motion.button>
-                                <div className="lg:flex sm:px-4">
+                                <div className="lg:flex sm:px-4 overflow-y-auto h-full">
                                     <div className="flex justify-center lg:px-4 py-10">
-                                        <div className="w-64 h-64 border-2 border-[#252525] overflow-hidden flex justify-center items-center">
+                                        <div className="w-64 h-64 overflow-hidden flex justify-center items-center">
                                             {imagesURLs.length < 1 && imageName == '' &&
                                                 <motion.div
                                                     whileHover={{ scale: 1.25 }}
@@ -403,14 +402,14 @@ function StockConfig() {
                                         </div>
                                         <input className="hidden" type="file" id='image' name="image" accept='image/*' onChange={onImageChanged}/>
                                     </div> 
-                                    <div className="px-4 mt-1 h-96 lg:h-auto overflow-y-auto lg:ml-4 lg:overflow-hidden">
+                                    <div className="px-4 mt-1 w-96 sm:w-full sm:h-96 lg:h-auto overflow-x-hidden overflow-y-auto lg:ml-4 lg:overflow-hidden">
                                         <div className="D">
                                             <label className="">ชื่อสินค้า</label>
                                             <input value={Title} maxLength={20} className="bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required onChange={(event) => {setTitle(event.target.value)}}></input>
                                         </div>
                                         <div className="mt-2">
                                             <label className="">ลายละเอียดสินค้า</label>
-                                            <div className="w-96">
+                                            <div className="w-full lg:w-96 overflow-hidden6">
                                                 <textarea value={Detail} rows="4"maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..." onChange={(event) => {setDetail(event.target.value)}}></textarea>
                                             </div>
                                         </div>
