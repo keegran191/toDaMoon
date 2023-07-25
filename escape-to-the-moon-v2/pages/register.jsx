@@ -31,14 +31,15 @@ export default function Login() {
                         <div className="relative z-0 mb-6 w-full group">
                             <input type="password" name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                             <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รหัสผ่าน</label>
-                            <span id="outOfContext" className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวอักษร A-Z a-z และ ตัวเลข 0-9</span>
-                            <span id="reqNotMatch"  className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวเล็ก และ ตัวใหญ่</span>
-                            <span id="lessThenEight" className="text-[#ff0000] block">รหัสผ่านจะต้องยาวอยย่างน้อย 8 ตัว</span>
+                            {errorMsg == "User" &&<span id="outOfContext" className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวอักษร A-Z a-z และ ตัวเลข 0-9</span>}
+                            {errorMsg == "PasswordNotBigOrNot8" &&<span id="reqNotMatch"  className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวเล็ก และ ตัวใหญ่</span>}
+                            {errorMsg == "PasswordNotBigOrNot8" &&<span id="lessThenEight" className="text-[#ff0000] block">รหัสผ่านจะต้องยาวอยย่างน้อย 8 ตัว</span>}
+                            {errorMsg == "PasswordNotMatch" &&<span id="passwordNotMatch" className="text-[#ff0000] block">รหัสผ่านไม่ตรงกัน</span>}
                         </div>
                         <div className="relative z-0 mb-6 w-full group">
                             <input type="password" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                             <label htmlFor="floating_repeat_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ยืนยันรหัสผ่าน</label>
-                            <span id="passwordNotMatch" className="text-[#ff0000] hidden">รหัสผ่านไม่ตรงกัน</span>
+                            
                         </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
@@ -54,6 +55,7 @@ export default function Login() {
                     <div className="relative z-0 mb-6 w-full group">
                         <input type="tel" name="floating_phone" id="floating_phone" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                         <label htmlFor="floating_phone" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทร</label>
+                        {errorMsg == "PhoneNot10" &&<span id="PhoneNot10" className="text-[#ff0000] block">เบอร์โทรไม่ถูกต้อง</span>}
                     </div>
                     <button id="register" type="submit" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none">สมัครสมาชิก</button>
                     <Link href="/login">
