@@ -30,6 +30,11 @@ export default function Store({ cookies }) {
 
     const [addressUser, setAddressUser] = useState([]);
     const [selectAddressUser, setSelectAddressUser] = useState(0);
+
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    const [QRCode, setQRCode] = useState();
+
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
@@ -68,6 +73,7 @@ export default function Store({ cookies }) {
           if (newList[index].stockAmount > 0) {
             newList[index].stockAmount -= 1;
           }
+          GetTotalPrice(newList)
           return newList;
         });
     };
@@ -78,9 +84,18 @@ export default function Store({ cookies }) {
             if (newList[index].stockAmount < newList[index].Amount) {
             newList[index].stockAmount += 1;
             }
+            GetTotalPrice(newList)
             return newList;
         });
     };
+
+    const GetTotalPrice = (BasketList) => {
+        let TotalPrice = 0
+        for (let i = 0; i < BasketList.length; i++) {
+            TotalPrice += (BasketList[i].Price * BasketList[i].stockAmount)
+        }
+        setTotalPrice(TotalPrice)
+    }
 
     const GetBasketAmount = (userId) => {
         Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
@@ -160,6 +175,8 @@ export default function Store({ cookies }) {
           }),
     }
 
+    const Sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
     useEffect(() => {
         GetBasketAmount(userId)
         GetBasket(userId)
@@ -170,6 +187,10 @@ export default function Store({ cookies }) {
         GetRoast(40);
         GetFlavor(41);
     }, [userId]);
+
+    useEffect(() => {
+        GetTotalPrice(basketList)
+    }, [basketList]);
 
     return (
         <div className='select-none'>
@@ -199,7 +220,7 @@ export default function Store({ cookies }) {
                     ไม่พบรายการสินค้า
                 </span>}
 
-                {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0&& basketList.map((stock, index) => {
+                {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
                     return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]'>
                         <div class='text-lg text-left col-span-2 flex'>
                             <div className='w-32 h-32 '>
@@ -237,6 +258,7 @@ export default function Store({ cookies }) {
                                             setBasketId(stock.id)
                                             setIsDelete(true)
                                             setBasketTitle(stock.Title)
+                                            GetTotalPrice(basketList)
                                         }}
                                     >
                                     <svg className='mr-1' xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 448 512">
@@ -258,11 +280,11 @@ export default function Store({ cookies }) {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
-                                        console.log(stock.stockAmount)
                                         if(stock.stockAmount == 1) {
                                             setBasketId(stock.id)
                                             setIsDelete(true)
                                             setBasketTitle(stock.Title)
+                                            GetTotalPrice(basketList)
                                         } else if(stock.stockAmount > 0) {
                                             handleDecreaseStockAmount(index)
                                         } 
@@ -310,7 +332,7 @@ export default function Store({ cookies }) {
                         />
                     </div>
 
-                    <span className='text-xl ml-10 mr-5'>ราคารวมทั้งหมด</span>
+                    {basketList.length > 0 && <span className='text-xl ml-10 mr-5'>ราคารวมทั้งหมด {totalPrice}</span>}
                 </div>
                 <div className='flex justify-end items-center my-5'>
                     <motion.button 
@@ -318,15 +340,56 @@ export default function Store({ cookies }) {
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => {
-                            
+                            Axios.get(`http://localhost:3000/api/Order/add?addressId=${selectAddressUser}`).then(async (response) => {
+                                const url = 'https://api.gbprimepay.com/v3/qrcode';
+                                const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
+                                const referenceNo = response.data.reffNo;
+                                const amount = '0.10'; //{totalPrice}
+                                const backgroundUrl = 'https://69e3-2403-6200-88a4-707f-5906-6b75-6cb5-aae3.ngrok.io/api/GBPay/getrespons'
+                                const data = new URLSearchParams();
+                                let isPayed = false;
+                                data.append('token', token);
+                                data.append('referenceNo', referenceNo);
+                                data.append('amount', amount);
+                                data.append('backgroundUrl', backgroundUrl);
+
+                                Axios.post(url, data, {
+                                responseType: "arraybuffer",
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                }})
+                                
+                                .then((response) => {
+                                    let QRCode = 'data:image/png;base64,' + Buffer.from(response.data, 'binary').toString('base64');
+                                    setQRCode(QRCode);
+                                })
+                                .catch((error) => {
+                                    console.error('Error:', error);
+                                });
+
+                                while (isPayed === false) {
+                                    Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
+                                        console.log(response.data.isSuccenss)
+                                        if(response.data.isSuccenss) {
+                                            // เอา QRCODE ออก เเล้ว Sweet Alert
+                                            // updateStock
+                                            isPayed = true
+                                            console.log("จ่ายเเล้ว");
+                                        }
+                                    })
+                                    await Sleep(5000)
+                                }
+                            })
                         }}
                     >
                         ชำระเงิน
                     </motion.button>
+
+                    {QRCode != '' && <img className='w-auto h-auto' src={QRCode}></img>}
                 </div>
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
             </div>
-
+            
             <AnimatePresence key={'modalDelete'} mode='wait'>
                 { isDelete && baksetId && <motion.div
                     style={{
@@ -384,11 +447,13 @@ export default function Store({ cookies }) {
                             setBasketId(0);
                             GetBasketAmount(userId)
                             GetBasket(userId)
+                            GetTotalPrice(basketList)
                         }}
                         txtClose="ยกเลิก"
                         onClose={()=>{
                             setIsDelete(false);
                             setBasketId(0);
+                            GetTotalPrice(basketList)
                         }}
                     >
                     </UniversalModal>

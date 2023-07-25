@@ -137,9 +137,9 @@ export default function Store({ cookies }) {
         }
     }
 
-    //StockList Api
+
     const GetStokcList = () => {
-        Axios.get(`http://localhost:3000/api/store/filter?search=${search}&StockType=${StockTypeFilter}&Process=${Process}&Roast=${Roast}&Flavor=${Flavor}&CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`).then((response) => {
+        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}`).then((response) => {
             setStockList(response.data);
         });
     };
@@ -218,10 +218,6 @@ export default function Store({ cookies }) {
         GetBasket(userId)
     }, [userId]);
 
-    useEffect(() => {
-        GetStokcList()
-
-    },[StockTypeFilter, Process, Roast, Flavor, CategolyId, subCategoryId]);
     //Validate and Utilities Function
     // const TotalItem = (e) => {
     //     const value = e.target.value;
@@ -264,137 +260,7 @@ export default function Store({ cookies }) {
                 </div>
             </div>
 
-            <div className='flex px-10 justify-center lg:justify-start'>
-                <div className="hidden lg:block w-2/12 px-4">
-                    <div className='w-full'>
-                        <label className="">ชนิดสินค้า</label>
-                        <Select
-                            inputId="coffeeId"
-                            options={optionCoffee}
-                            onChange={(newValue,meta) => {
-                                setStockTypeFilter(newValue.value);
-                                Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
-                                    &search=${search}&StockType=${newValue.value}&Roast=${Roast}&Flavor=${Flavor}
-                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
-                                setProcess(0); 
-                                setRoast(0);
-                                setFlavor(0);
-                                setCategoryId(0);
-                                setSubCategoryId(0)
-                                GetStokcList()
-
-                            }}
-                            styles={customStyles}
-                            placeholder="เลือกชนิดสินค้า"
-                        >
-                        </Select>
-                    </div>
-
-                    {StockTypeFilter == 1 && 
-                        <div className='w-full mt-2'>
-                            <label className="">วิธีการแปรรูป</label>
-                            <Select
-                                inputId="processId"
-                                options={coffeeProcess}
-                                onChange={(newValue,meta) => {
-                                    setProcess(newValue.value); 
-                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${newValue.value}
-                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${Flavor}
-                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
-                                    GetStokcList()
-                                }}
-                                styles={customStyles}
-                                placeholder="เลือกวิธีการแปรรูป"
-                            >
-                            </Select>
-                        </div>
-                    }
-
-                    {StockTypeFilter == 1 && 
-                        <div className='w-full mt-2'>
-                            <label className="">วิธีการคั่ว</label>
-                            <Select
-                                inputId="roastId"
-                                options={coffeeRoast}
-                                onChange={ (newValue,meta) => {
-                                    setRoast(newValue.value);
-                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
-                                    &search=${search}&StockType=${StockType}&Roast=${newValue.value}&Flavor=${Flavor}
-                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
-                                    GetStokcList()
-                                 
-                                }}
-                                styles={customStyles}
-                                placeholder="เลือกวิธีการคั่ว"
-                            >
-                            </Select>
-                        </div>
-                    }
-
-                    {StockTypeFilter == 1 && 
-                        <div className='w-full mt-2'>
-                            <label className="">เลือกกลิ่น รส</label>
-                            <Select
-                                inputId="flavorId"
-                                options={coffeeFlavor}
-                                onChange={(newValue,meta) => {
-                                    setFlavor(newValue.value); 
-                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
-                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${newValue.value}
-                                    &CategolyId=${CategolyId}&subCategoryId=${subCategoryId}`)
-                                    GetStokcList()
-                                
-                                }}
-                                styles={customStyles}
-                                placeholder="เลือกกลิ่น รส"
-                            >
-                            </Select>
-                        </div>
-                    }
-
-                    {StockTypeFilter == 2 && (
-                        <div className='w-full mt-2'>
-                            <label>ประเภทสินค้า</label>
-                            <Select
-                                inputId="categoryId"
-                                options={optionCategory}
-                                onChange={(newValue, meta) => {
-                                    setCategoryId(newValue.value);
-                                    Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
-                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${Flavor}
-                                    &CategolyId=${newValue.value}&subCategoryId=${subCategoryId}`)
-                                
-                                    setSubCategoryId(0); // Reset subCategoryId when the category changes
-                                    GetStokcList()
-                                }}
-                                styles={customStyles}
-                                placeholder="เลือกประเภทสินค้า"
-                            />
-                            </div>
-                        )}
-
-                        {StockTypeFilter == 2 && (
-                            <div className="w-full mt-2">
-                                <label>หมวดหมู่สินค้า</label>
-                                <Select
-                                    inputId='subcategoryId'
-                                    options={optionSubCategory}
-                                    onChange={(newValue, meta) => {
-                                        setSubCategoryId(newValue.value);
-                                        Axios.get(`http://localhost:3000/api/store/filter?Process=${Process}
-                                    &search=${search}&StockType=${StockType}&Roast=${Roast}&Flavor=${Flavor}
-                                    &CategolyId=${CategolyId}&subCategoryId=${newValue.value}`)
-                                        GetStokcList()
-                                
-                                    }}
-                                    styles={customStyles}
-                                    placeholder="เลือกหมวดหมู่สินค้า"
-                                />
-                            </div>
-                        )}
-                </div>
-
-                <div className='hidden lg:block w-2 h-auto border-l-2 border-[#252525]'></div>
+            <div className='flex px-10 justify-center lg:justify-center'>
 
                 <div className={`border-[#252525] px-4 pt-4 h-auto w-8/12 mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
                     {stockList.map((post) => {
@@ -478,18 +344,20 @@ export default function Store({ cookies }) {
                                     }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
-                                        setSelectedId(null)
-                                        setTitle('')
-                                        setDetail('')
-                                        setAmount(0)
-                                        setPrice(0)
-                                        setIsAdvise(0)
-                                        setStockType(0)
-                                        setProcess(0)
-                                        setRoast(0)
-                                        setFlavor(0)
-                                        setCategoryId(0)
-                                        setSubCategoryId(0)
+                                        setSelectedId(null);
+                                        setTitle('');
+                                        setDetail('');
+                                        setAmount(0);
+                                        setPrice(0);
+                                        setIsAdvise(0);
+                                        setStockType(0);
+                                        setProcess(0);
+                                        setRoast(0);
+                                        setFlavor(0);
+                                        setCategoryId(0);
+                                        setSubCategoryId(0);
+                                        GetBasketAmount(userId);
+                                        setItemAmount(0)
                                     }}
                                     className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
                                     <span className="text-xl bold">✕</span>
@@ -618,6 +486,7 @@ export default function Store({ cookies }) {
                                                                         setFlavor(0);
                                                                         setCategoryId(0);
                                                                         setSubCategoryId(0);
+                                                                        setItemAmount(0)
                                                                         GetBasketAmount(userId);
                                                                     } else {
                                                                         alert("จำนวนสินค้าของทางร้านไม่เพียงพอ");
@@ -639,6 +508,7 @@ export default function Store({ cookies }) {
                                                                 setFlavor(0);
                                                                 setCategoryId(0);
                                                                 setSubCategoryId(0);
+                                                                setItemAmount(0)
                                                                 GetBasketAmount(userId);
                                                             }
                                                         } else {

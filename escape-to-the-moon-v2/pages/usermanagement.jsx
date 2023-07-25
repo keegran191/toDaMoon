@@ -374,14 +374,6 @@ function UserManagement ({ cookies}) {
                             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทร</label>
                         </div>
                     </div>
-                    <div className='w-full h-auto flex justify-start mt-5'>
-                        <div className="relative z-0 mb-6 w-3/6 group">
-                            <input onChange={(e) => {
-                                setEmail(e.target.value);
-                            }} value={Email} type="email" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
-                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">อีเมลล์</label>
-                        </div>
-                    </div>
                     <motion.button 
                         className='bg-[#252525] text-[#FFFFFF] w-auto p-3 rounded-lg'
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
@@ -761,6 +753,33 @@ function UserManagement ({ cookies}) {
 
                 {order && <div className='w-8/12 mt9 lg:pl-10'>
                     <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
+                        
+                    <motion.div className='mt-5'>
+                        <div className="w-full h-48 bg-[#FFFFFF] rounded-3xl overflow-hidden">
+                            <div className='w-full h-20 bg-[#252525] p-3 flex justify-between'>
+                                <div className='w-full'>
+                                    <div className='w-full flex pl-7 items-center'>
+                                        <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข 125437689032</div>
+                                        <div className='ml-2 w-20 h-5 text-sm bg-[#FFC107] text-center rounded-full'>ชำระเงินเเล้ว</div>
+                                    </div>
+                                    <div className='flex'>
+
+                                    </div>
+                                </div>
+                                <div className='w-full text-[#ECEBE8] self-center flex justify-end pr-7'>
+                                    <motion.button className='bg-[#ECEBE8] text-[#252525] py-3 px-5 rounded-full'
+                                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        ดูลายละเอียด
+                                    </motion.button>
+                                </div>
+                            </div>
+                            <div className='w-full h-full p-3'>
+
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>}
 
                 {history && <div className='w-8/12 mt9 lg:pl-10'>
