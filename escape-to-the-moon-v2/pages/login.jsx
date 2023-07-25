@@ -31,8 +31,8 @@ export default function Login() {
                     <div className="w-full">
                             {errorMsg == "WrongEmailOrPassword" &&<span id="alreadyExist" className="text-[#ff0000] block">อีเมล หรือ รหัสผ่าน ผิด</span>}
                         </div>
-                    <h1 id="forget" className="forgot text-right mb-6 cursor-pointer">ลืมรหัสผ่าน?</h1>
-                    <button id="login" type="submit" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none">ลงชื่อเข้าใช้</button>
+                    
+                    <button id="login" type="submit" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mt-10 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none">ลงชื่อเข้าใช้</button>
                     <Link href="/register">
                         <h1 id="register" className="cursor-pointer text-center hover:text-[#010101] mt-6 mb-6">ยังไม่ได้เป็นสมาชิก? กดที่นี่เลย</h1>
                     </Link>
