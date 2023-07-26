@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       const match = await bcrypt.compare(floating_password, user.user_password);
       const isAdmin = await connection.query(`SELECT is_admin FROM users WHERE email = ?`, [floating_email]);
       const isAdminValue = isAdmin[0]?.[0].is_admin;
-
+     //pool.end();
       if (match) {
         console.log("Password match!");
 
@@ -55,6 +55,7 @@ export default async function handler(req, res) {
         res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
       }
     } else {
+     //pool.end();
       console.log("Email not found");
       res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
     }

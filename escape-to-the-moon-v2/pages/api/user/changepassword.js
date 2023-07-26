@@ -34,6 +34,7 @@ export default async function handler(req, res) {
         const isPasswordMatch = await bcrypt.compare(password, user.user_password);
         
         if (!isPasswordMatch) {
+           //pool.end();
             console.log("Invalid password.")
             return res.status(400).json({ isSuccess: false, message: "Invalid password" });
         }
@@ -43,6 +44,7 @@ export default async function handler(req, res) {
 
         const updateQuery = `UPDATE users SET user_password = ? WHERE id = ?`;
         await pool.query(updateQuery, [hashedNewPassword, user.id]);
+       //pool.end();
         console.log("Password updated successfully.")
         return res.status(200).json({ isSuccess: true, message: "Password updated successfully." });
     } catch (error) {

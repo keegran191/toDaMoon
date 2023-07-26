@@ -8,6 +8,7 @@ export default async function handler(req, res) {
         console.error(err);
         return null;
     });
+   //pool.end();
     if (results[0].payment_status === "00") {
         return res.status(200).json({ isSuccenss: true });
     } else {

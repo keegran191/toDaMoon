@@ -32,17 +32,18 @@ export default async function handler(req, res) {
       if (err) throw (err)
       console.log("------> Search Results")
       console.log(result.length)
+
       if (result.length != 0) {
         console.log("------> User already exists")
         let data = {
           email: true,
           username: true
         }
+       //pool.end();
         res.redirect(307, '/register?errorMsg=UserAlreadyExists&errObj=' + JSON.stringify(data))
         res.status(409)
       } else {
         console.log("this1")
-
         // Check if password and repeat password match
         if (floating_password !== repeat_password) {
           let data = {
@@ -89,6 +90,7 @@ export default async function handler(req, res) {
 
           if (err) throw (err)
           console.log("--------> Created new User")
+         //pool.end();
           res.redirect(307, '/login')
           console.log(result.insertId)
           res.status(201)

@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       console.error(err);
       return null;
     });
-
+   //pool.end();
     res.redirect(307, '/adminpage/category')
     res.status(200)
 }

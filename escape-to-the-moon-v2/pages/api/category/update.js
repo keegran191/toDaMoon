@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     console.error(err);
     return null;
   });
-
+ //pool.end();
   console.log("update category success")
   res.status(201).json({"Status": "Category Updated"});
 }

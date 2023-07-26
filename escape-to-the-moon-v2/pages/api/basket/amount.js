@@ -9,6 +9,8 @@ export default async function handler(req, res) {
         return null;
     });
 
+   //pool.end();
+
     if (results && results.length > 0) {
         const totalStockAmount = results[0].totalStockAmount;
         res.status(200).json({ totalStockAmount });

@@ -47,7 +47,7 @@ function Navbar({
                         </li>
                         <li>
                             <Link href="/store">
-                                <a className={style.list}>ร้านค้า</a>
+                                <a className={style.list}>สินค้าทั้งหมด</a>
                             </Link>
                         </li>
                         <li>

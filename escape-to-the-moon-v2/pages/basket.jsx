@@ -193,7 +193,7 @@ export default function Store({ cookies }) {
     }, [basketList]);
 
     return (
-        <div className='select-none'>
+        <div className='select-none min-h-screen flex flex-col'>
             <Head>
                 <title>Home</title>
                 <link rel="icon" href="/ttmLogo.png"/>
@@ -221,7 +221,7 @@ export default function Store({ cookies }) {
                 </span>}
 
                 {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
-                    return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]'>
+                    return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' key={index}>
                         <div class='text-lg text-left col-span-2 flex'>
                             <div className='w-32 h-32 '>
                                 <img className='w-full h-full rounded-lg' src={`/uploads/${stock.Image}`}></img>
@@ -375,6 +375,8 @@ export default function Store({ cookies }) {
                                                 setQRCode('')
                                                 isPayed = true
                                                 console.log("จ่ายเเล้ว");
+                                                GetBasket(userId)
+                                                GetBasketAmount(userId)
                                             }
                                         })
                                         await Sleep(5000)

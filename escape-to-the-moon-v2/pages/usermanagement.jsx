@@ -11,7 +11,7 @@ import Select from 'react-select'
 import { parse } from 'cookie';
 import UniversalModal from '../components/Modal.js';
 
-function UserManagement ({ cookies}) {
+function UserManagement ({ cookies }) {
     const { fname, userId } = cookies;
     const [stockAmount, setStockAmount] = useState(0)
 
@@ -104,7 +104,7 @@ function UserManagement ({ cookies}) {
     }, [userId]);
 
     return (
-        <div className='select-none'>
+        <div className='select-none min-h-screen flex flex-col'>
             <Head>
                 <title>Home</title>
                 <link rel="icon" href="/ttmLogo.png"/>
@@ -754,16 +754,19 @@ function UserManagement ({ cookies}) {
                 {order && <div className='w-8/12 mt9 lg:pl-10'>
                     <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
                         
-                    <motion.div className='mt-5'>
-                        <div className="w-full h-48 bg-[#FFFFFF] rounded-3xl overflow-hidden">
+                    <motion.div className='mt-5 flex justify-center'>
+                        <div className="w-9/12 h-48 bg-[#FFFFFF] rounded-3xl overflow-hidden">
                             <div className='w-full h-20 bg-[#252525] p-3 flex justify-between'>
-                                <div className='w-full'>
-                                    <div className='w-full flex pl-7 items-center'>
+                                <div className='w-full pl-7'>
+                                    <div className='w-full flex items-center'>
                                         <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข 125437689032</div>
-                                        <div className='ml-2 w-20 h-5 text-sm bg-[#FFC107] text-center rounded-full'>ชำระเงินเเล้ว</div>
+                                        <div className='ml-2 w-20 h-5 text-sm bg-[#7A7A7A] text-[#ECEBE8] text-center rounded-full'>รอดำเนินการ</div>
                                     </div>
-                                    <div className='flex'>
-
+                                    <div className='flex text-[#ECEBE8] items-center'>
+                                        <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                            <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
+                                        </svg>
+                                        <span className='ml-2 text-sm'>สั่งซื้อเมื่อ 20-10-2021  14:14:14 ชื่อผู้สั่ง รพีพัฒน์ สันติวรพงศ์</span>
                                     </div>
                                 </div>
                                 <div className='w-full text-[#ECEBE8] self-center flex justify-end pr-7'>
@@ -775,8 +778,28 @@ function UserManagement ({ cookies}) {
                                     </motion.button>
                                 </div>
                             </div>
-                            <div className='w-full h-full p-3'>
+                            <div className='w-auto h-full p-3 px-10 flex justify-around'>
+                                 <div>
+                                    <p>รูปแบบการชำระเงิน</p>
+                                    <p className='text-lg font-semibold'>QR Payment</p>
+                                    <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center'>
+                                        <svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                                        </svg>
+                                        <span className='text-sm'>ชำระเงินสำเร็จ</span>
+                                    </div>
+                                 </div>
 
+                                 <div>
+                                    <p>รูปแบบการชำระเงิน</p>
+                                    <p className='text-lg font-semibold'>QR Payment</p>
+                                    <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center'>
+                                        <svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                                        </svg>
+                                        <span className='text-sm'>ชำระเงินสำเร็จ</span>
+                                    </div>
+                                 </div>
                             </div>
                         </div>
                     </motion.div>
@@ -856,6 +879,7 @@ function UserManagement ({ cookies}) {
                     </UniversalModal>
                 </motion.div>
             }
+            <Foot></Foot>
         </div>
     )
 }

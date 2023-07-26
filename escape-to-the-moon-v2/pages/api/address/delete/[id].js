@@ -11,5 +11,6 @@ export default async function handler(req, res) {
     });
   
     console.log("Delete success")
+   //pool.end();
     res.redirect(307, "/usermanagement");
   }

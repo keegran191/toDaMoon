@@ -42,7 +42,6 @@ export default function Store({ cookies }) {
 
     // Filter Values List
     const [search, setSearch] = useState('');
-    const [optionCoffee, setOptionCoffee] = useState([]);
     const [optionCategory, setOptionCategory] = useState([]);
     const [optionSubCategory, setOptionSubCategory] = useState([]);
     const [coffeeProcess, setCoffeeProcess] = useState([]);
@@ -98,11 +97,6 @@ export default function Store({ cookies }) {
     }
 
     //Get Filter Api
-    const GetCoffee = () => {
-        Axios.get("http://localhost:3000/api/coffee/get").then((response) => {
-            setOptionCoffee(response.data.map((coffee) => ({ value: coffee.id, label: coffee.label })));
-        });
-    }
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
@@ -197,7 +191,6 @@ export default function Store({ cookies }) {
 
     useEffect(() => {
         GetStokcList();
-        GetCoffee();
         GetCategory();
         GetProcess(42);
         GetRoast(40);
@@ -226,7 +219,7 @@ export default function Store({ cookies }) {
     // }
 
     return(
-        <div className='select-none'>
+        <div className='select-none min-h-screen flex flex-col'>
             <Head>
                 <title>Home</title>
                 <link rel="icon" href="/ttmLogo.png"/>
@@ -488,6 +481,7 @@ export default function Store({ cookies }) {
                                                                         setSubCategoryId(0);
                                                                         setItemAmount(0)
                                                                         GetBasketAmount(userId);
+                                                                        GetBasket(userId);
                                                                     } else {
                                                                         alert("จำนวนสินค้าของทางร้านไม่เพียงพอ");
                                                                     }
@@ -510,6 +504,7 @@ export default function Store({ cookies }) {
                                                                 setSubCategoryId(0);
                                                                 setItemAmount(0)
                                                                 GetBasketAmount(userId);
+                                                                GetBasket(userId);
                                                             }
                                                         } else {
                                                             alert("โปรดใส่จำนวนให้ถูกต้อง");

@@ -6,7 +6,6 @@ export default function handler(req, res) {
       'fname=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/',
       'userId=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
     ]);
-
     console.log("Logout successful")
     res.redirect(307, "/")
   }

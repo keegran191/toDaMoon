@@ -386,8 +386,8 @@ function StockConfig() {
                                                 </motion.div>
                                             }
                                             {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
-                                                <div className="img">
-                                                    <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
+                                                <div key={idx} className="img">
+                                                    <img className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
                                                         document.getElementById('image').click();
                                                     }} src={imageSrc}></img>
                                                 </div>

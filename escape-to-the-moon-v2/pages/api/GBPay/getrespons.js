@@ -8,34 +8,35 @@ export default async function handler(req, res) {
         return null;
     });
     
-    const resultRows = await pool
+    const [resultRows] = await pool
         .query("SELECT UserId, order_Id FROM order_list WHERE refNumber = ?", [
-        req.body.referenceNo,
+            req.body.referenceNo,
         ])
         .catch((err) => {
-        res.status(500).json({ Status: "Database Error" });
-        console.error(err);
-        return [];
+            res.status(500).json({ Status: "Database Error" });
+            console.error(err);
+        return null;
         });
 
     if (resultRows.length === 0) {
         res.status(404).json({ Status: "Order not found" });
-        return;
+        return null;
     }
-
+    
     const userId = resultRows[0].UserId;
     const orderId = resultRows[0].order_Id;
 
-    const resultsStock = await pool
+    const [resultsStock] = await pool
         .query("SELECT stockId, stockAmount, stockPrice FROM basket WHERE userId = ?", [
         userId,
         ])
         .catch((err) => {
         res.status(500).json({ Status: "Database Error" });
         console.error(err);
-        return [];
+        return null;
         });
-
+    console.log(resultRows);
+    console.log(resultsStock);
     // Insert each row of resultsStock into the item_order table
     for (const stockItem of resultsStock) {
         const { stockId, stockAmount, stockPrice } = stockItem;
@@ -53,13 +54,13 @@ export default async function handler(req, res) {
     }
 
     // Clear items in the basket
-    const ClearBasket = await pool
+    const [ClearBasket] = await pool
         .query("DELETE FROM basket WHERE userId = ?", [userId])
         .catch((err) => {
         res.status(500).json({ Status: "Database Error" });
         console.error(err);
         return [];
         });
-
+        
     return res.status(200).json({ isSuccess: true, message: "Payment Completed" });
 }

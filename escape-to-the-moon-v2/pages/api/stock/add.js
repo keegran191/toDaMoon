@@ -78,6 +78,7 @@ export default function handler(req, res) {
           fileName
         ]
       );
+      //pool.end();
       return res.status(200).json({ success: true, message: 'Add Stock Complete' });
     } catch (err) {
       console.error('Database Error:', err);

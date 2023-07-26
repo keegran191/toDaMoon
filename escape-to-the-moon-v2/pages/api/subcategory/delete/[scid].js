@@ -11,6 +11,7 @@ export default async function handler(req, res) {
 
   if (results.length > 0) {
     console.log('using')
+   //pool.end();
     res.redirect(307, "/adminpage/subcategory?errorMsg=SubCaregoryIdIsUsing=");
 
   } else {
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
     });
   
     console.log("Delete success")
+   //pool.end();
     res.redirect(307, "/adminpage/subcategory");
   }
   

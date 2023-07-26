@@ -35,7 +35,7 @@ export default async function handler(req, res) {
         );
 
         res.setHeader("Set-Cookie", cookieStrings);
-
+       //pool.end();
         res.status(200).json({ isSuccess: true, message: "User Updated" });
     } catch (err) {
         res.status(500).json({ isSuccess: false, message: "Database error." });

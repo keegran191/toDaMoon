@@ -8,6 +8,6 @@ export default async function handler(req, res) {
     console.error(err);
     return null;
   });
-
+ //pool.end();
   res.status(200).json(results);
 }

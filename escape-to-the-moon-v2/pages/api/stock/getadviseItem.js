@@ -8,6 +8,7 @@ export default async function handler(req, res) {
   try {
     const query = 'SELECT * FROM stock WHERE IsAdvise = 1 LIMIT ? OFFSET ?';
     const [results] = await pool.query(query, [offset, startIndex]);
+   //pool.end();
     res.status(200).json(results);
   } catch (err) {
     console.error(err);

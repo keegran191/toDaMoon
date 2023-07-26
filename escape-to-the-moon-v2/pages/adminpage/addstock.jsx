@@ -246,8 +246,8 @@ function Stock() {
                                 </motion.div>
                             }
                             {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
-                                <div className="img">
-                                    <img key={idx} className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
+                                <div key={idx} className="img">
+                                    <img className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
                                         document.getElementById('image').click();
                                     }} src={imageSrc}></img>
                                 </div>
@@ -260,8 +260,8 @@ function Stock() {
                         <div className="relative plusContainer top-1/2 transform -translate-y-1/2">
                             {imagesURLs.length < 1 && <label className="relative hover:cursor-pointer" htmlFor="image"><span className='text-5xl'>+</span></label>}
                             {imagesURLs.length > 0 && imagesURLs.map((imageSrc, idx) =>
-                                <div className="img">
-                                    <img key={idx} className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
+                                <div  key={idx} className="img">
+                                    <img className='h-64 w-52 transition duration-300 ease-in-out transform hover:opacity-50' onClick={() => {
                                         document.getElementById('image').click();
                                     }} src={imageSrc}></img>
                                 </div>

@@ -16,5 +16,6 @@ export default async function handler(req, res) {
         return null;
     })
     // console.log(results.insertId);
+   //pool.end();
     res.redirect(307,'/usermanagement')
 }

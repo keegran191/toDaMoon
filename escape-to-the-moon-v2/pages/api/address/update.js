@@ -14,6 +14,7 @@ export default async function handler(req, res) {
       'UPDATE address SET name = ?, detail = ?, subdistrict = ?, district = ?, province = ?, zipCode = ?, userId = ?',
       [name, detail, subdistrict, district, province, zipCode, userId]
     );
+   //pool.end();
     res.redirect(307, '/usermanagement');
   } catch (err) {
     res.status(500).json({ "Status": "Database Error" });

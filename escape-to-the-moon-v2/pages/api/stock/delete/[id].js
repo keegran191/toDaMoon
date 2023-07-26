@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       res.status(500).json({ "Status": "Database Error" });
       console.error(err);
     });
-  
+   //pool.end();
     console.log("Delete success")
     res.redirect(307, "/adminpage/stock");
   }

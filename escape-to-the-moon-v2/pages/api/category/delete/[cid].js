@@ -23,6 +23,7 @@ export default async function handler(req, res) {
       console.error(err);
     });
     console.log("Delete success")
+    //pool.end();
     res.redirect(307, "/adminpage/category");
   }
 }

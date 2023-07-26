@@ -66,7 +66,7 @@ export default function Home({ cookies }) {
 
   return (
 
-    <div className='select-none'>
+    <div className='select-none min-h-screen flex flex-col'>
         <Head>
           <title>Home</title>
           <link rel="icon" href="/ttmLogo.png"/>
@@ -168,120 +168,120 @@ export default function Home({ cookies }) {
             </motion.button>
           </Link>
         </div>
-
-        <motion.div className='flex flex-col sm:flex-row justify-center gap-5 items-center mb-10'>
-          {/* Process */}
-          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
-            <motion.div
-              initial={{
-                scale: 1.05,
-              }}
-              whileHover={{
-                scale: 1,
-              }}
-              transition={{
-                duration: 0.3,
-              }}
-            >
-              <motion.div className='relative'>
-                <img className="brightness-50 z-0 icon-img" src="/ProcessBG.png" alt="Coffee" />
-                <motion.div
-                  initial={{
-                    scale: 1,
-                  }}
-                  whileHover={{
-                    scale: 1.08,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                  }}
-                  className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
-                >
-                  <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                  <motion.div className='relative top-36 w-8'>
-                    <img className="icon-img" src="/ProcessIcon.png" alt="Icon" />
+        <motion.div>
+          <motion.div className='flex flex-col sm:flex-row justify-center gap-5 items-center mb-10'>
+            {/* Process */}
+            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
+              <motion.div
+                initial={{
+                  scale: 1.05,
+                }}
+                whileHover={{
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 0.3,
+                }}
+              >
+                <motion.div className='relative'>
+                  <img className="brightness-50 z-0 icon-img" src="/ProcessBG.png" alt="Coffee" />
+                  <motion.div
+                    initial={{
+                      scale: 1,
+                    }}
+                    whileHover={{
+                      scale: 1.08,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                    }}
+                    className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                  >
+                    <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                    <motion.div className='relative top-36 w-8'>
+                      <img className="icon-img" src="/ProcessIcon.png" alt="Icon" />
+                    </motion.div>
+                    <span className="relative top-40">กระบวนการคั่ว</span>
                   </motion.div>
-                  <span className="relative top-40">กระบวนการคั่ว</span>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Havest */}
+            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
+              <motion.div
+                initial={{
+                  scale: 1.05,
+                }}
+                whileHover={{
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 0.3,
+                }}
+              >
+                <motion.div className='relative'>
+                  <img className="brightness-50 z-0 icon-img" src="/HavestBG.png" alt="Coffee" />
+                  <motion.div
+                    initial={{
+                      scale: 1,
+                    }}
+                    whileHover={{
+                      scale: 1.08,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                    }}
+                    className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                  >
+                    <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                    <motion.div className='relative top-36'>
+                      <img className="icon-img w-10" src="/HavestIcon.png" alt="Icon" />
+                    </motion.div>
+                    <span className="relative top-40">กระบวนการเก็บเกี่ยว</span>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Info */}
+            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
+              <motion.div
+                initial={{
+                  scale: 1.05,
+                }}
+                whileHover={{
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 0.3,
+                }}
+              >
+                <motion.div className='relative'>
+                  <img className="brightness-50 z-0 icon-img" src="/InfoBG.png" alt="Coffee" />
+                  <motion.div
+                    initial={{
+                      scale: 1,
+                    }}
+                    whileHover={{
+                      scale: 1.08,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                    }}
+                    className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                  >
+                    <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                    <motion.div className='relative top-36'>
+                      <img className="icon-img w-10" src="/InfoIcon.png" alt="Icon" />
+                    </motion.div>
+                    <span className="relative top-40">เกี่ยวกับเรา</span>
+                  </motion.div>
                 </motion.div>
               </motion.div>
             </motion.div>
           </motion.div>
-
-          {/* Havest */}
-          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
-            <motion.div
-              initial={{
-                scale: 1.05,
-              }}
-              whileHover={{
-                scale: 1,
-              }}
-              transition={{
-                duration: 0.3,
-              }}
-            >
-              <motion.div className='relative'>
-                <img className="brightness-50 z-0 icon-img" src="/HavestBG.png" alt="Coffee" />
-                <motion.div
-                  initial={{
-                    scale: 1,
-                  }}
-                  whileHover={{
-                    scale: 1.08,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                  }}
-                  className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
-                >
-                  <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                  <motion.div className='relative top-36'>
-                    <img className="icon-img w-10" src="/HavestIcon.png" alt="Icon" />
-                  </motion.div>
-                  <span className="relative top-40">กระบวนการเก็บเกี่ยว</span>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* Info */}
-          <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
-            <motion.div
-              initial={{
-                scale: 1.05,
-              }}
-              whileHover={{
-                scale: 1,
-              }}
-              transition={{
-                duration: 0.3,
-              }}
-            >
-              <motion.div className='relative'>
-                <img className="brightness-50 z-0 icon-img" src="/InfoBG.png" alt="Coffee" />
-                <motion.div
-                  initial={{
-                    scale: 1,
-                  }}
-                  whileHover={{
-                    scale: 1.08,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                  }}
-                  className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
-                >
-                  <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                  <motion.div className='relative top-36'>
-                    <img className="icon-img w-10" src="/InfoIcon.png" alt="Icon" />
-                  </motion.div>
-                  <span className="relative top-40">เกี่ยวกับเรา</span>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
+        </motion.div>          
         <Foot></Foot>
     </div>
   )

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
       "SELECT user_fname, user_lname, email, user_phone FROM users WHERE id = ?",
       [userId]
     );
-
+   //pool.end();
     if (results.length > 0) {
       const userData = results[0];
       console.log(userData)
