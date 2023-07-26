@@ -33,7 +33,7 @@ export default function Store({ cookies }) {
 
     const [totalPrice, setTotalPrice] = useState(0);
 
-    const [QRCode, setQRCode] = useState();
+    const [QRCode, setQRCode] = useState('');
 
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/stock/category").then((response) => {
@@ -372,7 +372,7 @@ export default function Store({ cookies }) {
                                         Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
                                             console.log(response.data.isSuccenss)
                                             if(response.data.isSuccenss) {
-                                                // เอา QRCODE ออก เเล้ว Sweet Alert
+                                                setQRCode('')
                                                 isPayed = true
                                                 console.log("จ่ายเเล้ว");
                                             }
@@ -388,11 +388,51 @@ export default function Store({ cookies }) {
                         ชำระเงิน
                     </motion.button>
 
+                    <AnimatePresence mode='wait' key={'QRCode-Blur'}>
+                        {QRCode != '' && <motion.div
+                            style={{
+                                position: 'fixed',
+                                top: '0',
+                                left: '0',
+                                width: '100vw',
+                                height: '100vh',
+                                backgroundColor: 'rgba(0, 0, 0, .25)'
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: .5
+                            }}
+                        ></motion.div>}
+                    </AnimatePresence>
+
                     {QRCode != '' && (
-                        <motion.div className=''>
-                            <img className='w-auto h-auto' src={QRCode}></img>
+                        <motion.div 
+                            className='z-50 absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center'
+                            initial={{
+                                scale: 0,
+                            }}
+                            animate={{
+                                scale: 1,
+                            }}
+                            exit={{
+                                scale: 0
+                            }}
+                            transition={{
+                                duration: .3
+                            }}
+                        >
+                            <img className='w-auto h-auto' src={QRCode} alt="QR Code"></img>
                         </motion.div>
                     )}
+
                 </div>
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
             </div>
