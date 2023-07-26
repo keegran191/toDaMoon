@@ -340,52 +340,59 @@ export default function Store({ cookies }) {
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => {
-                            Axios.get(`http://localhost:3000/api/Order/add?addressId=${selectAddressUser}`).then(async (response) => {
-                                const url = 'https://api.gbprimepay.com/v3/qrcode';
-                                const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
-                                const referenceNo = response.data.reffNo;
-                                const amount = '0.10'; //{totalPrice}
-                                const backgroundUrl = 'https://69e3-2403-6200-88a4-707f-5906-6b75-6cb5-aae3.ngrok.io/api/GBPay/getrespons'
-                                const data = new URLSearchParams();
-                                let isPayed = false;
-                                data.append('token', token);
-                                data.append('referenceNo', referenceNo);
-                                data.append('amount', amount);
-                                data.append('backgroundUrl', backgroundUrl);
+                            if (selectAddressUser != 0) {
+                                Axios.get(`http://localhost:3000/api/Order/add?addressId=${selectAddressUser}&UserId=${userId}`).then(async (response) => {
+                                    const url = 'https://api.gbprimepay.com/v3/qrcode';
+                                    const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
+                                    const referenceNo = response.data.reffNo;
+                                    const amount = '0.10'; //{totalPrice}
+                                    const backgroundUrl = 'https://02e8-2403-6200-88a4-707f-b9cc-3055-4476-411d.ngrok-free.app/api/GBPay/getrespons'
+                                    const data = new URLSearchParams();
+                                    let isPayed = false;
+                                    data.append('token', token);
+                                    data.append('referenceNo', referenceNo);
+                                    data.append('amount', amount);
+                                    data.append('backgroundUrl', backgroundUrl);
 
-                                Axios.post(url, data, {
-                                responseType: "arraybuffer",
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                }})
-                                
-                                .then((response) => {
-                                    let QRCode = 'data:image/png;base64,' + Buffer.from(response.data, 'binary').toString('base64');
-                                    setQRCode(QRCode);
-                                })
-                                .catch((error) => {
-                                    console.error('Error:', error);
-                                });
-
-                                while (isPayed === false) {
-                                    Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
-                                        console.log(response.data.isSuccenss)
-                                        if(response.data.isSuccenss) {
-                                            // เอา QRCODE ออก เเล้ว Sweet Alert
-                                            // updateStock
-                                            isPayed = true
-                                            console.log("จ่ายเเล้ว");
-                                        }
+                                    Axios.post(url, data, {
+                                    responseType: "arraybuffer",
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                    }})
+                                    
+                                    .then((response) => {
+                                        let QRCode = 'data:image/png;base64,' + Buffer.from(response.data, 'binary').toString('base64');
+                                        setQRCode(QRCode);
                                     })
-                                    await Sleep(5000)
-                                }
-                            })
+                                    .catch((error) => {
+                                        console.error('Error:', error);
+                                    });
+
+                                    while (isPayed === false) {
+                                        Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
+                                            console.log(response.data.isSuccenss)
+                                            if(response.data.isSuccenss) {
+                                                // เอา QRCODE ออก เเล้ว Sweet Alert
+                                                isPayed = true
+                                                console.log("จ่ายเเล้ว");
+                                            }
+                                        })
+                                        await Sleep(5000)
+                                    }
+                                })
+                            } else {
+                                alert("กรุณาเลือกที่อยู่")
+                            }
                         }}
                     >
                         ชำระเงิน
                     </motion.button>
 
-                    {QRCode != '' && <img className='w-auto h-auto' src={QRCode}></img>}
+                    {QRCode != '' && (
+                        <motion.div className=''>
+                            <img className='w-auto h-auto' src={QRCode}></img>
+                        </motion.div>
+                    )}
                 </div>
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
             </div>
