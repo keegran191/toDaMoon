@@ -9,7 +9,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
 import { parse } from 'cookie';
 
-function StockConfig() {
+function StockConfig({ cookies }) {
+    const { fname, userId } = cookies;
+
     //Stock List
     const [stockList, setStockList] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
@@ -235,7 +237,7 @@ function StockConfig() {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
             <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
             </Head>
-            <NavAdmin></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
             <div className={style.adminContainer}>
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">แก้ไขสินค้า</span>
@@ -625,4 +627,11 @@ function StockConfig() {
 
 export default StockConfig;
 
-                                    
+export async function getServerSideProps(context) {
+    const cookies = parse(context.req.headers.cookie || '');
+    return {
+      props: {
+        cookies,
+      },
+    };
+}

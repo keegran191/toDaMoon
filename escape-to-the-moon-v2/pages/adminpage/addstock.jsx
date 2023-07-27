@@ -7,7 +7,9 @@ import Select from 'react-select'
 import { motion, AnimatePresence } from 'framer-motion';
 import { parse } from 'cookie';
 
-function Stock() {
+function Stock({ cookies }) {
+    const { fname, userId } = cookies;
+
     const [optionCoffee, setOptionCoffee] = useState([]);
     const [valueCoffee, setValueCoffee] = useState();
 
@@ -221,7 +223,7 @@ function Stock() {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <NavAdmin></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
 
             <div className={style.adminContainer}>
                 <div className="w-full">
@@ -436,3 +438,12 @@ function Stock() {
 }
 
 export default Stock
+
+export async function getServerSideProps(context) {
+    const cookies = parse(context.req.headers.cookie || '');
+    return {
+      props: {
+        cookies,
+      },
+    };
+}

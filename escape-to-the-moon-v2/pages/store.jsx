@@ -262,6 +262,18 @@ export default function Store({ cookies }) {
                             className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer"
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             layoutId={post.Id}
+                            initial={{
+                                scale: 0,
+                            }}
+                            animate={{
+                                scale: 1,
+                            }}
+                            exit={{
+                                scale: 0
+                            }}
+                            transition={{
+                                duration: .2
+                            }}
                             onClick={() => {
                                 setTitle(post.Title)
                                 setDetail(post.Detail)
@@ -277,12 +289,12 @@ export default function Store({ cookies }) {
                                 GetSubCategory(post.CategoryId)
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
+                                setItemAmount(getTotalStockAmount(basketList, post.Id))
                                 // console.log(basketList.map(e => e.stockId).indexOf(post.Id))
                             }}
                             style={{
                                 opacity: selectedId == post.Id ? 0 : 1,
                             }}
-                            exit={{scale: 0, transition: { duration: 0.2}}}
                         >
                             <div className="flex justify-center items-center">
                                 <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
@@ -461,30 +473,25 @@ export default function Store({ cookies }) {
                                                         if (ItemAmount !== 0) {
                                                             let totalStockAmount = getTotalStockAmount(basketList, selectedId);
                                                             let selectedIndex = basketList.findIndex(e => e.stockId == selectedId);
-                                                            // console.log(selectedId, selectedIndex)
                                                             if (selectedIndex !== -1) {
                                                                 const selectedItem = basketList[selectedIndex];
                                                                 if (selectedItem.stockAmount !== undefined) {
-                                                                    if ((selectedItem.Amount - totalStockAmount) >= ItemAmount) {
-                                                                        await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`);
-                                                                        setSelectedId(null);
-                                                                        setTitle('');
-                                                                        setDetail('');
-                                                                        setAmount(0);
-                                                                        setPrice(0);
-                                                                        setIsAdvise(0);
-                                                                        setStockType(0);
-                                                                        setProcess(0);
-                                                                        setRoast(0);
-                                                                        setFlavor(0);
-                                                                        setCategoryId(0);
-                                                                        setSubCategoryId(0);
-                                                                        setItemAmount(0)
-                                                                        GetBasketAmount(userId);
-                                                                        GetBasket(userId);
-                                                                    } else {
-                                                                        alert("จำนวนสินค้าของทางร้านไม่เพียงพอ");
-                                                                    }
+                                                                    await Axios.get(`http://localhost:3000/api/basket/update?stockId=${selectedId}&stockAmount=${ItemAmount}&userId=${userId}`);
+                                                                    setSelectedId(null);
+                                                                    setTitle('');
+                                                                    setDetail('');
+                                                                    setAmount(0);
+                                                                    setPrice(0);
+                                                                    setIsAdvise(0);
+                                                                    setStockType(0);
+                                                                    setProcess(0);
+                                                                    setRoast(0);
+                                                                    setFlavor(0);
+                                                                    setCategoryId(0);
+                                                                    setSubCategoryId(0);
+                                                                    setItemAmount(0)
+                                                                    GetBasketAmount(userId);
+                                                                    GetBasket(userId);
                                                                 } else {
                                                                     alert("ไม่สามารถเพิ่มสินค้าได้ในขณะนี้");
                                                                 }
@@ -517,7 +524,8 @@ export default function Store({ cookies }) {
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" className="mr-2 fill-current">
                                                     <path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
                                                 </svg>
-                                                ใส่ตระกร้า
+                                                {basketList.findIndex(e => e.stockId == selectedId) !== -1 && <span>อัพเดทตะกร้า</span>}
+                                                {basketList.findIndex(e => e.stockId == selectedId) === -1 && <span>ใส่ตระกร้า</span>}
                                             </motion.button>}
                                         </div>
                                     </div>

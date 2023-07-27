@@ -34,6 +34,7 @@ export default function Store({ cookies }) {
     const [totalPrice, setTotalPrice] = useState(0);
 
     const [QRCode, setQRCode] = useState('');
+    const [IsPaid, setIsPaid] = useState(false);
 
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/stock/category").then((response) => {
@@ -216,10 +217,10 @@ export default function Store({ cookies }) {
                 </div>
 
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
-                {basketList.length == 0 && <span className='text-2xl my-32'>
-                    ไม่พบรายการสินค้า
-                </span>}
-
+                {basketList.length == 0 && <div className='w-full flex justify-center'>
+                    <span className='text-2xl my-32'>ไม่พบรายการสินค้า</span>    
+                </div>}
+                
                 {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
                     return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' key={index}>
                         <div class='text-lg text-left col-span-2 flex'>
@@ -317,7 +318,7 @@ export default function Store({ cookies }) {
                     </motion.div>
                 })}
                 
-                <div className='flex justify-end items-center my-5'>
+                {basketList.length > 0 && <div className='flex justify-end items-center my-5'>
                     <span className='text-xl mr-5'>ที่อยู่จัดส่งสินค้า</span>
                     <div className="w-full md:w-64 sm:pr-2">
                         <Select
@@ -333,8 +334,8 @@ export default function Store({ cookies }) {
                     </div>
 
                     {basketList.length > 0 && <span className='text-xl ml-10 mr-5'>ราคารวมทั้งหมด {totalPrice}</span>}
-                </div>
-                <div className='flex justify-end items-center my-5'>
+                </div>}
+                {basketList.length > 0 &&  <div className='flex justify-end items-center my-5'>
                     <motion.button 
                         className='bg-[#252525] text-[#FFFFFF] p-3 px-10 mr-5 rounded-lg'
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
@@ -346,7 +347,7 @@ export default function Store({ cookies }) {
                                     const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
                                     const referenceNo = response.data.reffNo;
                                     const amount = '0.10'; //{totalPrice}
-                                    const backgroundUrl = 'https://02e8-2403-6200-88a4-707f-b9cc-3055-4476-411d.ngrok-free.app/api/GBPay/getrespons'
+                                    const backgroundUrl = 'https://8a58-2403-6200-88a4-2208-19bc-582c-bf2e-a96e.ngrok-free.app/api/GBPay/getrespons'
                                     const data = new URLSearchParams();
                                     let isPayed = false;
                                     data.append('token', token);
@@ -373,6 +374,7 @@ export default function Store({ cookies }) {
                                             console.log(response.data.isSuccenss)
                                             if(response.data.isSuccenss) {
                                                 setQRCode('')
+                                                setIsPaid(true)
                                                 isPayed = true
                                                 console.log("จ่ายเเล้ว");
                                                 GetBasket(userId)
@@ -415,17 +417,45 @@ export default function Store({ cookies }) {
                         ></motion.div>}
                     </AnimatePresence>
 
-                    {QRCode != '' && (
+                    <AnimatePresence mode='wait' key={'sweet-alert'}>
+                        {IsPaid && <motion.div
+                            style={{
+                                position: 'fixed',
+                                top: '0',
+                                left: '0',
+                                width: '100vw',
+                                height: '100vh',
+                                backgroundColor: 'rgba(0, 0, 0, .25)'
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: .5
+                            }}
+                        ></motion.div>}
+                    </AnimatePresence>
+
+                    {(QRCode != '' )&& (
                         <motion.div 
                             className='z-50 absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center'
                             initial={{
                                 scale: 0,
+                                y: 100,
                             }}
                             animate={{
                                 scale: 1,
+                                y: 0,
                             }}
                             exit={{
-                                scale: 0
+                                scale: 0,
+                                y: 100,
                             }}
                             transition={{
                                 duration: .3
@@ -435,8 +465,8 @@ export default function Store({ cookies }) {
                         </motion.div>
                     )}
 
-                </div>
-                <div className='w-full h-1 border-b-2 border-[#252525]'></div>
+                </div>}
+                {basketList.length > 0 && <div className='w-full h-1 border-b-2 border-[#252525]'></div>}
             </div>
             
             <AnimatePresence key={'modalDelete'} mode='wait'>

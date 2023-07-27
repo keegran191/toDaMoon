@@ -98,9 +98,19 @@ function UserManagement ({ cookies }) {
         });
     }
 
+    const GetUserInfo = () => {
+        Axios.get(`http://localhost:3000/api/user/get/this`).then((response) => {
+            console.log(response.data.userData)
+            setFname(response.data.userData.user_fname)
+            setSname(response.data.userData.user_lname)
+            setPhone(response.data.userData.user_phone)
+        })
+    }
+
     useEffect(() => {
         GetBasketAmount(userId)
         GetAddress(userId)
+        GetUserInfo()
     }, [userId]);
 
     return (
@@ -114,7 +124,7 @@ function UserManagement ({ cookies }) {
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
             
-            <div className='mt-40 flex px-10 justify-center lg:justify-start h-auto'>
+            <div className='mt-40 flex px-10 justify-center lg:justify-start h-auto mb-20'>
                 <div className="hidden lg:block w-2/12">
                     <motion.div 
                         className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
@@ -379,7 +389,7 @@ function UserManagement ({ cookies }) {
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
                         onClick={async () => {
-                            if (Fname === "" || Sname === "" || Phone === undefined || Email === "") {
+                            if (Fname === "" || Sname === "" || Phone === undefined) {
                               alert("Please fill in all fields.");
                             } else {
 

@@ -1,7 +1,6 @@
 import pool from "../../../lib/database";
 
 export default async function handler(req, res) {
-
     const [results] = await pool.query('UPDATE order_list SET payment_status = ? ,IsUpdateStock = 1 WHERE refNumber = ?', [req.body.resultCode, req.body.referenceNo]).catch((err) => {
         res.status(500).json({ "Status": "Database Error" });
         console.error(err);
@@ -35,8 +34,7 @@ export default async function handler(req, res) {
         console.error(err);
         return null;
         });
-    console.log(resultRows);
-    console.log(resultsStock);
+
     // Insert each row of resultsStock into the item_order table
     for (const stockItem of resultsStock) {
         const { stockId, stockAmount, stockPrice } = stockItem;

@@ -5,7 +5,6 @@ export default async function handler(req, res) {
   
   const cookies = parse(req.headers.cookie || "");
   const userId = cookies.userId; // Get the user ID from the cookie
-
   try {
     // Fetch user data from the database
     const [results] = await pool.query(
@@ -15,7 +14,6 @@ export default async function handler(req, res) {
    //pool.end();
     if (results.length > 0) {
       const userData = results[0];
-      console.log(userData)
       return res.status(200).json({isSuccess: true, userData});
     } else {
       return res.status(404).json({ isSuccess: false, message: "User not found" });
