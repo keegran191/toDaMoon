@@ -5,10 +5,11 @@ export default async function handler(req, res) {
 
   try {
     const [results] = await pool.query('SELECT * FROM stock WHERE Title LIKE ?', [`%${searchItem}%`]);
-   //pool.end();
+    pool.end();
     res.status(200).json(results);
   } catch (err) {
     console.error(err);
+    pool.end();
     res.status(500).json({ "Status": "Database Error" });
   }
 }

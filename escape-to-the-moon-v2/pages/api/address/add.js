@@ -11,11 +11,11 @@ export default async function handler(req, res) {
     const userId = req.query.userId
 
     const [results] = await pool.query('INSERT INTO address (name, detail, subdistrict, district, province, zipCode, userId) VALUES (?,?,?,?,?,?,?)', [name, detail, subdistrict, district, province, zipCode, userId]).catch((err) => {
+        pool.end();
         res.status(500).json({ "Status": "Database Error" });
         console.error(err);
         return null;
     })
-    // console.log(results.insertId);
-   //pool.end();
+    pool.end();
     res.redirect(307,'/usermanagement')
 }

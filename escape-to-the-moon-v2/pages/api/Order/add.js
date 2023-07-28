@@ -7,10 +7,11 @@ export default async function handler(req, res) {
     const UserId = req.query.UserId
 
     const [results] = await pool.query('INSERT INTO order_list (refNumber, addressId, UserId) VALUES (?,?,?)',[refNumber,addressId,UserId]).catch((err) => {
+        pool.end();
         res.status(500).json({ "Status": "Database Error" });
         console.error(err);
         return null;
     });
-   //pool.end();
+    pool.end();
     return res.status(200).json({ success: true, reffNo: refNumber });
 }

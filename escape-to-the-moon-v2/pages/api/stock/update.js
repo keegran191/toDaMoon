@@ -57,10 +57,11 @@ export default async function handler(req, res) {
       }
 
       await updateStock(stockId, updatedStock);
-     //pool.end();
+      pool.end();
       return res.status(200).json({ success: true, message: 'Update Stock Complete' });
     } catch (err) {
       console.error('Database Error:', err);
+      pool.end();
       return res.status(500).json({ error: 'Database Error' });
     }
   });

@@ -8,11 +8,12 @@ export default async function handler(req, res) {
   const userId = req.query.userId
 
   const [results] = await pool.query('UPDATE basket SET stockAmount = ? WHERE stockId = ? AND userId = ?', [stockAmount,stockId,userId]).catch((err) => {
+    pool.end();
     res.status(500).json({ "Status": "Database Error" });
     console.error(err);
     return null;
   });
   
-  pool.destroy();
+  pool.end();
   res.status(201).json({"Status": "Basket Updated"});
 }

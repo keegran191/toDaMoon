@@ -11,15 +11,17 @@ export default async function handler(req, res) {
       "SELECT user_fname, user_lname, email, user_phone FROM users WHERE id = ?",
       [userId]
     );
-   //pool.end();
     if (results.length > 0) {
       const userData = results[0];
+      pool.end();
       return res.status(200).json({isSuccess: true, userData});
     } else {
+      pool.end();
       return res.status(404).json({ isSuccess: false, message: "User not found" });
     }
   } catch (error) {
     console.error(error);
+    pool.end();
     return res.status(500).json({ isSuccess: false, message: "Database error" });
   }
 }

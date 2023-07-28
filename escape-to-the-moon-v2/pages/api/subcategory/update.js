@@ -5,10 +5,12 @@ export default async function handler(req, res) {
   const label = req.query.label;
 
   const [results] = await pool.query('UPDATE subcategory SET sub_label = ? WHERE sub_id = ?',[label, id]).catch((err) => {
-    res.status(500).json({ "Status": "Database Error" });
     console.error(err);
+    pool.end();
+    res.status(500).json({ "Status": "Database Error" });
+
     return null;
   });
- //pool.end();
+  pool.end();
   res.redirect(307, '/adminpage/subcategory')
 }

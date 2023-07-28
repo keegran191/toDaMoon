@@ -15,10 +15,10 @@ export default async function handler(req, res) {
       const match = await bcrypt.compare(floating_password, user.user_password);
       const isAdmin = await connection.query(`SELECT is_admin FROM users WHERE email = ?`, [floating_email]);
       const isAdminValue = isAdmin[0]?.[0].is_admin;
-     //pool.end();
+     
       if (match) {
         console.log("Password match!");
-
+        
         const cookies = [
           cookie.serialize("loggedin", user.is_admin, {
             httpOnly: true,
@@ -42,25 +42,29 @@ export default async function handler(req, res) {
             path: "/"
           })
         ];
-
+        
         if (isAdminValue === 1) {
           res.setHeader("Set-Cookie", cookies);
+          pool.end();
           res.redirect(307, `/adminpage/category`);
         } else {
+          pool.end();
           res.setHeader("Set-Cookie", cookies);
           res.redirect(307, "/");
         }
       } else {
         console.log("Password does not match!");
+        pool.end();
         res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
       }
     } else {
-     //pool.end();
       console.log("Email not found");
+      pool.end();
       res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
     }
   } catch (error) {
     console.error(error);
+    pool.end();
     res.redirect(307, "/login?errorMsg=DatabaseError&errObj=");
   }
 }
