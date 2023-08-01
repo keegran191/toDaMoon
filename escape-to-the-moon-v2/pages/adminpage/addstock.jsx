@@ -10,6 +10,9 @@ import { parse } from 'cookie';
 function Stock({ cookies }) {
     const { fname, userId } = cookies;
 
+    const [orderAmount, setOrderAmount] = useState(0)
+    const [haveNewOrder, setHaveNewOrder] = useState()
+
     const [optionCoffee, setOptionCoffee] = useState([]);
     const [valueCoffee, setValueCoffee] = useState();
 
@@ -83,6 +86,27 @@ function Stock({ cookies }) {
         }),
     }
 
+    const GetAdminOrderAmount = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        .then((response) => {
+            const {data} = response;
+            setOrderAmount(data.totalOrderAmount || 0);
+        })
+        .catch((error) => {
+            console.error('Error fetching order amount:', error);
+            setOrderAmount(0);
+        })
+    }
+
+    const GetAdminHaveNewOrder = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+            if (response.data.IsRead == 0) {
+                setHaveNewOrder(0)
+            } else if (response.data.IsRead == 1) {
+                setHaveNewOrder(1)
+            }
+        });
+    }
     const GetCoffee = () => {
         Axios.get("http://localhost:3000/api/coffee/get").then((response) => {
             setOptionCoffee(response.data.map((coffee) => ({ value: coffee.id, label: coffee.label })));
@@ -152,6 +176,11 @@ function Stock({ cookies }) {
         setImagesURLs(newImageUrls);
 
     }, [images]);
+
+    useEffect(() => {
+        GetAdminHaveNewOrder()
+        GetAdminOrderAmount()
+    }, []);
 
     function onImageChanged(event) {
         setImages([...event.target.files]);
@@ -223,7 +252,7 @@ function Stock({ cookies }) {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
             <div className={style.adminContainer}>
                 <div className="w-full">

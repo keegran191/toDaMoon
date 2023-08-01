@@ -9,6 +9,8 @@ import { parse } from 'cookie';
 
 export default function Admin({ cookies }) {
     const { fname, userId } = cookies;
+    const [orderAmount, setOrderAmount] = useState(0)
+    const [haveNewOrder, setHaveNewOrder] = useState()
 
     const [categoryList, setCategoryList] = useState([]);
     const [IsChange, setChange] = useState(false);
@@ -20,6 +22,28 @@ export default function Admin({ cookies }) {
     const [selectedId, setSelectedId] = useState(null);
     const [isItemSelected, setItemSelected] = useState(false);
 
+    const GetAdminOrderAmount = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        .then((response) => {
+            const {data} = response;
+            setOrderAmount(data.totalOrderAmount || 0);
+        })
+        .catch((error) => {
+            console.error('Error fetching order amount:', error);
+            setOrderAmount(0);
+        })
+    }
+
+    const GetAdminHaveNewOrder = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+            if (response.data.IsRead == 0) {
+                setHaveNewOrder(0)
+            } else if (response.data.IsRead == 1) {
+                setHaveNewOrder(1)
+            }
+        });
+    }
+
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/category/get").then((response) => {
             setCategoryList(response.data);
@@ -28,6 +52,8 @@ export default function Admin({ cookies }) {
 
     useEffect(() => {
         GetCategory()
+        GetAdminHaveNewOrder()
+        GetAdminOrderAmount()
     }, []);
     
     return(
@@ -41,7 +67,7 @@ export default function Admin({ cookies }) {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
             </Head>
-            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
             <div className={style.adminContainer}>
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มประเภทสินค้า</span>

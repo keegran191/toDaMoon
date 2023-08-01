@@ -11,6 +11,8 @@ import { parse } from 'cookie';
 
 function Subcategory({ cookies }) {
     const { fname, userId } = cookies;
+    const [orderAmount, setOrderAmount] = useState(0)
+    const [haveNewOrder, setHaveNewOrder] = useState()
 
     const [option, setOption] = useState([]);
 
@@ -73,7 +75,28 @@ function Subcategory({ cookies }) {
             ...(state.isSelected && { color: "#FFFFFF" , backgroundColor: "#252525"}), // add this line to change the text color of the selected option
           }),
     }
+    
+    const GetAdminOrderAmount = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        .then((response) => {
+            const {data} = response;
+            setOrderAmount(data.totalOrderAmount || 0);
+        })
+        .catch((error) => {
+            console.error('Error fetching order amount:', error);
+            setOrderAmount(0);
+        })
+    }
 
+    const GetAdminHaveNewOrder = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+            if (response.data.IsRead == 0) {
+                setHaveNewOrder(0)
+            } else if (response.data.IsRead == 1) {
+                setHaveNewOrder(1)
+            }
+        });
+    }
 
     const GetCategory = () => {
         Axios.get("http://localhost:3000/api/category/get").then((response) => {
@@ -91,6 +114,8 @@ function Subcategory({ cookies }) {
     
     useEffect(() => {
         GetCategory()
+        GetAdminHaveNewOrder()
+        GetAdminOrderAmount()
     }, []); //subCategoryList
 
     useEffect(() => {
@@ -106,7 +131,7 @@ function Subcategory({ cookies }) {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
 
             <div className={style.adminContainer}>

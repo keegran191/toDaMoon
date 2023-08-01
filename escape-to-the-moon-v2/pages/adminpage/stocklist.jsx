@@ -11,7 +11,8 @@ import { parse } from 'cookie';
 
 function StockConfig({ cookies }) {
     const { fname, userId } = cookies;
-
+    const [orderAmount, setOrderAmount] = useState(0)
+    const [haveNewOrder, setHaveNewOrder] = useState()
     //IsDelete
     const [IsDelete, setDelete] = useState(false);
     const [Label, setLabel] = useState("");
@@ -158,6 +159,28 @@ function StockConfig({ cookies }) {
         }),
     }
 
+    const GetAdminOrderAmount = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        .then((response) => {
+            const {data} = response;
+            setOrderAmount(data.totalOrderAmount || 0);
+        })
+        .catch((error) => {
+            console.error('Error fetching order amount:', error);
+            setOrderAmount(0);
+        })
+    }
+
+    const GetAdminHaveNewOrder = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+            if (response.data.IsRead == 0) {
+                setHaveNewOrder(0)
+            } else if (response.data.IsRead == 1) {
+                setHaveNewOrder(1)
+            }
+        });
+    }
+
     useEffect(() => {
         GetStokcList();
         GetCoffee()
@@ -172,6 +195,11 @@ function StockConfig({ cookies }) {
         setImagesURLs(newImageUrls);
         
     }, [images]);
+
+    useEffect(() => {
+        GetAdminHaveNewOrder()
+        GetAdminOrderAmount()
+    }, []);
 
     function onImageChanged(e) {
         setImages([...e.target.files]);
@@ -242,7 +270,7 @@ function StockConfig({ cookies }) {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
             <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
             </Head>
-            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
             <div className={style.adminContainer}>
                 <div className="w-full">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">แก้ไขสินค้า</span>

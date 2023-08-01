@@ -21,6 +21,34 @@ function AdminManagement({ cookies }) {
     const [changeUser, setChangeUser] = useState(false)
     const [changePassword, setChangePassword] = useState(false)
 
+    // Order List
+    const [order, setOrder] = useState(false)
+    const [adminOrder, setAdminOrder] = useState([]);
+    const [history, setHistory] = useState(false)
+    const [adminHistory, setAdminHistory] = useState([]);
+    const [orderItem, setOrderItem] = useState([]);
+    const [orderItemByOrder, setOrderItemByOrder] = useState([]);
+
+    // Order Val
+    const [selectOrder, setSelectOrder] = useState(false)
+    const [orderNo, setOrderNo] = useState('');
+    const [orderOn, setOrderOn] = useState('');
+    const [reciveName, setReciveName] = useState('');
+    const [orderAddressDetail, setOrderAddressDetail] = useState('');
+    const [orderSubdistrict, setOrderSubdistrict] = useState('');
+    const [orderDistrict, setOrderDistrict] = useState('');
+    const [orderProvince, setOrderProvince] = useState('');
+    const [orderZipcode, setOrderZipcode] = useState('');
+    const [orderShipment, setOrderShipment] = useState('');
+    const [orderCode, setOrderCode] = useState('');
+    const [orderTotal, setOrderTotal] = useState(0);
+
+    //items
+    const [optionCategory, setOptionCategory] = useState([]);
+    const [optionSubCategory, setOptionSubCategory] = useState([]);
+    const [coffeeProcess, setCoffeeProcess] = useState([]);
+    const [coffeeRoast, setCoffeeRoast] = useState([]);
+    const [coffeeFlavor, setCoffeFlavor] = useState([]);
 
     //User Value
     const [Fname, setFname] = useState('');
@@ -310,7 +338,6 @@ function AdminManagement({ cookies }) {
 
                 
             </div>
-
         </div>
     )
 }
