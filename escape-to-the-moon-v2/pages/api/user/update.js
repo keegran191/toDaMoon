@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     try {
         // Update user data in the database
-        const [results] = await pool.query('UPDATE users SET user_fname = ?, user_lname = ?, user_phone = ? WHERE id = ?', [fName, lName, email, phone, userId]);
+        const [results] = await pool.query('UPDATE users SET user_fname = ?, user_lname = ?, user_phone = ? WHERE id = ?', [fName, lName, phone, userId]);
         console.log("update user success");
 
         // Update the fname value in the cookies

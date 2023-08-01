@@ -95,7 +95,7 @@ function Subcategory({ cookies }) {
 
     useEffect(() => {
         GetSubCategory(value)
-    }, [subCategoryList]); //subCategoryList
+    }, []); //subCategoryList
 
     return (
         <div>
@@ -262,9 +262,9 @@ function Subcategory({ cookies }) {
                                                             color: '#FFFFFF'
                                                         }}
                                                         whileTap={{ scale: 0.95 }}
-                                                        onClick={() => {
+                                                        onClick={async () => {
                                                             if (Label != "") {
-                                                                Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${selectedId}`)
+                                                                await Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${selectedId}`)
                                                                 setSelectedId(null)
                                                                 setLabel('')
                                                                 GetSubCategory(value)

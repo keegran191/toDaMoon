@@ -12,6 +12,11 @@ import { parse } from 'cookie';
 function StockConfig({ cookies }) {
     const { fname, userId } = cookies;
 
+    //IsDelete
+    const [IsDelete, setDelete] = useState(false);
+    const [Label, setLabel] = useState("");
+
+
     //Stock List
     const [stockList, setStockList] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
@@ -337,8 +342,8 @@ function StockConfig({ cookies }) {
                         //<motion.div layoutId={selectedId} className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center select-none bg-white rounded-xl shadow-lg ${style.selectedItem}`}></motion.div>
                             <motion.div layoutId={selectedId} 
                                 className={
-                                    `z-50 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
-                                    lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
+                                    `z-40 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
+                                    lg:absolute lg:top-36 2xl:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-5/6 lg:rounded-xl shadow-lg ${style.selectedItem}
                                     `
                                 }>
                                 <motion.button
@@ -593,22 +598,9 @@ function StockConfig({ cookies }) {
                                                 whileTap={{ scale: 0.85 }}
                                                 className="text-[#252525] border-2 border-[#252525] bg-none px-5 py-2.5 rounded-lg font-medium text-sm"
                                                 onClick={() => {
-                                                    setSelectedId(null)
-                                                    setSelectedId(null)
-                                                    setTitle(null)
-                                                    setDetail(null)
-                                                    setAmount(null)
-                                                    setPrice(null)
-                                                    setIsAdvise(null)
-                                                    setStockType(null)
-                                                    setProcess(null)
-                                                    setRoast(null)
-                                                    setFlavor(null)
-                                                    setCategoryId(null)
-                                                    setSubCategoryId(null)
-                                                    GetStokcList();
-                                                    setImages([]);
-                                                    setImagesURLs([]);
+                                                    setDelete(true);
+                                                    setLabel(Title);
+
                                                 }}
                                             >
                                                 ลบสินค้า
@@ -619,6 +611,106 @@ function StockConfig({ cookies }) {
                             </motion.div>
                         )}
                     </AnimatePresence>
+
+                    <AnimatePresence key={'modalDelete'} mode='wait'>
+                    { IsDelete && selectedId && <motion.div
+                        style={{
+                            position: 'fixed',
+                            top: '0',
+                            left: '0',
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(0, 0, 0, .25)'
+                        }}
+                        initial={{
+                            opacity: 0,
+                        }}
+                        animate={{
+                            opacity: 1,
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        transition={{
+                            duration: .5
+                        }}
+                        className='z-50'
+                    ></motion.div>}
+                    </AnimatePresence>
+
+                    { IsDelete && selectedId &&
+                        <motion.div
+                            style={{
+                                position: 'fixed',
+                                top: '0',
+                                left: '0',
+                                width: '100vw',
+                                height: '100vh',
+                            }}
+
+                            initial={{
+                                scale: 0.0,
+                            }}
+                            animate={{
+                                scale: 0.95,
+                            }}
+                            exit={{
+                                scale: 0.0
+                            }}
+                            transition={{
+                                duration: .2
+                            }}
+                            className='z-50'
+                        >
+                            <UniversalModal
+                                message={"คุณต้องการลบสินค้า " + Label + " ?"}
+                                txtApply="ลบ"
+                                onApply={ async () =>{
+                                    await Axios.get(`http://localhost:3000/api/stock/delete/${selectedId}`)
+                                    setSelectedId(null)
+                                    setSelectedId(null)
+                                    setTitle(null)
+                                    setDetail(null)
+                                    setAmount(null)
+                                    setPrice(null)
+                                    setIsAdvise(null)
+                                    setStockType(null)
+                                    setProcess(null)
+                                    setRoast(null)
+                                    setFlavor(null)
+                                    setCategoryId(null)
+                                    setSubCategoryId(null)
+                                    setImages([]);
+                                    setImagesURLs([]);
+                                    setDelete(false);
+                                    setSelectedId(null);
+                                    GetStokcList();
+                                }}
+                                txtClose="ยกเลิก"
+                                onClose={()=>{
+                                    setSelectedId(null)
+                                    setSelectedId(null)
+                                    setTitle(null)
+                                    setDetail(null)
+                                    setAmount(null)
+                                    setPrice(null)
+                                    setIsAdvise(null)
+                                    setStockType(null)
+                                    setProcess(null)
+                                    setRoast(null)
+                                    setFlavor(null)
+                                    setCategoryId(null)
+                                    setSubCategoryId(null)
+                                    setImages([]);
+                                    setImagesURLs([]);
+                                    setDelete(false);
+                                    setSelectedId(null);
+                                    GetStokcList();
+                                }}
+                            >
+                            </UniversalModal>
+                        </motion.div>
+                    }
                 </div>
             </div>
         </div>

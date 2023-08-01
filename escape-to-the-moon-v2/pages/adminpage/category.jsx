@@ -28,7 +28,7 @@ export default function Admin({ cookies }) {
 
     useEffect(() => {
         GetCategory()
-    }, [categoryList]);
+    }, []);
     
     return(
         <div className='select-none'>
@@ -176,12 +176,12 @@ export default function Admin({ cookies }) {
                                                     color: '#FFFFFF'
                                                 }}
                                                 whileTap={{ scale: 0.95 }}
-                                                onClick={() => {
+                                                onClick={async () => {
                                                     if (selectedId == 40 || selectedId == 41 || selectedId == 42) {
                                                         alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
                                                     } else {
                                                         if(Label != '') {
-                                                            Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${selectedId}`)
+                                                            await Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${selectedId}`)
                                                             setSelectedId(null)
                                                             setLabel('')
                                                             setItemSelected(false);

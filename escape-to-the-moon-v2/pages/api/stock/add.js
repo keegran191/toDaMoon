@@ -16,6 +16,7 @@ const upload = multer({ storage: storage });
 
 
 export default function handler(req, res) {
+
   upload.single('image')(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
       console.log('Multer error:', err);
@@ -59,7 +60,8 @@ export default function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Subcategory Required' });
       }
     }
-
+    
+    const pool = await db.getConnection();
     try {
       await pool.query(
         'INSERT INTO stock (Title, Detail, Amount, Price, IsAdvise, StockType, Process, Roast, Flavor, CategoryId, SubCategoryId, Image) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',

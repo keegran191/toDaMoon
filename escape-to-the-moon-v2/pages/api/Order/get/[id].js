@@ -1,4 +1,4 @@
-import db from "../../../lib/database";
+import db from "../../../../lib/database";
 
 export default async function handler(req, res) {
     const pool = await db.getConnection();
@@ -12,8 +12,9 @@ export default async function handler(req, res) {
         INNER JOIN address 
             ON order_list.addressId = address.id
         WHERE 
-            order_list.UserId = ? 
+            order_list.UserId = ?
             AND order_list.order_status != 0 
+            AND order_list.order_status != 3 
             AND order_list.payment_status = "00"
 
         ORDER BY order_list.order_Id DESC

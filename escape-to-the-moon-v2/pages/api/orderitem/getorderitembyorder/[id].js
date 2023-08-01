@@ -1,4 +1,4 @@
-import db from "../../../lib/database";
+import db from "../../../../lib/database";
 
 export default async function handler(req, res) {
   const pool = await db.getConnection();

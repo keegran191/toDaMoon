@@ -19,9 +19,8 @@ export default async function handler(req, res) {
     const userId = cookies.userId; // Get the user ID from the cookie
     
     try {
-        const connection = await pool.getConnection();
         const query = `SELECT * FROM users WHERE id = ?`;
-        const [results] = await connection.query(query, [userId]);
+        const [results] = await pool.query(query, [userId]);
         
         if (results.length === 0) {
             console.log("User not found")  

@@ -1,5 +1,5 @@
 import cookie from "cookie";
-import db from "../../../lib/database";
+import db from "../../lib/database";
 const bcrypt = require("bcrypt");
 
 export default async function handler(req, res) {
@@ -7,14 +7,13 @@ export default async function handler(req, res) {
   const pool = await db.getConnection();
   
   try {
-    const connection = await pool.getConnection();
     const query = `SELECT * FROM users WHERE email = ?`;
-    const [results] = await connection.query(query, [floating_email]);
+    const [results] = await pool.query(query, [floating_email]);
 
     if (results.length > 0) {
       const user = results[0];
       const match = await bcrypt.compare(floating_password, user.user_password);
-      const isAdmin = await connection.query(`SELECT is_admin FROM users WHERE email = ?`, [floating_email]);
+      const isAdmin = await pool.query(`SELECT is_admin FROM users WHERE email = ?`, [floating_email]);
       const isAdminValue = isAdmin[0]?.[0].is_admin;
      
       if (match) {

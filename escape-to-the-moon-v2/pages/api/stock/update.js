@@ -23,8 +23,6 @@ export default async function handler(req, res) {
       console.log('Unknown error:', err);
       return res.status(500).json({ error: 'Unknown error occurred.' });
     }
-
-    const pool = await db.getConnection();
     const stockId = req.body.stockId;
 
     const updatedStock = {
@@ -69,6 +67,7 @@ export default async function handler(req, res) {
 }
 
 async function getStockById(stockId) {
+  const pool = await db.getConnection();
   try {
     const [results] = await pool.query('SELECT * FROM stock WHERE id = ?', [stockId]);
     if (results.length > 0) {
@@ -81,6 +80,8 @@ async function getStockById(stockId) {
 }
 
 async function updateStock(stockId, updatedStock) {
+
+  const pool = await db.getConnection();
   try {
     await pool.query(
       'UPDATE stock SET Title = ?, Detail = ?, Amount = ?, Price = ?, IsAdvise = ?, StockType = ?, Process = ?, Roast = ?, Flavor = ?, CategoryId = ?, SubCategoryId = ?, Image = ? WHERE id = ?',

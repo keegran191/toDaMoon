@@ -1,4 +1,4 @@
-import db from "../../../lib/database";
+import db from "../../../../lib/database";
 import { parse } from "cookie";
 
 export default async function handler(req, res) {

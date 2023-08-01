@@ -33,6 +33,7 @@ function UserManagement ({ cookies }) {
     const [order, setOrder] = useState(false)
     const [userOrder, setUserOrder] = useState([]);
     const [history, setHistory] = useState(false)
+    const [userHistory, setUserHistory] = useState([]);
     const [orderItem, setOrderItem] = useState([]);
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
     // Order Val
@@ -206,6 +207,14 @@ function UserManagement ({ cookies }) {
         }
         setOrderTotal(TotalPrice)
     }
+
+    const handleCopyToClipboard = (text) => {
+        navigator.clipboard.writeText(text)
+          .then(() => setIsCopied(true))
+          .catch((error) => {
+            console.error('Failed to copy to clipboard: ', error);
+          });
+    };
 
     useEffect(() => {
         GetBasketAmount(userId)
@@ -925,10 +934,13 @@ function UserManagement ({ cookies }) {
                     </motion.button>
                 </div>}
 
-                {/* pc */}
+                {/* order */}
                 {order && <div className='block w-8/12 mt9 lg:pl-10'>
                     <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
-                    {userOrder.map((post) => {
+                    {userOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
+                        ไม่พบรายการสั่งซื้อ
+                    </motion.div>}
+                    {userOrder.length > 0 && userOrder.map((post) => {
                         return (
                             <motion.div 
                                 className='mt-5 flex justify-center'
@@ -941,7 +953,15 @@ function UserManagement ({ cookies }) {
                                         <div className='w-full pl-7'>
                                             <div className='w-full flex items-center'>
                                                 <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข {post.refNumber}</div>
-                                                <div className={`ml-2 w-20 h-5 text-sm bg-[${post.bg_color}] text-[${post.text_color}] text-center rounded-full`}>{post.label}</div>
+                                                <div 
+                                                    style={{
+                                                        backgroundColor: post.bg_color,
+                                                        color: post.text_color
+                                                    }} 
+                                                    className={`ml-2 w-20 h-5 text-sm text-center rounded-full`}
+                                                >
+                                                    {post.label}
+                                                </div>  
                                             </div>
                                             <div className='flex text-[#ECEBE8] items-center'>
                                                 <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -1111,7 +1131,7 @@ function UserManagement ({ cookies }) {
                             layoutId={selectOrder}
                             className={
                                 `
-                                    z-50 fixed left-0 right-0 top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full
+                                    z-50 fixed left-0 right-0 top-0 bottom-0 flex flex-col p-4 bg-white w-full
                                     lg:absolute xl:ml-auto xl:mr-auto lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:top-28 2xl:h-5/6 lg:rounded-xl shadow-lg
                                 `
                             }
@@ -1147,7 +1167,15 @@ function UserManagement ({ cookies }) {
                             <motion.div className='p-5 px-10'>
                                 <motion.div className='flex  items-center'>
                                     <motion.p className='text-2xl'>คำสั่งหมายเลข {orderNo}</motion.p>
-                                    <motion.div className={`flex items-center justify-center ml-2 w-auto h-6 px-2 text-sm bg-[${orderStatusBgColor}] text-[${orderStatusTextColor}] text-center rounded-full`}>{orderStatus}</motion.div>
+                                    <motion.div 
+                                        style={{
+                                            backgroundColor: orderStatusBgColor,
+                                            color: orderStatusTextColor
+                                        }} 
+                                        className={`flex items-center justify-center ml-2 w-auto h-6 px-2 text-sm bg-[${orderStatusBgColor}] text-[${orderStatusTextColor}] text-center rounded-full`}
+                                    >
+                                        {orderStatus}
+                                    </motion.div>
                                 </motion.div>
                                 <motion.div className='flex text-[#252525] items-center mt-2'>
                                     <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -1161,9 +1189,29 @@ function UserManagement ({ cookies }) {
                                         <motion.p>หมายเลขพัสดุ</motion.p>
                                         <motion.p>{orderShipment}</motion.p>
                                         <motion.div
-                                            className='p-1 border-2 border-[#252525]'
+                                            className='flex item-center justify-between border-2 border-[#252525]'
                                         >
-                                            {orderCode}
+                                            <span className='p-1'>{orderCode}</span>
+                                            <motion.div 
+                                                className='h-full w-auto'
+                                                whileHover={{
+                                                    backgroundColor: '#252525'
+                                                }}
+                                            >
+                                                <motion.div
+                                                    className='h-full w-auto p-1'
+                                                    whileHover={{
+                                                        backgroundColor: '#252525',
+                                                        color: '#FFFFFF'
+                                                    }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() => {
+                                                        handleCopyToClipboard(orderCode)
+                                                    }}
+                                                >
+                                                    คัดลอก
+                                                </motion.div>
+                                            </motion.div>
                                         </motion.div>
                                     </motion.div>
 
@@ -1252,9 +1300,25 @@ function UserManagement ({ cookies }) {
                     </AnimatePresence>
 
                 </div>}
-
-                {history && <div className='w-8/12 mt9 lg:pl-10'>
+                
+                {/* history */}
+                {history && <div className='block w-8/12 mt9 lg:pl-10'>
                     <h1 className=' text-xl'>ประวิติการสั่งซื้อ</h1>
+                    {userHistory.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
+                        ไม่พบประวัติการสั่งซื้อ
+                    </motion.div>}
+                    {userHistory.length > 0 && userHistory.map((post) => {
+                        return (
+                            <motion.div 
+                                className='mt-5 flex justify-center'
+                                key={post.order_Id}
+                                layoutId={post.order_Id}
+                            >
+                                
+                            </motion.div>
+                        )
+                    })}
+
                 </div>}
             </div>
 
