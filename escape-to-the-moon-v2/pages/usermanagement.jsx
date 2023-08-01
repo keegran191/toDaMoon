@@ -1083,7 +1083,15 @@ function UserManagement ({ cookies }) {
                                     >
                                         <div className='flex xl:hidden w-full h-auto bg-[#252525] p-3'>
                                             <div className='w-full'>
-                                                <div className={`w-20 h-5 text-sm bg-[${post.bg_color}] text-[${post.text_color}] text-center rounded-full`}>{post.label}</div>
+                                                <div 
+                                                    style={{
+                                                        backgroundColor: post.bg_color,
+                                                        color: post.text_color
+                                                    }} 
+                                                    className={`ml-2 w-fit h-5 text-sm text-center rounded-full px-2`}
+                                                >
+                                                    {post.label}
+                                                </div>  
                                                 <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข {post.refNumber}</div>
                                                 <div className='text-[#ECEBE8] mt-2'>
                                                     <p className='text-xs'>สั่งซื้อเมื่อ {post.order_on}</p>
@@ -1450,7 +1458,15 @@ function UserManagement ({ cookies }) {
                                     >
                                         <div className='flex xl:hidden w-full h-auto bg-[#252525] p-3'>
                                             <div className='w-full'>
-                                                <div className={`w-20 h-5 text-sm bg-[${post.bg_color}] text-[${post.text_color}] text-center rounded-full`}>{post.label}</div>
+                                                <div 
+                                                    style={{
+                                                        backgroundColor: post.bg_color,
+                                                        color: post.text_color
+                                                    }} 
+                                                    className={`ml-2 w-fit h-5 text-sm text-center rounded-full px-2`}
+                                                >
+                                                    {post.label}
+                                                </div>  
                                                 <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข {post.refNumber}</div>
                                                 <div className='text-[#ECEBE8] mt-2'>
                                                     <p className='text-xs'>สั่งซื้อเมื่อ {post.order_on}</p>
