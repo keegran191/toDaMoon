@@ -10,7 +10,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { parse } from 'cookie';
 
 function AdminManagement({ cookies }) {
+
     const { fname, userId } = cookies;
+    const [orderAmount, setOrderAmount] = useState(0)
+    const [haveNewOrder, setHaveNewOrder] = useState()
+
     const [toggleUser, setToggleUser] = useState(false)
     const [toggleOrder, setToggleOrder] = useState(false)
 
@@ -21,7 +25,6 @@ function AdminManagement({ cookies }) {
     //User Value
     const [Fname, setFname] = useState('');
     const [Sname, setSname] = useState('');
-    const [Email, setEmail] = useState('');
     const [Phone, setPhone] = useState();
     const [password, setPassword] = useState();
     const [newPassword, setNewPassword] = useState();
@@ -29,6 +32,28 @@ function AdminManagement({ cookies }) {
 
     //Rotare State
     const [rotateUser, setRotateUser] = useState(0);
+
+    const GetAdminOrderAmount = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        .then((response) => {
+            const {data} = response;
+            setOrderAmount(data.totalOrderAmount || 0);
+        })
+        .catch((error) => {
+            console.error('Error fetching order amount:', error);
+            setOrderAmount(0);
+        })
+    }
+
+    const GetAdminHaveNewOrder = () => {
+        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+            if (response.data.IsRead == 0) {
+                setHaveNewOrder(0)
+            } else if (response.data.IsRead == 1) {
+                setHaveNewOrder(1)
+            }
+        });
+    }
 
     const filterFnameTextInput = (e) => {
         const value = e.target.value;
@@ -54,6 +79,11 @@ function AdminManagement({ cookies }) {
         setNewPassword(sanitizedValue)
     }
 
+    useEffect(() => {
+        GetAdminHaveNewOrder()
+        GetAdminOrderAmount()
+    }, []);
+
     return (
         <div className='select-none'>
             <Head>
@@ -63,7 +93,7 @@ function AdminManagement({ cookies }) {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
-            <NavAdmin name={fname} userid={userId} orderCount={0}></NavAdmin>
+            <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
             <div className='mt-20 flex px-10 justify-center lg:justify-start h-auto'>
                 <div className="hidden lg:block w-2/12">
@@ -229,7 +259,7 @@ function AdminManagement({ cookies }) {
                               alert("Please fill in all fields.");
                             } else {
 
-                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Email=${Email}&Phone=${Phone}`);
+                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Phone=${Phone}`);
                               window.location.reload();
 
                             }
@@ -277,6 +307,8 @@ function AdminManagement({ cookies }) {
                             บันทึกข้อมูล
                     </motion.button>
                 </div>}
+
+                
             </div>
 
         </div>

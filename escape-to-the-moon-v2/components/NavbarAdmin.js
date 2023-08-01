@@ -1,20 +1,21 @@
 import Link from 'next/link'
 import {useState} from 'react'
-
+import { motion, AnimatePresence } from 'framer-motion';
 function Navbar({
     name,
     userid,
-    orderCount
+    orderCount,
+    haveOrder
 }) {
+    console.log(haveOrder)
     const [toggle, scountetToggle] = useState(true)
     const [toggle1, setToggle1] = useState(true)
     const [toggle2, setToggle2] = useState(true)
-    const [toggle3, setToggle3] = useState(true)
 
     return (
         <nav className="sticky top-0 w-full z-20 bg-[#252525] sm:px-4 py-2.5 dark:bg-[#252525]">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
-                <Link href="/">
+                <Link href="/adminpage/category">
                     <a className="flex items-center">
                         <span className="text-white sm:ml-0 ml-2 self-center sm:text-xl font-semibold whitespace-nowrap dark:text-white">Escape to the moon</span>
                     </a>
@@ -24,7 +25,12 @@ function Navbar({
                     {userid != null && <Link href='/adminpage/adminmanagement'>
                         <a id="user" className="flex items-center text-[#ECEBE8] text-sm cursor-pointer">{name}</a>
                     </Link>}
-                    <svg className="sm:w-4 sm:h-4 w-3 h-3 m-auto sm:ml-5 ml-3 fill-[#ECEBE8] cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M101.5 64C114.6 26.7 150.2 0 192 0s77.4 26.7 90.5 64H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h37.5zM224 96c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM160 368c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 392c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24zm64-120c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 296c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"/></svg>
+                    {<div className='relative sm:w-4 sm:h-4 w-3 h-3 m-auto sm:ml-5 ml-3'>
+                        {haveOrder == 0 && <motion.div className=" absolute w-2 h-2 rounded-full bg-red-500 right-0"></motion.div>}
+                        <svg className="w-full h-full fill-[#ECEBE8] cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path d="M101.5 64C114.6 26.7 150.2 0 192 0s77.4 26.7 90.5 64H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h37.5zM224 96c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM160 368c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 392c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24zm64-120c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 296c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"/>
+                        </svg>
+                    </div>}
                     <span id="newOrder" className="m-auto sm:ml-2 ml-1 text-[#ECEBE8]"> {orderCount} </span>
                     <button onClick={()=> {toggleBtn(toggle, scountetToggle)}} data-collapse-toggle="navbar-default" type="button" className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
                         <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
