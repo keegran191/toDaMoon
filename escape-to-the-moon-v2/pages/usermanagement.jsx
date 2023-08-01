@@ -965,7 +965,7 @@ function UserManagement ({ cookies }) {
                                                         backgroundColor: post.bg_color,
                                                         color: post.text_color
                                                     }} 
-                                                    className={`ml-2 w-20 h-5 text-sm text-center rounded-full`}
+                                                    className={`ml-2 w-auto h-5 text-sm text-center rounded-full px-2`}
                                                 >
                                                     {post.label}
                                                 </div>  
@@ -1332,7 +1332,7 @@ function UserManagement ({ cookies }) {
                                                         backgroundColor: post.bg_color,
                                                         color: post.text_color
                                                     }} 
-                                                    className={`ml-2 w-20 h-5 text-sm text-center rounded-full`}
+                                                    className={`ml-2 w-auto h-5 text-sm text-center rounded-full px-2`}
                                                 >
                                                     {post.label}
                                                 </div>  
