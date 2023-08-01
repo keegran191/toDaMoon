@@ -59,7 +59,6 @@ function UserManagement ({ cookies }) {
     //User Value
     const [Fname, setFname] = useState('');
     const [Sname, setSname] = useState('');
-    const [Email, setEmail] = useState('');
     const [Phone, setPhone] = useState();
     const [password, setPassword] = useState();
     const [newPassword, setNewPassword] = useState();
