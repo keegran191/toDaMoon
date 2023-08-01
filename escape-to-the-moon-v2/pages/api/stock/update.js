@@ -1,6 +1,6 @@
 import multer from 'multer';
 import { extname, join } from 'path';
-import pool from "../../../lib/database";
+import db from "../../../lib/database";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Unknown error occurred.' });
     }
 
+    const pool = await db.getConnection();
     const stockId = req.body.stockId;
 
     const updatedStock = {
@@ -57,11 +58,11 @@ export default async function handler(req, res) {
       }
 
       await updateStock(stockId, updatedStock);
-      pool.end();
+      pool.destroy();
       return res.status(200).json({ success: true, message: 'Update Stock Complete' });
     } catch (err) {
       console.error('Database Error:', err);
-      pool.end();
+      pool.destroy();
       return res.status(500).json({ error: 'Database Error' });
     }
   });

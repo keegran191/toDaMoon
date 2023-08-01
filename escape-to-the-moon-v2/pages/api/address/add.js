@@ -1,4 +1,4 @@
-import pool from "../../../lib/database";
+import db from "../../../lib/database";
 
 export default async function handler(req, res) {
 
@@ -10,12 +10,14 @@ export default async function handler(req, res) {
     const zipCode = req.query.zipCode
     const userId = req.query.userId
 
+    const pool = await db.getConnection();
+
     const [results] = await pool.query('INSERT INTO address (name, detail, subdistrict, district, province, zipCode, userId) VALUES (?,?,?,?,?,?,?)', [name, detail, subdistrict, district, province, zipCode, userId]).catch((err) => {
-        pool.end();
+        pool.destroy();
         res.status(500).json({ "Status": "Database Error" });
         console.error(err);
         return null;
     })
-    pool.end();
+    pool.destroy();
     res.redirect(307,'/usermanagement')
 }

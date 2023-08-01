@@ -222,7 +222,7 @@ export default function Store({ cookies }) {
                 </div>}
                 
                 {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
-                    return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' key={index}>
+                    return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' key={index} layoutId={stock.id}>
                         <div class='text-lg text-left col-span-2 flex'>
                             <div className='w-32 h-32 '>
                                 <img className='w-full h-full rounded-lg' src={`/uploads/${stock.Image}`}></img>
@@ -347,7 +347,7 @@ export default function Store({ cookies }) {
                                     const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
                                     const referenceNo = response.data.reffNo;
                                     const amount = '0.10'; //{totalPrice}
-                                    const backgroundUrl = 'https://8a58-2403-6200-88a4-2208-19bc-582c-bf2e-a96e.ngrok-free.app/api/GBPay/getrespons'
+                                    const backgroundUrl = 'https://2f33-2403-6200-88a4-4581-541d-d429-6a11-6f8d.ngrok-free.app/api/GBPay/getrespons'
                                     const data = new URLSearchParams();
                                     let isPayed = false;
                                     data.append('token', token);
@@ -417,30 +417,6 @@ export default function Store({ cookies }) {
                         ></motion.div>}
                     </AnimatePresence>
 
-                    <AnimatePresence mode='wait' key={'sweet-alert'}>
-                        {IsPaid && <motion.div
-                            style={{
-                                position: 'fixed',
-                                top: '0',
-                                left: '0',
-                                width: '100vw',
-                                height: '100vh',
-                                backgroundColor: 'rgba(0, 0, 0, .25)'
-                            }}
-                            initial={{
-                                opacity: 0,
-                            }}
-                            animate={{
-                                opacity: 1,
-                            }}
-                            exit={{
-                                opacity: 0
-                            }}
-                            transition={{
-                                duration: .5
-                            }}
-                        ></motion.div>}
-                    </AnimatePresence>
 
                     {(QRCode != '' )&& (
                         <motion.div 
@@ -469,6 +445,79 @@ export default function Store({ cookies }) {
                 {basketList.length > 0 && <div className='w-full h-1 border-b-2 border-[#252525]'></div>}
             </div>
             
+            <AnimatePresence mode='wait' key={'QRCode-Blur'}>
+                {IsPaid != '' && <motion.div
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100vw',
+                        height: '100vh',
+                        backgroundColor: 'rgba(0, 0, 0, .25)'
+                    }}
+                    initial={{
+                        opacity: 0,
+                    }}
+                    animate={{
+                        opacity: 1,
+                    }}
+                    exit={{
+                        opacity: 0
+                    }}
+                    transition={{
+                        duration: .5
+                    }}
+                ></motion.div>}
+            </AnimatePresence>
+
+            {IsPaid && <motion.div
+                style={{
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                    width: '100vw',
+                    height: '100vh',
+                }}
+
+                initial={{
+                    scale: 0.0,
+                }}
+                animate={{
+                    scale: 0.95,
+                }}
+                exit={{
+                    scale: 0.0
+                }}
+                transition={{
+                    duration: .2
+                }}
+            >
+                <div className="fixed top-0 left-0 w-full h-full flex p-4 items-center justify-center z-50 sm:top-1/2 sm:left-1/2 sm:transform sm:-translate-x-1/2 sm:-translate-y-1/2">
+                    <div className="relative w-full shadow-2xl rounded-lg max-w-md md:h-auto">
+                        <div className="relative bg-[#ECEBE8] rounded-lg shadow">
+                            <div className="pt-6 text-center">
+                            <svg className="mx-auto mb-4 w-14 h-14 fill-[#0FC000]" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                            </svg>
+                                <h4 className="mb-5 text-lg font-normal text-[#252525]">ชำระเงินเสร็จสิ้น</h4>
+                            </div>
+                            <div className="pb-6 text-center flex justify-center">
+                                <motion.button
+                                    className="text-white bg-[#252525] border-[#252525] border-2 hover:bg-[#252525] px-5 py-2.5 rounded-lg font-medium text-sm flex items-center" // Added 'flex' and 'items-center' classes
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 1.00 }}
+                                    onClick={() => {
+                                        setIsPaid(false);
+                                    }}
+                                >
+                                    ตกลง
+                                </motion.button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>}
+
             <AnimatePresence key={'modalDelete'} mode='wait'>
                 { isDelete && baksetId && <motion.div
                     style={{
@@ -519,7 +568,7 @@ export default function Store({ cookies }) {
                 >
                     <UniversalModal
                         message={"คุณต้องการลบสินค้า " + basketTitle + " ออกจากตระกร้า?"}
-                        txtApply="ลบ"
+                        txtApply="ลบสินค้า"
                         onApply={ async () =>{
                             await Axios.get(`http://localhost:3000/api/basket/delete/${baksetId}`)
                             setIsDelete(false);

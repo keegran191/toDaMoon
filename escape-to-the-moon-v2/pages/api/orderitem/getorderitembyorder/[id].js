@@ -2,8 +2,8 @@ import db from "../../../lib/database";
 
 export default async function handler(req, res) {
   const pool = await db.getConnection();
-
-  const [results] = await pool.query('SELECT * FROM coffee').catch((err) => {
+  const { id } = req.query;
+  const [results] = await pool.query('SELECT * FROM item_order INNER JOIN stock ON item_order.stock_id = stock.Id WHERE item_order.order_id = ?',[id]).catch((err) => {
     pool.destroy();
     res.status(500).json({ "Status": "Database Error" });
     console.error(err);

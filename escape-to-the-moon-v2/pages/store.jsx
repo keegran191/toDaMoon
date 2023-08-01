@@ -254,9 +254,15 @@ export default function Store({ cookies }) {
             </div>
 
             <div className='flex px-10 justify-center lg:justify-center'>
-
                 <div className={`border-[#252525] px-4 pt-4 h-auto w-8/12 mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
-                    {stockList.map((post) => {
+                    {stockList.length == 0 && 
+                        (<div className='absolute mt-auto'>
+                            <span className='text-2xl'>
+                                ไม่พบรายการสินค้า
+                            </span>
+                        </div>)
+                    }
+                    {stockList.length > 0 && stockList.map((post) => {
                         return <motion.div
                             key={post.Id}
                             className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer"
@@ -337,7 +343,7 @@ export default function Store({ cookies }) {
                                 className={
                                     `
                                         z-50 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
-                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg ${style.selectedItem}
+                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg
                                     `
                                 }
                             >

@@ -39,7 +39,7 @@ export default async function handler(req, res) {
           email: true,
           username: true
         }
-       //pool.end();
+       //pool.destroy();
         res.redirect(307, '/register?errorMsg=UserAlreadyExists&errObj=' + JSON.stringify(data))
         res.status(409)
       } else {
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
 
           if (err) throw (err)
           console.log("--------> Created new User")
-         //pool.end();
+         //pool.destroy();
           res.redirect(307, '/login')
           console.log(result.insertId)
           res.status(201)

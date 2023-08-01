@@ -1,8 +1,24 @@
-import pool from "../../../lib/database";
+import db from "../../../lib/database";
 
 export default async function handler(req, res) {
-    const [results] = await pool.query('UPDATE order_list SET payment_status = ? ,IsUpdateStock = 1 WHERE refNumber = ?', [req.body.resultCode, req.body.referenceNo]).catch((err) => {
-        pool.end();
+
+    const pool = await db.getConnection();
+
+    let today = new Date();
+
+    let day = String(today.getDate()).padStart(2, '0');
+    let month = String(today.getMonth() + 1).padStart(2, '0');
+    let year = today.getFullYear();
+
+    let hours = String(today.getHours()).padStart(2, '0');
+    let minutes = String(today.getMinutes()).padStart(2, '0');
+    let seconds = String(today.getSeconds()).padStart(2, '0');
+
+    let date = day + "/" + month + "/" + year
+    let time = hours + ":" + minutes + ":" + seconds
+
+    const [results] = await pool.query('UPDATE order_list SET payment_status = ? ,IsUpdateStock = 1,  order_status = 4,  order_on = ? WHERE refNumber = ?', [req.body.resultCode, (date + " " + time),req.body.referenceNo]).catch((err) => {
+        pool.destroy();
         res.status(500).json({ "Status": "Database Error" });
         console.error(err);
         return null;
@@ -13,14 +29,14 @@ export default async function handler(req, res) {
             req.body.referenceNo,
         ])
         .catch((err) => {
-            pool.end();
+            pool.destroy();
             res.status(500).json({ Status: "Database Error" });
             console.error(err);
             return null;
         });
 
     if (resultRows.length === 0) {
-        pool.end();
+        pool.destroy();
         res.status(404).json({ Status: "Order not found" });
         return null;
     }
@@ -33,7 +49,7 @@ export default async function handler(req, res) {
         userId,
         ])
         .catch((err) => {
-            pool.end();
+            pool.destroy();
             res.status(500).json({ Status: "Database Error" });
             console.error(err);
             return null;
@@ -49,7 +65,7 @@ export default async function handler(req, res) {
         await pool
         .query(insertQuery, [orderId, stockId, stockPrice, stockAmount, total])
         .catch((err) => {
-            pool.end();
+            pool.destroy();
             res.status(500).json({ Status: "Database Error" });
             console.error(err);
             return [];
@@ -60,7 +76,7 @@ export default async function handler(req, res) {
         await pool
         .query(updateStockQuery, [stockAmount, stockId])
         .catch((err) => {
-            pool.end();
+            pool.destroy();
             console.error(err);
             return res.status(500).json({ Status: "Database Error" });
         });
@@ -70,12 +86,12 @@ export default async function handler(req, res) {
 
     // Clear items in the basket
     const [ClearBasket] = await pool.query("DELETE FROM basket WHERE userId = ?", [userId]).catch((err) => {
-            pool.end();
+            pool.destroy();
             res.status(500).json({ Status: "Database Error" });
             console.error(err);
             return [];
         });
 
-    pool.end();   
+    pool.destroy();   
     return res.status(200).json({ isSuccess: true, message: "Payment Completed" });
 }

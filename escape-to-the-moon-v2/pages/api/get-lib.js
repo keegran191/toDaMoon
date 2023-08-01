@@ -6,10 +6,10 @@ export default async function handler(req, res) {
         const querySql = "SELECT `id`, `user_fname`, `user_lname`, `email`, `user_password`, `user_phone`, `is_admin` FROM users"
         const value = [];
         const data = await query({ query: querySql, value: value});
-        pool.end();
+        pool.destroy();
         res.status(200).json({ users: data});
     } catch (error) {
-        pool.end();
+        pool.destroy();
         res.status(500).json({ error: error.message});
     }
 }

@@ -1,9 +1,9 @@
-import pool from '../../../lib/database';
+import db from "../../../lib/database";
 import bcrypt from 'bcrypt';
 import { parse } from 'cookie';
 
 export default async function handler(req, res) {
-
+    const pool = await db.getConnection();
     const password = req.query.password;
     const newPassword = req.query.newPassword
     const confirmNewPassword = req.query.confirmNewPassword
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         
         if (results.length === 0) {
             console.log("User not found")  
-            pool.end();
+            pool.destroy();
             return res.status(401).json({ isSuccess: false, message: "User not found" });
         }
         
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         
         if (!isPasswordMatch) {
             console.log("Invalid password.")
-            pool.end();
+            pool.destroy();
             return res.status(400).json({ isSuccess: false, message: "Invalid password" });
             
         }
@@ -47,12 +47,12 @@ export default async function handler(req, res) {
         const updateQuery = `UPDATE users SET user_password = ? WHERE id = ?`;
         await pool.query(updateQuery, [hashedNewPassword, user.id]);
         console.log("Password updated successfully.")
-        pool.end();
+        pool.destroy();
         return res.status(200).json({ isSuccess: true, message: "Password updated successfully." });
     } catch (error) {
         console.log("err")
         console.error(error);
-        pool.end();
+        pool.destroy();
         return res.status(500).json({ isSuccess: false, message: "Database error." });
     }
 }

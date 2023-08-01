@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
 import { parse } from 'cookie';
 import UniversalModal from '../components/Modal.js';
+import Image from 'next/image'
 
 function UserManagement ({ cookies }) {
     const { fname, userId } = cookies;
@@ -22,8 +23,34 @@ function UserManagement ({ cookies }) {
     const [changePassword, setChangePassword] = useState(false)
     const [address, setAddress] = useState(false)
 
+    const [optionCategory, setOptionCategory] = useState([]);
+    const [optionSubCategory, setOptionSubCategory] = useState([]);
+    const [coffeeProcess, setCoffeeProcess] = useState([]);
+    const [coffeeRoast, setCoffeeRoast] = useState([]);
+    const [coffeeFlavor, setCoffeFlavor] = useState([]);
+
+    // Order List
     const [order, setOrder] = useState(false)
+    const [userOrder, setUserOrder] = useState([]);
     const [history, setHistory] = useState(false)
+    const [orderItem, setOrderItem] = useState([]);
+    const [orderItemByOrder, setOrderItemByOrder] = useState([]);
+    // Order Val
+    const [selectOrder, setSelectOrder] = useState(false)
+    const [orderNo, setOrderNo] = useState('');
+    const [orderOn, setOrderOn] = useState('');
+    const [reciveName, setReciveName] = useState('');
+    const [orderAddressDetail, setOrderAddressDetail] = useState('');
+    const [orderSubdistrict, setOrderSubdistrict] = useState('');
+    const [orderDistrict, setOrderDistrict] = useState('');
+    const [orderProvince, setOrderProvince] = useState('');
+    const [orderZipcode, setOrderZipcode] = useState('');
+    const [orderStatus, setOrderStatus] = useState('');
+    const [orderStatusBgColor, setOrderBgStatusColor] = useState('');
+    const [orderStatusTextColor, setOrderStatusTextColor] = useState('');
+    const [orderShipment, setOrderShipment] = useState('');
+    const [orderCode, setOrderCode] = useState('');
+    const [orderTotal, setOrderTotal] = useState(0);
 
     const [IsDelete, setDelete] = useState(false);
     const [targetDeleteId, setTargetDeleteId] = useState(0);
@@ -39,6 +66,8 @@ function UserManagement ({ cookies }) {
 
     //Address Value
     const [addressName, setAddressName] = useState('');
+    const [recipientName, setRecipientName] = useState('');
+    const [addressPhone, setAddressPhone] = useState();
     const [addressDetail, setAddressDetail] = useState('');
     const [subDistrict, setSubDistrict] = useState('');
     const [district, setDistrict] = useState('');
@@ -80,6 +109,18 @@ function UserManagement ({ cookies }) {
         setNewPassword(sanitizedValue)
     }
 
+    const filterFnameAddressTextInput = (e) => {
+        const value = e.target.value;
+        const sanitizedValue = value.replace(/[^a-zA-Z ]/g, "");
+        setRecipientName(sanitizedValue)
+    }
+
+    const filterPhoneNumberAddressInput = (e) => {
+        const value = e.target.value;
+        const sanitizedValue = value.replace(/[^0-9]/g, '');
+        setAddressPhone(sanitizedValue);
+    }
+
     const GetBasketAmount = (userId) => {
         Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
             .then((response) => {
@@ -107,10 +148,76 @@ function UserManagement ({ cookies }) {
         })
     }
 
+    const GetUserOrder = (userId) => {
+        Axios.get(`http://localhost:3000/api/Order/get/${userId}`).then((response) => {
+            setUserOrder(response.data)
+        });
+    }
+
+    const GetUserOrderItem = () => {
+        Axios.get(`http://localhost:3000/api/orderitem/getallorderitem`).then((response) => {
+            setOrderItem(response.data)
+        });
+    }
+
+    const GetOrderItemByOrder = (selectOrder) => {
+        Axios.get(`http://localhost:3000/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
+            setOrderItemByOrder(response.data)
+            TotalPrice(response.data)
+        })
+    }
+
+    const GetCategory = () => {
+        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+            setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
+        });
+    }
+    const GetSubCategory = () => {
+        Axios.get(`http://localhost:3000/api/subcategory/get/${0}`).then((response) => {
+            setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
+        })
+    }
+    const GetProcess = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
+            })
+        }
+    }
+    const GetRoast = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
+            })
+        }
+    }
+    const GetFlavor = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
+            })
+        }
+    }
+
+    const TotalPrice = (arr) => {
+        let TotalPrice = 0
+        for (let i = 0; i < arr.length; i++) {
+            TotalPrice += (arr[i].total)
+        }
+        setOrderTotal(TotalPrice)
+    }
+
     useEffect(() => {
         GetBasketAmount(userId)
         GetAddress(userId)
+        GetUserOrder(userId)
         GetUserInfo()
+        GetUserOrderItem()
+        GetCategory();
+        GetSubCategory(0);
+        GetProcess(42);
+        GetRoast(40);
+        GetFlavor(41);
     }, [userId]);
 
     return (
@@ -368,13 +475,13 @@ function UserManagement ({ cookies }) {
                     <h1 className=' text-xl'>เเก้ไขข้อมูลส่วนตัว</h1>
                     <div className='w-full h-auto flex justify-start mt-5'>
                         <div className="relative z-0 mb-6 w-3/6 group">
-                            <input onChange={filterFnameTextInput} value={Fname} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                            <input onChange={(e) => {setFname(e.target.value)}} value={Fname} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อ</label>
                         </div>
                     </div>
                     <div className='w-full h-auto flex justify-start mt-5'>
                         <div className="relative z-0 mb-6 w-3/6 group">
-                            <input onChange={filterSnameTextInput} value={Sname} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                            <input onChange={(e) => {setSname(e.target.value)}} value={Sname} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">นามสกุล</label>
                         </div>
                     </div>
@@ -393,13 +500,13 @@ function UserManagement ({ cookies }) {
                               alert("Please fill in all fields.");
                             } else {
 
-                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Email=${Email}&Phone=${Phone}`);
+                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Phone=${Phone}`);
                               window.location.reload();
 
                             }
                           }}
                     >
-                            บันทึกข้อมูล
+                        บันทึกข้อมูล
                     </motion.button>
                 </div>}
 
@@ -423,6 +530,8 @@ function UserManagement ({ cookies }) {
                                     setProvince(address.province);
                                     setZipCode(address.zipCode);
                                     setSelectedId(address.id);
+                                    setRecipientName(address.recipient_name)
+                                    setAddressPhone(address.recipient_phone)
                                 }}
                                 >
                                     <p className='text-xl mb-5'>{address.name}</p>
@@ -451,7 +560,32 @@ function UserManagement ({ cookies }) {
                     </div>
 
                     <AnimatePresence mode='wait' key={'block-shadow-addnewaddress'}>
-                        {Addaddress || changeAddress && <motion.div
+                        {Addaddress && <motion.div
+                            style={{
+                                position: 'fixed',
+                                top: '0',
+                                left: '0',
+                                width: '100vw',
+                                height: '100vh',
+                                backgroundColor: 'rgba(0, 0, 0, .25)'
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: .5
+                            }}
+                        ></motion.div>}
+                    </AnimatePresence>
+
+                    <AnimatePresence mode='wait' key={'block-shadow-changeaddress'}>
+                        {changeAddress && <motion.div
                             style={{
                                 position: 'fixed',
                                 top: '0',
@@ -502,6 +636,8 @@ function UserManagement ({ cookies }) {
                                             setDistrict('')
                                             setProvince('')
                                             setZipCode('')
+                                            setRecipientName('')
+                                            setAddressPhone()
                                         }}
                                         className=" text-gray-600 text-sm px-2 py-0.5 rounded-lg">
                                         <span className="text-xl bold">✕</span>
@@ -515,6 +651,18 @@ function UserManagement ({ cookies }) {
                                                 setAddressName(e.target.value)
                                             }} value={addressName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อที่อยู่</label>
+                                        </div>
+                                    </div>
+
+                                    <div className='w-3/6 h-auto mt-5 flex'>
+                                        <div className="relative z-0 mb-6 w-full group mr-2">
+                                            <input onChange={(e) => {setRecipientName(e.target.value)}} value={recipientName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อผู้รับ</label>
+                                        </div>
+
+                                        <div className='relative z-0 mb-6 w-full group ml-2'>
+                                            <input onChange={(e) => {setAddressPhone(e.target.value)}} value={addressPhone} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทรติดต่อ</label>
                                         </div>
                                     </div>
 
@@ -569,7 +717,7 @@ function UserManagement ({ cookies }) {
                                         whileTap={{ scale: 0.95 }}
                                         onClick={async () => {
                                             if (addressName != '' && addressDetail != '', subDistrict != '', district != '', province != '', zipCode != '') {
-                                                await Axios.get(`http://localhost:3000/api/address/add?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}`)
+                                                await Axios.get(`http://localhost:3000/api/address/add?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}`)
                                                 setAddressName('')
                                                 setAddressDetail('')
                                                 setSubDistrict('')
@@ -615,6 +763,8 @@ function UserManagement ({ cookies }) {
                                             setDistrict('')
                                             setProvince('')
                                             setZipCode('')
+                                            setRecipientName('')
+                                            setAddressPhone()
                                             setChangeAddress(false);
                                             
                                         }}
@@ -630,6 +780,18 @@ function UserManagement ({ cookies }) {
                                                 setAddressName(e.target.value)
                                             }} value={addressName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อที่อยู่</label>
+                                        </div>
+                                    </div>
+
+                                    <div className='w-3/6 h-auto mt-5 flex'>
+                                        <div className="relative z-0 mb-6 w-full group mr-2">
+                                            <input onChange={(e) => {setRecipientName(e.target.value)}} value={recipientName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อผู้รับ</label>
+                                        </div>
+
+                                        <div className='relative z-0 mb-6 w-full group ml-2'>
+                                            <input onChange={(e) => {setAddressPhone(e.target.value)}} value={addressPhone} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                            <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทรติดต่อ</label>
                                         </div>
                                     </div>
 
@@ -684,19 +846,23 @@ function UserManagement ({ cookies }) {
                                         whileTap={{ scale: 0.95 }}
                                         onClick={async () => {
                                             if (addressName != '' && addressDetail != '', subDistrict != '', district != '', province != '', zipCode != '') {
-                                                await Axios.get(`http://localhost:3000/api/address/update?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}`)
+                                                await Axios.get(`http://localhost:3000/api/address/update?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}`)
                                                 setAddressName('')
                                                 setAddressDetail('')
                                                 setSubDistrict('')
                                                 setDistrict('')
                                                 setProvince('')
                                                 setZipCode('')
+                                                setRecipientName('')
+                                                setAddressPhone()
                                                 setChangeAddress(false);
                                                 GetAddress(userId)
+                                            } else {
+                                                Alert('กรุณาใส่ข้อมูลให้ครบ')
                                             }
                                         }}
                                     >
-                                        เพิ่มที่อยู่จัดส่ง
+                                        เเก้ไขที่อยู่จัดส่ง
                                     </motion.button>
 
                                     <motion.button 
@@ -751,68 +917,340 @@ function UserManagement ({ cookies }) {
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
                         onClick={ async () => {
-                            
                             await Axios.get(`http://localhost:3000/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`)
                             window.location.reload();
-                             
-                         }}
+                        }}
                     >
-                            บันทึกข้อมูล
+                        บันทึกข้อมูล
                     </motion.button>
                 </div>}
 
-                {order && <div className='w-8/12 mt9 lg:pl-10'>
+                {/* pc */}
+                {order && <div className='block w-8/12 mt9 lg:pl-10'>
                     <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
-                        
-                    <motion.div className='mt-5 flex justify-center'>
-                        <div className="w-9/12 h-48 bg-[#FFFFFF] rounded-3xl overflow-hidden">
-                            <div className='w-full h-20 bg-[#252525] p-3 flex justify-between'>
-                                <div className='w-full pl-7'>
-                                    <div className='w-full flex items-center'>
-                                        <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข 125437689032</div>
-                                        <div className='ml-2 w-20 h-5 text-sm bg-[#7A7A7A] text-[#ECEBE8] text-center rounded-full'>รอดำเนินการ</div>
+                    {userOrder.map((post) => {
+                        return (
+                            <motion.div 
+                                className='mt-5 flex justify-center'
+                                key={post.order_Id}
+                                layoutId={post.order_Id}
+                            >
+                                <div className="w-full h-auto xl:w-9/12 xl:h-56 bg-[#FFFFFF] rounded-3xl overflow-hidden">
+                                    {/* pc */}
+                                    <div className='hidden xl:flex w-full h-20 bg-[#252525] p-3 justify-between'>
+                                        <div className='w-full pl-7'>
+                                            <div className='w-full flex items-center'>
+                                                <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข {post.refNumber}</div>
+                                                <div className={`ml-2 w-20 h-5 text-sm bg-[${post.bg_color}] text-[${post.text_color}] text-center rounded-full`}>{post.label}</div>
+                                            </div>
+                                            <div className='flex text-[#ECEBE8] items-center'>
+                                                <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                                    <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
+                                                </svg>
+                                                <span className='ml-2 text-sm'>สั่งซื้อเมื่อ {post.order_on} ชื่อผู้รับ {post.recipient_name}</span>
+                                            </div>
+                                        </div>
+                                        <div className='w-full text-[#ECEBE8] self-center flex justify-end pr-7'>
+                                            <motion.button className='bg-[#ECEBE8] text-[#252525] py-3 px-5 rounded-full'
+                                                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() => {
+                                                    setOrderNo(post.refNumber);
+                                                    setOrderOn(post.order_on);
+                                                    setReciveName(post.recipient_name);
+                                                    setOrderAddressDetail(post.detail);
+                                                    setOrderSubdistrict(post.subdistrict);
+                                                    setOrderDistrict(post.district);
+                                                    setOrderProvince(post.province);
+                                                    setOrderZipcode(post.zipCode)
+                                                    setOrderStatus(post.label);
+                                                    setOrderBgStatusColor(post.bg_color);
+                                                    setOrderStatusTextColor(post.text_color);
+                                                    setOrderShipment(post.order_shipment)
+                                                    setOrderCode(post.order_code)
+                                                    setSelectOrder(post.order_Id)
+                                                    GetOrderItemByOrder(post.order_Id)
+                                                }}
+                                            >
+                                                ดูลายละเอียด
+                                            </motion.button>
+                                        </div>
                                     </div>
-                                    <div className='flex text-[#ECEBE8] items-center'>
-                                        <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                                            <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
-                                        </svg>
-                                        <span className='ml-2 text-sm'>สั่งซื้อเมื่อ 20-10-2021  14:14:14 ชื่อผู้สั่ง รพีพัฒน์ สันติวรพงศ์</span>
-                                    </div>
-                                </div>
-                                <div className='w-full text-[#ECEBE8] self-center flex justify-end pr-7'>
-                                    <motion.button className='bg-[#ECEBE8] text-[#252525] py-3 px-5 rounded-full'
-                                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        ดูลายละเอียด
-                                    </motion.button>
-                                </div>
-                            </div>
-                            <div className='w-auto h-full p-3 px-10 flex justify-around'>
-                                 <div>
-                                    <p>รูปแบบการชำระเงิน</p>
-                                    <p className='text-lg font-semibold'>QR Payment</p>
-                                    <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center'>
-                                        <svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
-                                        </svg>
-                                        <span className='text-sm'>ชำระเงินสำเร็จ</span>
-                                    </div>
-                                 </div>
+                                    <div className='hidden xl:flex w-full h-auto pt-5 px-10 justify-between items-center'>
+                                        <div>
+                                            <p>หมายเลขพัสดุ</p>
+                                            <p className='text-lg font-semibold'>{post.order_shipment}</p>
+                                            <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
+                                                <span className='text-sm mr-5'>{post.order_code}</span>
+                                            </div>
+                                        </div>
 
-                                 <div>
-                                    <p>รูปแบบการชำระเงิน</p>
-                                    <p className='text-lg font-semibold'>QR Payment</p>
-                                    <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center'>
-                                        <svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
-                                        </svg>
-                                        <span className='text-sm'>ชำระเงินสำเร็จ</span>
+                                        <div>
+                                            <p>รูปแบบการชำระเงิน</p>
+                                            <p className='font-semibold'>QR Payment</p>
+                                            <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center'>
+                                                <svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                                    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                                                </svg>
+                                                <span className='text-sm'>ชำระเงินสำเร็จ</span>
+                                            </div>
+                                        </div>
+
+                                        {(() => {
+                                            let order_item = orderItem.find((item) => item.order_id == post.order_Id)
+                                            let total = 0
+                                            for (let i = 0; i < orderItem.length; i++) {
+                                                if (orderItem[i].order_id == post.order_Id) {
+                                                    total += (order_item.total)
+                                                }
+                                            }
+                                            return <div className='w-60'>
+                                            <div className='flex'>
+                                                <div className='w-20 h-auto mb-1 mr-2'>
+                                                    <img className='w-full h-full' src={`/uploads/${order_item.Image}`}></img>
+                                                </div>
+                                                <div className='w-40'>
+                                                    <p className='overflow-hidden text-ellipsis whitespace-nowrap'>{order_item.Title}</p>
+                                                    <motion.p 
+                                                        className='cursor-pointer text-xs'
+                                                        whileHover={{ fontWeight: 'bold'}}
+                                                        whileTap={{ scale: 0.95 }}
+                                                        onClick={() => {
+                                                            setOrderNo(post.refNumber);
+                                                            setOrderOn(post.order_on);
+                                                            setReciveName(post.recipient_name);
+                                                            setOrderAddressDetail(post.detail);
+                                                            setOrderSubdistrict(post.subdistrict);
+                                                            setOrderDistrict(post.district);
+                                                            setOrderProvince(post.province);
+                                                            setOrderZipcode(post.zipCode)
+                                                            setSelectOrder(post.order_Id)
+                                                            setOrderStatus(post.label);
+                                                            setOrderBgStatusColor(post.bg_color);
+                                                            setOrderStatusTextColor(post.text_color);
+                                                            setOrderShipment(post.order_shipment)
+                                                            setOrderCode(post.order_code)
+                                                            GetOrderItemByOrder(post.order_Id)
+                                                        }}
+                                                    >
+                                                        {`ดูลายละเอียดสินค้าทั้งหมด ->`}
+                                                    </motion.p>
+                                                </div>
+                                            </div>
+                                            <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
+                                                <span className='text-sm'>ยอดรวม</span>
+                                                <span className='text-sm'>฿{total}</span>
+                                            </div>
+                                        </div>})()}
                                     </div>
-                                 </div>
-                            </div>
-                        </div>
-                    </motion.div>
+
+                                    {/* mobile */}
+                                    <motion.div
+                                        onClick={() => {
+                                            setOrderNo(post.refNumber);
+                                            setOrderOn(post.order_on);
+                                            setReciveName(post.recipient_name);
+                                            setOrderAddressDetail(post.detail);
+                                            setSelectOrder(post.order_Id)
+                                        }}
+                                    >
+                                        <div className='flex xl:hidden w-full h-auto bg-[#252525] p-3'>
+                                            <div className='w-full'>
+                                                <div className={`w-20 h-5 text-sm bg-[${post.bg_color}] text-[${post.text_color}] text-center rounded-full`}>{post.label}</div>
+                                                <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข {post.refNumber}</div>
+                                                <div className='text-[#ECEBE8] mt-2'>
+                                                    <p className='text-xs'>สั่งซื้อเมื่อ {post.order_on}</p>
+                                                    <p className='text-xs'>ชื่อผู้รับ {post.recipient_name}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='block xl:hidden w-full h-auto pt-5 px-10 mb-5'>
+                                            <div>
+                                                <p className='text-sm'>หมายเลขพัสดุ</p>
+                                                <p className='text-sm font-semibold'>{post.order_shipment}</p>
+                                                <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
+                                                    <span className='text-xs'>{post.order_code}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                
+                                </div>
+                            </motion.div>
+                        )
+                    })}
+
+                    <AnimatePresence mode='wait' key={'block-content'}>
+                        {selectOrder && <motion.div
+                            style={{
+                                position: 'fixed',
+                                top: '0',
+                                left: '0',
+                                width: '100vw',
+                                height: '100vh',
+                                backgroundColor: 'rgba(0, 0, 0, .25)'
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: .5
+                            }}
+                        />}
+                    </AnimatePresence>
+                    
+                    <AnimatePresence key={'modalItems'}>
+                        {selectOrder && 
+                        (<motion.div
+                            layoutId={selectOrder}
+                            className={
+                                `
+                                    z-50 fixed left-0 right-0 top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full
+                                    lg:absolute xl:ml-auto xl:mr-auto lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:top-28 2xl:h-5/6 lg:rounded-xl shadow-lg
+                                `
+                            }
+                        >
+                            <motion.button
+                                whileHover={{ 
+                                    scale: 1.05,
+                                    backgroundColor: '#252525',
+                                    color: 'white'
+                                }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => {
+                                    setOrderNo('');
+                                    setReciveName('');
+                                    setOrderAddressDetail('');
+                                    setOrderSubdistrict('');
+                                    setOrderDistrict('');
+                                    setOrderProvince('');
+                                    setOrderZipcode('')
+                                    setOrderStatus('');
+                                    setOrderBgStatusColor('');
+                                    setOrderStatusTextColor('');
+                                    setOrderShipment('')
+                                    setOrderCode('')
+                                    setSelectOrder(null);
+                                    GetUserOrderItem()
+                                    
+                                }}
+                                className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
+                                <span className="text-xl bold">✕</span>
+                            </motion.button>
+
+                            <motion.div className='p-5 px-10'>
+                                <motion.div className='flex  items-center'>
+                                    <motion.p className='text-2xl'>คำสั่งหมายเลข {orderNo}</motion.p>
+                                    <motion.div className={`flex items-center justify-center ml-2 w-auto h-6 px-2 text-sm bg-[${orderStatusBgColor}] text-[${orderStatusTextColor}] text-center rounded-full`}>{orderStatus}</motion.div>
+                                </motion.div>
+                                <motion.div className='flex text-[#252525] items-center mt-2'>
+                                    <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                        <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
+                                    </svg>
+                                    <span className='ml-2 text-sm'>สั่งซื้อเมื่อ {orderOn} ชื่อผู้รับ {reciveName}</span>
+                                </motion.div>
+
+                                <motion.div className='flex justify-around mt-10'>
+                                    <motion.div className='w-52 h-auto'>
+                                        <motion.p>หมายเลขพัสดุ</motion.p>
+                                        <motion.p>{orderShipment}</motion.p>
+                                        <motion.div
+                                            className='p-1 border-2 border-[#252525]'
+                                        >
+                                            {orderCode}
+                                        </motion.div>
+                                    </motion.div>
+
+                                    <motion.div className='w-56 h-auto'>
+                                        <motion.p>ที่อยู่จัดส่ง</motion.p>
+                                        <motion.p>{orderAddressDetail + " ตำบล " + orderSubdistrict + " อำเภอ " + orderDistrict + " จังหวัด " + orderProvince + " " + orderZipcode}</motion.p>
+                                    </motion.div>
+
+                                    <motion.div className='w-56 h-auto'>
+                                        <motion.p>รูปแบบการชำระเงิน</motion.p>
+                                        <motion.p>QR Payment</motion.p>
+                                        <motion.div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center border-2 border-[#252525]'>
+                                            <motion.svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                                <motion.path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                                            </motion.svg>
+                                            <span className='text-sm'>ชำระเงินสำเร็จ</span>
+                                        </motion.div>
+                                    </motion.div>
+                                </motion.div>
+
+                                <motion.div
+                                    className='w-full mt-5'
+                                >
+                                    <motion.p className='text-2xl'>รายการสินค้า</motion.p>
+                                    <motion.div className='mt-2 w-full h-auto grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
+                                        <motion.div class='text-lg text-left col-span-2'>สินค้า</motion.div> 
+                                        <motion.div class='text-lg text-center col-start-3'>ราคา</motion.div>
+                                        <motion.div class='text-lg text-center'>จำนวน</motion.div>
+                                        <motion.div class='text-lg text-center'>ราคารวม</motion.div>
+                                    </motion.div>
+                                    <motion.div
+                                        className='overflow-x-hidden overflow-y-auto h-60'
+                                    >
+
+                                        {orderItemByOrder.map((element) => {
+                                        return (
+                                            <motion.div 
+                                                className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2' key={element.id}
+                                            >
+                                                <motion.div class='text-lg text-left col-span-2 flex'>
+                                                    <motion.div className='w-16 h-16'>
+                                                        <motion.img className='w-full h-full rounded-lg' src={`/uploads/${element.Image}`}></motion.img>
+                                                    </motion.div>
+                                                    <motion.div className='ml-5' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+                                                        <motion.span className='text-sm'>
+                                                            {element.Title}
+                                                        </motion.span>
+                                                        {element.StockType == 1 &&
+                                                            <motion.div className='text-sm mt-2'>
+                                                                <motion.p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(element.Process)].label}</motion.p>
+                                                                <motion.p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(element.Roast)].label}</motion.p>
+                                                                <motion.p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(element.Flavor)].label}</motion.p>
+                                                            </motion.div>
+                                                        }
+                                                        {element.StockType == 2 && 
+                                                        <div className='text-sm mt-2'>
+                                                            <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(element.CategoryId)].label}</p>
+                                                            <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(element.SubCategoryId)].label}</p>
+                                                        </div>}
+
+                                                    </motion.div>
+                                                </motion.div>
+                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-3'>
+                                                    ฿ {element.Price}
+                                                </motion.div>
+                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-4'>
+                                                    {element.amount}
+                                                </motion.div>
+                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-5'>
+                                                    {element.total}
+                                                </motion.div>
+                                            </motion.div>
+                                        )
+                                        
+                                    })}
+                                    </motion.div>
+                                    <motion.div className='relative mt-3 w-full h-1 border-b-2 border-[#252525] '></motion.div>
+                                    <motion.div className='w-full flex justify-end mt-2'>
+                                        <motion.div className='flex justify-between w-96 text-xl'>
+                                            <motion.span className='ml-5'>มูลค่าสินค้ารวม</motion.span> <motion.span>฿{orderTotal}</motion.span>
+                                        </motion.div>
+                                    </motion.div>
+                                </motion.div>
+                            </motion.div>
+                        </motion.div>)}
+                    </AnimatePresence>
+
                 </div>}
 
                 {history && <div className='w-8/12 mt9 lg:pl-10'>

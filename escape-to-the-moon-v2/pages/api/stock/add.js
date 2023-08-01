@@ -1,6 +1,6 @@
 import multer from 'multer';
 import { extname, join } from 'path';
-import pool from "../../../lib/database";
+import db from "../../../lib/database";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -78,11 +78,11 @@ export default function handler(req, res) {
           fileName
         ]
       );
-      pool.end();;
+      pool.destroy();;
       return res.status(200).json({ success: true, message: 'Add Stock Complete' });
     } catch (err) {
       console.error('Database Error:', err);
-      pool.end();
+      pool.destroy();
       return res.status(500).json({ error: 'Database Error' });
     }
   });

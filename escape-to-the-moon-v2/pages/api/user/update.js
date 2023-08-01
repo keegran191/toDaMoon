@@ -1,10 +1,11 @@
-import pool from "../../../lib/database";
+import db from "../../../lib/database";
 import { parse, serialize } from 'cookie';
 
 export default async function handler(req, res) {
+    const pool = await db.getConnection();
+    
     const fName = req.query.Fname;
     const lName = req.query.Sname;
-    const email = req.query.Email;
     const phone = req.query.Phone;
 
     const cookies = parse(req.headers.cookie || '');
@@ -12,7 +13,7 @@ export default async function handler(req, res) {
 
     try {
         // Update user data in the database
-        const [results] = await pool.query('UPDATE users SET user_fname = ?, user_lname = ?, email = ?, user_phone = ? WHERE id = ?', [fName, lName, email, phone, userId]);
+        const [results] = await pool.query('UPDATE users SET user_fname = ?, user_lname = ?, user_phone = ? WHERE id = ?', [fName, lName, email, phone, userId]);
         console.log("update user success");
 
         // Update the fname value in the cookies
@@ -35,11 +36,11 @@ export default async function handler(req, res) {
         );
 
         res.setHeader("Set-Cookie", cookieStrings);
-        pool.end();
+        pool.destroy();
         res.status(200).json({ isSuccess: true, message: "User Updated" });
     } catch (err) {
         console.error(err);
-        pool.end();
+        pool.destroy();
         res.status(500).json({ isSuccess: false, message: "Database error." });
     }
 }

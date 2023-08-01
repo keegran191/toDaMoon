@@ -1,10 +1,11 @@
 import cookie from "cookie";
-import pool from "../../lib/database";
+import db from "../../../lib/database";
 const bcrypt = require("bcrypt");
 
 export default async function handler(req, res) {
   const { floating_email, floating_password } = req.body;
-
+  const pool = await db.getConnection();
+  
   try {
     const connection = await pool.getConnection();
     const query = `SELECT * FROM users WHERE email = ?`;
@@ -45,26 +46,26 @@ export default async function handler(req, res) {
         
         if (isAdminValue === 1) {
           res.setHeader("Set-Cookie", cookies);
-          pool.end();
+          pool.destroy();
           res.redirect(307, `/adminpage/category`);
         } else {
-          pool.end();
+          pool.destroy();
           res.setHeader("Set-Cookie", cookies);
           res.redirect(307, "/");
         }
       } else {
         console.log("Password does not match!");
-        pool.end();
+        pool.destroy();
         res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
       }
     } else {
       console.log("Email not found");
-      pool.end();
+      pool.destroy();
       res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
     }
   } catch (error) {
     console.error(error);
-    pool.end();
+    pool.destroy();
     res.redirect(307, "/login?errorMsg=DatabaseError&errObj=");
   }
 }
