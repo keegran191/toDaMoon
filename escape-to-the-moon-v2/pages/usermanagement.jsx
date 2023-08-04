@@ -36,6 +36,7 @@ function UserManagement ({ cookies }) {
     const [userHistory, setUserHistory] = useState([]);
     const [orderItem, setOrderItem] = useState([]);
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
+
     // Order Val
     const [selectOrder, setSelectOrder] = useState(false)
     const [orderNo, setOrderNo] = useState('');
@@ -46,6 +47,7 @@ function UserManagement ({ cookies }) {
     const [orderDistrict, setOrderDistrict] = useState('');
     const [orderProvince, setOrderProvince] = useState('');
     const [orderZipcode, setOrderZipcode] = useState('');
+    const [orderStatusId, setOrderStatusId] = useState(0);
     const [orderStatus, setOrderStatus] = useState('');
     const [orderStatusBgColor, setOrderBgStatusColor] = useState('');
     const [orderStatusTextColor, setOrderStatusTextColor] = useState('');
@@ -977,10 +979,41 @@ function UserManagement ({ cookies }) {
                                             </div>
                                         </div>
                                         <div className='w-full text-[#ECEBE8] self-center flex justify-end pr-7'>
+                                            {post.order_status == 2 && <motion.button 
+                                                className='mr-3 py-3 px-5 rounded-full bg-green-500 text-white'
+                                                whileHover={{
+                                                    scale: 1.05,
+                                                }}
+                                                whileTap={{
+                                                    scale: 0.95
+                                                }}
+                                                onClick={async () => {
+                                                    await Axios.get(`http://localhost:3000/api/Order/userreciveitem?orderId=${post.order_Id}`)
+                                                    setOrderNo('');
+                                                    setReciveName('');
+                                                    setOrderAddressDetail('');
+                                                    setOrderSubdistrict('');
+                                                    setOrderDistrict('');
+                                                    setOrderProvince('');
+                                                    setOrderZipcode('')
+                                                    setOrderStatus('');
+                                                    setOrderBgStatusColor('');
+                                                    setOrderStatusTextColor('');
+                                                    setOrderShipment('')
+                                                    setOrderCode('')
+                                                    setOrderStatusId()
+                                                    setSelectOrder(null);
+                                                    GetUserOrderItem()
+                                                    GetUserOrder(userId)
+                                                    GetUserHistoryOrder(userId)
+                                                }}
+                                            >
+                                                ฉันได้ตรวจสอบ / ได้รับสินค้า
+                                            </motion.button>}
                                             <motion.button className='bg-[#ECEBE8] text-[#252525] py-3 px-5 rounded-full'
                                                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                                 whileTap={{ scale: 0.95 }}
-                                                onClick={() => {
+                                                onClick={async () => {
                                                     setOrderNo(post.refNumber);
                                                     setOrderOn(post.order_on);
                                                     setReciveName(post.recipient_name);
@@ -990,6 +1023,7 @@ function UserManagement ({ cookies }) {
                                                     setOrderProvince(post.province);
                                                     setOrderZipcode(post.zipCode)
                                                     setOrderStatus(post.label);
+                                                    setOrderStatusId(post.order_status);
                                                     setOrderBgStatusColor(post.bg_color);
                                                     setOrderStatusTextColor(post.text_color);
                                                     setOrderShipment(post.order_shipment)
@@ -1051,6 +1085,7 @@ function UserManagement ({ cookies }) {
                                                             setOrderProvince(post.province);
                                                             setOrderZipcode(post.zipCode)
                                                             setSelectOrder(post.order_Id)
+                                                            setOrderStatusId(post.order_status);
                                                             setOrderStatus(post.label);
                                                             setOrderBgStatusColor(post.bg_color);
                                                             setOrderStatusTextColor(post.text_color);
@@ -1077,6 +1112,7 @@ function UserManagement ({ cookies }) {
                                             setOrderOn(post.order_on);
                                             setReciveName(post.recipient_name);
                                             setOrderAddressDetail(post.detail);
+                                            setOrderStatusId(post.order_status);
                                             setSelectOrder(post.order_Id)
                                         }}
                                     >
@@ -1190,6 +1226,39 @@ function UserManagement ({ cookies }) {
                                     >
                                         {orderStatus}
                                     </motion.div>
+                                    {orderStatusId == 2 && <motion.div className='w-1/2 flex justify-end h-auto relative'>
+                                        <motion.button 
+                                            className='w-auto p-2 rounded-lg bg-green-500 text-white'
+                                            whileHover={{
+                                                scale: 1.05,
+                                            }}
+                                            whileTap={{
+                                                scale: 0.95
+                                            }}
+                                            onClick={async () => {
+                                                await Axios.get(`http://localhost:3000/api/Order/userreciveitem?orderId=${selectOrder}`)
+                                                setOrderNo('');
+                                                setReciveName('');
+                                                setOrderAddressDetail('');
+                                                setOrderSubdistrict('');
+                                                setOrderDistrict('');
+                                                setOrderProvince('');
+                                                setOrderZipcode('')
+                                                setOrderStatus('');
+                                                setOrderBgStatusColor('');
+                                                setOrderStatusTextColor('');
+                                                setOrderShipment('')
+                                                setOrderCode('')
+                                                setOrderStatusId()
+                                                setSelectOrder(null);
+                                                GetUserOrderItem()
+                                                GetUserOrder(userId)
+                                                GetUserHistoryOrder(userId)
+                                            }}
+                                        >
+                                            ฉันได้ตรวจสอบ / ได้รับสินค้า
+                                        </motion.button>
+                                    </motion.div>}
                                 </motion.div>
                                 <motion.div className='flex text-[#252525] items-center mt-2'>
                                     <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">

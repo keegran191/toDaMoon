@@ -4,17 +4,15 @@ export default async function handler(req, res) {
     const pool = await db.getConnection();
     
     const [results] = await pool.query(`
-        SELECT COUNT(order_list.order_Id) AS IsOrderRead
+        SELECT *
         FROM order_list 
-        INNER JOIN order_status 
-            ON order_list.order_status = order_status.id
         WHERE 
-            order_list.isRead = 0
-            AND order_list.order_status != 0 
-            AND order_list.order_status != 3 
-            AND order_list.payment_status = "00"
+            isRead = 0
+            AND order_status != 0
+            AND order_status != 3
+            AND payment_status = "00"
 
-        ORDER BY order_list.order_Id DESC`
+        ORDER BY order_Id DESC`
 
     ).catch((err) => {
         pool.destroy();

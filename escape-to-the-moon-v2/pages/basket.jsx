@@ -347,7 +347,7 @@ export default function Store({ cookies }) {
                                     const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
                                     const referenceNo = response.data.reffNo;
                                     const amount = '0.10'; //{totalPrice}
-                                    const backgroundUrl = 'https://2f33-2403-6200-88a4-4581-541d-d429-6a11-6f8d.ngrok-free.app/api/GBPay/getrespons'
+                                    const backgroundUrl = 'https://36d1-2403-6200-88a4-4581-315f-5fb8-1fc0-c685.ngrok-free.app/api/GBPay/getrespons'
                                     const data = new URLSearchParams();
                                     let isPayed = false;
                                     data.append('token', token);

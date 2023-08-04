@@ -229,7 +229,7 @@ export default function Store({ cookies }) {
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
 
-            <div className="w-4/5 lg:w-1/2 relative left-1/2 -translate-x-1/2 mt-28">
+            <div className="w-4/5 lg:w-1/2 relative left-1/2 -translate-x-1/2 mt-10">
                 <div className="relative mt-10">
                     <input
                         onChange={(e) => {
@@ -278,7 +278,7 @@ export default function Store({ cookies }) {
                                 scale: 0
                             }}
                             transition={{
-                                duration: .2
+                                duration: .25
                             }}
                             onClick={() => {
                                 setTitle(post.Title)
