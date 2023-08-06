@@ -79,7 +79,7 @@ export default function Home({ cookies }) {
           <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
         </motion.div>
 
-        <div className="mt-14 2xl:mt-16 relative h-2/6 sm:h-4/6">
+        <div className="relative h-2/6 sm:h-4/6">
           <img className="w-full h-full brightness-50 z-0" src="/coffee.png" alt="Coffee"></img>
           <div className="absolute top-10 left-5 sm:top-40 sm:left-20 z-10">
             <h1 className="text-3xl sm:text-7xl text-white">กาแฟอราบิก้า 100%<br/>คั่วสดใหม่ เมล็ดเกรด A</h1>

@@ -288,7 +288,7 @@ export default function Store({ cookies }) {
                                             GetTotalPrice(basketList)
                                         } else if(stock.stockAmount > 0) {
                                             handleDecreaseStockAmount(index)
-                                        } 
+                                        }
                                     }}
                                 >
                                     <svg className='w-auto h-auto' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -319,7 +319,7 @@ export default function Store({ cookies }) {
                 })}
                 
                 {basketList.length > 0 && <div className='flex justify-end items-center my-5'>
-                    <span className='text-xl mr-5'>ที่อยู่จัดส่งสินค้า</span>
+                    <span className='text-xl mr-5'>ที่อยู่สำหรับจัดส่ง</span>
                     <div className="w-full md:w-64 sm:pr-2">
                         <Select
                             className='shadow-lg rounded-full'
@@ -347,7 +347,7 @@ export default function Store({ cookies }) {
                                     const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
                                     const referenceNo = response.data.reffNo;
                                     const amount = '0.10'; //{totalPrice}
-                                    const backgroundUrl = 'https://36d1-2403-6200-88a4-4581-315f-5fb8-1fc0-c685.ngrok-free.app/api/GBPay/getrespons'
+                                    const backgroundUrl = 'https://2291-2403-6200-88a2-20d-8537-6051-96a2-2af8.ngrok-free.app/api/GBPay/getrespons'
                                     const data = new URLSearchParams();
                                     let isPayed = false;
                                     data.append('token', token);
