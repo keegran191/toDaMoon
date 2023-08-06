@@ -1,5 +1,6 @@
 import Nav from '../components/Navbar'
 import Head from 'next/head'
+import style from '../styles/RegisLogin.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Foot from '../components/Foot'
@@ -176,11 +177,11 @@ export default function ConfirmOrder ({ cookies }) {
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
-            <div className='text-xl flex justify-center mt-10'>
+            <div className='px-20 text-xl flex justify-start mt-10'>
                 <h1 className='text-3xl'>รายละเอียดสินค้า และ ที่อยู่จัดส่ง</h1>
             </div>
             <div className='w-full h-auto mt-5 px-20'>
-                <div className='flex justify-start items-center'>
+                <div className='flex justify-center items-center'>
                     <span className='text-xl mr-5'>ที่อยู่สำหรับจัดส่ง</span>
                     <div className="w-full md:w-64 sm:pr-2">
                         <Select
@@ -199,15 +200,19 @@ export default function ConfirmOrder ({ cookies }) {
                         />
                     </div>
                 </div>
-                {userAddress.length > 0 && 
-                (<motion.div 
-                    className='w-96 h-auto mt-5'
-                >
-                    <motion.p className='text-lg'>{userAddress[0].recipient_name + " | " + userAddress[0].recipient_phone}</motion.p>
-                    <motion.p className='text-lg'>{userAddress[0].detail + " ตำบล " + userAddress[0].subdistrict}</motion.p>
-                    <motion.p className='text-lg'>{" อำเภอ " + userAddress[0].district + " จังหวัด " + userAddress[0].district + " " + userAddress[0].zipCode}</motion.p>
-                </motion.div>)}
+                <div className='flex justify-center w-full h-auto'>
+                    {userAddress.length > 0 && 
+                    (<motion.div 
+                        className='w-96 h-auto mt-5'
+                    >
+                        <motion.p className='text-lg'>{userAddress[0].recipient_name + " | " + userAddress[0].recipient_phone}</motion.p>
+                        <motion.p className='text-lg'>{userAddress[0].detail + " ตำบล " + userAddress[0].subdistrict}</motion.p>
+                        <motion.p className='text-lg'>{" อำเภอ " + userAddress[0].district + " จังหวัด " + userAddress[0].district + " " + userAddress[0].zipCode}</motion.p>
+                    </motion.div>)}
+                </div>
+                
             </div>
+            {/* {basketList.length > 0 && <span className='text-xl ml-10 mr-5'>ราคารวมทั้งหมด {totalPrice}</span>} */}
             <Foot></Foot>
         </div>
     )

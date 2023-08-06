@@ -318,79 +318,64 @@ export default function Store({ cookies }) {
                     </motion.div>
                 })}
                 
-                {basketList.length > 0 && <div className='flex justify-end items-center my-5'>
-                    <span className='text-xl mr-5'>ที่อยู่สำหรับจัดส่ง</span>
-                    <div className="w-full md:w-64 sm:pr-2">
-                        <Select
-                            className='shadow-lg rounded-full'
-                            inputId='coffeeId'
-                            options={addressUser}
-                            onChange={(newValue,meta) => {
-                                setSelectAddressUser(newValue.value); 
-                            }}
-                            styles={customStyles}
-                            placeholder="เลือกที่อยู่สำหรับจัดส่ง"
-                        />
-                    </div>
-
-                    {basketList.length > 0 && <span className='text-xl ml-10 mr-5'>ราคารวมทั้งหมด {totalPrice}</span>}
-                </div>}
                 {basketList.length > 0 &&  <div className='flex justify-end items-center my-5'>
-                    <motion.button 
-                        className='bg-[#252525] text-[#FFFFFF] p-3 px-10 mr-5 rounded-lg'
-                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                            if (selectAddressUser != 0) {
-                                Axios.get(`http://localhost:3000/api/Order/add?addressId=${selectAddressUser}&UserId=${userId}`).then(async (response) => {
-                                    const url = 'https://api.gbprimepay.com/v3/qrcode';
-                                    const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
-                                    const referenceNo = response.data.reffNo;
-                                    const amount = '0.10'; //{totalPrice}
-                                    const backgroundUrl = 'https://2291-2403-6200-88a2-20d-8537-6051-96a2-2af8.ngrok-free.app/api/GBPay/getrespons'
-                                    const data = new URLSearchParams();
-                                    let isPayed = false;
-                                    data.append('token', token);
-                                    data.append('referenceNo', referenceNo);
-                                    data.append('amount', amount);
-                                    data.append('backgroundUrl', backgroundUrl);
+                    <Link href={'/confirmorder'}>
+                        <motion.button 
+                            className='bg-[#252525] text-[#FFFFFF] p-3 px-10 mr-5 rounded-lg'
+                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                            whileTap={{ scale: 0.95 }}
+                            // onClick={() => {
+                            //     if (selectAddressUser != 0) {
+                            //         Axios.get(`http://localhost:3000/api/Order/add?addressId=${selectAddressUser}&UserId=${userId}`).then(async (response) => {
+                            //             const url = 'https://api.gbprimepay.com/v3/qrcode';
+                            //             const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
+                            //             const referenceNo = response.data.reffNo;
+                            //             const amount = '0.10'; //{totalPrice}
+                            //             const backgroundUrl = 'https://2291-2403-6200-88a2-20d-8537-6051-96a2-2af8.ngrok-free.app/api/GBPay/getrespons'
+                            //             const data = new URLSearchParams();
+                            //             let isPayed = false;
+                            //             data.append('token', token);
+                            //             data.append('referenceNo', referenceNo);
+                            //             data.append('amount', amount);
+                            //             data.append('backgroundUrl', backgroundUrl);
 
-                                    Axios.post(url, data, {
-                                    responseType: "arraybuffer",
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded'
-                                    }})
-                                    
-                                    .then((response) => {
-                                        let QRCode = 'data:image/png;base64,' + Buffer.from(response.data, 'binary').toString('base64');
-                                        setQRCode(QRCode);
-                                    })
-                                    .catch((error) => {
-                                        console.error('Error:', error);
-                                    });
+                            //             Axios.post(url, data, {
+                            //             responseType: "arraybuffer",
+                            //             headers: {
+                            //                 'Content-Type': 'application/x-www-form-urlencoded'
+                            //             }})
+                                        
+                            //             .then((response) => {
+                            //                 let QRCode = 'data:image/png;base64,' + Buffer.from(response.data, 'binary').toString('base64');
+                            //                 setQRCode(QRCode);
+                            //             })
+                            //             .catch((error) => {
+                            //                 console.error('Error:', error);
+                            //             });
 
-                                    while (isPayed === false) {
-                                        Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
-                                            console.log(response.data.isSuccenss)
-                                            if(response.data.isSuccenss) {
-                                                setQRCode('')
-                                                setIsPaid(true)
-                                                isPayed = true
-                                                console.log("จ่ายเเล้ว");
-                                                GetBasket(userId)
-                                                GetBasketAmount(userId)
-                                            }
-                                        })
-                                        await Sleep(5000)
-                                    }
-                                })
-                            } else {
-                                alert("กรุณาเลือกที่อยู่")
-                            }
-                        }}
-                    >
-                        ชำระเงิน
-                    </motion.button>
+                            //             while (isPayed === false) {
+                            //                 Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
+                            //                     console.log(response.data.isSuccenss)
+                            //                     if(response.data.isSuccenss) {
+                            //                         setQRCode('')
+                            //                         setIsPaid(true)
+                            //                         isPayed = true
+                            //                         console.log("จ่ายเเล้ว");
+                            //                         GetBasket(userId)
+                            //                         GetBasketAmount(userId)
+                            //                     }
+                            //                 })
+                            //                 await Sleep(5000)
+                            //             }
+                            //         })
+                            //     } else {
+                            //         alert("กรุณาเลือกที่อยู่")
+                            //     }
+                            // }}
+                        >
+                            ชำระเงิน
+                        </motion.button>
+                    </Link>
 
                     <AnimatePresence mode='wait' key={'QRCode-Blur'}>
                         {QRCode != '' && <motion.div
