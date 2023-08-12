@@ -1,8 +1,9 @@
-import pool from "../../../lib/database";
+import db from "../../../lib/database";
 
 export default async function handler(req, res) {
     const id = req.query.id;
-
+    const pool = await db.getConnection();
+    
     try {
         // Check if the combination of id already exists in the basket table.
         const [existingRows] = await pool.query(
@@ -16,16 +17,16 @@ export default async function handler(req, res) {
                 'UPDATE basket SET stockAmount = stockAmount - 1 WHERE id = ?',
                 [id]
             );
-            pool.end();
+            pool.destroy();
             res.status(200).json({ "Status": "StockAmount updated successfully." });
         } else {
             // If the combination doesn't exist, return an error response or any other desired behavior.
-            pool.end();
+            pool.destroy();
             res.status(404).json({ "Status": "Combination not found in the basket." });
         }
     } catch (err) {
         console.error(err);
-        pool.end();
+        pool.destroy();
         res.status(500).json({ "Status": "Database Error" });
     }
 }

@@ -30,6 +30,8 @@ export default function Store({ cookies }) {
 
     const [addressUser, setAddressUser] = useState([]);
     const [selectAddressUser, setSelectAddressUser] = useState(0);
+    const [userAddressSelected, setUserAddressSeleceted] = useState([]);
+    const [selectAddress, setSelectAddress] = useState(false)
 
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -203,12 +205,12 @@ export default function Store({ cookies }) {
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
-            <div className='text-xl flex justify-center my-28'>
+            <div className='text-xl flex justify-center mt-14 mb-5'>
                 <h1>ตระกร้าสินค้า</h1>
             </div>
 
-            <div className='block px-5 xl:px-44'>
-                <div className='w-full h-1 border-b-2 border-[#252525] '></div>
+            <div className='block px-5 xl:px-44 h-4/6'>
+                <div className='w-full h-1 border-b-2 border-[#252525]'></div>
                 <div class='w-full h-auto grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
                     <div class='text-lg text-center col-span-2'>สินค้า</div> 
                     <div class='text-lg text-center col-start-3'>ราคา</div>
@@ -216,166 +218,287 @@ export default function Store({ cookies }) {
                     <div class='text-lg text-center'>ราคารวม</div>
                 </div>
 
-                <div className='w-full h-1 border-b-2 border-[#252525]'></div>
-                {basketList.length == 0 && <div className='w-full flex justify-center'>
-                    <span className='text-2xl my-32'>ไม่พบรายการสินค้า</span>    
+                <div className='w-full h-1 border-b-2 border-[#252525] mb-1'></div>
+                {basketList.length == 0 && <div className='w-full flex justify-center mt-28'>
+                    <span className='text-2xl'>ไม่พบรายการสินค้า</span>    
                 </div>}
-                
-                {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
-                    return <motion.div className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' key={index} layoutId={stock.id}>
-                        <div class='text-lg text-left col-span-2 flex'>
-                            <div className='w-32 h-32 '>
-                                <img className='w-full h-full rounded-lg' src={`/uploads/${stock.Image}`}></img>
+                <div className={basketList.length == 1 ? `w-full`: `w-full overflow-x-hidden overflow-y-auto h-2/4`}>
+                    {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
+                        return <motion.div 
+                            className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' 
+                            key={index} 
+                            layoutId={stock.id}
+                            initial={{ translateX: -100 }}
+                            animate={{ translateX: 1 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                            }}
+                        >
+                            <div class='text-lg text-left col-span-2 flex'>
+                                <div className='w-32 h-32 '>
+                                    <img className='w-full h-full rounded-lg' src={`/uploads/${stock.Image}`}></img>
+                                </div>
+                                <div className='ml-5' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+                                    <span className='font-semibold'>
+                                        {stock.Title}
+                                    </span>
+
+                                    {stock.StockType == 1 && 
+                                    <div className='text-sm mt-2'>
+                                        <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>
+                                        <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>
+                                        <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>
+                                    </div>}
+
+                                    {stock.StockType == 2 && 
+                                    <div className='text-sm mt-2'>
+                                        <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(stock.CategoryId)].label}</p>
+                                        <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(stock.SubCategoryId)].label}</p>
+                                    </div>}
+
+                                    <div className='mt-1'>
+                                        <motion.button 
+                                            className='flex items-center bottom-0 text-sm border-2 border-[#252525] px-2 py-1 rounded-sm' 
+                                            whileHover={{ 
+                                                scale: 1.05, 
+                                                transition: { duration: 0.2 },
+                                                backgroundColor: '#252525',
+                                                color: '#FFFFFF'
+                                            }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                setBasketId(stock.id)
+                                                setIsDelete(true)
+                                                setBasketTitle(stock.Title)
+                                                GetTotalPrice(basketList)
+                                            }}
+                                        >
+                                        <svg className='mr-1' xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 448 512">
+                                            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                        </svg>
+                                        <p>ลบสินค้า</p>
+                                        </motion.button>
+                                    </div>
+                                </div>
+
+                            </div> 
+                            <div class='text-lg flex items-center justify-center text-center col-start-3'>
+                                ฿ {stock.Price}
                             </div>
-                            <div className='ml-5' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-                                <span className='font-semibold'>
-                                    {stock.Title}
-                                </span>
-
-                                {stock.StockType == 1 && 
-                                <div className='text-sm mt-2'>
-                                    <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>
-                                    <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>
-                                    <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>
-                                </div>}
-
-                                {stock.StockType == 2 && 
-                                <div className='text-sm mt-2'>
-                                    <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(stock.CategoryId)].label}</p>
-                                    <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(stock.SubCategoryId)].label}</p>
-                                </div>}
-
-                                <div className='mt-1'>
-                                    <motion.button 
-                                        className='flex items-center bottom-0 text-sm border-2 border-[#252525] px-2 py-1 rounded-sm' 
-                                        whileHover={{ 
-                                            scale: 1.05, 
-                                            transition: { duration: 0.2 },
-                                            backgroundColor: '#252525',
-                                            color: '#FFFFFF'
-                                        }}
+                            <div class='text-lg flex items-center justify-center text-center '>
+                                <div className="amountContainer flex items-baseline">
+                                    <motion.div
+                                        className='cursor-pointer w-7 h-7 py-2'
+                                        whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        onClick={() => {
-                                            setBasketId(stock.id)
-                                            setIsDelete(true)
-                                            setBasketTitle(stock.Title)
-                                            GetTotalPrice(basketList)
+                                        onClick={async () => {
+                                            if(stock.stockAmount == 1) {
+                                                setBasketId(stock.id)
+                                                setIsDelete(true)
+                                                setBasketTitle(stock.Title)
+                                                GetTotalPrice(basketList)
+                                            } else if(stock.stockAmount > 0) {
+                                                handleDecreaseStockAmount(index)
+                                                await Axios.get(`http://localhost:3000/api/basket/minusOne?id=${stock.id}`)
+                                                GetBasketAmount(userId)
+                                            }
                                         }}
                                     >
-                                    <svg className='mr-1' xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 448 512">
-                                        <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
-                                    </svg>
-                                    <p>ลบสินค้า</p>
-                                    </motion.button>
+                                        <svg className='w-auto h-auto' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/>
+                                        </svg>
+                                    </motion.div>
+                                    <input value={stock.stockAmount} className='block p-1 w-11 text-center text-md text-[#252525] bg-[#FFFFFF] rounded-lg mx-5 outline-none'/>
+                                    <motion.div
+                                        className='cursor-pointer w-7 h-7 py-2'
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={async () => {
+                                            if(stock.stockAmount < stock.Amount) {
+                                                handleIncreaseStockAmount(index)
+                                                await Axios.get(`http://localhost:3000/api/basket/addOne?id=${stock.id}`)
+                                                GetBasketAmount(userId)
+                                            }   
+                                        }}
+                                    >
+                                        <svg className='w-auto h-auto' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>      
+                                        </svg>
+                                    </motion.div>
                                 </div>
                             </div>
-
-                        </div> 
-                        <div class='text-lg flex items-center justify-center text-center col-start-3'>
-                            ฿ {stock.Price}
-                        </div>
-                        <div class='text-lg flex items-center justify-center text-center '>
-                            <div className="amountContainer flex items-baseline">
-                                <motion.div
-                                    className='cursor-pointer w-7 h-7 py-2'
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        if(stock.stockAmount == 1) {
-                                            setBasketId(stock.id)
-                                            setIsDelete(true)
-                                            setBasketTitle(stock.Title)
-                                            GetTotalPrice(basketList)
-                                        } else if(stock.stockAmount > 0) {
-                                            handleDecreaseStockAmount(index)
-                                        }
-                                    }}
-                                >
-                                    <svg className='w-auto h-auto' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232H328c13.3 0 24 10.7 24 24s-10.7 24-24 24H184c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/>
-                                    </svg>
-                                </motion.div>
-                                <input value={stock.stockAmount} className='block p-1 w-11 text-center text-md text-[#252525] bg-[#FFFFFF] rounded-lg mx-5 outline-none'/>
-                                <motion.div
-                                    className='cursor-pointer w-7 h-7 py-2'
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        if(stock.stockAmount < stock.Amount) {
-                                            handleIncreaseStockAmount(index)
-                                        }
-                                    }}
-                                >
-                                    <svg className='w-auto h-auto' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>      
-                                    </svg>
-                                </motion.div>
+                            <div class='text-lg flex items-center justify-center text-center '>
+                                ฿ {stock.Price * stock.stockAmount}
                             </div>
-                        </div>
-                        <div class='text-lg flex items-center justify-center text-center '>
-                            ฿ {stock.Price * stock.stockAmount}
-                        </div>
-                    </motion.div>
-                })}
+                        </motion.div>
+                    })}
+                </div>
                 
                 {basketList.length > 0 &&  <div className='flex justify-end items-center my-5'>
-                    <Link href={'/confirmorder'}>
-                        <motion.button 
-                            className='bg-[#252525] text-[#FFFFFF] p-3 px-10 mr-5 rounded-lg'
-                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                            whileTap={{ scale: 0.95 }}
-                            // onClick={() => {
-                            //     if (selectAddressUser != 0) {
-                            //         Axios.get(`http://localhost:3000/api/Order/add?addressId=${selectAddressUser}&UserId=${userId}`).then(async (response) => {
-                            //             const url = 'https://api.gbprimepay.com/v3/qrcode';
-                            //             const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
-                            //             const referenceNo = response.data.reffNo;
-                            //             const amount = '0.10'; //{totalPrice}
-                            //             const backgroundUrl = 'https://2291-2403-6200-88a2-20d-8537-6051-96a2-2af8.ngrok-free.app/api/GBPay/getrespons'
-                            //             const data = new URLSearchParams();
-                            //             let isPayed = false;
-                            //             data.append('token', token);
-                            //             data.append('referenceNo', referenceNo);
-                            //             data.append('amount', amount);
-                            //             data.append('backgroundUrl', backgroundUrl);
+                    <motion.button 
+                        className='bg-[#252525] text-[#FFFFFF] p-3 px-10 mr-5 rounded-lg'
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                            setSelectAddress(true);
+                        }}
+                    >
+                        ชำระเงิน
+                    </motion.button>
 
-                            //             Axios.post(url, data, {
-                            //             responseType: "arraybuffer",
-                            //             headers: {
-                            //                 'Content-Type': 'application/x-www-form-urlencoded'
-                            //             }})
-                                        
-                            //             .then((response) => {
-                            //                 let QRCode = 'data:image/png;base64,' + Buffer.from(response.data, 'binary').toString('base64');
-                            //                 setQRCode(QRCode);
-                            //             })
-                            //             .catch((error) => {
-                            //                 console.error('Error:', error);
-                            //             });
-
-                            //             while (isPayed === false) {
-                            //                 Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
-                            //                     console.log(response.data.isSuccenss)
-                            //                     if(response.data.isSuccenss) {
-                            //                         setQRCode('')
-                            //                         setIsPaid(true)
-                            //                         isPayed = true
-                            //                         console.log("จ่ายเเล้ว");
-                            //                         GetBasket(userId)
-                            //                         GetBasketAmount(userId)
-                            //                     }
-                            //                 })
-                            //                 await Sleep(5000)
-                            //             }
-                            //         })
-                            //     } else {
-                            //         alert("กรุณาเลือกที่อยู่")
-                            //     }
-                            // }}
+                    <AnimatePresence mode='wait' key={'blur-address'}>
+                        {selectAddress && <motion.div
+                            style={{
+                                position: 'fixed',
+                                top: '0',
+                                left: '0',
+                                width: '100vw',
+                                height: '100vh',
+                                backgroundColor: 'rgba(0, 0, 0, .25)'
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: .5
+                            }}
                         >
-                            ชำระเงิน
+                            
+                        </motion.div>}
+                    </AnimatePresence>
+
+                    {selectAddress && <motion.div
+                        className = {
+                            `
+                                z-50 fixed left-0 right-0 top-0 bottom-0 flex flex-col p-4 bg-white w-full
+                                lg:absolute lg:ml-auto lg:mr-auto lg:w-1/2 xl:ml-auto xl:mr-auto lg:top-36 xl:w-3/6 xl:h-5/6 2xl:w-3/6 2xl:top-28 2xl:h-5/6 lg:rounded-xl shadow-lg
+                            `
+                        }
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20
+                        }}
+                    >
+                        <motion.button
+                            whileHover={{ 
+                                scale: 1.05,
+                                backgroundColor: '#252525',
+                                color: 'white'
+                            }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => {
+                                setSelectAddress(false);
+                                setUserAddressSeleceted('');
+                                setSelectAddressUser(0);
+                            }}
+                            className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
+                            <span className="text-xl bold">✕</span>
                         </motion.button>
-                    </Link>
+                        <div className='w-full flex justify-center text-2xl'>
+                            <h1>เลือกที่อยู่สำหรับจัดส่งสินค้า</h1>
+                        </div>
+                        <div className="mt-10 sm:px-4 overflow-y-auto h-full">
+                            <div className='lg:flex items-center justify-center'>
+                                <span className='text-xl mr-5'>ที่อยู่สำหรับจัดส่ง</span>
+                                <div className="w-full md:w-64 sm:pr-2">
+                                    <Select
+                                        className='shadow-lg rounded-full'
+                                        inputId='coffeeId'
+                                        options={addressUser}
+                                        onChange={async (newValue,meta) => {
+                                            setSelectAddressUser(newValue.value);
+                                            await Axios.get(`http://localhost:3000/api/address/getaddress/${newValue.value}`).then((response) => {
+                                                setUserAddressSeleceted(response.data);
+                                                console.log(response.data)
+                                            });
+                                        }}
+                                        styles={customStyles}
+                                        placeholder="เลือกที่อยู่สำหรับจัดส่ง"
+                                    />
+                                </div>
+                            </div>
+                            <div className='flex justify-center w-full h-auto'>
+                                {userAddressSelected.length > 0 && 
+                                (<motion.div 
+                                    className='w-3/4 h-auto mt-10'
+                                >
+                                    <motion.div 
+                                        className='w-full'
+                                    >
+                                        <div className="w-full grid md:grid-cols-2 md:gap-6">
+                                            <div className="relative z-0 mb-6 w-full group">
+                                                <input disabled value={userAddressSelected[0].recipient_name} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อผู้รับ</label>
+                                            </div>
+                                            <div className="relative z-0 mb-6 w-full group">
+                                                <input disabled value={userAddressSelected[0].recipient_phone} type="text" name="floating_last_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทร</label>
+                                            </div>
+                                        </div>
+                                        <div className="w-full">
+                                            <div className="relative z-0 mb-6 w-full group">
+                                                <input disabled value={userAddressSelected[0].detail} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รายละเอียดที่อยู่</label>
+                                            </div>
+                                        </div>
+                                        <div className="w-full grid md:grid-cols-2 md:gap-6">
+                                            <div className="relative z-0 mb-6 w-full group">
+                                                <input disabled value={userAddressSelected[0].subdistrict} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ตำบล</label>
+                                            </div>
+                                            <div className="relative z-0 mb-6 w-full group">
+                                                <input disabled value={userAddressSelected[0].district} type="text" name="floating_last_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">อำเภอ</label>
+                                            </div>
+                                        </div>
+                                        <div className="w-full grid md:grid-cols-2 md:gap-6">
+                                            <div className="relative z-0 mb-6 w-full group">
+                                                <input disabled value={userAddressSelected[0].province} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">จังหวัด</label>
+                                            </div>
+                                            <div className="relative z-0 mb-6 w-full group">
+                                                <input disabled value={userAddressSelected[0].zipCode} type="text" name="floating_last_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                                <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ไปรษณีย์</label>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+
+                                    <motion.div
+                                        className='w-full flex justify-center mt-20'
+                                    >
+                                        {selectAddressUser != 0 && 
+                                        <Link href={`/confirmorder?id=${selectAddressUser}`}>
+                                            <motion.button
+                                                className='bg-[#252525] text-[#FFFFFF] p-3 px-10 mr-5 rounded-lg'
+                                                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                                whileTap={{ scale: 0.95 }}
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{
+                                                    type: "spring",
+                                                    stiffness: 260,
+                                                    damping: 20
+                                                }}
+                                            >
+                                                ยืนยันที่อยู่
+                                            </motion.button>
+                                        </Link>}
+                                    </motion.div>
+                                </motion.div>)}
+                            </div>
+                        </div>
+                    </motion.div>}
 
                     <AnimatePresence mode='wait' key={'QRCode-Blur'}>
                         {QRCode != '' && <motion.div
@@ -537,18 +660,12 @@ export default function Store({ cookies }) {
                         width: '100vw',
                         height: '100vh',
                     }}
-
-                    initial={{
-                        scale: 0.0,
-                    }}
-                    animate={{
-                        scale: 0.95,
-                    }}
-                    exit={{
-                        scale: 0.0
-                    }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
                     transition={{
-                        duration: .2
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20
                     }}
                 >
                     <UniversalModal

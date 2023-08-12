@@ -9,7 +9,6 @@ import { useState, useEffect, createRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Select from 'react-select'
 import { parse } from 'cookie';
-import { getTsBuildInfoEmitOutputFilePath } from 'typescript'
 
 export default function Store({ cookies }) {
     const { fname, userId } = cookies;
@@ -132,7 +131,7 @@ export default function Store({ cookies }) {
     }
 
 
-    const GetStokcList = () => {
+    const GetStokcList = (search) => {
         Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}`).then((response) => {
             setStockList(response.data);
         });
@@ -190,7 +189,7 @@ export default function Store({ cookies }) {
     };
 
     useEffect(() => {
-        GetStokcList();
+        GetStokcList(search);
         GetCategory();
         GetProcess(42);
         GetRoast(40);
@@ -234,22 +233,13 @@ export default function Store({ cookies }) {
                     <input
                         onChange={(e) => {
                             setSearch(e.target.value);
+                            GetStokcList(e.target.value)
                         }}
                         id="Search"
                         name="Search"
                         className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
                         placeholder="ค้าหาสินค้า"
                     ></input>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
-                        onClick={() => {
-                            GetStokcList()
-                        }}
-                    >
-                    ค้นหา
-                    </motion.button>
                 </div>
             </div>
 
@@ -265,20 +255,15 @@ export default function Store({ cookies }) {
                     {stockList.length > 0 && stockList.map((post) => {
                         return <motion.div
                             key={post.Id}
-                            className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer"
+                            className={post.Amount == 0 ? "hidden": "mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer"}
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             layoutId={post.Id}
-                            initial={{
-                                scale: 0,
-                            }}
-                            animate={{
-                                scale: 1,
-                            }}
-                            exit={{
-                                scale: 0
-                            }}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
                             transition={{
-                                duration: .25
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
                             }}
                             onClick={() => {
                                 setTitle(post.Title)

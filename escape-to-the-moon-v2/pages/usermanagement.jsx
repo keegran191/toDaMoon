@@ -14,6 +14,10 @@ import Image from 'next/image'
 
 function UserManagement ({ cookies }) {
     const { fname, userId } = cookies;
+
+    const router = useRouter();
+    const IsOrder = router.query.IsOrder;
+
     const [stockAmount, setStockAmount] = useState(0)
 
     const [toggleUser, setToggleUser] = useState(false)
@@ -33,7 +37,6 @@ function UserManagement ({ cookies }) {
     const [order, setOrder] = useState(false)
     const [userOrder, setUserOrder] = useState([]);
     const [history, setHistory] = useState(false)
-    const [userHistory, setUserHistory] = useState([]);
     const [orderItem, setOrderItem] = useState([]);
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
 
@@ -54,6 +57,7 @@ function UserManagement ({ cookies }) {
     const [orderShipment, setOrderShipment] = useState('');
     const [orderCode, setOrderCode] = useState('');
     const [orderTotal, setOrderTotal] = useState(0);
+    const [orderStatusList, setOrderStatusList] = useState([]);
 
     const [IsDelete, setDelete] = useState(false);
     const [targetDeleteId, setTargetDeleteId] = useState(0);
@@ -86,18 +90,6 @@ function UserManagement ({ cookies }) {
 
     //Address Value
     const [addressUser, setAddressUser] = useState([]);
-
-    const filterFnameTextInput = (e) => {
-        const value = e.target.value;
-        const sanitizedValue = value.replace(/[^a-zA-Z ]/g, "");
-        setFname(sanitizedValue)
-    }
-
-    const filterSnameTextInput = (e) => {
-        const value = e.target.value;
-        const sanitizedValue = value.replace(/[^a-zA-Z ]/g, "");
-        setSname(sanitizedValue)
-    }
     
     const filterPhoneNumberInput = (e) => {
         const value = e.target.value;
@@ -109,18 +101,6 @@ function UserManagement ({ cookies }) {
         const value = e.target.value;
         const sanitizedValue = value.replace(/[^a-zA-Z0-9!@#$%^&*()-_=+[\]{}|;:'",.<>/?\\ ]/g, '');
         setNewPassword(sanitizedValue)
-    }
-
-    const filterFnameAddressTextInput = (e) => {
-        const value = e.target.value;
-        const sanitizedValue = value.replace(/[^a-zA-Z ]/g, "");
-        setRecipientName(sanitizedValue)
-    }
-
-    const filterPhoneNumberAddressInput = (e) => {
-        const value = e.target.value;
-        const sanitizedValue = value.replace(/[^0-9]/g, '');
-        setAddressPhone(sanitizedValue);
     }
 
     const GetBasketAmount = (userId) => {
@@ -150,17 +130,13 @@ function UserManagement ({ cookies }) {
         })
     }
 
-    const GetUserOrder = (userId) => {
-        Axios.get(`http://localhost:3000/api/Order/get/${userId}`).then((response) => {
+    const GetUserOrder = (userId,orderStatus) => {
+        Axios.get(`http://localhost:3000/api/Order/get?id=${userId}&order_status=${orderStatus}`).then((response) => {
             setUserOrder(response.data)
         });
     }
 
-    const GetUserHistoryOrder = (userId) => {
-        Axios.get(`http://localhost:3000/api/Order/gethistory/${userId}`).then((response) => {
-            setUserHistory(response.data)
-        });
-    }
+
 
     const GetUserOrderItem = () => {
         Axios.get(`http://localhost:3000/api/orderitem/getallorderitem`).then((response) => {
@@ -215,6 +191,12 @@ function UserManagement ({ cookies }) {
         setOrderTotal(TotalPrice)
     }
 
+    const GetOrderStatus = () => {
+        Axios.get(`http://localhost:3000/api/Order/getorderstatus`).then((response) => {
+            setOrderStatusList(response.data.map((status) => ({ value: status.id, label: status.label })))
+        });
+    }
+
     const handleCopyToClipboard = (text) => {
         navigator.clipboard.writeText(text)
           .then(() => setIsCopied(true))
@@ -223,11 +205,58 @@ function UserManagement ({ cookies }) {
           });
     };
 
+
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            width: "100%",
+            borderRadius: "50px",
+            boxShadow: state.isFocused ? "0 0 0 0px #252525" : "0 0 0 0px #252525",
+            borderColor: state.isFocused ? "none" : "none",
+            padding: "9px 10px",
+            "&:hover": {
+                outline: "none",
+            },
+        }),
+
+        input: (provided, state) => ({
+            ...provided,
+            borderRadius: "50px",
+            boxShadow: state.isFocused ? "none" : "none",
+            borderColor: state.isFocused ? "none" : "none",
+        }),
+
+        menu: (provided, state) => ({
+            ...provided,
+            borderRadius: "10px",
+            padding: "10px",
+        }),
+
+        menuList: (provided, state) => ({
+            ...provided,
+            borderRadius: "10px",
+          }),
+
+          option: (provided, state) => ({
+            ...provided,
+            color: state.isFocused ? "#FFFFFF" : "#252525",
+            backgroundColor: state.isFocused ? "#666" : "transparent",
+            "&:hover": {
+              backgroundColor: "#666",
+              color: "#FFFFFF",
+            },
+            "&:active": {
+              backgroundColor: "#252525",
+              color: "#FFFFFF",
+            },
+            ...(state.isSelected && { color: "#FFFFFF" , backgroundColor: "#252525"}), // add this line to change the text color of the selected option
+          }),
+    }
+
     useEffect(() => {
         GetBasketAmount(userId)
         GetAddress(userId)
-        GetUserOrder(userId)
-        GetUserHistoryOrder(userId)
+        GetUserOrder(userId,0)
         GetUserInfo()
         GetUserOrderItem()
         GetCategory();
@@ -235,10 +264,15 @@ function UserManagement ({ cookies }) {
         GetProcess(42);
         GetRoast(40);
         GetFlavor(41);
+        GetOrderStatus();
+        if( IsOrder == 1 ) {
+            setToggleHistory(true);
+            setOrder(true);
+        }
     }, [userId]);
 
     return (
-        <div className='select-none min-h-screen flex flex-col'>
+        <div className='select-none min-h-screen flex flex-col overflow-hidden'>
             <Head>
                 <title>Home</title>
                 <link rel="icon" href="/ttmLogo.png"/>
@@ -248,245 +282,223 @@ function UserManagement ({ cookies }) {
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
             
-            <div className='mt-40 flex px-10 justify-center lg:justify-start h-auto mb-20'>
-                <div className="hidden lg:block w-2/12">
-                    <motion.div 
-                        className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
-                        onClick={() => {
-                            if(toggleUser) {
-                                setToggleUser(false);
-                                setRotateUser(0)
-                                setChangeUser(false);
-                                setAddress(false)
+            <div className='mt-10 flex lg:px-10 justify-center lg:justify-start h-5/6 lg:h-4/6 mb-10'>
+                <div className="hidden lg:block w-2/12 border-r-2 border-[#252525]">
+                    <div className='w-full h-5/6'>
+                        <motion.div 
+                            className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
+                            onClick={() => {
+                                if(toggleUser) {
+                                    setToggleUser(false);
+                                    setRotateUser(0)
+                                    setChangeUser(false);
+                                    setAddress(false)
+                                    setChangePassword(false);
+                                    setOrder(false);
+                                    setHistory(false);
+                                    GetUserOrder(userId,0)
+                                } else {
+                                    setRotateUser(180);
+                                    setToggleUser(true);
+                                }
+                            }}
+                        >
+                            <svg className='sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-1 m-auto fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
+                            </svg>
+                            <span>โปรไฟล์</span>
+                            <motion.div
+                                className = 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 m-auto '
+                                animate={{
+                                    x: 0,
+                                    y: 0,
+                                    scale: 1,
+                                    rotate: rotateUser,
+                                }}
+                            >
+                                <svg className='fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>            
+                                </svg>
+                            </motion.div>
+                        </motion.div>
+
+                        {toggleUser && <motion.div
+                            className={changeUser ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
+                            whileHover={{
+                                border: '2px solid #252525',
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: 0.2
+                            }}
+                            onClick={() => {
+                                setChangeUser(true);
+                                setAddress(false);
                                 setChangePassword(false);
                                 setOrder(false);
                                 setHistory(false);
-                            } else {
-                                setRotateUser(180);
-                                setToggleUser(true);
-                            }
-                        }}
-                    >
-                        <svg className='sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-1 m-auto fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
-                        </svg>
-                        <span>โปรไฟล์</span>
-                        <motion.div
-                            className='sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 m-auto '
-                            animate={{
-                                x: 0,
-                                y: 0,
-                                scale: 1,
-                                rotate: rotateUser,
+                                GetUserOrder(userId,0)
                             }}
                         >
-                            <svg className='fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>            
+                            <svg className={changeUser ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
                             </svg>
-                        </motion.div>
-                    </motion.div>
-
-                    {toggleUser && <motion.div
-                        className={changeUser ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
-                        whileHover={{
-                            border: '2px solid #252525',
-                        }}
-                        initial={{
-                            opacity: 0,
-                        }}
-                        animate={{
-                            opacity: 1,
-                        }}
-                        exit={{
-                            opacity: 0
-                        }}
-                        transition={{
-                            duration: 0.2
-                        }}
-                        onClick={() => {
-                            setChangeUser(true);
-                            setAddress(false);
-                            setChangePassword(false);
-                            setOrder(false);
-                            setHistory(false);
-                        }}
-                    >
-                        <svg className={changeUser ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
-                        </svg>
-                        <span>เเก้ไขข้อมูลส่วนตัว</span>
-                    </motion.div>}
-                    {toggleUser && <motion.div
-                        className={address ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
-                        whileHover={{
-                            border: '2px solid #252525',
-                        }}
-                        initial={{
-                            opacity: 0,
-                        }}
-                        animate={{
-                            opacity: 1,
-                        }}
-                        exit={{
-                            opacity: 0
-                        }}
-                        transition={{
-                            duration: 0.2
-                        }}
-                        onClick={() => {
-                            setAddress(true)
-                            setChangePassword(false);
-                            setChangeUser(false);
-                            setOrder(false);
-                            setHistory(false);
-                        }}
-                    >
-                        <svg className={address ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                            <path d="M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/>                        </svg>
-                        <span>เพิ่ม/เเก้ไขที่อยู่</span>
-                    </motion.div>}
-                    {toggleUser && <motion.div
-                        className={changePassword ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
-                        whileHover={{
-                            border: '2px solid #252525',
-                        }}
-                        initial={{
-                            opacity: 0,
-                        }}
-                        animate={{
-                            opacity: 1,
-                        }}
-                        exit={{
-                            opacity: 0
-                        }}
-                        transition={{
-                            duration: 0.2
-                        }}
-                        onClick={() => {
-                            setChangePassword(true);
-                            setChangeUser(false);
-                            setAddress(false)
-                            setOrder(false);
-                            setHistory(false);
-                        }}
-                    >
-                        <svg className={changePassword ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"/>
-                        </svg>
-                        <span>เเก้ไขรหัสผ่าน</span>
-                    </motion.div>}
-
-                    <motion.div 
-                        className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
-                        onClick={() => {
-                            if(toggleHistory) {
-                                setToggleHistory(false);
-                                setRotateHistory(0)
+                            <span>เเก้ไขข้อมูลส่วนตัว</span>
+                        </motion.div>}
+                        {toggleUser && <motion.div
+                            className={address ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
+                            whileHover={{
+                                border: '2px solid #252525',
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: 0.2
+                            }}
+                            onClick={() => {
+                                setAddress(true)
+                                setChangePassword(false);
+                                setChangeUser(false);
                                 setOrder(false);
-                                setHistory(false)
-                            } else {
-                                setRotateHistory(180);
-                                setToggleHistory(true);
-                            }
-                        }}
-                    >
-                        <svg className='sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-1 m-auto fill-[#252525]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                            <path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
-                        </svg>
-                        <span>การสั่งซื้อ</span>
-                        <motion.div
-                            className='sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 m-auto '
+                                setHistory(false);
+                                GetUserOrder(userId,0)
+                            }}
+                        >
+                            <svg className={address ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                <path d="M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/>                        </svg>
+                            <span>เพิ่ม/เเก้ไขที่อยู่</span>
+                        </motion.div>}
+                        {toggleUser && <motion.div
+                            className={changePassword ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
+                            whileHover={{
+                                border: '2px solid #252525',
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
                             animate={{
-                                x: 0,
-                                y: 0,
-                                scale: 1,
-                                rotate: rotateHistory,
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: 0.2
+                            }}
+                            onClick={() => {
+                                setChangePassword(true);
+                                setChangeUser(false);
+                                setAddress(false)
+                                setOrder(false);
+                                setHistory(false);
+                                GetUserOrder(userId,0)
                             }}
                         >
-                            <svg className='fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>            
+                            <svg className={changePassword ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"/>
                             </svg>
-                        </motion.div>
-                    </motion.div>
+                            <span>เเก้ไขรหัสผ่าน</span>
+                        </motion.div>}
 
-                    {toggleHistory && <motion.div
-                        className={order ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
-                        whileHover={{
-                            border: '2px solid #252525',
-                        }}
-                        initial={{
-                            opacity: 0,
-                        }}
-                        animate={{
-                            opacity: 1,
-                        }}
-                        exit={{
-                            opacity: 0
-                        }}
-                        transition={{
-                            duration: 0.2
-                        }}
-                        onClick={() => {
-                            setOrder(true);
-                            setHistory(false)
-                            setChangeUser(false);
-                            setAddress(false)
-                            setChangePassword(false);
-                        }}
-                    >
-                        <svg className={order ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                            <path d="M101.5 64C114.6 26.7 150.2 0 192 0s77.4 26.7 90.5 64H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h37.5zM224 96c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM160 368c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 392c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24zm64-120c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 296c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"/>
-                        </svg>
-                        <span>รายการสั่งซื้อ</span>
-                    </motion.div>}
-
-                    {toggleHistory && <motion.div
-                        className={history ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
-                        whileHover={{
-                            border: '2px solid #252525',
-                        }}
-                        initial={{
-                            opacity: 0,
-                        }}
-                        animate={{
-                            opacity: 1,
-                        }}
-                        exit={{
-                            opacity: 0
-                        }}
-                        transition={{
-                            duration: 0.2
-                        }}
-                        onClick={() => {
-                            setOrder(false);
-                            setHistory(true)
-                            setChangeUser(false);
-                            setAddress(false)
-                            setChangePassword(false);
-                        }}
-                    >
-                        <svg className={history ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/>
-                        </svg>
-                        <span>ประวัติการสั่งซื้อ</span>
-                    </motion.div>}
-
-                    <div className='flex justify-center cursor-pointer mt-48'>
-                        <motion.button 
-                            className='bg-[#252525] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
-                            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={async () => {
-                            
-                                await Axios.get(`http://localhost:3000/api/logout`);
-                                window.location.href = "/";
+                        <motion.div 
+                            className='w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'
+                            onClick={() => {
+                                if(toggleHistory) {
+                                    setToggleHistory(false);
+                                    setRotateHistory(0)
+                                    setOrder(false);
+                                    setHistory(false)
+                                    GetUserOrder(userId,0)
+                                } else {
+                                    setRotateHistory(180);
+                                    setToggleHistory(true);
+                                }
                             }}
                         >
-                            ออกจากระบบ
-                        </motion.button>
+                            <svg className='sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-1 m-auto fill-[#252525]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
+                                <path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
+                            </svg>
+                            <span>การสั่งซื้อ</span>
+                            <motion.div
+                                className='sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 m-auto '
+                                animate={{
+                                    x: 0,
+                                    y: 0,
+                                    scale: 1,
+                                    rotate: rotateHistory,
+                                }}
+                            >
+                                <svg className='fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>            
+                                </svg>
+                            </motion.div>
+                        </motion.div>
+
+                        {toggleHistory && <motion.div
+                            className={order ? 'bg-[#252525] text-[#ECEBE8] w-full flex justify-start cursor-pointer border-2 border-[#252525] p-4' : 'w-full flex justify-start cursor-pointer border-2 border-[#25252500] p-4'}
+                            whileHover={{
+                                border: '2px solid #252525',
+                            }}
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
+                            exit={{
+                                opacity: 0
+                            }}
+                            transition={{
+                                duration: 0.2
+                            }}
+                            onClick={() => {
+                                setOrder(true);
+                                setHistory(false)
+                                setChangeUser(false);
+                                setAddress(false)
+                                setChangePassword(false);
+                                GetUserOrder(userId,0)
+                            }}
+                        >
+                            <svg className={order ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                <path d="M101.5 64C114.6 26.7 150.2 0 192 0s77.4 26.7 90.5 64H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h37.5zM224 96c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM160 368c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 392c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24zm64-120c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zM96 296c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z"/>
+                            </svg>
+                            <span>รายการสั่งซื้อ</span>
+                        </motion.div>}
+                    </div>
+                    
+                    {/* Log out */}
+                    <div className='relative w-full h-full mt-10'>
+                        <div className='flex justify-center cursor-pointer'>
+                            <motion.button 
+                                className='bg-[#252525] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
+                                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={async () => {
+                                    await Axios.get(`http://localhost:3000/api/logout`);
+                                    window.location.href = "/";
+                                }}
+                            >
+                                ออกจากระบบ
+                            </motion.button>
+                        </div>
                     </div>
                 </div>
-                <div className='hidden lg:block w-2 h-auto border-l-2 border-[#252525]'></div>
 
                 {changeUser && <div className='w-8/12 mt9 lg:pl-10'>
                     <h1 className=' text-xl'>เเก้ไขข้อมูลส่วนตัว</h1>
@@ -538,6 +550,13 @@ function UserManagement ({ cookies }) {
                                     className="mb-3 select-none w-96 h-48 bg-white border border-[#FFFFFF] rounded-xl shadow-md p-4 cursor-pointer"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20
+                                    }}
                                     onClick={() => {
                                     setChangeAddress(true);
                                     setAddressName(address.name);
@@ -562,11 +581,25 @@ function UserManagement ({ cookies }) {
                         <motion.div
                             className="mb-3 select-none w-96 h-48 bg-[#BCBCBC] border border-[#252525] border-dashed rounded-xl shadow-md flex justify-center items-center p-4 cursor-pointer"
                             layoutId={"Addaddress"}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                            }}
+                            
                         >
                             <motion.button 
                                 className='bg-[#252525] text-[#FFFFFF] p-3 px-5 rounded-full'
                                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                 whileTap={{ scale: 0.95 }}
+                                animate={{ scale: 1 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 260,
+                                    damping: 20
+                                }}
                                 onClick={() => {
                                     setAddaddress(true);
                                 }}
@@ -943,461 +976,57 @@ function UserManagement ({ cookies }) {
                 </div>}
 
                 {/* order */}
-                {order && <div className='block w-8/12 mt9 lg:pl-10'>
-                    <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
-                    {userOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
-                        ไม่พบรายการสั่งซื้อ
-                    </motion.div>}
-                    {userOrder.length > 0 && userOrder.map((post) => {
-                        return (
-                            <motion.div 
-                                className='mt-5 flex justify-center'
-                                key={post.order_Id}
-                                layoutId={post.order_Id}
-                            >
-                                <div className="w-full h-auto xl:w-9/12 xl:h-56 bg-[#FFFFFF] rounded-3xl overflow-hidden">
-                                    {/* pc */}
-                                    <div className='hidden xl:flex w-full h-20 bg-[#252525] p-3 justify-between'>
-                                        <div className='w-full pl-7'>
-                                            <div className='w-full flex items-center'>
-                                                <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข {post.refNumber}</div>
-                                                <div 
-                                                    style={{
-                                                        backgroundColor: post.bg_color,
-                                                        color: post.text_color
-                                                    }} 
-                                                    className={`ml-2 w-auto h-5 text-sm text-center rounded-full px-2`}
-                                                >
-                                                    {post.label}
-                                                </div>  
-                                            </div>
-                                            <div className='flex text-[#ECEBE8] items-center'>
-                                                <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                                                    <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
-                                                </svg>
-                                                <span className='ml-2 text-sm'>สั่งซื้อเมื่อ {post.order_on} ชื่อผู้รับ {post.recipient_name}</span>
-                                            </div>
-                                        </div>
-                                        <div className='w-full text-[#ECEBE8] self-center flex justify-end pr-7'>
-                                            {post.order_status == 2 && <motion.button 
-                                                className='mr-3 py-3 px-5 rounded-full bg-green-500 text-white'
-                                                whileHover={{
-                                                    scale: 1.05,
-                                                }}
-                                                whileTap={{
-                                                    scale: 0.95
-                                                }}
-                                                onClick={async () => {
-                                                    await Axios.get(`http://localhost:3000/api/Order/userreciveitem?orderId=${post.order_Id}`)
-                                                    setOrderNo('');
-                                                    setReciveName('');
-                                                    setOrderAddressDetail('');
-                                                    setOrderSubdistrict('');
-                                                    setOrderDistrict('');
-                                                    setOrderProvince('');
-                                                    setOrderZipcode('')
-                                                    setOrderStatus('');
-                                                    setOrderBgStatusColor('');
-                                                    setOrderStatusTextColor('');
-                                                    setOrderShipment('')
-                                                    setOrderCode('')
-                                                    setOrderStatusId()
-                                                    setSelectOrder(null);
-                                                    GetUserOrderItem()
-                                                    GetUserOrder(userId)
-                                                    GetUserHistoryOrder(userId)
-                                                }}
-                                            >
-                                                ฉันได้ตรวจสอบ / ได้รับสินค้า
-                                            </motion.button>}
-                                            <motion.button className='bg-[#ECEBE8] text-[#252525] py-3 px-5 rounded-full'
-                                                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                                                whileTap={{ scale: 0.95 }}
-                                                onClick={async () => {
-                                                    setOrderNo(post.refNumber);
-                                                    setOrderOn(post.order_on);
-                                                    setReciveName(post.recipient_name);
-                                                    setOrderAddressDetail(post.detail);
-                                                    setOrderSubdistrict(post.subdistrict);
-                                                    setOrderDistrict(post.district);
-                                                    setOrderProvince(post.province);
-                                                    setOrderZipcode(post.zipCode)
-                                                    setOrderStatus(post.label);
-                                                    setOrderStatusId(post.order_status);
-                                                    setOrderBgStatusColor(post.bg_color);
-                                                    setOrderStatusTextColor(post.text_color);
-                                                    setOrderShipment(post.order_shipment)
-                                                    setOrderCode(post.order_code)
-                                                    setSelectOrder(post.order_Id)
-                                                    GetOrderItemByOrder(post.order_Id)
-                                                }}
-                                            >
-                                                ดูลายละเอียด
-                                            </motion.button>
-                                        </div>
-                                    </div>
-                                    <div className='hidden xl:flex w-full h-auto pt-5 px-10 justify-between items-center'>
-                                        <div>
-                                            <p>หมายเลขพัสดุ</p>
-                                            <p className='text-lg font-semibold'>{post.order_shipment}</p>
-                                            <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                <span className='text-sm mr-5'>{post.order_code}</span>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <p>รูปแบบการชำระเงิน</p>
-                                            <p className='font-semibold'>QR Payment</p>
-                                            <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center'>
-                                                <svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                                    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
-                                                </svg>
-                                                <span className='text-sm'>ชำระเงินสำเร็จ</span>
-                                            </div>
-                                        </div>
-
-                                        {(() => {
-                                            let order_item = orderItem.find((item) => item.order_id == post.order_Id)
-                                            let total = 0
-                                            for (let i = 0; i < orderItem.length; i++) {
-                                                if (orderItem[i].order_id == post.order_Id) {
-                                                    total += (order_item.total)
-                                                }
-                                            }
-                                            return <div className='w-60'>
-                                            <div className='flex'>
-                                                <div className='w-20 h-auto mb-1 mr-2'>
-                                                    <img className='w-full h-full' src={`/uploads/${order_item.Image}`}></img>
-                                                </div>
-                                                <div className='w-40'>
-                                                    <p className='overflow-hidden text-ellipsis whitespace-nowrap'>{order_item.Title}</p>
-                                                    <motion.p 
-                                                        className='cursor-pointer text-xs'
-                                                        whileHover={{ fontWeight: 'bold'}}
-                                                        whileTap={{ scale: 0.95 }}
-                                                        onClick={() => {
-                                                            setOrderNo(post.refNumber);
-                                                            setOrderOn(post.order_on);
-                                                            setReciveName(post.recipient_name);
-                                                            setOrderAddressDetail(post.detail);
-                                                            setOrderSubdistrict(post.subdistrict);
-                                                            setOrderDistrict(post.district);
-                                                            setOrderProvince(post.province);
-                                                            setOrderZipcode(post.zipCode)
-                                                            setSelectOrder(post.order_Id)
-                                                            setOrderStatusId(post.order_status);
-                                                            setOrderStatus(post.label);
-                                                            setOrderBgStatusColor(post.bg_color);
-                                                            setOrderStatusTextColor(post.text_color);
-                                                            setOrderShipment(post.order_shipment)
-                                                            setOrderCode(post.order_code)
-                                                            GetOrderItemByOrder(post.order_Id)
-                                                        }}
-                                                    >
-                                                        {`ดูลายละเอียดสินค้าทั้งหมด ->`}
-                                                    </motion.p>
-                                                </div>
-                                            </div>
-                                            <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                <span className='text-sm'>ยอดรวม</span>
-                                                <span className='text-sm'>฿{total}</span>
-                                            </div>
-                                        </div>})()}
-                                    </div>
-
-                                    {/* mobile */}
-                                    <motion.div
-                                        onClick={() => {
-                                            setOrderNo(post.refNumber);
-                                            setOrderOn(post.order_on);
-                                            setReciveName(post.recipient_name);
-                                            setOrderAddressDetail(post.detail);
-                                            setOrderStatusId(post.order_status);
-                                            setSelectOrder(post.order_Id)
-                                        }}
-                                    >
-                                        <div className='flex xl:hidden w-full h-auto bg-[#252525] p-3'>
-                                            <div className='w-full'>
-                                                <div 
-                                                    style={{
-                                                        backgroundColor: post.bg_color,
-                                                        color: post.text_color
-                                                    }} 
-                                                    className={`ml-2 w-fit h-5 text-sm text-center rounded-full px-2`}
-                                                >
-                                                    {post.label}
-                                                </div>  
-                                                <div className='text-xl text-[#ECEBE8]'>คำสั่งหมายเลข {post.refNumber}</div>
-                                                <div className='text-[#ECEBE8] mt-2'>
-                                                    <p className='text-xs'>สั่งซื้อเมื่อ {post.order_on}</p>
-                                                    <p className='text-xs'>ชื่อผู้รับ {post.recipient_name}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='block xl:hidden w-full h-auto pt-5 px-10 mb-5'>
-                                            <div>
-                                                <p className='text-sm'>หมายเลขพัสดุ</p>
-                                                <p className='text-sm font-semibold'>{post.order_shipment}</p>
-                                                <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                    <span className='text-xs'>{post.order_code}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                
-                                </div>
-                            </motion.div>
-                        )
-                    })}
-
-                    <AnimatePresence mode='wait' key={'block-content'}>
-                        {selectOrder && <motion.div
-                            style={{
-                                position: 'fixed',
-                                top: '0',
-                                left: '0',
-                                width: '100vw',
-                                height: '100vh',
-                                backgroundColor: 'rgba(0, 0, 0, .25)'
-                            }}
-                            initial={{
-                                opacity: 0,
-                            }}
-                            animate={{
-                                opacity: 1,
-                            }}
-                            exit={{
-                                opacity: 0
-                            }}
-                            transition={{
-                                duration: .5
-                            }}
-                        />}
-                    </AnimatePresence>
-                    
-                    <AnimatePresence key={'modalItems'}>
-                        {selectOrder && 
-                        (<motion.div
-                            layoutId={selectOrder}
-                            className={
-                                `
-                                    z-50 fixed left-0 right-0 top-0 bottom-0 flex flex-col p-4 bg-white w-full
-                                    lg:absolute xl:ml-auto xl:mr-auto lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:top-28 2xl:h-5/6 lg:rounded-xl shadow-lg
-                                `
-                            }
+                {order && <div className='block w-8/12 lg:pl-10 h-auto'>
+                    <motion.div className='flex justify-between mb-5'>
+                        <motion.div className='w-full'>
+                            <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
+                        </motion.div>
+                        <motion.div
+                            className='w-full'
                         >
-                            <motion.button
-                                whileHover={{ 
-                                    scale: 1.05,
-                                    backgroundColor: '#252525',
-                                    color: 'white'
-                                }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => {
-                                    setOrderNo('');
-                                    setReciveName('');
-                                    setOrderAddressDetail('');
-                                    setOrderSubdistrict('');
-                                    setOrderDistrict('');
-                                    setOrderProvince('');
-                                    setOrderZipcode('')
-                                    setOrderStatus('');
-                                    setOrderBgStatusColor('');
-                                    setOrderStatusTextColor('');
-                                    setOrderShipment('')
-                                    setOrderCode('')
-                                    setSelectOrder(null);
-                                    GetUserOrderItem()
+                            <Select
+                                className='shadow-lg rounded-full'
+                                inputId='coffeeId'
+                                options={orderStatusList}
+                                isClearable={true}
+                                onChange={(newValue,meta) => {
+                                    if (newValue === undefined || newValue === null) {
+                                        GetUserOrder(userId,0)
+                                    } else {
+                                        GetUserOrder(userId,newValue.value)
+                                    }
                                     
                                 }}
-                                className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
-                                <span className="text-xl bold">✕</span>
-                            </motion.button>
-
-                            <motion.div className='p-5 px-10'>
-                                <motion.div className='flex  items-center'>
-                                    <motion.p className='text-2xl'>คำสั่งหมายเลข {orderNo}</motion.p>
-                                    <motion.div 
-                                        style={{
-                                            backgroundColor: orderStatusBgColor,
-                                            color: orderStatusTextColor
-                                        }} 
-                                        className={`flex items-center justify-center ml-2 w-auto h-6 px-2 text-sm bg-[${orderStatusBgColor}] text-[${orderStatusTextColor}] text-center rounded-full`}
-                                    >
-                                        {orderStatus}
-                                    </motion.div>
-                                    {orderStatusId == 2 && <motion.div className='w-1/2 flex justify-end h-auto relative'>
-                                        <motion.button 
-                                            className='w-auto p-2 rounded-lg bg-green-500 text-white'
-                                            whileHover={{
-                                                scale: 1.05,
-                                            }}
-                                            whileTap={{
-                                                scale: 0.95
-                                            }}
-                                            onClick={async () => {
-                                                await Axios.get(`http://localhost:3000/api/Order/userreciveitem?orderId=${selectOrder}`)
-                                                setOrderNo('');
-                                                setReciveName('');
-                                                setOrderAddressDetail('');
-                                                setOrderSubdistrict('');
-                                                setOrderDistrict('');
-                                                setOrderProvince('');
-                                                setOrderZipcode('')
-                                                setOrderStatus('');
-                                                setOrderBgStatusColor('');
-                                                setOrderStatusTextColor('');
-                                                setOrderShipment('')
-                                                setOrderCode('')
-                                                setOrderStatusId()
-                                                setSelectOrder(null);
-                                                GetUserOrderItem()
-                                                GetUserOrder(userId)
-                                                GetUserHistoryOrder(userId)
-                                            }}
-                                        >
-                                            ฉันได้ตรวจสอบ / ได้รับสินค้า
-                                        </motion.button>
-                                    </motion.div>}
-                                </motion.div>
-                                <motion.div className='flex text-[#252525] items-center mt-2'>
-                                    <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                                        <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
-                                    </svg>
-                                    <span className='ml-2 text-sm'>สั่งซื้อเมื่อ {orderOn} ชื่อผู้รับ {reciveName}</span>
-                                </motion.div>
-
-                                <motion.div className='flex justify-around mt-10'>
-                                    <motion.div className='w-52 h-auto'>
-                                        <motion.p>หมายเลขพัสดุ</motion.p>
-                                        <motion.p>{orderShipment}</motion.p>
-                                        <motion.div
-                                            className='flex item-center justify-between border-2 border-[#252525]'
-                                        >
-                                            <span className='p-1'>{orderCode}</span>
-                                            <motion.div 
-                                                className='h-full w-auto'
-                                                whileHover={{
-                                                    backgroundColor: '#252525'
-                                                }}
-                                            >
-                                                <motion.div
-                                                    className='h-full w-auto p-1'
-                                                    whileHover={{
-                                                        backgroundColor: '#252525',
-                                                        color: '#FFFFFF'
-                                                    }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                    onClick={() => {
-                                                        handleCopyToClipboard(orderCode)
-                                                    }}
-                                                >
-                                                    คัดลอก
-                                                </motion.div>
-                                            </motion.div>
-                                        </motion.div>
-                                    </motion.div>
-
-                                    <motion.div className='w-56 h-auto'>
-                                        <motion.p>ที่อยู่จัดส่ง</motion.p>
-                                        <motion.p>{orderAddressDetail + " ตำบล " + orderSubdistrict + " อำเภอ " + orderDistrict + " จังหวัด " + orderProvince + " " + orderZipcode}</motion.p>
-                                    </motion.div>
-
-                                    <motion.div className='w-56 h-auto'>
-                                        <motion.p>รูปแบบการชำระเงิน</motion.p>
-                                        <motion.p>QR Payment</motion.p>
-                                        <motion.div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center border-2 border-[#252525]'>
-                                            <motion.svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                                <motion.path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
-                                            </motion.svg>
-                                            <span className='text-sm'>ชำระเงินสำเร็จ</span>
-                                        </motion.div>
-                                    </motion.div>
-                                </motion.div>
-
-                                <motion.div
-                                    className='w-full mt-5'
+                                styles={customStyles}
+                                placeholder="สถานะสินค้า"
+                            />
+                        </motion.div>
+                    </motion.div>
+                    <motion.div 
+                        className='h-5/6 overflow-x-hidden overflow-y-auto'
+                    >
+                        {userOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
+                            ไม่พบรายการสั่งซื้อ
+                        </motion.div>}
+    
+                        {userOrder.length > 0 && userOrder.map((post) => {
+                            return (
+                                <motion.div 
+                                    className='mt-5 flex justify-center'
+                                    key={post.order_Id}
+                                    layoutId={post.order_Id}
+                                    style={{
+                                        opacity: selectOrder == post.order_Id ? 0 : 1,
+                                    }}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20
+                                    }}
                                 >
-                                    <motion.p className='text-2xl'>รายการสินค้า</motion.p>
-                                    <motion.div className='mt-2 w-full h-auto grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
-                                        <motion.div class='text-lg text-left col-span-2'>สินค้า</motion.div> 
-                                        <motion.div class='text-lg text-center col-start-3'>ราคา</motion.div>
-                                        <motion.div class='text-lg text-center'>จำนวน</motion.div>
-                                        <motion.div class='text-lg text-center'>ราคารวม</motion.div>
-                                    </motion.div>
-                                    <motion.div
-                                        className='overflow-x-hidden overflow-y-auto h-60'
-                                    >
-
-                                        {orderItemByOrder.map((element) => {
-                                        return (
-                                            <motion.div 
-                                                className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2' key={element.id}
-                                            >
-                                                <motion.div class='text-lg text-left col-span-2 flex'>
-                                                    <motion.div className='w-16 h-16'>
-                                                        <motion.img className='w-full h-full rounded-lg' src={`/uploads/${element.Image}`}></motion.img>
-                                                    </motion.div>
-                                                    <motion.div className='ml-5' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-                                                        <motion.span className='text-sm'>
-                                                            {element.Title}
-                                                        </motion.span>
-                                                        {element.StockType == 1 &&
-                                                            <motion.div className='text-sm mt-2'>
-                                                                <motion.p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(element.Process)].label}</motion.p>
-                                                                <motion.p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(element.Roast)].label}</motion.p>
-                                                                <motion.p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(element.Flavor)].label}</motion.p>
-                                                            </motion.div>
-                                                        }
-                                                        {element.StockType == 2 && 
-                                                        <div className='text-sm mt-2'>
-                                                            <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(element.CategoryId)].label}</p>
-                                                            <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(element.SubCategoryId)].label}</p>
-                                                        </div>}
-
-                                                    </motion.div>
-                                                </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-3'>
-                                                    ฿ {element.Price}
-                                                </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-4'>
-                                                    {element.amount}
-                                                </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-5'>
-                                                    {element.total}
-                                                </motion.div>
-                                            </motion.div>
-                                        )
-                                        
-                                    })}
-                                    </motion.div>
-                                    <motion.div className='relative mt-3 w-full h-1 border-b-2 border-[#252525] '></motion.div>
-                                    <motion.div className='w-full flex justify-end mt-2'>
-                                        <motion.div className='flex justify-between w-96 text-xl'>
-                                            <motion.span className='ml-5'>มูลค่าสินค้ารวม</motion.span> <motion.span>฿{orderTotal}</motion.span>
-                                        </motion.div>
-                                    </motion.div>
-                                </motion.div>
-                            </motion.div>
-                        </motion.div>)}
-                    </AnimatePresence>
-
-                </div>}
-                
-                {/* history */}
-                {history && <div className='block w-8/12 mt9 lg:pl-10'>
-                    <h1 className=' text-xl'>ประวิติการสั่งซื้อ</h1>
-                    {userHistory.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
-                        ไม่พบประวัติการสั่งซื้อ
-                    </motion.div>}
-                    {userHistory.length > 0 && userHistory.map((post) => {
-                        return (
-                            <motion.div 
-                                className='mt-5 flex justify-center'
-                                key={post.order_Id}
-                                layoutId={post.order_Id}
-                            >
-                                <div className="w-full h-auto xl:w-9/12 xl:h-56 bg-[#FFFFFF] rounded-3xl overflow-hidden">
+                                <div className="w-full h-auto xl:w-9/12 xl:h-56 bg-[#FFFFFF] rounded-lg lg:rounded-xl overflow-hidden">
                                     {/* pc */}
                                     <div className='hidden xl:flex w-full h-20 bg-[#252525] p-3 justify-between'>
                                         <div className='w-full pl-7'>
@@ -1553,10 +1182,11 @@ function UserManagement ({ cookies }) {
                                         </div>
                                     </motion.div>
                                 </div>
+                                </motion.div>
+                            )
+                        })}
+                    </motion.div>
 
-                            </motion.div>
-                        )
-                    })}
                     <AnimatePresence mode='wait' key={'block-content'}>
                         {selectOrder && <motion.div
                             style={{
@@ -1601,6 +1231,7 @@ function UserManagement ({ cookies }) {
                                 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => {
+                                    setSelectOrder(null);
                                     setOrderNo('');
                                     setReciveName('');
                                     setOrderAddressDetail('');
@@ -1613,14 +1244,11 @@ function UserManagement ({ cookies }) {
                                     setOrderStatusTextColor('');
                                     setOrderShipment('')
                                     setOrderCode('')
-                                    setSelectOrder(null);
-                                    GetUserOrderItem()
-                                    
                                 }}
                                 className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
                                 <span className="text-xl bold">✕</span>
                             </motion.button>
-
+                            
                             <motion.div className='p-5 px-10'>
                                 <motion.div className='flex  items-center'>
                                     <motion.p className='text-2xl'>คำสั่งหมายเลข {orderNo}</motion.p>
@@ -1633,6 +1261,38 @@ function UserManagement ({ cookies }) {
                                     >
                                         {orderStatus}
                                     </motion.div>
+                                    {orderStatusId == 2 && <motion.div className='w-1/2 flex justify-end h-auto relative'>
+                                        <motion.button 
+                                            className='w-auto p-2 rounded-lg bg-green-500 text-white'
+                                            whileHover={{
+                                                scale: 1.05,
+                                            }}
+                                            whileTap={{
+                                                scale: 0.95
+                                            }}
+                                            onClick={async () => {
+                                                await Axios.get(`http://localhost:3000/api/Order/userreciveitem?orderId=${selectOrder}`)
+                                                setOrderNo('');
+                                                setReciveName('');
+                                                setOrderAddressDetail('');
+                                                setOrderSubdistrict('');
+                                                setOrderDistrict('');
+                                                setOrderProvince('');
+                                                setOrderZipcode('')
+                                                setOrderStatus('');
+                                                setOrderBgStatusColor('');
+                                                setOrderStatusTextColor('');
+                                                setOrderShipment('')
+                                                setOrderCode('')
+                                                setOrderStatusId()
+                                                setSelectOrder(null);
+                                                GetUserOrder(userId,0)
+                                                GetUserHistoryOrder(userId)
+                                            }}
+                                        >
+                                            ฉันได้ตรวจสอบ / ได้รับสินค้า
+                                        </motion.button>
+                                    </motion.div>}
                                 </motion.div>
                                 <motion.div className='flex text-[#252525] items-center mt-2'>
                                     <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -1756,6 +1416,7 @@ function UserManagement ({ cookies }) {
                         </motion.div>)}
                     </AnimatePresence>
                 </div>}
+                
             </div>
 
             <AnimatePresence key={'modalDelete'} mode='wait'>

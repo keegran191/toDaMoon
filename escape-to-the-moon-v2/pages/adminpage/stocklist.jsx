@@ -310,6 +310,13 @@ function StockConfig({ cookies }) {
                             className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer"
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             layoutId={post.Id}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                            }}
                             onClick={() => {
                                 setTitle(post.Title)
                                 setDetail(post.Detail)
@@ -329,6 +336,7 @@ function StockConfig({ cookies }) {
                             style={{
                                 opacity: selectedId == post.Id ? 0 : 1,
                             }}
+  
                         >
                             <div className="flex justify-center items-center">
                                 <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
@@ -370,8 +378,9 @@ function StockConfig({ cookies }) {
                         //<motion.div layoutId={selectedId} className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center select-none bg-white rounded-xl shadow-lg ${style.selectedItem}`}></motion.div>
                             <motion.div layoutId={selectedId} 
                                 className={
-                                    `z-40 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
-                                    lg:absolute lg:top-36 2xl:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-5/6 lg:rounded-xl shadow-lg ${style.selectedItem}
+                                    `   
+                                        z-50 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
+                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg
                                     `
                                 }>
                                 <motion.button
@@ -382,7 +391,6 @@ function StockConfig({ cookies }) {
                                     }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
-                                        setSelectedId(null)
                                         setSelectedId(null)
                                         setTitle(null)
                                         setDetail(null)
@@ -675,20 +683,14 @@ function StockConfig({ cookies }) {
                                 width: '100vw',
                                 height: '100vh',
                             }}
-
-                            initial={{
-                                scale: 0.0,
-                            }}
-                            animate={{
-                                scale: 0.95,
-                            }}
-                            exit={{
-                                scale: 0.0
-                            }}
-                            transition={{
-                                duration: .2
-                            }}
                             className='z-50'
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                            }}
                         >
                             <UniversalModal
                                 message={"คุณต้องการลบสินค้า " + Label + " ?"}

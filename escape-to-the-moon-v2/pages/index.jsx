@@ -117,20 +117,15 @@ export default function Home({ cookies }) {
                 return (
                   <motion.div
                     key={post.Id}
-                    className="select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative" // Add 'relative' class
+                    className={post.Amount == 0 ? "hidden": "select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative"} // Add 'relative' class
                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     layoutId={post.Id}
-                    initial={{
-                      scale: 0,
-                    }}
-                    animate={{
-                      scale: 1,
-                    }}
-                    exit={{
-                      scale: 0
-                    }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
                     transition={{
-                      duration: .3
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20
                     }}
                   >
                     <Link href={`/store?id=${post.Id}`} className="w-full h-full rounded-full">
@@ -141,7 +136,7 @@ export default function Home({ cookies }) {
                       />
                     </Link>
                   </motion.div>
-              );
+                );
               })}
 
             <motion.div 

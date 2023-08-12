@@ -3,6 +3,7 @@ import db from "../../../lib/database";
 export default async function handler(req, res) {
     const pool = await db.getConnection();
 
+    const id = req.query.id;
     const order_status = req.query.order_status;
 
     let sql = `
@@ -13,11 +14,11 @@ export default async function handler(req, res) {
         INNER JOIN address 
             ON order_list.addressId = address.id
         WHERE 
-            order_list.payment_status = "00"
-            AND order_list.order_status != 2
+            order_list.UserId = ?
+            AND order_list.payment_status = "00"
     `;
 
-    const values = [];
+    const values = [id];
 
     if (order_status !== "0") {
         sql += `AND order_list.order_status = ? `;

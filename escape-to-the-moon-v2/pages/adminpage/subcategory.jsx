@@ -184,6 +184,13 @@ function Subcategory({ cookies }) {
                                     style={{
                                         opacity: selectedId == post.sub_id ? 0 : 1,
                                     }}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20
+                                    }}
                                 >
                                     <p key={post.sub_id} className='2xl:text-md md:text-md sm:text-md'>{post.sub_label}</p>
                                     <motion.div className='buttonGroup flex items-baseline'>
@@ -343,18 +350,12 @@ function Subcategory({ cookies }) {
                             width: '100vw',
                             height: '100vh',
                         }}
-
-                        initial={{
-                            scale: 0.0,
-                        }}
-                        animate={{
-                            scale: 0.95,
-                        }}
-                        exit={{
-                            scale: 0.0
-                        }}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
                         transition={{
-                            duration: .2
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20
                         }}
                     >
                         <UniversalModal
@@ -418,18 +419,12 @@ function Subcategory({ cookies }) {
                             width: '100vw',
                             height: '100vh',
                         }}
-
-                        initial={{
-                            scale: 0.0,
-                        }}
-                        animate={{
-                            scale: 0.95,
-                        }}
-                        exit={{
-                            scale: 0.0
-                        }}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
                         transition={{
-                            duration: .2
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20
                         }}
                     >
                         <UniversalModal
