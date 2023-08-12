@@ -3,6 +3,7 @@ import style from '../../styles/Admin.module.css'
 import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router'
 import UniversalModal from '../../components/Modal.js';
 import React from 'react'
 import Select from 'react-select'
@@ -12,6 +13,11 @@ import { parse } from 'cookie';
 function AdminManagement({ cookies }) {
 
     const { fname, userId } = cookies;
+
+    const router = useRouter();
+    const IsOrder = router.query.IsOrder;
+    const IsUser = router.query.IsUser;
+
     const [orderAmount, setOrderAmount] = useState(0)
     const [haveNewOrder, setHaveNewOrder] = useState()
 
@@ -265,6 +271,13 @@ function AdminManagement({ cookies }) {
         GetProcess(42);
         GetRoast(40);
         GetFlavor(41);
+        if( IsOrder == 1 ) {
+            setToggleOrder(true);
+            setLookOrder(true);
+        }
+        if (IsUser == 1) {
+            setToggleUser(true);
+        }
     }, []);
 
     return (
@@ -338,6 +351,7 @@ function AdminManagement({ cookies }) {
                                     setChangePassword(false);
                                     setLookOrder(false);
                                     setLookHistory(false);
+                                    GetAdminOrder(0);
                                 }}
                             >
                                 <svg className={changeUser ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -368,6 +382,7 @@ function AdminManagement({ cookies }) {
                                     setChangeUser(false);
                                     setLookOrder(false);
                                     setLookHistory(false);
+                                    GetAdminOrder(0);
                                 }}
                             >
                                 <svg className={changePassword ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -462,6 +477,7 @@ function AdminManagement({ cookies }) {
                                     setLookOrder(false);
                                     setChangeUser(false);
                                     setChangePassword(false);
+                                    GetAdminOrder(0);
                                 }}
                             >
                                 <svg className={lookHistory ? 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#ECEBE8]' : 'sm:w-4 sm:h-4 w-3 h-3 sm:mr-2 ml-10 m-auto fill-[#252525]'} xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">

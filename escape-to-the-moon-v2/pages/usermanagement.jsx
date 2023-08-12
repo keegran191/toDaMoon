@@ -296,7 +296,6 @@ function UserManagement ({ cookies }) {
                                     setChangePassword(false);
                                     setOrder(false);
                                     setHistory(false);
-                                    GetUserOrder(userId,0)
                                 } else {
                                     setRotateUser(180);
                                     setToggleUser(true);
