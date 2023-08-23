@@ -14,7 +14,7 @@ function Navbar({
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <div className='flex items-center'>
                     <Link href="/"> 
-                        <img className='cursor-pointer w-12 mr-5' src='/ttmLogo.png'></img>
+                        <img className='hidden lg:block cursor-pointer w-12 mr-5' src='/ttmLogo.png'></img>
                     </Link>
                     <Link href="/">
                         <a className="flex items-center">

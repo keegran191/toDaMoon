@@ -413,8 +413,6 @@ export default function ConfirmOrder ({ cookies }) {
                     </motion.div>}
                 </div>
             </div>
-            
-            
             <Foot></Foot>
         </div>
     )

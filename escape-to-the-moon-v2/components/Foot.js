@@ -5,10 +5,7 @@ function Foot() {
     return (
         <div className="hidden xl:block mt-auto h-36 w-full relative bottom-0 bg-[#252525] text-[#ECEBE8] py-5 px-96 select-none">
             <div className='flex h-full pt-2 px-40'>
-                <div className='basis-1/4 h-full py-3.5 flex flex-col justify-between px-10'>
-                    <div className="whitespace-nowrap text-xs w-full mb-1">
-                        คำถามที่พบบ่อย
-                    </div>
+                <div className='basis-1/4 h-full py-3.5 flex flex-col justify-evenly px-10'>
                     <div className="whitespace-nowrap text-xs w-full mb-1">
                         นโยบายความเป็นส่วนตัว
                     </div>
@@ -23,7 +20,7 @@ function Foot() {
                         </div>
                         <div className='flex items-center mb-1'>
                             <img src="/call.png" className='w-3 h-3'></img>
-                            <span className="text-xs ml-1">0812780800</span>
+                            <span className="text-xs ml-1">0818422407</span>
                         </div>
                         <div className='flex items-center'>
                             <img src="/mail.png" className='w-3 h-3'></img>
@@ -45,7 +42,7 @@ function Foot() {
                         </div>
                     </div>
                 </div>
-                <div className='basis-1/4 h-full px-5'>
+                <div className='basis-1/4 h-full px-5 flex flex-col justify-center'>
                     <Link href="/">
                         <h1 className="text-xs hover:cursor-pointer mb-1">หน้าหลัก</h1>
                     </Link>
@@ -54,9 +51,6 @@ function Foot() {
                     </Link>
                     <Link href="/">
                         <h1 className="text-xs hover:cursor-pointer mb-1">เกี่ยวกับเรา</h1>
-                    </Link>
-                    <Link href="/">
-                        <h1 className="text-xs hover:cursor-pointer mb-1">ติดต่อเรา</h1>
                     </Link>
                     <Link href="/">
                         <h1 className="text-xs hover:cursor-pointer mb-1">วิธีการชำระเงิน</h1>

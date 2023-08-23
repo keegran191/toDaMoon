@@ -79,21 +79,23 @@ export default function Home({ cookies }) {
           <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
         </motion.div>
 
-        <div className="relative h-2/6 sm:h-4/6">
-          <img className="w-full h-full brightness-50 z-0" src="/coffee.png" alt="Coffee"></img>
-          <div className="absolute top-10 left-5 sm:top-40 sm:left-20 z-10">
-            <h1 className="text-3xl sm:text-7xl text-white">กาแฟอราบิก้า 100%<br/>คั่วสดใหม่ เมล็ดเกรด A</h1>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 1.00 }}
-              className='py-1 w-32 sm:w-40 sm:px-4 sm:py-2 mt-7 text-center border-2 '
-            >
-              <span className='text-white text-lg whitespace-nowrap sm:text-2xl'>อ่านเพิ่มเติม</span>
-            </motion.div>
+        <div className="relative lg:h-4/6">
+          <img className="w-full h-full brightness-50" src="/coffee.png" alt="Coffee"></img>
+          <div className="absolute top-5 left-5 md:top-14 lg:top-28 lg:left-20 z-10">
+            <h1 className="text-xl md:text-6xl lg:text-7xl text-white">กาแฟอราบิก้า 100%<br/>คั่วสดใหม่ เมล็ดเกรด A</h1>
+            <Link href={'/moreinfo'}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 1.00 }}
+                className='py-1 w-24 mt-1 md:w-40 md:px-4 md:py-2 md:mt-7 text-center border-2 '
+              >
+                <span className='text-white text-sm md:text-lg whitespace-nowrap sm:text-2xl'>อ่านเพิ่มเติม</span>
+              </motion.div>
+            </Link>
           </div>
         </div>
 
-        <div className="text-center mt-24">
+        <div className="text-center mt-10 md:mt-24">
           <div className='mb-5'>
             <span className="text-[#4B4946] text-xl font-bold">สินค้าเเนะนำ</span>
           </div>
@@ -117,7 +119,7 @@ export default function Home({ cookies }) {
                 return (
                   <motion.div
                     key={post.Id}
-                    className={post.Amount == 0 ? "hidden": "select-none w-40 lg:w-36 lg:h-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative"} // Add 'relative' class
+                    className={post.Amount == 0 ? "hidden": "select-none w-28 h-28 md:h-36 md:w-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative"} // Add 'relative' class
                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     layoutId={post.Id}
                     initial={{ scale: 0 }}
@@ -163,10 +165,10 @@ export default function Home({ cookies }) {
             </motion.button>
           </Link>
         </div>
-        <motion.div>
+        <motion.div className='w-full px-3'>
           <motion.div className='flex flex-col sm:flex-row justify-center gap-5 items-center mb-10'>
             {/* Process */}
-            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
+            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
               <motion.div
                 initial={{
                   scale: 1.05,
@@ -190,20 +192,20 @@ export default function Home({ cookies }) {
                     transition={{
                       duration: 0.3,
                     }}
-                    className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
                   >
-                    <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                    <motion.div className='relative top-36 w-8'>
-                      <img className="icon-img" src="/ProcessIcon.png" alt="Icon" />
+                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                    <motion.div className='relative top-36 md:top-20 lg:top-32 xl:top-36 w-8'>
+                      <img className="icon-img" src="/ProcessIcon.png" alt="Icon"/>
                     </motion.div>
-                    <span className="relative top-40">กระบวนการคั่ว</span>
+                    <span className="relative top-40 md:top-24 lg:top-36 xl:top-40">กระบวนการคั่ว</span>
                   </motion.div>
                 </motion.div>
               </motion.div>
             </motion.div>
 
             {/* Havest */}
-            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
+            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
               <motion.div
                 initial={{
                   scale: 1.05,
@@ -227,20 +229,20 @@ export default function Home({ cookies }) {
                     transition={{
                       duration: 0.3,
                     }}
-                    className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
                   >
-                    <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                    <motion.div className='relative top-36'>
+                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                    <motion.div className='relative top-36 md:top-20 lg:top-32 xl:top-36'>
                       <img className="icon-img w-10" src="/HavestIcon.png" alt="Icon" />
                     </motion.div>
-                    <span className="relative top-40">กระบวนการเก็บเกี่ยว</span>
+                    <span className="relative top-40 md:top-24 lg:top-36 xl:top-40">กระบวนการเก็บเกี่ยว</span>
                   </motion.div>
                 </motion.div>
               </motion.div>
             </motion.div>
 
             {/* Info */}
-            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 sm:w-2/12 h-2/6'>
+            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
               <motion.div
                 initial={{
                   scale: 1.05,
@@ -264,19 +266,19 @@ export default function Home({ cookies }) {
                     transition={{
                       duration: 0.3,
                     }}
-                    className='absolute pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
                   >
-                    <span className="text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                    <motion.div className='relative top-36'>
+                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
+                    <motion.div className='relative top-36 md:top-20 lg:top-32 xl:top-36'>
                       <img className="icon-img w-10" src="/InfoIcon.png" alt="Icon" />
                     </motion.div>
-                    <span className="relative top-40">เกี่ยวกับเรา</span>
+                    <span className="relative top-40 md:top-24 lg:top-36 xl:top-40">เกี่ยวกับเรา</span>
                   </motion.div>
                 </motion.div>
               </motion.div>
             </motion.div>
           </motion.div>
-        </motion.div>          
+        </motion.div> 
         <Foot></Foot>
     </div>
   )

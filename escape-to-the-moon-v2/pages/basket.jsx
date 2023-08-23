@@ -104,11 +104,11 @@ export default function Store({ cookies }) {
         Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
             .then((response) => {
                 const { data } = response;
-                setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount
+                setStockAmount(data.totalStockAmount || 0);
             })
             .catch((error) => {
                 console.error('Error fetching basket amount:', error);
-                setStockAmount(0); // Set a default value in case of an error
+                setStockAmount(0);
             });
     };  
 
@@ -174,7 +174,7 @@ export default function Store({ cookies }) {
               backgroundColor: "#252525",
               color: "#FFFFFF",
             },
-            ...(state.isSelected && { color: "#FFFFFF" , backgroundColor: "#252525"}), // add this line to change the text color of the selected option
+            ...(state.isSelected && { color: "#FFFFFF" , backgroundColor: "#252525"}),
           }),
     }
 
