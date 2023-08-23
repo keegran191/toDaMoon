@@ -83,11 +83,11 @@ export default function Home({ cookies }) {
           <img className="w-full h-full brightness-50" src="/coffee.png" alt="Coffee"></img>
           <div className="absolute top-5 left-5 md:top-14 lg:top-28 lg:left-20 z-10">
             <h1 className="text-xl md:text-6xl lg:text-7xl text-white">กาแฟอราบิก้า 100%<br/>คั่วสดใหม่ เมล็ดเกรด A</h1>
-            <Link href={'/moreinfo'}>
+            <Link href={'/moreinfo'} >
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 1.00 }}
-                className='py-1 w-24 mt-1 md:w-40 md:px-4 md:py-2 md:mt-7 text-center border-2 '
+                className='cursor-pointer py-1 w-24 mt-1 md:w-40 md:px-4 md:py-2 md:mt-7 text-center border-2 '
               >
                 <span className='text-white text-sm md:text-lg whitespace-nowrap sm:text-2xl'>อ่านเพิ่มเติม</span>
               </motion.div>
