@@ -39,6 +39,8 @@ function StockConfig({ cookies }) {
 
     const [imageName, setImageName] = useState('');
 
+    const [searchTitle, setSearchTitle] = useState('');
+
     //Option Value
     const [optionCoffee, setOptionCoffee] = useState([]);
     const [optionCategory, setOptionCategory] = useState([]);
@@ -87,16 +89,10 @@ function StockConfig({ cookies }) {
         }
     }
     //StockList
-    const GetStokcList = (search) => {
-        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}`).then((response) => {
+    const GetStokcList = (searchTitle) => {
+        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${searchTitle}`).then((response) => {
             setStockList(response.data);
         });
-    };
-
-    //Filtter
-    const searchItem = (e) => {
-      const value = e.target.value;
-      setSearch(value);
     };
 
     //Validate and Utilities Function
@@ -179,7 +175,7 @@ function StockConfig({ cookies }) {
     }
 
     useEffect(() => {
-        GetStokcList('');
+        GetStokcList(searchTitle);
         GetCoffee()
         GetCategory()
         GetProcess(42)
@@ -197,6 +193,10 @@ function StockConfig({ cookies }) {
         GetAdminHaveNewOrder()
         GetAdminOrderAmount()
     }, []);
+
+    useEffect(() => {
+        GetStokcList(searchTitle);
+    }, [searchTitle]);
 
     function onImageChanged(e) {
         setImages([...e.target.files]);
@@ -276,7 +276,7 @@ function StockConfig({ cookies }) {
                 <div className="relative mt-10">
                 <input
                     onChange={(e) => {
-                        GetStokcList(e.target.value);
+                        setSearchTitle(e.target.value);
                     }}
                     id="Search"
                     name="Search"
@@ -292,7 +292,7 @@ function StockConfig({ cookies }) {
                     {stockList.map((post) => {
                         return <motion.div
                             key={post.Id}
-                            className="mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer"
+                            className='mb-3 select-none w-48 h-52 bg-white rounded-xl shadow-md flex flex-col justify-between p-4 cursor-pointer'
                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                             layoutId={post.Id}
                             initial={{ scale: 0 }}
@@ -301,6 +301,9 @@ function StockConfig({ cookies }) {
                                 type: "spring",
                                 stiffness: 260,
                                 damping: 20
+                            }}
+                            style={{
+                                opacity: selectedId == post.Id ? 0 : 1,
                             }}
                             onClick={() => {
                                 setTitle(post.Title)
@@ -318,10 +321,6 @@ function StockConfig({ cookies }) {
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
                             }}
-                            style={{
-                                opacity: selectedId == post.Id ? 0 : 1,
-                            }}
-  
                         >
                             <div className="flex justify-center items-center">
                                 <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
@@ -360,13 +359,15 @@ function StockConfig({ cookies }) {
 
                     <AnimatePresence key={'modalItems'}>
                         {selectedId && (
-                            <motion.div layoutId={selectedId} 
+                            <motion.div 
+                                layoutId={selectedId} 
                                 className={
                                     `   
                                         z-50 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
                                         lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg
                                     `
-                                }>
+                                }
+                            >
                                 <motion.button
                                     whileHover={{ 
                                         scale: 1.05,
@@ -375,21 +376,21 @@ function StockConfig({ cookies }) {
                                     }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
-                                        GetStokcList('');
                                         setSelectedId(null)
-                                        setTitle(null)
-                                        setDetail(null)
-                                        setAmount(null)
-                                        setPrice(null)
-                                        setIsAdvise(null)
-                                        setStockType(null)
-                                        setProcess(null)
-                                        setRoast(null)
-                                        setFlavor(null)
-                                        setCategoryId(null)
-                                        setSubCategoryId(null)
-                                        setImages([]);
-                                        setImagesURLs([]);
+                                        // GetStokcList(searchTitle);
+                                        // setTitle(null);
+                                        // setDetail(null);
+                                        // setAmount(null);
+                                        // setPrice(null);
+                                        // setIsAdvise(null);
+                                        // setStockType(null);
+                                        // setProcess(null);
+                                        // setRoast(null);
+                                        // setFlavor(null);
+                                        // setCategoryId(null);
+                                        // setSubCategoryId(null);
+                                        // setImages([]);
+                                        // setImagesURLs([]);
                                     }}
                                     className="self-end text-gray-600 text-sm px-2 py-0.5 rounded-lg">
                                     <span className="text-xl bold">✕</span>
@@ -587,21 +588,21 @@ function StockConfig({ cookies }) {
                                                 onClick={() => {
                                                     UpdateStock(selectedId)
                                                     setSelectedId(null)
-                                                    setSelectedId(null)
-                                                    setTitle(null)
-                                                    setDetail(null)
-                                                    setAmount(null)
-                                                    setPrice(null)
-                                                    setIsAdvise(null)
-                                                    setStockType(null)
-                                                    setProcess(null)
-                                                    setRoast(null)
-                                                    setFlavor(null)
-                                                    setCategoryId(null)
-                                                    setSubCategoryId(null)
-                                                    GetStokcList('');
-                                                    setImages([]);
-                                                    setImagesURLs([]);
+                                                    // setSelectedId(null)
+                                                    // setTitle(null)
+                                                    // setDetail(null)
+                                                    // setAmount(null)
+                                                    // setPrice(null)
+                                                    // setIsAdvise(null)
+                                                    // setStockType(null)
+                                                    // setProcess(null)
+                                                    // setRoast(null)
+                                                    // setFlavor(null)
+                                                    // setCategoryId(null)
+                                                    // setSubCategoryId(null)
+                                                    GetStokcList(searchTitle);
+                                                    // setImages([]);
+                                                    // setImagesURLs([]);
                                                 }}
                                             >
                                                 เเก้ไขสินค้า
@@ -682,44 +683,40 @@ function StockConfig({ cookies }) {
                                 onApply={ async () =>{
                                     await Axios.get(`http://localhost:3000/api/stock/delete/${selectedId}`)
                                     setSelectedId(null)
-                                    setSelectedId(null)
-                                    setTitle(null)
-                                    setDetail(null)
-                                    setAmount(null)
-                                    setPrice(null)
-                                    setIsAdvise(null)
-                                    setStockType(null)
-                                    setProcess(null)
-                                    setRoast(null)
-                                    setFlavor(null)
-                                    setCategoryId(null)
-                                    setSubCategoryId(null)
-                                    setImages([]);
-                                    setImagesURLs([]);
+                                    // setTitle(null)
+                                    // setDetail(null)
+                                    // setAmount(null)
+                                    // setPrice(null)
+                                    // setIsAdvise(null)
+                                    // setStockType(null)
+                                    // setProcess(null)
+                                    // setRoast(null)
+                                    // setFlavor(null)
+                                    // setCategoryId(null)
+                                    // setSubCategoryId(null)
+                                    // setImages([]);
+                                    // setImagesURLs([]);
                                     setDelete(false);
-                                    setSelectedId(null);
-                                    GetStokcList('');
+                                    GetStokcList(searchTitle);
                                 }}
                                 txtClose="ยกเลิก"
                                 onClose={()=>{
-                                    setSelectedId(null)
-                                    setSelectedId(null)
-                                    setTitle(null)
-                                    setDetail(null)
-                                    setAmount(null)
-                                    setPrice(null)
-                                    setIsAdvise(null)
-                                    setStockType(null)
-                                    setProcess(null)
-                                    setRoast(null)
-                                    setFlavor(null)
-                                    setCategoryId(null)
-                                    setSubCategoryId(null)
-                                    setImages([]);
-                                    setImagesURLs([]);
+                                    setSelectedId(null)                                    
+                                    // setTitle(null)
+                                    // setDetail(null)
+                                    // setAmount(null)
+                                    // setPrice(null)
+                                    // setIsAdvise(null)
+                                    // setStockType(null)
+                                    // setProcess(null)
+                                    // setRoast(null)
+                                    // setFlavor(null)
+                                    // setCategoryId(null)
+                                    // setSubCategoryId(null)
+                                    // setImages([]);
+                                    // setImagesURLs([]);
                                     setDelete(false);
-                                    setSelectedId(null);
-                                    GetStokcList('');
+                                    GetStokcList(searchTitle);
                                 }}
                             >
                             </UniversalModal>
