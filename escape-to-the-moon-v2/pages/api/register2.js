@@ -76,7 +76,7 @@ export default async function handler(req, res) {
         }
 
         // Check if phone number < 10
-        if (floating_phone.length < 10) {
+        if (floating_phone.length != 10) {
           let data = {
             errorMsg: "PhoneNot10",
             errObj: {}
