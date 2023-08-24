@@ -89,7 +89,7 @@ export default function Admin({ cookies }) {
                 <div className="w-full ">
                     <span className="2xl:text-xl md:text-lg sm:text-md mr-2">แก้ไข /ลบ ประเภทสินค้า</span>
                 </div>
-                <div className="w-full h-auto mt-10 ">
+                <div className="w-full h-2/6 mt-10 p-4 overflow-x-hidden overflow-y-auto">
                     {categoryList && categoryList.map((post) => {
                         return <motion.div
                             key={post.cat_id}
@@ -225,7 +225,7 @@ export default function Admin({ cookies }) {
                                                     }
                                                 }}
                                             >
-                                                <span className='whitespace-nowrap'>แก้ไขสินค้า</span>
+                                                <span className='whitespace-nowrap'>แก้ไขประเภทสินค้า</span>
                                             </motion.button>
                                         </motion.div>
                                     </motion.div>

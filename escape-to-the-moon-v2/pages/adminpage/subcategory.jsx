@@ -136,7 +136,7 @@ function Subcategory({ cookies }) {
 
             <div className={style.adminContainer}>
                 <div className="w-full">
-                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มหมวดหมู่สินค้า</span>
+                    <span className="2xl:text-xl md:text-lg sm:text-md mr-2">เพิ่มหมวดหมู่ย่อยประเภทสินค้า</span>
                 </div>
 
                 <div className="relative mt-10 flex items-baseline">
@@ -171,7 +171,7 @@ function Subcategory({ cookies }) {
                     <div className="w-full border border-b-[#252525] mt-10 mb-10"></div>
                         
                         <div className="w-full">
-                            <span className="2xl:text-l md:text-lg sm:text-md mr-2 ">แก้ไข /ลบ หมวดหมู่สินค้า</span>
+                            <span className="2xl:text-l md:text-lg sm:text-md mr-2 ">แก้ไข /ลบ หมวดหมู่ย่อยประเภทสินค้า</span>
                         </div>
 
                         <div className="w-full h-auto mt-10 ">

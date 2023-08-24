@@ -81,7 +81,7 @@ export default function Home({ cookies }) {
 
         <div className="relative lg:h-4/6">
           <img className="w-full h-full brightness-50" src="/coffee.png" alt="Coffee"></img>
-          <div className="absolute top-5 left-5 md:top-14 lg:top-28 lg:left-20 z-10">
+          <div className="absolute top-5 left-5 md:top-14 lg:top-28 lg:left-20 z-10 xl:top-40">
             <h1 className="text-xl md:text-6xl lg:text-7xl text-white">กาแฟอราบิก้า 100%<br/>คั่วสดใหม่ เมล็ดเกรด A</h1>
             <Link href={'/moreinfo'} >
               <motion.div
@@ -119,7 +119,7 @@ export default function Home({ cookies }) {
                 return (
                   <motion.div
                     key={post.Id}
-                    className={post.Amount == 0 ? "hidden": "select-none w-28 h-28 md:h-36 md:w-36 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative"} // Add 'relative' class
+                    className={post.Amount == 0 ? "hidden": "select-none w-28 h-28 md:h-36 md:w-36 lg:h-32 lg:w-32 bg-white rounded-full shadow-md flex flex-col justify-between p-4 cursor-pointer relative"} // Add 'relative' class
                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                     layoutId={post.Id}
                     initial={{ scale: 0 }}
@@ -168,7 +168,8 @@ export default function Home({ cookies }) {
         <motion.div className='w-full px-3'>
           <motion.div className='flex flex-col sm:flex-row justify-center gap-5 items-center mb-10'>
             {/* Process */}
-            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
+            <Link href={'/roast'}>
+              <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
               <motion.div
                 initial={{
                   scale: 1.05,
@@ -192,17 +193,17 @@ export default function Home({ cookies }) {
                     transition={{
                       duration: 0.3,
                     }}
-                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white text-center'
                   >
-                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                    <motion.div className='relative top-36 md:top-20 lg:top-32 xl:top-36 w-8'>
+                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">การคั่ว</span>
+                    <motion.div className='relative top-36 md:top-36 lg:top-56 xl:top-56 w-8'>
                       <img className="icon-img" src="/ProcessIcon.png" alt="Icon"/>
                     </motion.div>
-                    <span className="relative top-40 md:top-24 lg:top-36 xl:top-40">กระบวนการคั่ว</span>
                   </motion.div>
                 </motion.div>
               </motion.div>
-            </motion.div>
+              </motion.div>
+            </Link>
 
             {/* Havest */}
             <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
@@ -229,13 +230,12 @@ export default function Home({ cookies }) {
                     transition={{
                       duration: 0.3,
                     }}
-                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white text-center'
                   >
-                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                    <motion.div className='relative top-36 md:top-20 lg:top-32 xl:top-36'>
+                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">การเก็บเกี่ยว</span>
+                    <motion.div className='relative top-36 md:top-36 lg:top-56 xl:top-56'>
                       <img className="icon-img w-10" src="/HavestIcon.png" alt="Icon" />
                     </motion.div>
-                    <span className="relative top-40 md:top-24 lg:top-36 xl:top-40">กระบวนการเก็บเกี่ยว</span>
                   </motion.div>
                 </motion.div>
               </motion.div>
@@ -266,13 +266,12 @@ export default function Home({ cookies }) {
                     transition={{
                       duration: 0.3,
                     }}
-                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white'
+                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white text-center'
                   >
-                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">Lorem Ipsum is <br/>simply dummy</span>
-                    <motion.div className='relative top-36 md:top-20 lg:top-32 xl:top-36'>
+                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">เกี่ยวกับเรา</span>
+                    <motion.div className='relative top-36 md:top-36 lg:top-56 xl:top-56'>
                       <img className="icon-img w-10" src="/InfoIcon.png" alt="Icon" />
                     </motion.div>
-                    <span className="relative top-40 md:top-24 lg:top-36 xl:top-40">เกี่ยวกับเรา</span>
                   </motion.div>
                 </motion.div>
               </motion.div>
