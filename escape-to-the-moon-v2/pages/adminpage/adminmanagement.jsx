@@ -686,7 +686,7 @@ function AdminManagement({ cookies }) {
                                                         GetOrderItemByOrder(post.order_Id)
                                                     }}
                                                 >
-                                                    ดูลายละเอียด
+                                                    ดูรายละเอียด
                                                 </motion.button>
                                             </div>
                                         </div>
@@ -749,7 +749,7 @@ function AdminManagement({ cookies }) {
                                                                 GetOrderItemByOrder(post.order_Id)
                                                             }}
                                                         >
-                                                            {`ดูลายละเอียดสินค้าทั้งหมด ->`}
+                                                            {`ดูรายละเอียดสินค้าทั้งหมด ->`}
                                                         </motion.p>
                                                     </div>
                                                 </div>
@@ -1187,7 +1187,7 @@ function AdminManagement({ cookies }) {
                                                         GetOrderItemByOrder(post.order_Id)
                                                     }}
                                                 >
-                                                    ดูลายละเอียด
+                                                    ดูรายละเอียด
                                                 </motion.button>
                                             </div>
                                         </div>
@@ -1248,7 +1248,7 @@ function AdminManagement({ cookies }) {
                                                                 GetOrderItemByOrder(post.order_Id)
                                                             }}
                                                         >
-                                                            {`ดูลายละเอียดสินค้าทั้งหมด ->`}
+                                                            {`ดูรายละเอียดสินค้าทั้งหมด ->`}
                                                         </motion.p>
                                                     </div>
                                                 </div>
