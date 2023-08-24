@@ -17,6 +17,7 @@ function AdminManagement({ cookies }) {
     const router = useRouter();
     const IsOrder = router.query.IsOrder;
     const IsUser = router.query.IsUser;
+    const IsHistory = router.query.IsHistory;
 
     const [orderAmount, setOrderAmount] = useState(0)
     const [haveNewOrder, setHaveNewOrder] = useState()
@@ -277,6 +278,10 @@ function AdminManagement({ cookies }) {
         }
         if (IsUser == 1) {
             setToggleUser(true);
+        }
+        if (IsHistory == 1) {
+            setToggleOrder(true);
+            setLookHistory(true)
         }
     }, []);
 

@@ -22,9 +22,6 @@ function StockConfig({ cookies }) {
     const [stockList, setStockList] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
 
-    // Filter
-    const [search, setSearch] = useState('');
-
     //Value of Item
     const [Title, setTitle] = useState('');
     const [Detail, setDetail] = useState('');
@@ -90,7 +87,7 @@ function StockConfig({ cookies }) {
         }
     }
     //StockList
-    const GetStokcList = () => {
+    const GetStokcList = (search) => {
         Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}`).then((response) => {
             setStockList(response.data);
         });
@@ -182,7 +179,7 @@ function StockConfig({ cookies }) {
     }
 
     useEffect(() => {
-        GetStokcList();
+        GetStokcList('');
         GetCoffee()
         GetCategory()
         GetProcess(42)
@@ -279,25 +276,13 @@ function StockConfig({ cookies }) {
                 <div className="relative mt-10">
                 <input
                     onChange={(e) => {
-                        setSearch(e.target.value);
-                        console.log(search);
+                        GetStokcList(e.target.value);
                     }}
                     id="Search"
                     name="Search"
                     className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full shadow-lg outline-none"
                     placeholder="ค้าหาสินค้า"
                 ></input>
-
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="text-white absolute right-2.5 bottom-2.5 bg-[#252525] hover:bg-[#252525] font-medium rounded-full text-sm px-6 py-2"
-                        onClick={() => {
-                            GetStokcList()
-                        }}
-                    >
-                    ค้นหา
-                    </motion.button>
                 </div>
 
                 <div className={`px-4 pt-4 overflow-y-auto overflow-x-hidden h-4/6 w-fill mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-items-center ${selectedId ? style.blurBackground : ''}`}>
@@ -375,7 +360,6 @@ function StockConfig({ cookies }) {
 
                     <AnimatePresence key={'modalItems'}>
                         {selectedId && (
-                        //<motion.div layoutId={selectedId} className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center select-none bg-white rounded-xl shadow-lg ${style.selectedItem}`}></motion.div>
                             <motion.div layoutId={selectedId} 
                                 className={
                                     `   
@@ -391,6 +375,7 @@ function StockConfig({ cookies }) {
                                     }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
+                                        GetStokcList('');
                                         setSelectedId(null)
                                         setTitle(null)
                                         setDetail(null)
@@ -403,7 +388,6 @@ function StockConfig({ cookies }) {
                                         setFlavor(null)
                                         setCategoryId(null)
                                         setSubCategoryId(null)
-                                        GetStokcList();
                                         setImages([]);
                                         setImagesURLs([]);
                                     }}
@@ -615,7 +599,7 @@ function StockConfig({ cookies }) {
                                                     setFlavor(null)
                                                     setCategoryId(null)
                                                     setSubCategoryId(null)
-                                                    GetStokcList();
+                                                    GetStokcList('');
                                                     setImages([]);
                                                     setImagesURLs([]);
                                                 }}
@@ -714,7 +698,7 @@ function StockConfig({ cookies }) {
                                     setImagesURLs([]);
                                     setDelete(false);
                                     setSelectedId(null);
-                                    GetStokcList();
+                                    GetStokcList('');
                                 }}
                                 txtClose="ยกเลิก"
                                 onClose={()=>{
@@ -735,7 +719,7 @@ function StockConfig({ cookies }) {
                                     setImagesURLs([]);
                                     setDelete(false);
                                     setSelectedId(null);
-                                    GetStokcList();
+                                    GetStokcList('');
                                 }}
                             >
                             </UniversalModal>
