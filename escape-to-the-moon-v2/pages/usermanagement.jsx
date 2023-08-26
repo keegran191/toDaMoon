@@ -823,7 +823,7 @@ function UserManagement ({ cookies }) {
                                 </motion.button>
                             </motion.div>
                             <motion.div className='w-full flex justify-center items-center flex-col'>
-                                <h1 className='mb-5 text-xl'>เพิ่มที่อยู่ใหม่</h1>
+                                <h1 className='mb-5 text-xl'>เเก้ไขที่อยู่</h1>
                                 <div className='w-full h-auto mt-5 flex justify-center'>
                                     <div className="relative z-0 mb-6 w-3/6 group">
                                         <input onChange={(e) => {
@@ -896,7 +896,7 @@ function UserManagement ({ cookies }) {
                                     whileTap={{ scale: 0.95 }}
                                     onClick={async () => {
                                         if (addressName != '' && addressDetail != '', subDistrict != '', district != '', province != '', zipCode != '') {
-                                            await Axios.get(`http://localhost:3000/api/address/update?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}`)
+                                            await Axios.get(`http://localhost:3000/api/address/update?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}&id=${selectedId}`)
                                             setAddressName('')
                                             setAddressDetail('')
                                             setSubDistrict('')

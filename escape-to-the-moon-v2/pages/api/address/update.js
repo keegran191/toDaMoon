@@ -1,6 +1,7 @@
 import db from "../../../lib/database";
 
 export default async function handler(req, res) {
+  const id = req.query.id;
   const name = req.query.name;
   const detail = req.query.detail;
   const subdistrict = req.query.subdistrict;
@@ -15,8 +16,8 @@ export default async function handler(req, res) {
 
   try {
     const [results] = await pool.query(
-      'UPDATE address SET name = ?, detail = ?, subdistrict = ?, district = ?, province = ?, zipCode = ?, userId = ?, recipient_name = ?, recipient_phone = ?',
-      [name, detail, subdistrict, district, province, zipCode, userId, recipientName, addressPhone]
+      'UPDATE address SET name = ?, detail = ?, subdistrict = ?, district = ?, province = ?, zipCode = ?, userId = ?, recipient_name = ?, recipient_phone = ? WHERE id = ?',
+      [name, detail, subdistrict, district, province, zipCode, userId, recipientName, addressPhone, id]
     );
     pool.destroy();
     res.redirect(307, '/usermanagement');
