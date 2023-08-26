@@ -1426,7 +1426,8 @@ function UserManagement ({ cookies }) {
                         left: '0',
                         width: '100vw',
                         height: '100vh',
-                        backgroundColor: 'rgba(0, 0, 0, .25)'
+                        backgroundColor: 'rgba(0, 0, 0, .25)',
+                        zIndex: 1000,
                     }}
                     initial={{
                         opacity: 0,
@@ -1452,6 +1453,7 @@ function UserManagement ({ cookies }) {
                         left: '0',
                         width: '100vw',
                         height: '100vh',
+                        zIndex: 1000,
                     }}
 
                     initial={{

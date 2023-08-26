@@ -245,40 +245,43 @@ export default function Home({ cookies }) {
 
 
             {/* Info */}
-            <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
-              <motion.div
-                initial={{
-                  scale: 1.05,
-                }}
-                whileHover={{
-                  scale: 1,
-                }}
-                transition={{
-                  duration: 0.3,
-                }}
-              >
-                <motion.div className='relative'>
-                  <img className="brightness-50 z-0 icon-img" src="/InfoBG.png" alt="Coffee" />
-                  <motion.div
-                    initial={{
-                      scale: 1,
-                    }}
-                    whileHover={{
-                      scale: 1.08,
-                    }}
-                    transition={{
-                      duration: 0.3,
-                    }}
-                    className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white text-center'
-                  >
-                    <span className="text-3xl md:text-2xl lg:text-3xl font-bold">เกี่ยวกับเรา</span>
-                    <motion.div className='relative top-36 md:top-36 lg:top-56 xl:top-56'>
-                      <img className="icon-img w-10" src="/InfoIcon.png" alt="Icon" />
+            <Link href={'/myinfo'}>
+              <motion.div className='cursor-pointer flex justify-center overflow-auto overflow-x-hidden overflow-y-hidden shadow-lg w-10/12 h-2/6 md:w-full lg:w-3/12 xl:w-2/12'>
+                <motion.div
+                  initial={{
+                    scale: 1.05,
+                  }}
+                  whileHover={{
+                    scale: 1,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                  }}
+                >
+                  <motion.div className='relative'>
+                    <img className="brightness-50 z-0 icon-img" src="/InfoBG.png" alt="Coffee" />
+                    <motion.div
+                      initial={{
+                        scale: 1,
+                      }}
+                      whileHover={{
+                        scale: 1.08,
+                      }}
+                      transition={{
+                        duration: 0.3,
+                      }}
+                      className='absolute pt-20 lg:pt-10 xl:pt-20 top-0 left-0 w-full h-full flex flex-col items-center text-white text-center'
+                    >
+                      <span className="text-3xl md:text-2xl lg:text-3xl font-bold">เกี่ยวกับเรา</span>
+                      <motion.div className='relative top-36 md:top-36 lg:top-56 xl:top-56'>
+                        <img className="icon-img w-10" src="/InfoIcon.png" alt="Icon" />
+                      </motion.div>
                     </motion.div>
                   </motion.div>
                 </motion.div>
               </motion.div>
-            </motion.div>
+            </Link>
+
           </motion.div>
         </motion.div> 
         <Foot></Foot>
