@@ -242,9 +242,9 @@ function StockConfig({ cookies }) {
         postData("/api/stock/update", data).then((data) => {
             console.log(data); // JSON data parsed by `data.json()` call
   
-            // if(data.success) {
-            //   location.reload();
-            // }
+            if(data.success) {
+                GetStokcList(searchTitle);
+            }
         });
     }
 
@@ -331,8 +331,9 @@ function StockConfig({ cookies }) {
                             </div>
                         </motion.div>
                     })}
+                </div>
 
-                    <AnimatePresence mode='wait' key={'block-content'}>
+                <AnimatePresence mode='wait' key={'block-content'}>
                         {selectedId && <motion.div
                             style={{
                                 position: 'fixed',
@@ -364,7 +365,7 @@ function StockConfig({ cookies }) {
                                 className={
                                     `   
                                         z-50 fixed top-0 bottom-0 flex flex-col p-4 bg-white select-none w-full items-center
-                                        lg:absolute lg:top-36 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-4/6 lg:rounded-xl shadow-lg
+                                        lg:absolute lg:top-36 2xl:top-28 xl:w-5/6 xl:h-5/6 2xl:w-4/6 2xl:h-5/6 lg:rounded-xl shadow-lg
                                     `
                                 }
                             >
@@ -701,7 +702,7 @@ function StockConfig({ cookies }) {
                                 }}
                                 txtClose="ยกเลิก"
                                 onClose={()=>{
-                                    setSelectedId(null)                                    
+                                    // setSelectedId(null)                                    
                                     // setTitle(null)
                                     // setDetail(null)
                                     // setAmount(null)
@@ -716,13 +717,12 @@ function StockConfig({ cookies }) {
                                     // setImages([]);
                                     // setImagesURLs([]);
                                     setDelete(false);
-                                    GetStokcList(searchTitle);
+                                    // GetStokcList(searchTitle);
                                 }}
                             >
                             </UniversalModal>
                         </motion.div>
                     }
-                </div>
             </div>
         </div>
     );

@@ -275,11 +275,14 @@ function AdminManagement({ cookies }) {
         if( IsOrder == 1 ) {
             setToggleOrder(true);
             setLookOrder(true);
+            setRotateHistory(180)
         }
         if (IsUser == 1) {
             setToggleUser(true);
+            setRotateUser(180)
         }
         if (IsHistory == 1) {
+            setRotateHistory(180)
             setToggleOrder(true);
             setLookHistory(true)
         }

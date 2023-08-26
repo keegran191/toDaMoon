@@ -20,7 +20,7 @@ function Navbar({
         <nav className="sticky top-0 w-full z-20 bg-[#252525] sm:px-4 py-2.5 dark:bg-[#252525]">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <div className='flex items-center'>
-                    <img className='cursor-pointer w-12 mr-5' src='/ttmLogo.png'></img>
+                    <img className='hidden lg:block cursor-pointer w-12 mr-5' src='/ttmLogo.png'></img>
                     <a className="flex items-center">
                         <span className="text-white sm:ml-0 ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">Escape to the moon</span>
                     </a>

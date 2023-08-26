@@ -56,11 +56,9 @@ export default async function handler(req, res) {
       }
 
       await updateStock(stockId, updatedStock);
-      pool.destroy();
       return res.status(200).json({ success: true, message: 'Update Stock Complete' });
     } catch (err) {
       console.error('Database Error:', err);
-      pool.destroy();
       return res.status(500).json({ error: 'Database Error' });
     }
   });
@@ -71,6 +69,7 @@ async function getStockById(stockId) {
   try {
     const [results] = await pool.query('SELECT * FROM stock WHERE id = ?', [stockId]);
     if (results.length > 0) {
+      pool.destroy();
       return results[0];
     }
     return null;
@@ -101,6 +100,7 @@ async function updateStock(stockId, updatedStock) {
         stockId
       ]
     );
+    pool.destroy();
   } catch (err) {
     throw err;
   }
