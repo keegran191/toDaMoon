@@ -200,6 +200,7 @@ function AdminManagement({ cookies }) {
     const GetAdminOrder = (orderStatus) => {
         Axios.get(`http://localhost:3000/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
             setAdminOrder(response.data)
+            console.log(response.data)
         })
     }
 
@@ -878,14 +879,14 @@ function AdminManagement({ cookies }) {
                             </motion.button>
 
                             <motion.div className='p-5 px-10'>
-                                <motion.div className='flex  items-center'>
+                                <motion.div className='flex items-center'>
                                     <motion.p className='text-2xl'>คำสั่งซื้อหมายเลข {orderNo}</motion.p>
                                     <motion.div 
                                         style={{
                                             backgroundColor: orderStatusBgColor,
                                             color: orderStatusTextColor
                                         }} 
-                                        className={`flex items-center justify-center ml-2 w-auto h-6 px-2 text-sm text-center rounded-full`}
+                                        className={`flex items-center justify-center ml-2 w-28 h-6 px-2 text-sm text-center rounded-full`}
                                         onClick={() => {
                                             if (rotateStatus === 0) {
                                                 setRotateStatus(180)
@@ -898,7 +899,7 @@ function AdminManagement({ cookies }) {
                                     >
                                         {orderStatus}
                                     </motion.div>
-                                    <motion.div className='w-36 h-auto relative'>
+                                    <motion.div className='w-48 h-auto relative'>
                                         <motion.div
                                             className='ml-4 w-3 h-3'
                                             animate={{

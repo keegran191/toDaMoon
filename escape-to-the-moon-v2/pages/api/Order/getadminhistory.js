@@ -7,9 +7,9 @@ export default async function handler(req, res) {
     let sql = `
         SELECT * 
         FROM order_list 
-        INNER JOIN order_status 
+        LEFT JOIN order_status 
             ON order_list.order_status = order_status.id
-        INNER JOIN address 
+        LEFT JOIN address 
             ON order_list.addressId = address.id
         WHERE 
             order_list.order_status = 2

@@ -1390,13 +1390,13 @@ function UserManagement ({ cookies }) {
 
                                                     </motion.div>
                                                 </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-3'>
+                                                <motion.div className='text-lg flex items-center justify-center text-center col-start-3'>
                                                     ฿ {element.Price}
                                                 </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-4'>
+                                                <motion.div className='text-lg flex items-center justify-center text-center col-start-4'>
                                                     {element.amount}
                                                 </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-5'>
+                                                <motion.div className='text-lg flex items-center justify-center text-center col-start-5'>
                                                     {element.total}
                                                 </motion.div>
                                             </motion.div>

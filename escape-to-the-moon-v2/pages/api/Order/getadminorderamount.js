@@ -6,11 +6,11 @@ export default async function handler(req, res) {
     const [results] = await pool.query(`
         SELECT COUNT(order_list.order_Id) AS OrderAmount
         FROM order_list 
-        INNER JOIN order_status 
+        LEFT JOIN order_status 
             ON order_list.order_status = order_status.id
         WHERE 
             order_list.order_status != 0 
-            AND order_list.order_status != 3 
+            AND order_list.order_status != 2
             AND order_list.payment_status = "00"
 
         ORDER BY order_list.order_Id DESC`
