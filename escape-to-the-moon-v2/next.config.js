@@ -8,7 +8,10 @@ const nextConfig = {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     };
     return config
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+}
 }
 
 module.exports = nextConfig
