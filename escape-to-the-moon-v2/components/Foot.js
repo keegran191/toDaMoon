@@ -52,9 +52,6 @@ function Foot() {
                     <Link href="/">
                         <h1 className="text-xs hover:cursor-pointer mb-1">เกี่ยวกับเรา</h1>
                     </Link>
-                    <Link href="/">
-                        <h1 className="text-xs hover:cursor-pointer mb-1">วิธีการชำระเงิน</h1>
-                    </Link>
                 </div>
             </div>
 
