@@ -87,7 +87,7 @@ function Stock({ cookies }) {
     }
 
     const GetAdminOrderAmount = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminorderamount")
         .then((response) => {
             const {data} = response;
             setOrderAmount(data.totalOrderAmount || 0);
@@ -99,7 +99,7 @@ function Stock({ cookies }) {
     }
 
     const GetAdminHaveNewOrder = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminhaveneworder").then((response) => {
             if (response.data.IsRead == 0) {
                 setHaveNewOrder(0)
             } else if (response.data.IsRead == 1) {
@@ -108,20 +108,20 @@ function Stock({ cookies }) {
         });
     }
     const GetCoffee = () => {
-        Axios.get("http://localhost:3000/api/coffee/get").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/coffee/get").then((response) => {
             setOptionCoffee(response.data.map((coffee) => ({ value: coffee.id, label: coffee.label })));
         });
     }
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
 
     const GetSubCategory = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
             })
         }
@@ -129,7 +129,7 @@ function Stock({ cookies }) {
 
     const GetProcess = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
             })
         }
@@ -137,7 +137,7 @@ function Stock({ cookies }) {
 
     const GetRoast = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
@@ -145,7 +145,7 @@ function Stock({ cookies }) {
 
     const GetFlavor = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }

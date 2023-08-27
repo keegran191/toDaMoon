@@ -23,7 +23,7 @@ export default function Admin({ cookies }) {
     const [isItemSelected, setItemSelected] = useState(false);
 
     const GetAdminOrderAmount = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminorderamount")
         .then((response) => {
             const {data} = response;
             setOrderAmount(data.totalOrderAmount || 0);
@@ -35,7 +35,7 @@ export default function Admin({ cookies }) {
     }
 
     const GetAdminHaveNewOrder = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminhaveneworder").then((response) => {
             if (response.data.IsRead == 0) {
                 setHaveNewOrder(0)
             } else if (response.data.IsRead == 1) {
@@ -45,7 +45,7 @@ export default function Admin({ cookies }) {
     }
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/category/get").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/category/get").then((response) => {
             setCategoryList(response.data);
         });
     }
@@ -214,7 +214,7 @@ export default function Admin({ cookies }) {
                                                         alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
                                                     } else {
                                                         if(Label != '') {
-                                                            await Axios.get(`http://localhost:3000/api/category/update?label=${Label}&id=${selectedId}`)
+                                                            await Axios.get(`https://escapetothemoon.lol/api/category/update?label=${Label}&id=${selectedId}`)
                                                             setSelectedId(null)
                                                             setLabel('')
                                                             setItemSelected(false);
@@ -286,7 +286,7 @@ export default function Admin({ cookies }) {
                                 if (targetDeleteId == 40 || targetDeleteId == 41 || targetDeleteId == 42) {
                                     alert("ไม่สามารถทำการเปลี่ยนแปลงข้อมูลนี้ได้")
                                 } else {
-                                    await Axios.get(`http://localhost:3000/api/category/delete/${targetDeleteId}`)
+                                    await Axios.get(`https://escapetothemoon.lol/api/category/delete/${targetDeleteId}`)
                                     setDelete(false);
                                     setTargetDeleteId(null);
                                     GetCategory()

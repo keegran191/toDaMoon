@@ -104,7 +104,7 @@ function UserManagement ({ cookies }) {
     }
 
     const GetBasketAmount = (userId) => {
-        Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+        Axios.get(`https://escapetothemoon.lol/api/basket/amount?userId=${userId}`)
             .then((response) => {
                 const { data } = response;
                 setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount
@@ -116,13 +116,13 @@ function UserManagement ({ cookies }) {
     };  
 
     const GetAddress = (userId) => {
-        Axios.get(`http://localhost:3000/api/address/get/${userId}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/address/get/${userId}`).then((response) => {
             setAddressUser(response.data);
         });
     }
 
     const GetUserInfo = () => {
-        Axios.get(`http://localhost:3000/api/user/get/this`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/user/get/this`).then((response) => {
             console.log(response.data.userData)
             setFname(response.data.userData.user_fname)
             setSname(response.data.userData.user_lname)
@@ -131,7 +131,7 @@ function UserManagement ({ cookies }) {
     }
 
     const GetUserOrder = (userId,orderStatus) => {
-        Axios.get(`http://localhost:3000/api/Order/get?id=${userId}&order_status=${orderStatus}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/get?id=${userId}&order_status=${orderStatus}`).then((response) => {
             setUserOrder(response.data)
         });
     }
@@ -139,45 +139,45 @@ function UserManagement ({ cookies }) {
 
 
     const GetUserOrderItem = () => {
-        Axios.get(`http://localhost:3000/api/orderitem/getallorderitem`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/orderitem/getallorderitem`).then((response) => {
             setOrderItem(response.data)
         });
     }
 
     const GetOrderItemByOrder = (selectOrder) => {
-        Axios.get(`http://localhost:3000/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
             setOrderItemByOrder(response.data)
             TotalPrice(response.data)
         })
     }
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
     const GetSubCategory = () => {
-        Axios.get(`http://localhost:3000/api/subcategory/get/${0}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${0}`).then((response) => {
             setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
         })
     }
     const GetProcess = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
             })
         }
     }
     const GetRoast = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
     }
     const GetFlavor = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
@@ -192,7 +192,7 @@ function UserManagement ({ cookies }) {
     }
 
     const GetOrderStatus = () => {
-        Axios.get(`http://localhost:3000/api/Order/getorderstatus`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/getorderstatus`).then((response) => {
             setOrderStatusList(response.data.map((status) => ({ value: status.id, label: status.label })))
         });
     }
@@ -489,7 +489,7 @@ function UserManagement ({ cookies }) {
                                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={async () => {
-                                    await Axios.get(`http://localhost:3000/api/logout`);
+                                    await Axios.get(`https://escapetothemoon.lol/api/logout`);
                                     window.location.href = "/";
                                 }}
                             >
@@ -528,7 +528,7 @@ function UserManagement ({ cookies }) {
                               alert("Please fill in all fields.");
                             } else {
 
-                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Phone=${Phone}`);
+                              await Axios.get(`https://escapetothemoon.lol/api/user/update?Fname=${Fname}&Sname=${Sname}&Phone=${Phone}`);
                               window.location.reload();
 
                             }
@@ -767,7 +767,7 @@ function UserManagement ({ cookies }) {
                                     whileTap={{ scale: 0.95 }}
                                     onClick={async () => {
                                         if (addressName != '' && addressDetail != '', subDistrict != '', district != '', province != '', zipCode != '') {
-                                            await Axios.get(`http://localhost:3000/api/address/add?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}`)
+                                            await Axios.get(`https://escapetothemoon.lol/api/address/add?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}`)
                                             setAddressName('')
                                             setAddressDetail('')
                                             setSubDistrict('')
@@ -896,7 +896,7 @@ function UserManagement ({ cookies }) {
                                     whileTap={{ scale: 0.95 }}
                                     onClick={async () => {
                                         if (addressName != '' && addressDetail != '', subDistrict != '', district != '', province != '', zipCode != '') {
-                                            await Axios.get(`http://localhost:3000/api/address/update?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}&id=${selectedId}`)
+                                            await Axios.get(`https://escapetothemoon.lol/api/address/update?name=${addressName}&detail=${addressDetail}&subdistrict=${subDistrict}&district=${district}&province=${province}&zipCode=${zipCode}&userId=${userId}&recipientName=${recipientName}&addressPhone=${addressPhone}&id=${selectedId}`)
                                             setAddressName('')
                                             setAddressDetail('')
                                             setSubDistrict('')
@@ -966,7 +966,7 @@ function UserManagement ({ cookies }) {
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
                         onClick={ async () => {
-                            await Axios.get(`http://localhost:3000/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`)
+                            await Axios.get(`https://escapetothemoon.lol/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`)
                             window.location.reload();
                         }}
                     >
@@ -1270,7 +1270,7 @@ function UserManagement ({ cookies }) {
                                                 scale: 0.95
                                             }}
                                             onClick={async () => {
-                                                await Axios.get(`http://localhost:3000/api/Order/userreciveitem?orderId=${selectOrder}`)
+                                                await Axios.get(`https://escapetothemoon.lol/api/Order/userreciveitem?orderId=${selectOrder}`)
                                                 setOrderNo('');
                                                 setReciveName('');
                                                 setOrderAddressDetail('');
@@ -1473,7 +1473,7 @@ function UserManagement ({ cookies }) {
                         message={"คุณต้องการลบที่อยู่ " + addressName + " ?"}
                         txtApply="ลบ"
                         onApply={ async () =>{
-                            await Axios.get(`http://localhost:3000/api/address/delete/${targetDeleteId}`)
+                            await Axios.get(`https://escapetothemoon.lol/api/address/delete/${targetDeleteId}`)
                             setSelectedId(null);
                             setChangeAddress(false);
                             setDelete(false);

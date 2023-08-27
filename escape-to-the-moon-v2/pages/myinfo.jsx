@@ -15,7 +15,7 @@ export default function Roast({ cookies }) {
     const [stockAmount, setStockAmount] = useState(0)
 
     const GetBasketAmount = (userId) => {
-        Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+        Axios.get(`https://escapetothemoon.lol/api/basket/amount?userId=${userId}`)
           .then((response) => {
             const { data } = response;
             setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount

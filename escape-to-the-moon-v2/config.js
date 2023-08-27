@@ -1,4 +1,4 @@
-const AppUrl = 'http://localhost:3000';
+const AppUrl = 'https://escapetothemoon.lol';
 
 export default {
     AppUrl: AppUrl

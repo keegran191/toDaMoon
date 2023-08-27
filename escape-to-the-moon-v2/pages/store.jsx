@@ -97,34 +97,34 @@ export default function Store({ cookies }) {
 
     //Get Filter Api
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
     const GetSubCategory = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
             })
         }
     }
     const GetProcess = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
             })
         }
     }
     const GetRoast = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
     }
     const GetFlavor = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
@@ -132,13 +132,13 @@ export default function Store({ cookies }) {
 
 
     const GetStokcList = (search) => {
-        Axios.get(`http://localhost:3000/api/stock/getallstock?search=${search}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/stock/getallstock?search=${search}`).then((response) => {
             setStockList(response.data);
         });
     };
 
     const GetStock = (stockId) => {
-        Axios.get(`http://localhost:3000/api/stock/get/${stockId}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/stock/get/${stockId}`).then((response) => {
             setTitle(response.data[0].Title);
             setDetail(response.data[0].Detail)
             setAmount(response.data[0].Amount)
@@ -155,7 +155,7 @@ export default function Store({ cookies }) {
     };
 
     const GetBasketAmount = (userId) => {
-        Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+        Axios.get(`https://escapetothemoon.lol/api/basket/amount?userId=${userId}`)
             .then((response) => {
                 const { data } = response;
                 setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount
@@ -168,7 +168,7 @@ export default function Store({ cookies }) {
 
     const GetBasket = (userId) => {
         if (userId) {
-            Axios.get(`http://localhost:3000/api/basket/get/${userId}`)
+            Axios.get(`https://escapetothemoon.lol/api/basket/get/${userId}`)
             .then((response) => {
                 setBasketList(response.data)
             })
@@ -467,7 +467,7 @@ export default function Store({ cookies }) {
                                                             if (selectedIndex !== -1) {
                                                                 const selectedItem = basketList[selectedIndex];
                                                                 if (selectedItem.stockAmount !== undefined) {
-                                                                    await Axios.get(`http://localhost:3000/api/basket/update?stockId=${selectedId}&stockAmount=${ItemAmount}&userId=${userId}`);
+                                                                    await Axios.get(`https://escapetothemoon.lol/api/basket/update?stockId=${selectedId}&stockAmount=${ItemAmount}&userId=${userId}`);
                                                                     setSelectedId(null);
                                                                     setTitle('');
                                                                     setDetail('');
@@ -487,7 +487,7 @@ export default function Store({ cookies }) {
                                                                     alert("ไม่สามารถเพิ่มสินค้าได้ในขณะนี้");
                                                                 }
                                                             } else {
-                                                                await Axios.get(`http://localhost:3000/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`);
+                                                                await Axios.get(`https://escapetothemoon.lol/api/basket/add?stockId=${selectedId}&stockAmount=${ItemAmount}&stockPrice=${Price}&userId=${userId}`);
                                                                 setSelectedId(null);
                                                                 setTitle('');
                                                                 setDetail('');

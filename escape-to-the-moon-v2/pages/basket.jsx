@@ -39,32 +39,32 @@ export default function Store({ cookies }) {
     const [IsPaid, setIsPaid] = useState(false);
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
     const GetSubCategory = () => {
-        Axios.get(`http://localhost:3000/api/subcategory/get/${0}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${0}`).then((response) => {
             setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
         })
     }
     const GetProcess = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
             })
         }
     }
     const GetRoast = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
     }
     const GetFlavor = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
@@ -101,7 +101,7 @@ export default function Store({ cookies }) {
     }
 
     const GetBasketAmount = (userId) => {
-        Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+        Axios.get(`https://escapetothemoon.lol/api/basket/amount?userId=${userId}`)
             .then((response) => {
                 const { data } = response;
                 setStockAmount(data.totalStockAmount || 0);
@@ -114,7 +114,7 @@ export default function Store({ cookies }) {
 
     const GetBasket = (userId) => {
         if (userId) {
-            Axios.get(`http://localhost:3000/api/basket/get/${userId}`)
+            Axios.get(`https://escapetothemoon.lol/api/basket/get/${userId}`)
             .then((response) => {
                 setBasketList(response.data)
             })
@@ -125,7 +125,7 @@ export default function Store({ cookies }) {
     }
 
     const GetAddress = (userId) => {
-        Axios.get(`http://localhost:3000/api/address/get/${userId}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/address/get/${userId}`).then((response) => {
             setAddressUser(response.data.map((address) =>  ({ value: address.id, label: address.name})));
         });
     }
@@ -301,7 +301,7 @@ export default function Store({ cookies }) {
                                                 GetTotalPrice(basketList)
                                             } else if(stock.stockAmount > 0) {
                                                 handleDecreaseStockAmount(index)
-                                                await Axios.get(`http://localhost:3000/api/basket/minusOne?id=${stock.id}`)
+                                                await Axios.get(`https://escapetothemoon.lol/api/basket/minusOne?id=${stock.id}`)
                                                 GetBasketAmount(userId)
                                             }
                                         }}
@@ -318,7 +318,7 @@ export default function Store({ cookies }) {
                                         onClick={async () => {
                                             if(stock.stockAmount < stock.Amount) {
                                                 handleIncreaseStockAmount(index)
-                                                await Axios.get(`http://localhost:3000/api/basket/addOne?id=${stock.id}`)
+                                                await Axios.get(`https://escapetothemoon.lol/api/basket/addOne?id=${stock.id}`)
                                                 GetBasketAmount(userId)
                                             }   
                                         }}
@@ -418,7 +418,7 @@ export default function Store({ cookies }) {
                                         options={addressUser}
                                         onChange={async (newValue,meta) => {
                                             setSelectAddressUser(newValue.value);
-                                            await Axios.get(`http://localhost:3000/api/address/getaddress/${newValue.value}`).then((response) => {
+                                            await Axios.get(`https://escapetothemoon.lol/api/address/getaddress/${newValue.value}`).then((response) => {
                                                 setUserAddressSeleceted(response.data);
                                                 console.log(response.data)
                                             });
@@ -672,7 +672,7 @@ export default function Store({ cookies }) {
                         message={"คุณต้องการลบสินค้า " + basketTitle + " ออกจากตระกร้า?"}
                         txtApply="ลบสินค้า"
                         onApply={ async () =>{
-                            await Axios.get(`http://localhost:3000/api/basket/delete/${baksetId}`)
+                            await Axios.get(`https://escapetothemoon.lol/api/basket/delete/${baksetId}`)
                             setIsDelete(false);
                             setBasketId(0);
                             GetBasketAmount(userId)

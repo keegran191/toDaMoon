@@ -6,23 +6,23 @@ export default function middleware(req:NextRequest){
     let url = req.url
     
     if(!verify && url.includes('/adminpage')){
-      return NextResponse.redirect("http://localhost:3000/login");
+      return NextResponse.redirect("https://escapetothemoon.lol/login");
     }
 
     if(!verify && url.includes('/home')){
-      return NextResponse.redirect("http://localhost:3000/login");
+      return NextResponse.redirect("https://escapetothemoon.lol/login");
     }
 
     if (verify != "1"  && url.includes('/adminpage')){
-        return NextResponse.redirect("http://localhost:3000/");
+        return NextResponse.redirect("https://escapetothemoon.lol/");
     }
 
     if (verify != "0"  && url.includes('/home')){
-      return NextResponse.redirect("http://localhost:3000/");
+      return NextResponse.redirect("https://escapetothemoon.lol/");
     }
 
-    if (verify && url === "http://localhost:3000/login") {
-      return NextResponse.redirect("http://localhost:3000/");
+    if (verify && url === "https://escapetothemoon.lol/login") {
+      return NextResponse.redirect("https://escapetothemoon.lol/");
     }
 
 }

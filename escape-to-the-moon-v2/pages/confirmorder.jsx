@@ -45,7 +45,7 @@ export default function ConfirmOrder ({ cookies }) {
     }
 
     const GetBasketAmount = (userId) => {
-        Axios.get(`http://localhost:3000/api/basket/amount?userId=${userId}`)
+        Axios.get(`https://escapetothemoon.lol/api/basket/amount?userId=${userId}`)
             .then((response) => {
                 const { data } = response;
                 setStockAmount(data.totalStockAmount || 0); // Assuming the response is a number representing the total stock amount
@@ -58,7 +58,7 @@ export default function ConfirmOrder ({ cookies }) {
 
     const GetBasket = (userId) => {
         if (userId) {
-            Axios.get(`http://localhost:3000/api/basket/get/${userId}`)
+            Axios.get(`https://escapetothemoon.lol/api/basket/get/${userId}`)
             .then((response) => {
                 setBasketList(response.data)
             })
@@ -69,45 +69,45 @@ export default function ConfirmOrder ({ cookies }) {
     }
 
     const GetAddress = (userId) => {
-        Axios.get(`http://localhost:3000/api/address/get/${userId}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/address/get/${userId}`).then((response) => {
             setAddressUserList(response.data.map((address) =>  ({ value: address.id, label: address.name})));
         });
     }
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
     const GetSubCategory = () => {
-        Axios.get(`http://localhost:3000/api/subcategory/get/${0}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${0}`).then((response) => {
             setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
         })
     }
     const GetProcess = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
             })
         }
     }
     const GetRoast = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
     }
     const GetFlavor = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
     }
 
     const GetAddressUser = (id) => {
-        Axios.get(`http://localhost:3000/api/address/getaddress/${id}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/address/getaddress/${id}`).then((response) => {
             setUserAddress(response.data);
             console.log(response.data)
         });
@@ -175,7 +175,7 @@ export default function ConfirmOrder ({ cookies }) {
                                 damping: 20
                             }}
                             onClick={() => {
-                                Axios.get(`http://localhost:3000/api/Order/add?addressId=${addressid}&UserId=${userId}`).then(async (response) => {
+                                Axios.get(`https://escapetothemoon.lol/api/Order/add?addressId=${addressid}&UserId=${userId}`).then(async (response) => {
                                     const url = 'https://api.gbprimepay.com/v3/qrcode';
                                     const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
                                     const referenceNo = response.data.reffNo;
@@ -203,7 +203,7 @@ export default function ConfirmOrder ({ cookies }) {
                                     });
 
                                     while (isPayed === false) {
-                                        Axios.get(`http://localhost:3000/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
+                                        Axios.get(`https://escapetothemoon.lol/api/GBPay/getStatus?refNo=${referenceNo}`).then((response) => {
                                             console.log(response.data.isSuccenss)
                                             if(response.data.isSuccenss) {
                                                 setQRCode('')

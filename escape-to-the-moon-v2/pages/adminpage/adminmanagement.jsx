@@ -83,63 +83,63 @@ function AdminManagement({ cookies }) {
     const [status, setStatus] = useState(0);
 
     const GetAdminHistory = (search) => {
-        Axios.get(`http://localhost:3000/api/Order/getadminhistory?search=${search}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/getadminhistory?search=${search}`).then((response) => {
             setAdminHistory(response.data)
         });
     }
 
     const GetOrderStatus = () => {
-        Axios.get(`http://localhost:3000/api/Order/getorderstatus`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/getorderstatus`).then((response) => {
             setOrderStatusList(response.data)
         });
     }
 
     const GetOrderStatusForSelect = () => {
-        Axios.get(`http://localhost:3000/api/Order/getorderstatuslistselect`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/getorderstatuslistselect`).then((response) => {
             setOrderStatusListForSelect(response.data.map((status) => ({ value: status.id, label: status.label })))
         });
     }
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/stock/category").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/stock/category").then((response) => {
             setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
     const GetSubCategory = () => {
-        Axios.get(`http://localhost:3000/api/subcategory/get/${0}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${0}`).then((response) => {
             setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
         })
     }
     const GetProcess = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
             })
         }
     }
     const GetRoast = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
     }
     const GetFlavor = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
             })
         }
     }
 
     const GetUserOrderItem = () => {
-        Axios.get(`http://localhost:3000/api/orderitem/getallorderitem`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/orderitem/getallorderitem`).then((response) => {
             setOrderItem(response.data)
         });
     }
 
     const GetAdminOrderAmount = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminorderamount")
         .then((response) => {
             const {data} = response;
             setOrderAmount(data.totalOrderAmount || 0);
@@ -151,7 +151,7 @@ function AdminManagement({ cookies }) {
     }
 
     const GetAdminHaveNewOrder = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminhaveneworder").then((response) => {
             if (response.data.IsRead == 0) {
                 setHaveNewOrder(0)
             } else if (response.data.IsRead == 1) {
@@ -161,7 +161,7 @@ function AdminManagement({ cookies }) {
     }
 
     const GetUserInfo = () => {
-        Axios.get(`http://localhost:3000/api/user/get/this`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/user/get/this`).then((response) => {
             console.log(response.data.userData)
             setFname(response.data.userData.user_fname)
             setSname(response.data.userData.user_lname)
@@ -194,14 +194,14 @@ function AdminManagement({ cookies }) {
     }
 
     const GetOrderItemByOrder = (selectOrder) => {
-        Axios.get(`http://localhost:3000/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
             setOrderItemByOrder(response.data)
             TotalPrice(response.data)
         })
     }
 
     const GetAdminOrder = (orderStatus) => {
-        Axios.get(`http://localhost:3000/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
             setAdminOrder(response.data)
             console.log(response.data)
         })
@@ -512,7 +512,7 @@ function AdminManagement({ cookies }) {
                                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={async () => {
-                                        await Axios.get(`http://localhost:3000/api/logout`);
+                                        await Axios.get(`https://escapetothemoon.lol/api/logout`);
                                         window.location.href = "/";
                                     }}
                                 >
@@ -552,7 +552,7 @@ function AdminManagement({ cookies }) {
                               alert("Please fill in all fields.");
                             } else {
 
-                              await Axios.get(`http://localhost:3000/api/user/update?Fname=${Fname}&Sname=${Sname}&Phone=${Phone}`);
+                              await Axios.get(`https://escapetothemoon.lol/api/user/update?Fname=${Fname}&Sname=${Sname}&Phone=${Phone}`);
                               window.location.reload();
 
                             }
@@ -592,7 +592,7 @@ function AdminManagement({ cookies }) {
                         whileTap={{ scale: 0.95 }}
                         onClick={ async () => {
                             
-                           await Axios.get(`http://localhost:3000/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`)
+                           await Axios.get(`https://escapetothemoon.lol/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`)
                            window.location.reload();
                             
                         }}
@@ -680,7 +680,7 @@ function AdminManagement({ cookies }) {
                                                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                                     whileTap={{ scale: 0.95 }}
                                                     onClick={async() => {
-                                                        await Axios.get(`http://localhost:3000/api/Order/updateisread?orderId=${post.order_Id}`)
+                                                        await Axios.get(`https://escapetothemoon.lol/api/Order/updateisread?orderId=${post.order_Id}`)
                                                         GetAdminHaveNewOrder()
                                                         setOrderNo(post.refNumber);
                                                         setOrderOn(post.order_on);
@@ -777,7 +777,7 @@ function AdminManagement({ cookies }) {
                                         {/* mobile */}
                                         <motion.div
                                             onClick={async () => {
-                                                await Axios.get(`http://localhost:3000/api/Order/updateisread?orderId=${post.order_Id}`)
+                                                await Axios.get(`https://escapetothemoon.lol/api/Order/updateisread?orderId=${post.order_Id}`)
                                                 GetAdminHaveNewOrder()
                                                 setOrderNo(post.refNumber);
                                                 setOrderOn(post.order_on);
@@ -982,7 +982,7 @@ function AdminManagement({ cookies }) {
                                                 scale: 0.95
                                             }}
                                             onClick={async () => {
-                                                await Axios.get(`http://localhost:3000/api/Order/updateOrder?orderId=${selectOrder}&orderStatus=${orderStatusId}&orderShipment=${orderShipment}&orderCode=${orderCode}`)
+                                                await Axios.get(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${selectOrder}&orderStatus=${orderStatusId}&orderShipment=${orderShipment}&orderCode=${orderCode}`)
                                                 setShowStatusList(false)
                                                 setOrderNo('');
                                                 setReciveName('');
@@ -1188,7 +1188,7 @@ function AdminManagement({ cookies }) {
                                                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                                     whileTap={{ scale: 0.95 }}
                                                     onClick={async() => {
-                                                        await Axios.get(`http://localhost:3000/api/Order/updateisread?orderId=${post.order_Id}`)
+                                                        await Axios.get(`https://escapetothemoon.lol/api/Order/updateisread?orderId=${post.order_Id}`)
                                                         GetAdminHaveNewOrder()
                                                         setOrderNo(post.refNumber);
                                                         setOrderOn(post.order_on);
@@ -1285,7 +1285,7 @@ function AdminManagement({ cookies }) {
                                         {/* mobile */}
                                         <motion.div
                                             onClick={async () => {
-                                                await Axios.get(`http://localhost:3000/api/Order/updateisread?orderId=${post.order_Id}`)
+                                                await Axios.get(`https://escapetothemoon.lol/api/Order/updateisread?orderId=${post.order_Id}`)
                                                 GetAdminHaveNewOrder()
                                                 setOrderNo(post.refNumber);
                                                 setOrderOn(post.order_on);

@@ -77,7 +77,7 @@ function Subcategory({ cookies }) {
     }
     
     const GetAdminOrderAmount = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminorderamount")
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminorderamount")
         .then((response) => {
             const {data} = response;
             setOrderAmount(data.totalOrderAmount || 0);
@@ -89,7 +89,7 @@ function Subcategory({ cookies }) {
     }
 
     const GetAdminHaveNewOrder = () => {
-        Axios.get("http://localhost:3000/api/Order/getadminhaveneworder").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminhaveneworder").then((response) => {
             if (response.data.IsRead == 0) {
                 setHaveNewOrder(0)
             } else if (response.data.IsRead == 1) {
@@ -99,14 +99,14 @@ function Subcategory({ cookies }) {
     }
 
     const GetCategory = () => {
-        Axios.get("http://localhost:3000/api/category/get").then((response) => {
+        Axios.get("https://escapetothemoon.lol/api/category/get").then((response) => {
             setOption(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
         });
     }
 
     const GetSubCategory = (categoryId) => {
         if (categoryId) {
-            Axios.get(`http://localhost:3000/api/subcategory/get/${categoryId}`).then((response) => {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
                 setSubCategoryList(response.data);
             })
         }
@@ -296,7 +296,7 @@ function Subcategory({ cookies }) {
                                                         whileTap={{ scale: 0.95 }}
                                                         onClick={async () => {
                                                             if (Label != "") {
-                                                                await Axios.get(`http://localhost:3000/api/subcategory/update?label=${Label}&id=${selectedId}`)
+                                                                await Axios.get(`https://escapetothemoon.lol/api/subcategory/update?label=${Label}&id=${selectedId}`)
                                                                 setSelectedId(null)
                                                                 setLabel('')
                                                                 GetSubCategory(value)
@@ -363,7 +363,7 @@ function Subcategory({ cookies }) {
                             txtApply="เพิ่ม"
                             onApply={ async () =>{
                                 if (subCategoryLabel != "") {
-                                    await Axios.get(`http://localhost:3000/api/subcategory/add?label=${subCategoryLabel}&cid=${value}`)
+                                    await Axios.get(`https://escapetothemoon.lol/api/subcategory/add?label=${subCategoryLabel}&cid=${value}`)
                                     setNew(false);
                                     setSubCategoryLabel("");
                                     GetSubCategory(value)
@@ -431,7 +431,7 @@ function Subcategory({ cookies }) {
                             message={"คุณต้องการลบประเภทสินค้า " + Label + " ?"}
                             txtApply="ลบ"
                             onApply={ async () =>{
-                                await Axios.get(`http://localhost:3000/api/subcategory/delete/${targetDeleteId}`)
+                                await Axios.get(`https://escapetothemoon.lol/api/subcategory/delete/${targetDeleteId}`)
                                 setDelete(false);
                                 setTargetDeleteId(null);
                                 GetSubCategory(value)
