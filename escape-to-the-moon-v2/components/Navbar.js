@@ -60,11 +60,6 @@ function Navbar({
                                 <a className={style.list}>เกี่ยวกับเรา</a>
                             </Link>
                         </li>
-                        <li>
-                            <Link href="/">
-                                <a className={style.list}>วิธีการชำระเงิน</a>
-                            </Link>
-                        </li>
                     </ul>
                 </div>
             </div>
