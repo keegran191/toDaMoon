@@ -180,7 +180,7 @@ export default function ConfirmOrder ({ cookies }) {
                                     const token = 'QZb0+iwtgx4YrdhEasfIkFohRxoLEACJnlyzgnSHQ/q9EL5MC8tVhUdoVL8w9/VL/LuP3gHwgsQB8CxKRBLwxTsnTK/xafKFSjsSEYPr4yMX4c4BnNvKP96L9yPG0Fzz+OVQf6AS92rYLCJeaUhUUzuypws=';
                                     const referenceNo = response.data.reffNo;
                                     const amount = '0.10'; //{totalPrice}
-                                    const backgroundUrl = 'https://45e8-2403-6200-88a4-4dda-8c9e-4233-455a-c506.ngrok-free.app/api/GBPay/getrespons'
+                                    const backgroundUrl = 'https://escapetothemoon.lol/api/GBPay/getrespons'
                                     const data = new URLSearchParams();
                                     let isPayed = false;
                                     data.append('token', token);
