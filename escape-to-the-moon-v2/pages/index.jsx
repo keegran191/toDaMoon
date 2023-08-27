@@ -97,7 +97,7 @@ export default function Home({ cookies }) {
 
         <div className="text-center mt-10 md:mt-24">
           <div className='mb-5'>
-            <span className="text-[#4B4946] text-xl font-bold">สินค้าเเนะนำ</span>
+            <span className="text-[#4B4946] text-2xl font-bold">สินค้าเเนะนำ</span>
           </div>
 
           <motion.div className="relative p-5 left-1/2 -translate-x-1/2 flex justify-center gap-5 mb-5 w-full lg:w-6/12">
@@ -159,7 +159,7 @@ export default function Home({ cookies }) {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-lg text-sm px-6 py-3 mb-20"
+              className="text-white bg-[#252525] hover:bg-[#252525] font-medium rounded-lg text-md px-6 py-3 mb-20"
             >
                 ดูสินค้นอื่นเพิ่ม
             </motion.button>

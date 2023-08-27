@@ -2,3 +2,9 @@
     margin: auto;
     width: 50%;
 }
+
+.remove_number_arrows {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+}  

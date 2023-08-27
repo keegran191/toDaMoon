@@ -237,7 +237,7 @@ export default function Store({ cookies }) {
                         }}
                         id="Search"
                         name="Search"
-                        className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525]"
+                        className="block p-4 pl-5 w-full text-md text-[#252525] bg-[#FFFFFF] rounded-full border border-[#252525] text-lg"
                         placeholder="ค้าหาสินค้า"
                     ></input>
                 </div>
