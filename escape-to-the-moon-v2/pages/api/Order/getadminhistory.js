@@ -14,8 +14,8 @@ export default async function handler(req, res) {
         WHERE 
             order_list.order_status = 2
             AND order_list.payment_status = "00"
-    `;
-
+    `
+    
     const values = [`%${search}%`];
 
     if (search !== "") {

@@ -79,6 +79,9 @@ function AdminManagement({ cookies }) {
     // show status list
     const [showStatusList, setShowStatusList] = useState(false);
 
+    // Status Value
+    const [status, setStatus] = useState(0);
+
     const GetAdminHistory = (search) => {
         Axios.get(`http://localhost:3000/api/Order/getadminhistory?search=${search}`).then((response) => {
             setAdminHistory(response.data)
@@ -273,9 +276,13 @@ function AdminManagement({ cookies }) {
         GetProcess(42);
         GetRoast(40);
         GetFlavor(41);
+    }, []);
+
+    useEffect(() => {
         if( IsOrder == 1 ) {
             setToggleOrder(true);
             setLookOrder(true);
+            setLookHistory(false);
             setRotateHistory(180)
         }
         if (IsUser == 1) {
@@ -285,9 +292,10 @@ function AdminManagement({ cookies }) {
         if (IsHistory == 1) {
             setRotateHistory(180)
             setToggleOrder(true);
+            setLookOrder(false);
             setLookHistory(true)
         }
-    }, []);
+    }, [IsOrder, IsUser, IsHistory]);
 
     return (
         <div className='select-none'>
@@ -595,23 +603,25 @@ function AdminManagement({ cookies }) {
 
                 {/* order */}
                 {lookOrder && <div className='block w-8/12 lg:pl-10 h-auto'>
-                    <motion.div className='flex justify-between mb-5'>
-                        <motion.div className='w-full'>
+                    <motion.div className='flex flex-col lg:flex-row lg:items-center mb-5'>
+                        <motion.div className='w-full text-center md:text-left'>
                             <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
                         </motion.div>
                         <motion.div
                             className='w-full'
                         >
                             <Select
-                                className='shadow-lg rounded-full'
+                                className='shadow-lg rounded-full text-xl'
                                 inputId='coffeeId'
                                 options={orderStatusListForSelect}
                                 isClearable={true}
                                 onChange={(newValue,meta) => {
                                     if (newValue === undefined || newValue === null) {
                                         GetAdminOrder(0)
+                                        setStatus(0)
                                     } else {
                                         GetAdminOrder(newValue.value)
+                                        setStatus(newValue.value)
                                     }
                                 }}
                                 styles={customStyles}
@@ -642,7 +652,7 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <div className="w-full h-auto xl:w-9/12 xl:h-56 bg-[#FFFFFF] rounded-lg lg:rounded-xl overflow-hidden">
+                                    <div className="w-full h-auto xl:w-10/12 xl:h-56 bg-[#FFFFFF] rounded-lg lg:rounded-xl overflow-hidden">
                                         {/* pc */}
                                         <div className='hidden xl:flex w-full h-20 bg-[#252525] p-3 justify-between'>
                                             <div className='w-full pl-7'>
@@ -987,11 +997,12 @@ function AdminManagement({ cookies }) {
                                                 setOrderShipment('')
                                                 setOrderCode('')
                                                 setOrderStatusId()
-                                                setSelectOrder(null);
                                                 GetUserOrderItem()
+                                                setSelectOrder(null);
                                                 setRotateStatus(0)
                                                 GetAdminOrderAmount()
                                                 GetAdminHistory()
+                                                GetAdminOrder(status);
                                             }}
                                         >
                                             บันทึกรายการ
@@ -1108,9 +1119,9 @@ function AdminManagement({ cookies }) {
 
                 {/* history */}
                 {lookHistory && <div className='block w-8/12 lg:pl-10 h-auto'>
-                    <motion.div className='flex justify-between mb-5'>
-                        <motion.div className='w-full'>
-                            <h1 className=' text-xl'>ประวัติรายการสั่งซื้อ</h1>
+                    <motion.div className='flex flex-col lg:flex-row lg:items-center mb-5'>
+                        <motion.div className='w-full text-center md:text-left'>
+                            <h1 className='text-xl mb-2 xl:mb-0'>ประวัติรายการสั่งซื้อ</h1>
                         </motion.div>
                         <motion.div
                             className='w-full'
@@ -1138,6 +1149,9 @@ function AdminManagement({ cookies }) {
                                     className='mt-5 flex justify-center'
                                     key={post.order_Id}
                                     layoutId={post.order_Id}
+                                    style={{
+                                        opacity: selectOrder == post.order_Id ? 0 : 1,
+                                    }}
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{
@@ -1146,7 +1160,7 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <div className="w-full h-auto xl:w-9/12 xl:h-56 bg-[#FFFFFF] rounded-3xl overflow-hidden">
+                                    <div className="w-full h-auto xl:w-10/12 xl:h-56 bg-[#FFFFFF] rounded-lg lg:rounded-xl overflow-hidden">
                                         {/* pc */}
                                         <div className='hidden xl:flex w-full h-20 bg-[#252525] p-3 justify-between'>
                                             <div className='w-full pl-7'>
@@ -1173,7 +1187,9 @@ function AdminManagement({ cookies }) {
                                                 <motion.button className='bg-[#ECEBE8] text-[#252525] py-3 px-5 rounded-full'
                                                     whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                                     whileTap={{ scale: 0.95 }}
-                                                    onClick={() => {
+                                                    onClick={async() => {
+                                                        await Axios.get(`http://localhost:3000/api/Order/updateisread?orderId=${post.order_Id}`)
+                                                        GetAdminHaveNewOrder()
                                                         setOrderNo(post.refNumber);
                                                         setOrderOn(post.order_on);
                                                         setReciveName(post.recipient_name);
@@ -1188,6 +1204,7 @@ function AdminManagement({ cookies }) {
                                                         setOrderShipment(post.order_shipment)
                                                         setOrderCode(post.order_code)
                                                         setSelectOrder(post.order_Id)
+                                                        setOrderStatusId(post.order_status)
                                                         GetOrderItemByOrder(post.order_Id)
                                                     }}
                                                 >
@@ -1218,6 +1235,7 @@ function AdminManagement({ cookies }) {
                                             {(() => {
                                                 let order_item = orderItem.find((item) => item.order_id == post.order_Id)
                                                 let total = 0
+                                                console.log(order_item)
                                                 for (let i = 0; i < orderItem.length; i++) {
                                                     if (orderItem[i].order_id == post.order_Id) {
                                                         total += (order_item.total)
@@ -1249,6 +1267,7 @@ function AdminManagement({ cookies }) {
                                                                 setOrderStatusTextColor(post.text_color);
                                                                 setOrderShipment(post.order_shipment)
                                                                 setOrderCode(post.order_code)
+                                                                setOrderStatusId(post.order_status)
                                                                 GetOrderItemByOrder(post.order_Id)
                                                             }}
                                                         >
@@ -1265,12 +1284,15 @@ function AdminManagement({ cookies }) {
 
                                         {/* mobile */}
                                         <motion.div
-                                            onClick={() => {
+                                            onClick={async () => {
+                                                await Axios.get(`http://localhost:3000/api/Order/updateisread?orderId=${post.order_Id}`)
+                                                GetAdminHaveNewOrder()
                                                 setOrderNo(post.refNumber);
                                                 setOrderOn(post.order_on);
                                                 setReciveName(post.recipient_name);
                                                 setOrderAddressDetail(post.detail);
                                                 setSelectOrder(post.order_Id)
+                                                setOrderStatusId(post.order_status)
                                             }}
                                         >
                                             <div className='flex xl:hidden w-full h-auto bg-[#252525] p-3'>
@@ -1302,13 +1324,12 @@ function AdminManagement({ cookies }) {
                                             </div>
                                         </motion.div>
                                     </div>
-
                                 </motion.div>
                             )
                         })}
                     </motion.div>
 
-                    <AnimatePresence mode='wait' key={'block-content'}>
+                    <AnimatePresence mode='wait' key={'block-content-history'}>
                         {selectOrder && <motion.div
                             style={{
                                 position: 'fixed',
@@ -1333,7 +1354,7 @@ function AdminManagement({ cookies }) {
                         />}
                     </AnimatePresence>
                     
-                    <AnimatePresence key={'modalItems'}>
+                    <AnimatePresence key={'modalItems-history'}>
                         {selectOrder && 
                         (<motion.div
                             layoutId={selectOrder}
@@ -1425,10 +1446,10 @@ function AdminManagement({ cookies }) {
                                 >
                                     <motion.p className='text-2xl'>รายการสินค้า</motion.p>
                                     <motion.div className='mt-2 w-full h-auto grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
-                                        <motion.div class='text-lg text-left col-span-2'>สินค้า</motion.div> 
-                                        <motion.div class='text-lg text-center col-start-3'>ราคา</motion.div>
-                                        <motion.div class='text-lg text-center'>จำนวน</motion.div>
-                                        <motion.div class='text-lg text-center'>ราคารวม</motion.div>
+                                        <motion.div className='text-lg text-left col-span-2'>สินค้า</motion.div> 
+                                        <motion.div className='text-lg text-center col-start-3'>ราคา</motion.div>
+                                        <motion.div className='text-lg text-center'>จำนวน</motion.div>
+                                        <motion.div className='text-lg text-center'>ราคารวม</motion.div>
                                     </motion.div>
                                     <motion.div
                                         className='overflow-x-hidden overflow-y-auto h-60'
@@ -1439,7 +1460,7 @@ function AdminManagement({ cookies }) {
                                             <motion.div 
                                                 className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2' key={element.id}
                                             >
-                                                <motion.div class='text-lg text-left col-span-2 flex'>
+                                                <motion.div className='text-lg text-left col-span-2 flex'>
                                                     <motion.div className='w-16 h-16'>
                                                         <motion.img className='w-full h-full rounded-lg' src={`/uploads/${element.Image}`}></motion.img>
                                                     </motion.div>
@@ -1462,13 +1483,13 @@ function AdminManagement({ cookies }) {
 
                                                     </motion.div>
                                                 </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-3'>
+                                                <motion.div className='text-lg flex items-center justify-center text-center col-start-3'>
                                                     ฿ {element.Price}
                                                 </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-4'>
+                                                <motion.div className='text-lg flex items-center justify-center text-center col-start-4'>
                                                     {element.amount}
                                                 </motion.div>
-                                                <motion.div class='text-lg flex items-center justify-center text-center col-start-5'>
+                                                <motion.div className='text-lg flex items-center justify-center text-center col-start-5'>
                                                     {element.total}
                                                 </motion.div>
                                             </motion.div>
