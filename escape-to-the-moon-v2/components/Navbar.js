@@ -56,7 +56,7 @@ function Navbar({
                             </Link>
                         </li>
                         <li>
-                            <Link href="/">
+                            <Link href="/myinfo">
                                 <a className={style.list}>เกี่ยวกับเรา</a>
                             </Link>
                         </li>
