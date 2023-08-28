@@ -21,20 +21,23 @@ export default async function handler(req, res) {
 
       if (searchResults.length !== 0) {
         console.log('User already exists');
+        pool.destroy();
         res.redirect(307, '/register?errorMsg=UserAlreadyExists&errObj=' + JSON.stringify({ email: true, username: true }));
-        res.status(409);
       } else {
         if (floating_password !== repeat_password) {
+          pool.destroy();
           res.redirect(307, '/register?errorMsg=PasswordNotMatch&errObj=');
           return;
         }
 
         if (floating_password.length < 8 || !/[A-Z]/.test(floating_password)) {
+          pool.destroy();
           res.redirect(307, '/register?errorMsg=PasswordRequirementsNotMet&errObj=');
           return;
         }
 
         if (floating_phone.length !== 10) {
+          pool.destroy();
           res.redirect(307, '/register?errorMsg=PhoneNot10&errObj=');
           return;
         }
@@ -45,17 +48,17 @@ export default async function handler(req, res) {
         const [insertResult] = await pool.query(insertQuery, insertValues);
 
         console.log('Created new User');
+        pool.destroy();
         res.redirect(307, '/login');
         console.log(insertResult.insertId);
-        res.status(201);
       }
     } catch (error) {
       console.error(error);
+      pool.destroy();
       res.redirect(307, '/register?errorMsg=DatabaseError&errObj=');
-    } finally {
-      pool.release();
     }
   } catch (error) {
+    pool.destroy();
     console.error(error);
     res.redirect(307, '/register?errorMsg=DatabaseConnectionError&errObj=');
   }
