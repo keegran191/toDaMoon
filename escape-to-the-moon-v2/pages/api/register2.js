@@ -1,7 +1,10 @@
 import db from "../../lib/database";
 import bcrypt from 'bcrypt';
 
-export async function handler(req, res) {
+export default async function handler(req, res) {
+  
+  const pool = await db.getConnection();
+
   try {
     const {
       floating_email,
@@ -13,8 +16,6 @@ export async function handler(req, res) {
     } = req.body;
 
     const hashedPassword = await bcrypt.hash(floating_password, 10);
-
-    const pool = await db.getConnection();
 
     try {
       const [searchResults] = await pool.query('SELECT * FROM users WHERE email = ?', [floating_email]);
