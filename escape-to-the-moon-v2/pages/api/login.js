@@ -59,6 +59,7 @@ export default async function handler(req, res) {
           pool.destroy();
           
           res.writeHead(307, { 'Location': '/' });
+          res.end();
         }
       } else {
         console.log("Password does not match!");
