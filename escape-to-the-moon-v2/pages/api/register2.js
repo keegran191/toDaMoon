@@ -24,6 +24,13 @@ export default async function handler(req, res) {
     return null;
   }
 
+  const [results] = await pool.query('INSERT INTO users (user_fname, user_lname, email, user_password, user_phone, is_admin) VALUES (?, ?, ?, ?, ?, ?)',[fname, sname, email, password, phone, 0]).catch((err) => {
+    pool.destroy();
+    res.status(500).json({"Status":"Database Error"});
+    console.error(err);
+    return null;
+  })
+  
   pool.destroy();
   res.redirect(200,'/login')
   
