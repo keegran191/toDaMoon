@@ -398,7 +398,7 @@ export default function Store({ cookies }) {
 
                                             {StockType == 1 &&
                                                 <div className="w-full mt-2">
-                                                    <label className="">กลื่น รส: </label>
+                                                    <label className="">กลิ่น รส: </label>
                                                     {Flavor != 0 && coffeeFlavor.length > 0 &&<span className='whitespace-nowrap'>{coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(Flavor)].label}</span>}
                                                 </div>
                                             }
