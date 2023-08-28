@@ -164,7 +164,7 @@ export default function Login() {
                                         console.log("InValid")
                                         setEmailNotAvailable(true);
                                     } else if (response.data.Status == "RegisterSuccess") {
-                                        console.log("Success")
+                                        alert("ลงทะเบียนเสร็จสิ้น")
                                         router.push('/login')
                                     }
                                 })
