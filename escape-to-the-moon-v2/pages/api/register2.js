@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       if (searchResults.length !== 0) {
         console.log('User already exists');
         pool.destroy();
-        res.redirect(307, '/register?errorMsg=UserAlreadyExists&errObj=' + JSON.stringify({ email: true, username: true }));
+        res.redirect(307, '/register?errorMsg=UserAlreadyExists&errObj=');
       } else {
         if (floating_password !== repeat_password) {
           pool.destroy();
