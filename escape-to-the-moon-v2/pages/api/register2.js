@@ -19,12 +19,16 @@ export default async function handler(req, res) {
     console.log(err);
     return null;
   })
-  console.log(emailValid);
+
+  console.log("Out" + emailValid);
+
   if (emailValid.length > 0) {
+    console.log("Have Email:" + emailValid.length);
     pool.destroy();
     res.status(200).json({ Status:"EmailIsNotValid" })
     return null;
   } else if (emailValid.length == 0) {
+    console.log("Not Have Email:" + emailValid.length);
     const [results] = await pool.query('INSERT INTO users (user_fname, user_lname, email, user_password, user_phone, is_admin) VALUES (?, ?, ?, ?, ?, ?)',[fname, sname, email, hashedPassword, phone, 0]).catch((err) => {
       pool.destroy();
       res.status(500).json({"Status":"Database Error"});
