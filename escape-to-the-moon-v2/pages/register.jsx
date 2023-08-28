@@ -16,6 +16,7 @@ export default function Login() {
     const [Sname, SetSname] = useState('')
     const [Phone, SetPhone] = useState()
 
+    //State Error Here
     const [emailNotAvailable, setEmailNotAvailable] = useState(false)
     const [emailValid, setEmailValid] = useState(false)
     const [passwordErrorInclude, setPasswordErrorInClude] = useState(false)
