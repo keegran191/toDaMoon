@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   console.log(req.body)
   console.log(repeat_password," And ",floating_password)
   const hashedPassword = await bcrypt.hash(floating_password, 10);
-  con.connect(async (err, connection) => {
+  pool.connect(async (err, connection) => {
     if (err) throw (err)
     const sqlSearch = "SELECT * FROM users WHERE email = ?"
     const search_query = mysql.format(sqlSearch, [floating_email])
