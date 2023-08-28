@@ -74,7 +74,7 @@ export default function Login() {
                                     const containsUppercase = /[A-Z]/.test(password);
                                     const containsDigit = /[0-9]/.test(password);
                                     const containsSpecialSymbol = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-]/.test(password);
-                                    if (containsSpecialSymbol && containsDigit == false) {
+                                    if (containsSpecialSymbol || containsDigit == false) {
                                         setPasswordErrorInClude(true)
                                     } else {
                                         setPasswordErrorInClude(false)
