@@ -47,12 +47,12 @@ export default function Login() {
                                 // ตัวอย่างการเขียน API
                                 // await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}&password=${Password}&fname=${Fname}&sname=${Sname}&phone=${Phone}`).then((response) => {
                                 //     console.log(response.data.Status) 
-                                //     if (response.data.Status == "EmailIsNotValid") {
+                                //     if (response.data.Status == "EmailIsNotValid" <--- Status that api call back) {
                                 //         console.log("InValid")
-                                //         setEmailNotAvailable(true);
-                                //     } else if (response.data.Status == "RegisterSuccess") {
+                                //         setEmailNotAvailable(true); <--- Set Error
+                                //     } else if (response.data.Status == "RegisterSuccess" <--- Status that api call back) {
                                 //         alert("ลงทะเบียนเสร็จสิ้น")
-                                //         router.push('/login')
+                                //         router.push('/login') <--- Set Screen When can login
                                 //     }
                                 // })
                             }
