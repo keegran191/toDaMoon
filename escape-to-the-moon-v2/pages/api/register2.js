@@ -1,7 +1,7 @@
 import db from "../../lib/database";
 import bcrypt from 'bcrypt';
 
-export async function handler(req, res) {
+export default async function handler(req, res) {
   
   const email = req.query.email
   const password = req.query.password
