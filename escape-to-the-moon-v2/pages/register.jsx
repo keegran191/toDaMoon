@@ -46,7 +46,7 @@ export default function Login() {
                             className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" 
                             placeholder=" "
                             onChange={(e) => {
-                                if(emailRegex.test(e.target.value) == false) {
+                                if(emailRegex.test(e.target.value) == false && e.target.value != "") {
                                     setEmailValid(true);
                                 }
                             }}
