@@ -55,7 +55,7 @@ export default function Login() {
                                         
                                         router.push('/adminpage/category')
                                      } else if (response.data.Status == "isUserLogin" ) {
-                                        router.push('/')
+                                        window.location.href = '/'; // Redirect to the desired URL
                                         
                                      }
                                  })

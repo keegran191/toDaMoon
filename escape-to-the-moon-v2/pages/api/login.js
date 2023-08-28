@@ -56,10 +56,10 @@ export default async function handler(req, res) {
         } else {
           res.setHeader("Set-Cookie", cookies);
           console.log("isNotAdmin")
+          pool.destroy();
           
-          res.writeHead(307, { 'Location': '/' });
-          res.end();
-          return;
+          res.status(200).json({ Status:"isUserLogin" })
+          
         }
       } else {
         console.log("Password does not match!");
