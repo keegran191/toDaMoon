@@ -41,19 +41,19 @@ export default async function handler(req, res) {
     };
 
     if(updatedStock.Process == 'null' || updatedStock.Process == null) {
-      updatedStock.Process = 'NULL'
+      updatedStock.Process = NULL
     }
     if(updatedStock.Roast == 'null' || updatedStock.Roast == null) {
-      updatedStock.Roast = 'NULL'
+      updatedStock.Roast = NULL
     }
     if(updatedStock.Flavor == 'null' || updatedStock.Flavor == null) {
-      updatedStock.Flavor = 'NULL'
+      updatedStock.Flavor = NULL
     }
     if(updatedStock.CategoryId == 'null' || updatedStock.CategoryId == null) {
-      updatedStock.CategoryId = 'NULL'
+      updatedStock.CategoryId = NULL
     }
     if(updatedStock.SubCategoryId == 'null' || updatedStock.SubCategoryId == null) {
-      updatedStock.SubCategoryId = 'NULL'
+      updatedStock.SubCategoryId = NULL
     }
 
     if (req.file && req.file.filename !== req.body.existingImages) {
