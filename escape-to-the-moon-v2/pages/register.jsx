@@ -7,7 +7,6 @@ import { useState, useEffect, createRef } from 'react';
 
 export default function Login() {
     const router = useRouter()
-    const {errorMsg, } = router.query
 
     const [Email, SetEmail] = useState('')
     const [Password, SetPassword] = useState('')
@@ -15,6 +14,15 @@ export default function Login() {
     const [Fname, SetFname] = useState('')
     const [Sname, SetSname] = useState('')
     const [Phone, SetPhone] = useState()
+
+    const [emailNotAvailable, setEmailNotAvailable] = useState(false)
+    const [emailValid, setEmailValid] = useState(false)
+    const [passwordErrorInclude, setPasswordErrorInClude] = useState(false)
+    const [passwordErrorCapital, setPasswordErrorCapital] = useState(false)
+    const [passwordErrorLenght, setPasswordErrorLenght] = useState(false)
+    const [passwordConfirmError, setPasswordConfirmError] = useState(false)
+    const [phoneError, setPhoneError] = useState(false)
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
     return(
         <div>
@@ -26,28 +34,50 @@ export default function Login() {
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <main>
+                {/* action="https://escapetothemoon.lol/api/register2" */}
                 <Nav className={style.nav}></Nav>
-                <form className={style.form} action="https://escapetothemoon.lol/api/register2" method='POST'>
+                <div className={style.form}> 
                     <h1 className="text-center sm:text-5xl text-4xl mt-36 mb-10 w-full">สมัครสมาชิก</h1>
                     <div className="relative z-0 mb-6 w-full group">
-                        <input type="email" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                        <input 
+                            type="email" 
+                            name="floating_email" 
+                            id="floating_email" 
+                            className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" 
+                            placeholder=" "
+                            onChange={(e) => {
+                                if(emailRegex.test(e.target.value) == false) {
+                                    setEmailValid(true);
+                                }
+                            }}
+                        />
                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">อีเมล</label>
                         <div className="w-full">
-                            {errorMsg == "UserAlreadyExists" &&<span id="alreadyExist" className="text-[#ff0000] block">Email ถูกใช้ไปแล้ว</span>}
+                            {emailNotAvailable &&<span id="alreadyExist" className="text-[#ff0000] block">Email ถูกใช้ไปแล้ว</span>}
+                            {emailValid &&<span id="alreadyExist" className="text-[#ff0000] block">ใส่ Email ไม่ถูกต้อง</span>}
                         </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
                         <div className="relative z-0 mb-6 w-full group">
-                            <input type="password" name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                            <input 
+                                type="password" 
+                                name="floating_password" 
+                                id="floating_password" 
+                                className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" 
+                                placeholder=" "
+                                onClick={() => {
+
+                                }}
+                            />
                             <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รหัสผ่าน</label>
-                            {errorMsg == "PasswordRequirementsNotMet" &&<span id="outOfContext" className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวอักษร A-Z a-z และ ตัวเลข 0-9</span>}
-                            {errorMsg == "PasswordRequirementsNotMet" &&<span id="reqNotMatch"  className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวเล็ก และ ตัวใหญ่</span>}
-                            {errorMsg == "PasswordRequirementsNotMet" &&<span id="lessThenEight" className="text-[#ff0000] block">รหัสผ่านจะต้องยาวอยย่างน้อย 8 ตัว</span>}
-                            {errorMsg == "PasswordNotMatch" &&<span id="passwordNotMatch" className="text-[#ff0000] block">รหัสผ่านไม่ตรงกัน</span>}
+                            {passwordErrorInclude &&<span id="outOfContext" className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวอักษร A-Z a-z และ ตัวเลข 0-9</span>}
+                            {passwordErrorCapital &&<span id="reqNotMatch"  className="text-[#ff0000] block">รหัสผ่านจะต้องประกอบไปด้วย ตัวเล็ก และ ตัวใหญ่</span>}
+                            {passwordErrorLenght &&<span id="lessThenEight" className="text-[#ff0000] block">รหัสผ่านจะต้องยาวอยย่างน้อย 8 ตัว</span>}
                         </div>
                         <div className="relative z-0 mb-6 w-full group">
                             <input type="password" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                             <label htmlFor="floating_repeat_password" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ยืนยันรหัสผ่าน</label>    
+                            {passwordConfirmError &&<span id="passwordNotMatch" className="text-[#ff0000] block">รหัสผ่านไม่ตรงกัน</span>}
                         </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
@@ -70,13 +100,13 @@ export default function Login() {
                         required
                     />
                         <label htmlFor="floating_phone" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทร</label>
-                        {errorMsg == "PhoneNot10" &&<span id="PhoneNot10" className="text-[#ff0000] block">เบอร์โทรไม่ถูกต้อง</span>}
+                        {phoneError &&<span id="PhoneNot10" className="text-[#ff0000] block">เบอร์โทรไม่ถูกต้อง</span>}
                     </div>
                     <button id="register" type="submit" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none">สมัครสมาชิก</button>
                     <Link href="/login">
                         <h1 id="login" className="cursor-pointer text-center hover:text-[#010101] mt-6 mb-6">เป็นสมาชิกอยู่เเล้ว? กดที่นี่เลย</h1>
                     </Link>
-                </form>
+                </div>
             </main>
         </div>
     )
