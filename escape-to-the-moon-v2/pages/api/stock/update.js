@@ -40,6 +40,22 @@ export default async function handler(req, res) {
       Image: req.body.existingImages 
     };
 
+    if(updatedStock.Process == 'null' || updatedStock.Process == null) {
+      updatedStock.Process = 'NULL'
+    }
+    if(updatedStock.Roast == 'null' || updatedStock.Roast == null) {
+      updatedStock.Roast = 'NULL'
+    }
+    if(updatedStock.Flavor == 'null' || updatedStock.Flavor == null) {
+      updatedStock.Flavor = 'NULL'
+    }
+    if(updatedStock.CategoryId == 'null' || updatedStock.CategoryId == null) {
+      updatedStock.CategoryId = 'NULL'
+    }
+    if(updatedStock.SubCategoryId == 'null' || updatedStock.SubCategoryId == null) {
+      updatedStock.SubCategoryId = 'NULL'
+    }
+
     if (req.file && req.file.filename !== req.body.existingImages) {
       const fileName = req.file.filename;
       console.log('Uploaded file:', fileName);
