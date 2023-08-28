@@ -55,8 +55,8 @@ export default function Login() {
                                         
                                         router.push('/adminpage/category')
                                      } else if (response.data.Status == "isUserLogin" ) {
+                                        window.location.href('https://escapetothemoon.lol')
                                         
-                                        router.push('https://escapetothemoon.lol')
                                      }
                                  })
                             }
