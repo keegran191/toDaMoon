@@ -45,6 +45,7 @@ export default function Home({ cookies }) {
 
   
   useEffect(() => {
+    window.location.reload()
     GetBasketAmount(userId)
   }, [userId]);
 
