@@ -47,9 +47,9 @@ export default async function handler(req, res) {
             console.log("Invalid password.")
             pool.destroy();
             if(formadmin == 1) {
-                res.redirect(200, '/adminpage/adminmanagement').json({ isSuccess: false, message: "Invalid password" });
+                res.status(200).json({ isSuccess: false, message: "Invalid password" });
             } else {
-                res.redirect(200, '/usermanagement').json({ isSuccess: false, message: "Invalid password" });
+                res.status(200).json({ isSuccess: false, message: "Invalid password" });
             }
             return
         }
