@@ -156,7 +156,7 @@ export default function Login() {
                         id="register" 
                         className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none"
                         onClick={async () => {
-                            if (emailValid == true || passwordErrorInclude == true || passwordErrorCapital == true || passwordErrorLenght == true || passwordConfirmError == true || phoneError == true) {
+                            if (Email == '' || Password == '' || ConfirmPassword == '' || Fname == '' || Sname == '' || Phone == '' || emailValid == true || passwordErrorInclude == true || passwordErrorCapital == true || passwordErrorLenght == true || passwordConfirmError == true || phoneError == true) {
                                 alert("กรุณาใส่ข้อมูลให้ถูกต้อง")
                             } else {
                                 await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}&password=${Password}&fname=${Fname}&sname=${Sname}&phone=${Phone}`).then((response) => {
