@@ -50,12 +50,12 @@ export default async function handler(req, res) {
           console.log("isAdmin")
           pool.destroy();
           
-          res.redirect(307, `/adminpage/category`);
+          res.status(200).json({ Status:"isAdminLogin" })
         } else {
           console.log("isNotAdmin")
           pool.destroy();
           res.setHeader("Set-Cookie", cookies);
-          res.redirect(307, "/");
+          res.status(200).json({ Status:"isUserLogin" })
         }
       } else {
         console.log("Password does not match!");

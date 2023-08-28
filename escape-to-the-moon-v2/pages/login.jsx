@@ -51,6 +51,12 @@ export default function Login() {
                                     if (response.data.Status == "EmailOrPassNotValid" ) {
                                         console.log("InValid")
                                         setLoginError(true);
+                                     } else if (response.data.Status == "isAdminLogin" ) {
+                                        
+                                        router.push('/adminpage/category')
+                                     } else if (response.data.Status == "isUserLogin" ) {
+                                        
+                                        router.push('/')
                                      }
                                  })
                             }
