@@ -56,7 +56,7 @@ export default async function handler(req, res) {
           console.log("isNotAdmin")
           pool.destroy();
           
-          res.status(200).json({ Status:"isUserLogin" })
+          res.writeHead(301, { Location: "http://w3docs.com/" });
         }
       } else {
         console.log("Password does not match!");
