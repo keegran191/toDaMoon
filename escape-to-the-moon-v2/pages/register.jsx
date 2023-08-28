@@ -46,6 +46,8 @@ export default function Login() {
                             placeholder=" "
                             onChange={(e) => {
                                 if(e.target.value.includes('@')&& e.target.value.includes('.') && e.target.value != "") {
+                                    setEmailValid(false);
+                                }else {
                                     setEmailValid(true);
                                 }
                             }}
