@@ -29,8 +29,8 @@ export default function Login() {
                         <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รหัสผ่าน</label>
                     </div>
                     <div className="w-full">
-                            {errorMsg == "WrongEmailOrPassword" &&<span id="alreadyExist" className="text-[#ff0000] block">อีเมล หรือ รหัสผ่าน ผิด</span>}
-                        </div>
+                        {errorMsg == "WrongEmailOrPassword" &&<span id="alreadyExist" className="text-[#ff0000] block">อีเมล หรือ รหัสผ่าน ผิด</span>}
+                    </div>
                     
                     <button id="login" type="submit" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mt-10 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none">ลงชื่อเข้าใช้</button>
                     <Link href="/register">
