@@ -46,7 +46,7 @@ export default function Login() {
                                 alert("กรุณากรอกข้อมูลให้ถูกต้อง")
                             } else {
                                 // ตัวอย่างการเขียน API
-                                await Axios.post(`https://escapetothemoon.lol/api/login?email=${Email}&password=${Password}`).then((response) => {
+                                await Axios.post(`https://escapetothemoon.lol/api/login?email=${email}&password=${password}`).then((response) => {
                                     console.log(response.data.Status) 
                                     if (response.data.Status == "EmailOrPassNotValid" ) {
                                         console.log("InValid")

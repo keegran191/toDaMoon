@@ -3,7 +3,9 @@ import db from "../../lib/database";
 const bcrypt = require("bcrypt");
 
 export default async function handler(req, res) {
-  const { floating_email, floating_password } = req.body;
+  const floating_email = req.query.email
+  const floating_password = req.query.password
+  
   const pool = await db.getConnection();
   
   try {
