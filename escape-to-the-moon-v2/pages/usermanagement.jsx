@@ -973,6 +973,8 @@ function UserManagement ({ cookies }) {
                                 if (response.data.isSuccess == false) {
                                     console.log(response.data.message)
                                     setErrorMessage(response.data.message)
+                                } else {
+                                    alert(response.data.message)
                                     window.location.reload()
                                 }
                             })

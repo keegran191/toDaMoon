@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     if (newPassword !== confirmNewPassword) {
         console.log("new password and confirm password not match")
         pool.destroy();
-        res.status(200).json({ isSuccess: false, message: "New password and confirm new password do not match." });
+        res.status(200).json({ isSuccess: false, message: "รหัสผ่านไม่ตรงกัน" });
         return
 
   }
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         if (!isPasswordMatch) {
             console.log("Invalid password.")
             pool.destroy();
-            res.status(200).json({ isSuccess: false, message: "Invalid password" });
+            res.status(200).json({ isSuccess: false, message: "รหัสผ่านไม่ถูกต้อง" });
             return
             
         }
@@ -49,9 +49,9 @@ export default async function handler(req, res) {
         
         const updateQuery = `UPDATE users SET user_password = ? WHERE id = ?`;
         await pool.query(updateQuery, [hashedNewPassword, user.id]);
-        console.log("Password updated successfully.")
+        console.log("เปลี่ยนรหัสผ่านสำเร็จ")
         pool.destroy();
-        res.status(200).json({ isSuccess: true, message: "Password updated successfully." });
+        res.status(200).json({ isSuccess: true, message: "เปลี่ยนรหัสผ่านสำเร็จ" });
         return 
     } catch (error) {
         console.log("err")
