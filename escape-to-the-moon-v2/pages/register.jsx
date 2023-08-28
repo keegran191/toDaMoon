@@ -149,7 +149,15 @@ export default function Login() {
                         <label htmlFor="floating_phone" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">เบอร์โทร</label>
                         {phoneError &&<span id="PhoneNot10" className="text-[#ff0000] block">เบอร์โทรไม่ถูกต้อง</span>}
                     </div>
-                    <button id="register" className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none">สมัครสมาชิก</button>
+                    <button 
+                        id="register" 
+                        className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none"
+                        onClick={() => {
+                            
+                        }}
+                    >
+                        สมัครสมาชิก
+                    </button>
                     <Link href="/login">
                         <h1 id="login" className="cursor-pointer text-center hover:text-[#010101] mt-6 mb-6">เป็นสมาชิกอยู่เเล้ว? กดที่นี่เลย</h1>
                     </Link>
