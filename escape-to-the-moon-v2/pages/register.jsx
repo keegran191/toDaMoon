@@ -157,7 +157,7 @@ export default function Login() {
                             if (emailValid == true || passwordErrorInclude == true || passwordErrorCapital == true || passwordErrorLenght == true || passwordConfirmError == true || phoneError == true) {
                                 alert("กรุณาใส่ข้อมูลให้ถูกต้อง")
                             } else {
-                                await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}`).then((response) => {
+                                await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}&password=${Password}&fname=${Fname}&sname=${Sname}&phone${Phone}`).then((response) => {
                                     if (response.data.Status = "EmailIsNotValid") {
                                         setEmailNotAvailable(true);
                                     }
