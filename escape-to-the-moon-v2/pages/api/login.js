@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 export default async function handler(req, res) {
   const floating_email = req.query.email
   const floating_password = req.query.password
-  
+
   const pool = await db.getConnection();
   
   try {
@@ -44,12 +44,15 @@ export default async function handler(req, res) {
             path: "/"
           })
         ];
-        
+        console.log(isAdminValue)
         if (isAdminValue === 1) {
           res.setHeader("Set-Cookie", cookies);
+          console.log("isAdmin")
           pool.destroy();
+          
           res.redirect(307, `/adminpage/category`);
         } else {
+          console.log("isNotAdmin")
           pool.destroy();
           res.setHeader("Set-Cookie", cookies);
           res.redirect(307, "/");
