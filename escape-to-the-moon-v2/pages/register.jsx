@@ -3,10 +3,19 @@ import Head from 'next/head'
 import style from '../styles/RegisLogin.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState, useEffect, createRef } from 'react';
 
 export default function Login() {
     const router = useRouter()
-    const errorMsg = router.query
+    const {errorMsg, } = router.query
+
+    const [Email, SetEmail] = useState('')
+    const [Password, SetPassword] = useState('')
+    const [ConfirmPassword, setConfirmPassword] = useState('')
+    const [Fname, SetFname] = useState('')
+    const [Sname, SetSname] = useState('')
+    const [Phone, SetPhone] = useState()
+
     return(
         <div>
             <Head>
@@ -18,7 +27,7 @@ export default function Login() {
             </Head>
             <main>
                 <Nav className={style.nav}></Nav>
-                <form className={style.form} action="/api/register2" method='POST' >
+                <form className={style.form} action="/api/register2" method='POST'>
                     <h1 className="text-center sm:text-5xl text-4xl mt-36 mb-10 w-full">สมัครสมาชิก</h1>
                     <div className="relative z-0 mb-6 w-full group">
                         <input type="email" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
@@ -38,8 +47,7 @@ export default function Login() {
                         </div>
                         <div className="relative z-0 mb-6 w-full group">
                             <input type="password" name="repeat_password" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
-                            <label htmlFor="floating_repeat_password" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ยืนยันรหัสผ่าน</label>
-                            
+                            <label htmlFor="floating_repeat_password" className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ยืนยันรหัสผ่าน</label>    
                         </div>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-6">
