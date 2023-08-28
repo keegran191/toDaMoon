@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
   const [emailValid] = await pool.query('SELECT * FROM users WHERE email = ?', [email]).catch((err)=> {
     pool.destroy();
-    res.status(500).json({"Status":"Database Error"})
+    res.status(500).json({ Status:"Database Error" })
     console.log(err);
     return null;
   })
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     console.log("Not Have Email:" + emailValid.length);
     const [results] = await pool.query('INSERT INTO users (user_fname, user_lname, email, user_password, user_phone, is_admin) VALUES (?, ?, ?, ?, ?, ?)',[fname, sname, email, hashedPassword, phone, 0]).catch((err) => {
       pool.destroy();
-      res.status(500).json({"Status":"Database Error"});
+      res.status(500).json({ Status:"Database Error" });
       console.error(err);
       return null;
     })

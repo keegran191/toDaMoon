@@ -159,6 +159,7 @@ export default function Login() {
                                 alert("กรุณาใส่ข้อมูลให้ถูกต้อง")
                             } else {
                                 await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}&password=${Password}&fname=${Fname}&sname=${Sname}&phone=${Phone}`).then((response) => {
+                                    console.log(response.data.Status)
                                     if (response.data.Status = "EmailIsNotValid") {
                                         console.log("InValid")
                                         setEmailNotAvailable(true);
