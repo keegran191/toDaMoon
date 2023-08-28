@@ -11,9 +11,8 @@ export default async function handler(req, res) {
     // Check if new password and confirm new password match
     if (newPassword !== confirmNewPassword) {
         console.log("new password and confirm password not match")
-        return res.status(400).json({ isSuccess: false, message: "New password and confirm new password do not match." });
-
-  }
+        return res.status(403).json({ isSuccess: false, message: "New password and confirm new password do not match." });
+    }
     
     const cookies = parse(req.headers.cookie || '');
     const userId = cookies.userId; // Get the user ID from the cookie
@@ -36,7 +35,7 @@ export default async function handler(req, res) {
         if (!isPasswordMatch) {
             console.log("Invalid password.")
             pool.destroy();
-            return res.status(400).json({ isSuccess: false, message: "Invalid password" });
+            return res.status(403).json({ isSuccess: false, message: "Invalid password" });
             
         }
 
