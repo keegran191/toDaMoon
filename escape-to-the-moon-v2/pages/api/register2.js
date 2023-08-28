@@ -19,9 +19,7 @@ export default async function handler(req, res) {
     console.log(err);
     return null;
   })
-
-  console.log("Process")
-
+  console.log(emailValid);
   if (emailValid.length > 0) {
     pool.destroy();
     res.status(200).json({ Status:"EmailIsNotValid" })
