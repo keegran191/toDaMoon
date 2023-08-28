@@ -1,15 +1,9 @@
 var mysql = require('mysql2');
 const bcrypt = require("bcrypt")
+import db from "../../lib/database";
 
 export default async function handler(req, res) {
-
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "to_da_moon"
-  });
-
+  const pool = await db.getConnection();
   const {
     floating_email,
     floating_password,
@@ -39,7 +33,7 @@ export default async function handler(req, res) {
           email: true,
           username: true
         }
-       //pool.destroy();
+        pool.destroy();
         res.redirect(307, '/register?errorMsg=UserAlreadyExists&errObj=' + JSON.stringify(data))
         res.status(409)
       } else {
@@ -61,6 +55,7 @@ export default async function handler(req, res) {
             errorMsg: "PasswordNotBigOrNot8",
             errObj: {}
           };
+          pool.destroy();
           res.redirect(307, '/register?' + new URLSearchParams(data).toString());
           return;
         }
@@ -71,6 +66,7 @@ export default async function handler(req, res) {
             errorMsg: "PasswordNotBigOrNot8",
             errObj: {}
           };
+          pool.destroy();
           res.redirect(307, '/register?' + new URLSearchParams(data).toString());
           return;
         }
@@ -81,6 +77,7 @@ export default async function handler(req, res) {
             errorMsg: "PhoneNot10",
             errObj: {}
           };
+          pool.destroy();
           res.redirect(307, '/register?' + new URLSearchParams(data).toString());
           return;
         }
@@ -90,7 +87,7 @@ export default async function handler(req, res) {
 
           if (err) throw (err)
           console.log("--------> Created new User")
-         //pool.destroy();
+          pool.destroy();
           res.redirect(307, '/login')
           console.log(result.insertId)
           res.status(201)
