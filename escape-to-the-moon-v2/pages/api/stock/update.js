@@ -83,7 +83,7 @@ async function updateStock(stockId, updatedStock) {
   const pool = await db.getConnection();
   try {
     await pool.query(
-      'UPDATE stock SET Title = ?, Detail = ?, Amount = ?, Price = ?, IsAdvise = ?, StockType = ?, Process = ?, Roast = ?, Flavor = ?, CategoryId = ?, SubCategoryId = ?, Image = ? WHERE id = ?',
+      'UPDATE stock SET Title = ?, Detail = ?, Amount = ?, Price = ?, IsAdvise = ?, StockType = ?, Process = ?, Roast = ?, Flavor = ?, CategoryId = ?, SubCategoryId = ?, Image = ? WHERE Id = ?',
       [
         updatedStock.Title,
         updatedStock.Detail,

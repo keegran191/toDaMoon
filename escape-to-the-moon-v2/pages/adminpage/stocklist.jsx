@@ -589,21 +589,21 @@ function StockConfig({ cookies }) {
                                                 onClick={() => {
                                                     UpdateStock(selectedId)
                                                     setSelectedId(null)
-                                                    // setSelectedId(null)
-                                                    // setTitle(null)
-                                                    // setDetail(null)
-                                                    // setAmount(null)
-                                                    // setPrice(null)
-                                                    // setIsAdvise(null)
-                                                    // setStockType(null)
-                                                    // setProcess(null)
-                                                    // setRoast(null)
-                                                    // setFlavor(null)
-                                                    // setCategoryId(null)
-                                                    // setSubCategoryId(null)
+                                                    setSelectedId(null)
+                                                    setTitle(null)
+                                                    setDetail(null)
+                                                    setAmount(null)
+                                                    setPrice(null)
+                                                    setIsAdvise(null)
+                                                    setStockType(null)
+                                                    setProcess(null)
+                                                    setRoast(null)
+                                                    setFlavor(null)
+                                                    setCategoryId(null)
+                                                    setSubCategoryId(null)
+                                                    setImages([]);
+                                                    setImagesURLs([]);
                                                     GetStokcList(searchTitle);
-                                                    // setImages([]);
-                                                    // setImagesURLs([]);
                                                 }}
                                             >
                                                 เเก้ไขสินค้า
