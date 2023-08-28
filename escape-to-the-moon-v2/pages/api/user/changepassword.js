@@ -7,18 +7,13 @@ export default async function handler(req, res) {
     const password = req.query.password;
     const newPassword = req.query.newPassword
     const confirmNewPassword = req.query.confirmNewPassword
-    const formadmin = req.query.formadmin
+    
     // Check if new password and confirm new password match
     if (newPassword !== confirmNewPassword) {
-        pool.destroy();
         console.log("new password and confirm password not match")
-        if(formadmin == 1) {
-            res.redirect(200, '/adminpage/adminmanagement?errorMsg=NewPasswordAndConfirmNewPasswordNotMatch');
-        } else {
-            res.redirect(200, '/usermanagement?errorMsg=NewPasswordAndConfirmNewPasswordNotMatch');
-        }
-        return
-    }
+        return res.status(200).json({ isSuccess: false, message: "New password and confirm new password do not match." });
+
+  }
     
     const cookies = parse(req.headers.cookie || '');
     const userId = cookies.userId; // Get the user ID from the cookie
@@ -30,12 +25,7 @@ export default async function handler(req, res) {
         if (results.length === 0) {
             console.log("User not found")  
             pool.destroy();
-            if(formadmin == 1) {
-                res.redirect(200, '/adminpage/adminmanagement').json({ isSuccess: false, message: "User not found" });
-            } else {
-                res.redirect(200, '/usermanagement').json({ isSuccess: false, message: "User not found" });
-            }
-            return 
+            return res.status(200).json({ isSuccess: false, message: "User not found" });
         }
         
         const user = results[0];
@@ -46,12 +36,8 @@ export default async function handler(req, res) {
         if (!isPasswordMatch) {
             console.log("Invalid password.")
             pool.destroy();
-            if(formadmin == 1) {
-                res.status(200).json({ isSuccess: false, message: "Invalid password" });
-            } else {
-                res.status(200).json({ isSuccess: false, message: "Invalid password" });
-            }
-            return
+            return res.status(200).json({ isSuccess: false, message: "Invalid password" });
+            
         }
 
         // Update the user's password with the new hashed password
