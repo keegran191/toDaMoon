@@ -52,9 +52,10 @@ export default async function handler(req, res) {
           
           res.status(200).json({ Status:"isAdminLogin" })
         } else {
+          res.setHeader("Set-Cookie", cookies);
           console.log("isNotAdmin")
           pool.destroy();
-          res.setHeader("Set-Cookie", cookies);
+          
           res.status(200).json({ Status:"isUserLogin" })
         }
       } else {
