@@ -595,7 +595,7 @@ function AdminManagement({ cookies }) {
                         whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                         whileTap={{ scale: 0.95 }}
                         onClick={ async () => {
-                            await Axios.get(`https://escapetothemoon.lol/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`).then((response) => {
+                            await Axios.get(`https://escapetothemoon.lol/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}&formadmin=${1}`).then((response) => {
                                 if (response.data.isSuccess == false) {
                                     setErrorMessage(response.data.message)
                                 }
