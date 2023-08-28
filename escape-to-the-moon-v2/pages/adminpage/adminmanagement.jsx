@@ -1008,7 +1008,7 @@ function AdminManagement({ cookies }) {
                                                 setSelectOrder(null);
                                                 setRotateStatus(0)
                                                 GetAdminOrderAmount()
-                                                GetAdminHistory()
+                                                GetAdminHistory("")
                                                 GetAdminOrder(status);
                                             }}
                                         >
