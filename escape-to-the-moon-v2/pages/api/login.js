@@ -55,16 +55,17 @@ export default async function handler(req, res) {
       } else {
         console.log("Password does not match!");
         pool.destroy();
-        res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
+        res.status(200).json({ Status:"EmailOrPassNotValid" })
       }
     } else {
       console.log("Email not found");
       pool.destroy();
-      res.redirect(307, "/login?errorMsg=WrongEmailOrPassword&errObj=");
+      res.status(200).json({ Status:"EmailOrPassNotValid" })
     }
   } catch (error) {
-    console.error(error);
     pool.destroy();
-    res.redirect(307, "/login?errorMsg=DatabaseError&errObj=");
+    res.status(500).json({ Status:"Database Error" })
+    console.log(err);
+    return null;
   }
 }

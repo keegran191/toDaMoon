@@ -4,6 +4,7 @@ import style from '../styles/RegisLogin.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect, createRef } from 'react';
+import Axios from 'axios';
 export default function Login() {
     const router = useRouter()
 
@@ -45,16 +46,13 @@ export default function Login() {
                                 alert("กรุณากรอกข้อมูลให้ถูกต้อง")
                             } else {
                                 // ตัวอย่างการเขียน API
-                                // await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}&password=${Password}&fname=${Fname}&sname=${Sname}&phone=${Phone}`).then((response) => {
-                                //     console.log(response.data.Status) 
-                                //     if (response.data.Status == "EmailIsNotValid" <--- Status that api call back) {
-                                //         console.log("InValid")
-                                //         setEmailNotAvailable(true); <--- Set Error
-                                //     } else if (response.data.Status == "RegisterSuccess" <--- Status that api call back) {
-                                //         alert("ลงทะเบียนเสร็จสิ้น")
-                                //         router.push('/login') <--- Set Screen When can login
-                                //     }
-                                // })
+                                await Axios.post(`https://escapetothemoon.lol/api/login?email=${Email}&password=${Password}`).then((response) => {
+                                    console.log(response.data.Status) 
+                                    if (response.data.Status == "EmailOrPassNotValid" ) {
+                                        console.log("InValid")
+                                        setLoginError(true);
+                                     }
+                                 })
                             }
                         }}
                     >
