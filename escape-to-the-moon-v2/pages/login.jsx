@@ -40,8 +40,12 @@ export default function Login() {
                     <button 
                         id="login" 
                         className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mt-10 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none"
-                        onClick={() => {
-                            
+                        onClick={async () => {
+                            if (email == '' || email == null || password == '' || password == null || password == undefined) {
+                                alert("กรุณากรอกข้อมูลให้ถูกต้อง")
+                            } else {
+                                
+                            }
                         }}
                     >
                         ลงชื่อเข้าใช้
