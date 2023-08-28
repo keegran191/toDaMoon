@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 export default function Login() {
     const router = useRouter()
-    const { errorMsg, } = router.query
+    const errorMsg = router.query
     return(
         <div>
             <Head>
