@@ -161,8 +161,9 @@ export default function Login() {
                                 await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}&password=${Password}&fname=${Fname}&sname=${Sname}&phone=${Phone}`).then((response) => {
                                     if (response.data.Status = "EmailIsNotValid") {
                                         setEmailNotAvailable(true);
-                                    } elseif (response.data.Status = "RegisterSuccess") {
+                                    } else if (response.data.Status = "RegisterSuccess") {
                                         router.push('/login')
+                                        
                                     }
                                 })
                             }
