@@ -18,7 +18,7 @@ export default function Login() {
             </Head>
             <main>
                 <Nav className={style.nav}></Nav>
-                <form className={style.form} action="api/login" method='POST'  >
+                <form className={style.form} action="api/login" method='POST'>
                     <h1 className="text-center sm:text-5xl text-4xl mt-36 mb-10 w-full">เข้าสู่ระบบ</h1>
                     <div className="relative z-0 mb-6 w-full group">
                         <input type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
