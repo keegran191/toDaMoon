@@ -44,7 +44,17 @@ export default function Login() {
                             if (email == '' || email == null || password == '' || password == null || password == undefined) {
                                 alert("กรุณากรอกข้อมูลให้ถูกต้อง")
                             } else {
-                                
+                                // ตัวอย่างการเขียน API
+                                // await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}&password=${Password}&fname=${Fname}&sname=${Sname}&phone=${Phone}`).then((response) => {
+                                //     console.log(response.data.Status) 
+                                //     if (response.data.Status == "EmailIsNotValid") {
+                                //         console.log("InValid")
+                                //         setEmailNotAvailable(true);
+                                //     } else if (response.data.Status == "RegisterSuccess") {
+                                //         alert("ลงทะเบียนเสร็จสิ้น")
+                                //         router.push('/login')
+                                //     }
+                                // })
                             }
                         }}
                     >
