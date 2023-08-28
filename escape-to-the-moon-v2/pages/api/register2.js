@@ -11,6 +11,8 @@ export default async function handler(req, res) {
 
   const pool = await db.getConnection();
 
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const [emailValid] = await pool.query('SELECT * FROM users WHERE email = ?', [email]).catch((err)=> {
     pool.destroy();
     res.status(500).json({"Status":"Database Error"})
@@ -18,21 +20,23 @@ export default async function handler(req, res) {
     return null;
   })
 
+  console.log("Process")
+
   if (emailValid.length > 0) {
     pool.destroy();
     res.status(200).json({ Status:"EmailIsNotValid" })
     return null;
-  }
+  } else if (emailValid.length == 0) {
+    const [results] = await pool.query('INSERT INTO users (user_fname, user_lname, email, user_password, user_phone, is_admin) VALUES (?, ?, ?, ?, ?, ?)',[fname, sname, email, hashedPassword, phone, 0]).catch((err) => {
+      pool.destroy();
+      res.status(500).json({"Status":"Database Error"});
+      console.error(err);
+      return null;
+    })
 
-  const [results] = await pool.query('INSERT INTO users (user_fname, user_lname, email, user_password, user_phone, is_admin) VALUES (?, ?, ?, ?, ?, ?)',[fname, sname, email, password, phone, 0]).catch((err) => {
     pool.destroy();
-    res.status(500).json({"Status":"Database Error"});
-    console.error(err);
-    return null;
-  })
-
-  pool.destroy();
-  res.status(200).json({ Status:"RegisterSuccess" });
+    res.status(200).json({ Status:"RegisterSuccess" });
+  }
   
   // try {
   //   const {

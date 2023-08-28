@@ -163,7 +163,6 @@ export default function Login() {
                                         setEmailNotAvailable(true);
                                     } else if (response.data.Status = "RegisterSuccess") {
                                         router.push('/login')
-                                        
                                     }
                                 })
                             }
