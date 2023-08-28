@@ -17,7 +17,7 @@ function UserManagement ({ cookies }) {
 
     const router = useRouter();
     const IsOrder = router.query.IsOrder;
-    const { errorMsg } = router.query.errorMsg
+    const errorMsg  = router.query.errorMsg
 
     const [stockAmount, setStockAmount] = useState(0)
 
