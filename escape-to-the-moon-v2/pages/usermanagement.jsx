@@ -530,10 +530,8 @@ function UserManagement ({ cookies }) {
                             if (Fname === "" || Sname === "" || Phone === undefined) {
                               alert("Please fill in all fields.");
                             } else {
-
                               await Axios.get(`https://escapetothemoon.lol/api/user/update?Fname=${Fname}&Sname=${Sname}&Phone=${Phone}`);
                               window.location.reload();
-
                             }
                           }}
                     >
@@ -972,6 +970,7 @@ function UserManagement ({ cookies }) {
                         onClick={ async () => {
                             await Axios.get(`https://escapetothemoon.lol/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}`).then((response) => {
                                 if (response.data.isSuccess == false) {
+                                    console.log(response.data.message)
                                     setErrorMessage(response.data.message)
                                 }
                             })
