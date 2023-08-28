@@ -1,5 +1,7 @@
 import cookie from "cookie";
 import db from "../../lib/database";
+import http from 'http';
+
 const bcrypt = require("bcrypt");
 
 export default async function handler(req, res) {
@@ -56,7 +58,7 @@ export default async function handler(req, res) {
           console.log("isNotAdmin")
           pool.destroy();
           
-          res.writeHead(301, { Location: "http://w3docs.com/" });
+          res.writeHead(307, { 'Location': '/' });
         }
       } else {
         console.log("Password does not match!");
