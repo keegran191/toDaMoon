@@ -970,11 +970,11 @@ function UserManagement ({ cookies }) {
                         onClick={ async () => {
                             await Axios.get(`https://escapetothemoon.lol/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}&formadmin=${0}`).then((response) => {
                                 console.log(response.data);
-                                // if (response.data.isSuccess == false) {
-                                //     console.log(response.data.message)
-                                //     setErrorMessage(response.data.message)
-                                //     window.location.reload()
-                                // }
+                                if (response.data.isSuccess == false) {
+                                    console.log(response.data.message)
+                                    setErrorMessage(response.data.message)
+                                    window.location.reload()
+                                }
                             })
                         }}
                     >

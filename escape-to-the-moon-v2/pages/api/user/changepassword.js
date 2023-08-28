@@ -11,7 +11,9 @@ export default async function handler(req, res) {
     // Check if new password and confirm new password match
     if (newPassword !== confirmNewPassword) {
         console.log("new password and confirm password not match")
-        return res.status(200).json({ isSuccess: false, message: "New password and confirm new password do not match." });
+        pool.destroy();
+        res.status(200).json({ isSuccess: false, message: "New password and confirm new password do not match." });
+        return
 
   }
     
@@ -25,7 +27,8 @@ export default async function handler(req, res) {
         if (results.length === 0) {
             console.log("User not found")  
             pool.destroy();
-            return res.status(200).json({ isSuccess: false, message: "User not found" });
+            res.status(200).json({ isSuccess: false, message: "User not found" });
+            return
         }
         
         const user = results[0];
@@ -36,7 +39,8 @@ export default async function handler(req, res) {
         if (!isPasswordMatch) {
             console.log("Invalid password.")
             pool.destroy();
-            return res.status(200).json({ isSuccess: false, message: "Invalid password" });
+            res.status(200).json({ isSuccess: false, message: "Invalid password" });
+            return
             
         }
 
@@ -47,11 +51,13 @@ export default async function handler(req, res) {
         await pool.query(updateQuery, [hashedNewPassword, user.id]);
         console.log("Password updated successfully.")
         pool.destroy();
-        return res.status(200).json({ isSuccess: true, message: "Password updated successfully." });
+        res.status(200).json({ isSuccess: true, message: "Password updated successfully." });
+        return 
     } catch (error) {
         console.log("err")
         console.error(error);
         pool.destroy();
-        return res.status(500).json({ isSuccess: false, message: "Database error." });
+        res.status(500).json({ isSuccess: false, message: "Database error." });
+        return 
     }
 }
