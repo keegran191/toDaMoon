@@ -13,9 +13,9 @@ export default async function handler(req, res) {
         pool.destroy();
         console.log("new password and confirm password not match")
         if(formadmin == 1) {
-            res.redirect(412, '/adminpage/adminmanagement?errorMsg=NewPasswordAndConfirmNewPasswordNotMatch');
+            res.redirect(200, '/adminpage/adminmanagement?errorMsg=NewPasswordAndConfirmNewPasswordNotMatch');
         } else {
-            res.redirect(412, '/usermanagement?errorMsg=NewPasswordAndConfirmNewPasswordNotMatch');
+            res.redirect(200, '/usermanagement?errorMsg=NewPasswordAndConfirmNewPasswordNotMatch');
         }
         return
     }
@@ -31,9 +31,9 @@ export default async function handler(req, res) {
             console.log("User not found")  
             pool.destroy();
             if(formadmin == 1) {
-                res.redirect(412, '/adminpage/adminmanagement').json({ isSuccess: false, message: "User not found" });
+                res.redirect(200, '/adminpage/adminmanagement').json({ isSuccess: false, message: "User not found" });
             } else {
-                res.redirect(412, '/usermanagement').json({ isSuccess: false, message: "User not found" });
+                res.redirect(200, '/usermanagement').json({ isSuccess: false, message: "User not found" });
             }
             return 
         }
@@ -47,9 +47,9 @@ export default async function handler(req, res) {
             console.log("Invalid password.")
             pool.destroy();
             if(formadmin == 1) {
-                res.redirect(412, '/adminpage/adminmanagement').json({ isSuccess: false, message: "Invalid password" });
+                res.redirect(200, '/adminpage/adminmanagement').json({ isSuccess: false, message: "Invalid password" });
             } else {
-                res.redirect(412, '/usermanagement').json({ isSuccess: false, message: "Invalid password" });
+                res.redirect(200, '/usermanagement').json({ isSuccess: false, message: "Invalid password" });
             }
             return
         }
