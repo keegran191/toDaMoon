@@ -4,6 +4,7 @@ import style from '../styles/RegisLogin.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect, createRef } from 'react';
+import Axios from 'axios';
 
 export default function Login() {
     const router = useRouter()
@@ -152,8 +153,16 @@ export default function Login() {
                     <button 
                         id="register" 
                         className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none"
-                        onClick={() => {
-                            
+                        onClick={async () => {
+                            if (emailValid == true || passwordErrorInclude == true || passwordErrorCapital == true || passwordErrorLenght == true || passwordConfirmError == true || phoneError == true) {
+                                alert("กรุณาใส่ข้อมูลให้ถูกต้อง")
+                            } else {
+                                await Axios.post(`https://escapetothemoon.lol/api/register2?email=${Email}`).then((response) => {
+                                    if (response.data.Status = "EmailIsNotValid") {
+                                        setEmailNotAvailable(true);
+                                    }
+                                })
+                            }
                         }}
                     >
                         สมัครสมาชิก

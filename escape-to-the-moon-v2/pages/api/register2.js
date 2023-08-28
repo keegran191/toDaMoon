@@ -20,13 +20,13 @@ export async function handler(req, res) {
 
   if (emailValid.length > 0) {
     pool.destroy();
-    res.status(200).json({"Status":"EmailIsNotValid"})
+    res.status(200).json({ Status:"EmailIsNotValid" })
     return null;
   }
 
   pool.destroy();
   res.redirect(200,'/login')
-
+  
   // try {
   //   const {
   //     floating_email,
