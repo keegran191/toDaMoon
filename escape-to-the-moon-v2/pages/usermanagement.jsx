@@ -270,6 +270,7 @@ function UserManagement ({ cookies }) {
             setToggleHistory(true);
             setOrder(true);
         }
+        console.log(errorMsg);
     }, [userId]);
 
     return (
