@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         if(formadmin == 1) {
             res.redirect(403, '/adminpage/adminmanagement').json({ isSuccess: false, message: "New password and confirm new password do not match." });
         } else {
-            res.redirect(403, '/adminpage/usermanagement').json({ isSuccess: false, message: "New password and confirm new password do not match." })
+            res.redirect(403, '/usermanagement').json({ isSuccess: false, message: "New password and confirm new password do not match." })
         }
         return
     }
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
             if(formadmin == 1) {
                 res.redirect(401, '/adminpage/adminmanagement').json({ isSuccess: false, message: "User not found" });
             } else {
-                res.redirect(401, '/adminpage/usermanagement').json({ isSuccess: false, message: "User not found" });
+                res.redirect(401, '/usermanagement').json({ isSuccess: false, message: "User not found" });
             }
             return 
         }
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
             if(formadmin == 1) {
                 res.redirect(403, '/adminpage/adminmanagement').json({ isSuccess: false, message: "Invalid password" });
             } else {
-                res.redirect(403, '/adminpage/usermanagement').json({ isSuccess: false, message: "Invalid password" });
+                res.redirect(403, '/usermanagement').json({ isSuccess: false, message: "Invalid password" });
             }
             return
         }
