@@ -1,7 +1,7 @@
 import db from "../../lib/database";
 import bcrypt from 'bcrypt';
 
-export default async function handler(req, res) {
+export async function handler(req, res) {
   
   const pool = await db.getConnection();
 
