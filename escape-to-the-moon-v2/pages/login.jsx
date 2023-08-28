@@ -45,7 +45,7 @@ export default function Login() {
                             if (email == '' || email == null || password == '' || password == null || password == undefined) {
                                 alert("กรุณากรอกข้อมูลให้ถูกต้อง")
                             } else {
-                                // ตัวอย่างการเขียน API
+                                
                                 await Axios.post(`https://escapetothemoon.lol/api/login?email=${email}&password=${password}`).then((response) => {
                                     console.log(response.data.Status) 
                                     if (response.data.Status == "EmailOrPassNotValid" ) {
@@ -55,7 +55,7 @@ export default function Login() {
                                         
                                         router.push('/adminpage/category')
                                      } else if (response.data.Status == "isUserLogin" ) {
-                                        window.location.href('https://escapetothemoon.lol')
+                                        router.push('/store')
                                         
                                      }
                                  })
