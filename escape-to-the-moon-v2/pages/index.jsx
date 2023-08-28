@@ -134,7 +134,7 @@ export default function Home({ cookies }) {
                       <img
                         src={`/uploads/${post.Image}`}
                         alt={post.Title}
-                        className="w-auto h-auto rounded-full"
+                        className="w-full h-full rounded-full"
                       />
                     </Link>
                   </motion.div>
