@@ -9,10 +9,6 @@ export default function middleware(req:NextRequest){
       return NextResponse.redirect("https://escapetothemoon.lol/login");
     }
 
-    if(!verify && url.includes('/home')){
-      return NextResponse.redirect("https://escapetothemoon.lol/login");
-    }
-
     if (verify != "1"  && url.includes('/adminpage')){
         return NextResponse.redirect("https://escapetothemoon.lol/");
     }
@@ -21,7 +17,7 @@ export default function middleware(req:NextRequest){
       return NextResponse.redirect("https://escapetothemoon.lol/");
     }
 
-    if (verify && url === "https://escapetothemoon.lol/login") {
+    if (verify && url.includes("/login")) {
       return NextResponse.redirect("https://escapetothemoon.lol/");
     }
 
