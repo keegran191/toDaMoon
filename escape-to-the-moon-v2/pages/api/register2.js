@@ -30,9 +30,9 @@ export default async function handler(req, res) {
     console.error(err);
     return null;
   })
-  
+
   pool.destroy();
-  res.redirect(200,'/login')
+  res.status(200).json({ Status:"RegisterSuccess" });
   
   // try {
   //   const {
