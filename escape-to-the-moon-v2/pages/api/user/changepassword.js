@@ -7,16 +7,11 @@ export default async function handler(req, res) {
     const password = req.query.password;
     const newPassword = req.query.newPassword
     const confirmNewPassword = req.query.confirmNewPassword
-    const formadmin = req.query.formadmin
     // Check if new password and confirm new password match
     if (newPassword !== confirmNewPassword) {
         pool.destroy();
         console.log("new password and confirm password not match")
-        if(formadmin == 1) {
-            res.redirect(307, '/adminpage/adminmanagement').json({ isSuccess: false, message: "New password and confirm new password do not match." });
-        } else {
-            res.redirect(307, '/usermanagement').json({ isSuccess: false, message: "New password and confirm new password do not match." })
-        }
+        res.status(307).json({ isSuccess: false, message: "New password and confirm new password do not match." });
         return
     }
     
@@ -30,11 +25,7 @@ export default async function handler(req, res) {
         if (results.length === 0) {
             console.log("User not found")  
             pool.destroy();
-            if(formadmin == 1) {
-                res.redirect(307, '/adminpage/adminmanagement').json({ isSuccess: false, message: "User not found" });
-            } else {
-                res.redirect(307, '/usermanagement').json({ isSuccess: false, message: "User not found" });
-            }
+            res.status(307).json({ isSuccess: false, message: "User not found" });
             return 
         }
         
@@ -46,11 +37,7 @@ export default async function handler(req, res) {
         if (!isPasswordMatch) {
             console.log("Invalid password.")
             pool.destroy();
-            if(formadmin == 1) {
-                res.redirect(307, '/adminpage/adminmanagement').json({ isSuccess: false, message: "Invalid password" });
-            } else {
-                res.redirect(307, '/usermanagement').json({ isSuccess: false, message: "Invalid password" });
-            }
+            res.status(307).json({ isSuccess: false, message: "Invalid password" });
             return
         }
 
