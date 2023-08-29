@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect, createRef } from 'react';
 import Axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
+
 export default function Login() {
     const router = useRouter()
 
@@ -38,8 +40,10 @@ export default function Login() {
                         {loginError && <span id="alreadyExist" className="text-[#ff0000] block">อีเมล หรือ รหัสผ่าน ผิด</span>}
                     </div>
                     
-                    <button 
+                    <motion.button 
                         id="login" 
+                        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                        whileTap={{ scale: 0.95 }}
                         className="w-full text-white bg-[#252525] hover:bg-[#010101] font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mt-10 mb-2 dark:bg-[#252525] dark:hover:bg-[#010101] focus:outline-none"
                         onClick={async () => {
                             if (email == '' || email == null || password == '' || password == null || password == undefined) {
@@ -63,7 +67,7 @@ export default function Login() {
                         }}
                     >
                         ลงชื่อเข้าใช้
-                    </button>
+                    </motion.button>
                     <Link href="/register">
                         <h1 id="register" className="cursor-pointer text-center hover:text-[#010101] mt-6 mb-6">ยังไม่ได้เป็นสมาชิก? กดที่นี่เลย</h1>
                     </Link>
