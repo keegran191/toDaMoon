@@ -209,7 +209,6 @@ function AdminManagement({ cookies }) {
     const GetAdminOrder = (orderStatus) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
             setAdminOrder(response.data)
-            console.log(response.data)
         })
     }
 
@@ -634,7 +633,6 @@ function AdminManagement({ cookies }) {
                         onClick={ async () => {
                             await Axios.get(`https://escapetothemoon.lol/api/user/changepassword?password=${password}&newPassword=${newPassword}&confirmNewPassword=${confirmNewPassword}&formadmin=${1}`).then((response) => {
                                 if (response.data.isSuccess == false) {
-                                    console.log(response.data.message)
                                     setErrorMessage(response.data.message)
                                 } else {
                                     alert(response.data.message)
@@ -781,7 +779,6 @@ function AdminManagement({ cookies }) {
                                                     )
                                                 }
                                                 let total = 0
-                                                console.log(order_item)
                                                 for (let i = 0; i < orderItem.length; i++) {
                                                     if (orderItem[i].order_id == post.order_Id) {
                                                         total += (order_item.total)
@@ -1294,7 +1291,6 @@ function AdminManagement({ cookies }) {
                                                     )
                                                 }
                                                 let total = 0
-                                                console.log(order_item)
                                                 for (let i = 0; i < orderItem.length; i++) {
                                                     if (orderItem[i].order_id == post.order_Id) {
                                                         total += (order_item.total)
