@@ -1552,7 +1552,6 @@ function AdminManagement({ cookies }) {
                             </motion.div>
                         </motion.div>)}
                     </AnimatePresence>
-
                 </div>}
             </div>
         </div>
