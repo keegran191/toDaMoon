@@ -4,9 +4,10 @@ import db from "../../../lib/database";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, join(process.cwd(), '/asset'));
+    cb(null, join(process.cwd(), '/public/uploads'));
   },
   filename: function (req, file, cb) {
+    console.log(file.fieldname)
     let name = file.fieldname + '-' + Date.now() + '-' + Math.round(Math.random() * 1E9) + extname(file.originalname);
     cb(null, name);
   }
