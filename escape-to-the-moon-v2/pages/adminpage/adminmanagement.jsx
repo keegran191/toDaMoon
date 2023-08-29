@@ -193,12 +193,6 @@ function AdminManagement({ cookies }) {
         setPhone(sanitizedValue);
     }
 
-    const filterPasswordsInput = (e) => {
-        const value = e.target.value;
-        const sanitizedValue = value.replace(/[^a-zA-Z0-9!@#$%^&*()-_=+[\]{}|;:'",.<>/?\\ ]/g, '');
-        setNewPassword(sanitizedValue)
-    }
-
     const GetOrderItemByOrder = (selectOrder) => {
         Axios.get(`https://escapetothemoon.lol/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
             setOrderItemByOrder(response.data)
@@ -308,18 +302,15 @@ function AdminManagement({ cookies }) {
     }, [IsOrder, IsUser, IsHistory]);
 
     useEffect(() => {
-        if (IsUser == 1 && changeProfileMenu == 1) {
-            setToggleUser(true);
-            setRotateUser(180)
+        console.log(changeProfileMenu)
+        if (changeProfileMenu == 1) {
             setChangeUser(true);
             setChangePassword(false);
             setLookOrder(false);
             setLookHistory(false)
         }
 
-        if (IsUser == 1 && changePasswordMenu == 1) {
-            setToggleUser(true);
-            setRotateUser(180)
+        if (changePasswordMenu == 1) {
             setChangeUser(false);
             setChangePassword(true);
             setLookOrder(false);
