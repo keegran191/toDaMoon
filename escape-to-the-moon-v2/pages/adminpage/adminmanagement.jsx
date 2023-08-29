@@ -22,7 +22,7 @@ function AdminManagement({ cookies }) {
     const changeProfileMenu = router.query.changeProfile;
     const changePasswordMenu = router.query.changePassword
 
-    const userlogout = router.query.user.UserLogout
+    const userlogout = router.query.UserLogout
 
     const [orderAmount, setOrderAmount] = useState(0)
     const [haveNewOrder, setHaveNewOrder] = useState()
