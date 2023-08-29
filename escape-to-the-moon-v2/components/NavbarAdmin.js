@@ -46,7 +46,7 @@ function Navbar({
                         <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
                     </button>
                 </div>
-                <div className = {toggle? "hidden lg:block": "" + "w-full md:block md:w-auto h-screen"} id="navbar-default">
+                <div className = {toggle? "hidden md:block": "" + "w-full lg:block md:w-auto h-screen"} id="navbar-default">
                     <ul className="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-[#252525] bg-[#252525] dark:border-[#252525]">
                         <li className='block sm:hidden'>
                             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" onClick={()=> {toggleBtn(toggleUser, setToggleUser)}} className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">โปรไฟล์ <svg className="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg></button>
