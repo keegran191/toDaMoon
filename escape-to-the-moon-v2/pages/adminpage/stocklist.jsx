@@ -320,11 +320,10 @@ function StockConfig({ cookies }) {
                                 GetSubCategory(post.CategoryId)
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
-                                console.log(post.Image)
                             }}
                         >
                             <div className="flex justify-center items-center">
-                                <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
+                                {post.Image != '' && <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />}
                             </div>
                             <div className="px-4 mt-1">
                                 <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{post.Title}</h3>
