@@ -1251,6 +1251,11 @@ function AdminManagement({ cookies }) {
 
                                             {(() => {
                                                 let order_item = orderItem.find((item) => item.order_id == post.order_Id)
+                                                if (order_item == undefined) {
+                                                    return (
+                                                        <p>Loading</p>
+                                                    )
+                                                }
                                                 let total = 0
                                                 console.log(order_item)
                                                 for (let i = 0; i < orderItem.length; i++) {
