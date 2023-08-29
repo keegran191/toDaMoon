@@ -107,18 +107,20 @@ function Navbar({
                                 <a className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">ประวิติการขายสินค้า</a>
                             </Link>
                         </li>
-                        <li className='flex w-full justify-center sm:hidden xl:block'>
-                            <motion.button 
-                                className='bg-[#252525] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
-                                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={async () => {
-                                    await Axios.get(`https://escapetothemoon.lol/api/logout`);
-                                    window.location.href = "/";
-                                }}
-                            >
-                                ออกจากระบบ
-                            </motion.button>
+                        <li className='flex w-full justify-center sm:hidden xl:block mt-10'>
+                            <Link href={`/adminpage/adminmanagement?UserLogout=${1}`} className='bg-[#3F3F3F] text-[#FFFFFF] w-6/12 py-3 rounded-lg'>
+                                <motion.button 
+                                    className='bg-[#3F3F3F] text-[#FFFFFF] w-full rounded-lg'
+                                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                    whileTap={{ scale: 0.95 }}
+                                    // onClick={async () => {
+                                    //     // await Axios.get(`https://escapetothemoon.lol/api/logout`);
+                                    //     // window.location.href = "/";
+                                    // }}
+                                >
+                                    ออกจากระบบ
+                                </motion.button>
+                            </Link>
                         </li>
                     </ul>
                 </div>
