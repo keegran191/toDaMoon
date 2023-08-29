@@ -102,7 +102,7 @@ function Navbar({
                                 </ul>
                             </div>
                         </li>
-                        <li>
+                        <li className='block md:hidden'>
                             <Link href={`/adminpage/adminmanagement?IsHistory=${1}`}>
                                 <a className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">ประวิติการขายสินค้า</a>
                             </Link>
