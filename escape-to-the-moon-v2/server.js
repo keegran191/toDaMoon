@@ -2,7 +2,7 @@ const express = require('express')
 const next = require('next')
 
 const port = 80
-const app = next({ dev: true, hostname: 'localhost', port })
+const app = next({ dev: false, hostname: 'localhost', port })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
