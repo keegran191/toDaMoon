@@ -54,7 +54,7 @@ function Navbar({
                             <div id="dropdownNavbar" className={toggleUser? "hidden": "" + "md:absolute z-10 w-50 mt-0.5 font-normal bg-[#333333] rounded divide-y divide-gray-100 shadow"}>
                                 <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
                                     <li>
-                                        <Link href={`/adminpage/adminmanagement?IsUser=${1}&changeProfileMenu=${1}`} className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
+                                        <Link href={`/adminpage/adminmanagement?IsUser=${1}&changeProfile=${1}`} className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
                                             <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไขข้อมูลส่วนตัว</h1>
                                         </Link>
                                     </li>
