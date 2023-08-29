@@ -1,39 +1,23 @@
-const { createServer } = require('http')
-const { parse } = require('url')
+const express = require('express')
 const next = require('next')
-const { statSync } = require('fs')
- 
-const dev = process.env.NODE_ENV !== 'production'
-const hostname = 'localhost'
-const port = 3000
-// when using middleware `hostname` and `port` must be provided below
-const app = next({ dev, hostname, port })
-const handle = app.getRequestHandler()
- 
-app.prepare().then(() => {
-  createServer(async (req, res) => {
-    try {
-      // Be sure to pass `true` as the second argument to `url.parse`.
-      // This tells it to parse the query portion of the URL.
-      const parsedUrl = parse(req.url, true)
-      const { pathname, query } = parsedUrl
 
-      if (pathname == "/uploads") {
-        console.log(parsedUrl);        
-      }
- 
-      await handle(req, res, parsedUrl)
-    } catch (err) {
-      console.error('Error occurred handling', req.url, err)
-      res.statusCode = 500
-      res.end('internal server error')
-    }
+const port = 80
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev, hostname: 'localhost', port })
+const handle = app.getRequestHandler()
+
+app.prepare().then(() => {
+  const server = express()
+
+  //console.log(__dirname + "/uploads")
+  server.use("/uploads", express.static(__dirname + "/public/uploads"));
+  server.all('*', (req, res) => {
+      //console.log('handle', req.url);
+      return handle(req, res)
+  });
+
+  server.listen(port, (err) => {
+    if (err) throw err
+    console.log(`> Ready on http://localhost:${port}`)
   })
-    .once('error', (err) => {
-      console.error(err)
-      process.exit(1)
-    })
-    .listen(port, () => {
-      console.log(`> Ready on http://${hostname}:${port}`)
-    })
 })
