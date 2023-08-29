@@ -13,6 +13,8 @@ function Navbar({
     const [toggle1, setToggle1] = useState(true)
     const [toggle2, setToggle2] = useState(true)
 
+    const [toggleUser, setToggleUser] = useState(true)
+
     const [rotateCategory ,setRotateCategory] = useState(0)
     const [rotateSubCategory ,setRotateSubCategory] = useState(0)
 
@@ -46,6 +48,24 @@ function Navbar({
                 </div>
                 <div className = {toggle? "hidden md:block": "" + "w-full md:block md:w-auto h-screen"} id="navbar-default">
                     <ul className="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-[#252525] bg-[#252525] dark:border-[#252525]">
+                        <li className='block lg:hidden'>
+                            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" onClick={()=> {toggleBtn(toggleUser, setToggleUser)}} className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">โปรไฟล์ <svg className="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg></button>
+                            
+                            <div id="dropdownNavbar" className={toggleUser? "hidden": "" + "md:absolute z-10 w-50 mt-0.5 font-normal bg-[#333333] rounded divide-y divide-gray-100 shadow"}>
+                                <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
+                                    <li>
+                                        <Link href="/adminpage/addstock" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
+                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">แก้ไขข้อมูลส่วนตัว</h1>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/adminpage/stocklist" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
+                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เเก้ไขรหัสผ่าน</h1>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         <li>
                             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" onClick={()=> {toggleBtn(toggle1, setToggle1)}} className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">จัดการประเภทของสินค้า <svg className="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg></button>
                             
@@ -83,7 +103,7 @@ function Navbar({
                             </div>
                         </li>
                         <li>
-                            <Link className='hidden lg:block' href={`/adminpage/adminmanagement?IsHistory=${1}`}>
+                            <Link href={`/adminpage/adminmanagement?IsHistory=${1}`}>
                                 <a className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">ประวิติการขายสินค้า</a>
                             </Link>
                         </li>

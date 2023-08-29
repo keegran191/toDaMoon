@@ -19,6 +19,9 @@ function AdminManagement({ cookies }) {
     const IsUser = router.query.IsUser;
     const IsHistory = router.query.IsHistory;
 
+    const changeProfileMenu = router.query.changeProfile;
+    const changePasswordMenu = router.query.changePassword
+
     const [orderAmount, setOrderAmount] = useState(0)
     const [haveNewOrder, setHaveNewOrder] = useState()
 
@@ -287,6 +290,8 @@ function AdminManagement({ cookies }) {
             setLookOrder(true);
             setLookHistory(false);
             setRotateHistory(180)
+            setChangeUser(false);
+            setChangePassword(false);
         }
         if (IsUser == 1) {
             setToggleUser(true);
@@ -297,8 +302,40 @@ function AdminManagement({ cookies }) {
             setToggleOrder(true);
             setLookOrder(false);
             setLookHistory(true)
+            setChangeUser(false);
+            setChangePassword(false);
+        }
+
+        if (IsUser == 1 && changeProfileMenu == 1) {
+            setToggleUser(true);
+            setRotateUser(180)
+            setChangeUser(true);
+            setChangePassword(false);
+        }
+
+        if (IsUser == 1 && changePasswordMenu == 1) {
+            setToggleUser(true);
+            setRotateUser(180)
+            setChangeUser(false);
+            setChangePassword(true);
         }
     }, [IsOrder, IsUser, IsHistory]);
+
+    useEffect(() => {
+        if (IsUser == 1 && changeProfileMenu == 1) {
+            setToggleUser(true);
+            setRotateUser(180)
+            setChangeUser(true);
+            setChangePassword(false);
+        }
+
+        if (IsUser == 1 && changePasswordMenu == 1) {
+            setToggleUser(true);
+            setRotateUser(180)
+            setChangeUser(false);
+            setChangePassword(true);
+        }
+    }, [changePasswordMenu, changeProfileMenu]);
 
     return (
         <div className='select-none'>
