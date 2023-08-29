@@ -305,19 +305,6 @@ function AdminManagement({ cookies }) {
             setChangePassword(false);
         }
 
-        if (IsUser == 1 && changeProfileMenu == 1) {
-            setToggleUser(true);
-            setRotateUser(180)
-            setChangeUser(true);
-            setChangePassword(false);
-        }
-
-        if (IsUser == 1 && changePasswordMenu == 1) {
-            setToggleUser(true);
-            setRotateUser(180)
-            setChangeUser(false);
-            setChangePassword(true);
-        }
     }, [IsOrder, IsUser, IsHistory]);
 
     useEffect(() => {
@@ -326,6 +313,8 @@ function AdminManagement({ cookies }) {
             setRotateUser(180)
             setChangeUser(true);
             setChangePassword(false);
+            setLookOrder(false);
+            setLookHistory(false)
         }
 
         if (IsUser == 1 && changePasswordMenu == 1) {
@@ -333,6 +322,8 @@ function AdminManagement({ cookies }) {
             setRotateUser(180)
             setChangeUser(false);
             setChangePassword(true);
+            setLookOrder(false);
+            setLookHistory(false)
         }
     }, [changePasswordMenu, changeProfileMenu]);
 
