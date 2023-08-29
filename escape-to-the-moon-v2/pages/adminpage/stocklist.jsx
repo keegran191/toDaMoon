@@ -323,7 +323,7 @@ function StockConfig({ cookies }) {
                             }}
                         >
                             <div className="flex justify-center items-center">
-                                <img src={`/asset/${post.Image}`} alt={post.Title} className="w-32 h-32" />
+                                <img src={`../../asset/${post.Image}`} alt={post.Title} className="w-32 h-32" />
                             </div>
                             <div className="px-4 mt-1">
                                 <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{post.Title}</h3>
