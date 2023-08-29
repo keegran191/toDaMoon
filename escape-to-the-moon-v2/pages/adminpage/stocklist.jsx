@@ -425,7 +425,7 @@ function StockConfig({ cookies }) {
                                                 <div className="img">
                                                     <img className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
                                                         document.getElementById('image').click();
-                                                    }} src={'/uploads/'+ imageName}></img>
+                                                    }} src={'../../asset/'+ imageName}></img>
                                                 </div>
                                             }
                                         </div>
