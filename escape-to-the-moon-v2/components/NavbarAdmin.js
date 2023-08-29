@@ -59,7 +59,7 @@ function Navbar({
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/adminpage/stocklist" className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
+                                        <Link href={`/adminpage/adminmanagement?IsUser=${1}&changePassword=${1}`} className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">
                                             <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เเก้ไขรหัสผ่าน</h1>
                                         </Link>
                                     </li>
