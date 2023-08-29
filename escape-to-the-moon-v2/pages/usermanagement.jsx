@@ -699,7 +699,7 @@ function UserManagement ({ cookies }) {
                                 <div className='w-full h-auto mt-5 flex justify-center'>
                                     <div className="relative z-0 mb-6 w-3/6 group">
                                         <input onChange={(e) => {
-                                            setAddressName(e.target.value)
+                                            setAddressName(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={addressName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อที่อยู่</label>
                                     </div>
@@ -707,7 +707,7 @@ function UserManagement ({ cookies }) {
 
                                 <div className='w-3/6 h-auto mt-5 flex'>
                                     <div className="relative z-0 mb-6 w-full group mr-2">
-                                        <input onChange={(e) => {setRecipientName(e.target.value)}} value={recipientName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
+                                        <input onChange={(e) => {setRecipientName(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))}} value={recipientName} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ชื่อผู้รับ</label>
                                     </div>
 
@@ -720,7 +720,7 @@ function UserManagement ({ cookies }) {
                                 <div className='w-full h-auto mt-5 flex justify-center'>
                                     <div className="relative z-0 mb-6 w-3/6 group">
                                         <input onChange={(e) => {
-                                            setAddressDetail(e.target.value)
+                                            setAddressDetail(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={addressDetail} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รายละเอียดที่อยู่</label>
                                     </div>
@@ -729,14 +729,14 @@ function UserManagement ({ cookies }) {
                                 <div className='w-3/6 h-auto mt-5 flex'>
                                     <div className="relative z-0 mb-6 w-full group mr-2">
                                         <input onChange={(e) => {
-                                            setSubDistrict(e.target.value)
+                                            setSubDistrict(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={subDistrict} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ตำบล / แขวง</label>
                                     </div>
 
                                     <div className="relative z-0 mb-6 w-full group ml-2">
                                         <input onChange={(e) => {
-                                            setDistrict(e.target.value)
+                                            setDistrict(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={district} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">อำเภอ / เขต</label>
                                     </div>
@@ -745,7 +745,7 @@ function UserManagement ({ cookies }) {
                                 <div className='w-3/6 h-auto mt-5 flex'>
                                     <div className="relative z-0 mb-6 w-full group mr-2">
                                         <input onChange={(e) => {
-                                            setProvince(e.target.value)
+                                            setProvince(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={province} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">จังหวัด</label>
                                     </div>
@@ -849,7 +849,7 @@ function UserManagement ({ cookies }) {
                                 <div className='w-full h-auto mt-5 flex justify-center'>
                                     <div className="relative z-0 mb-6 w-3/6 group">
                                         <input onChange={(e) => {
-                                            setAddressDetail(e.target.value)
+                                            setAddressDetail(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={addressDetail} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">รายละเอียดที่อยู่</label>
                                     </div>
@@ -858,14 +858,14 @@ function UserManagement ({ cookies }) {
                                 <div className='w-3/6 h-auto mt-5 flex'>
                                     <div className="relative z-0 mb-6 w-full group mr-2">
                                         <input onChange={(e) => {
-                                            setSubDistrict(e.target.value)
+                                            setSubDistrict(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={subDistrict} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ตำบล / แขวง</label>
                                     </div>
 
                                     <div className="relative z-0 mb-6 w-full group ml-2">
                                         <input onChange={(e) => {
-                                            setDistrict(e.target.value)
+                                            setDistrict(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={district} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">อำเภอ / เขต</label>
                                     </div>
@@ -874,7 +874,7 @@ function UserManagement ({ cookies }) {
                                 <div className='w-3/6 h-auto mt-5 flex'>
                                     <div className="relative z-0 mb-6 w-full group mr-2">
                                         <input onChange={(e) => {
-                                            setProvince(e.target.value)
+                                            setProvince(e.target.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]/g,''))
                                         }} value={province} type="text" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-[#252525] dark:border-gray-600 dark:focus:border-[#252525] focus:outline-none focus:ring-0 focus:border-[#252525] peer" placeholder=" " required />
                                         <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#252525] peer-focus:dark:text-[#252525] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">จังหวัด</label>
                                     </div>
