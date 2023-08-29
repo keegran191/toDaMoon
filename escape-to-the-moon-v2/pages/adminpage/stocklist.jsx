@@ -320,6 +320,7 @@ function StockConfig({ cookies }) {
                                 GetSubCategory(post.CategoryId)
                                 setImageName(post.Image)
                                 setSelectedId(post.Id)
+                                console.log(post.Image)
                             }}
                         >
                             <div className="flex justify-center items-center">
