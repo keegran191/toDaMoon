@@ -323,7 +323,7 @@ function StockConfig({ cookies }) {
                             }}
                         >
                             <div className="flex justify-center items-center">
-                                <img src={`../../asset/${post.Image}`} alt={post.Title} className="w-32 h-32" />
+                                <img src={`/uploads/${post.Image}`} alt={post.Title} className="w-32 h-32" />
                             </div>
                             <div className="px-4 mt-1">
                                 <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{post.Title}</h3>
@@ -425,7 +425,7 @@ function StockConfig({ cookies }) {
                                                 <div className="img">
                                                     <img className='h-64 w-64 transition duration-300 ease-in-out transform hover:opacity-50 hover:cursor-pointer' onClick={() => {
                                                         document.getElementById('image').click();
-                                                    }} src={'../../asset/'+ imageName}></img>
+                                                    }} src={'/uploads/'+ imageName}></img>
                                                 </div>
                                             }
                                         </div>
