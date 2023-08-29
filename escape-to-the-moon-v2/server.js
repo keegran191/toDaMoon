@@ -2,8 +2,7 @@ const express = require('express')
 const next = require('next')
 
 const port = 80
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev, hostname: 'localhost', port })
+const app = next({ dev: false, hostname: 'localhost', port })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
