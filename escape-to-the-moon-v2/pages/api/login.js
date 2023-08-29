@@ -1,5 +1,7 @@
 import cookie from "cookie";
 import db from "../../lib/database";
+import http from 'http';
+
 const bcrypt = require("bcrypt");
 
 export default async function handler(req, res) {
@@ -52,10 +54,12 @@ export default async function handler(req, res) {
           
           res.status(200).json({ Status:"isAdminLogin" })
         } else {
+          res.setHeader("Set-Cookie", cookies);
           console.log("isNotAdmin")
           pool.destroy();
-          res.setHeader("Set-Cookie", cookies);
+          
           res.status(200).json({ Status:"isUserLogin" })
+          
         }
       } else {
         console.log("Password does not match!");
