@@ -330,7 +330,7 @@ function AdminManagement({ cookies }) {
             <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
             <div className='mt-20 flex lg:px-10 justify-center lg:justify-start h-5/6 lg:h-4/6 mb-10'>
-                <div className="hidden lg:block w-2/12 border-r-2 border-[#252525]">
+                <div className="hidden lg:block lg:w-4/12 xl:w-2/12 border-r-2 border-[#252525]">
                     <div className='w-full h-full flex flex-col justify-between'>
                         <motion.div className='w-full'>
                             <motion.div 
