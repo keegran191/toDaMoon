@@ -73,25 +73,7 @@ function Navbar({
                                 <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
                                     <li>
                                         <Link href="/adminpage/category">
-                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่ม /แก้ไข ประเภทสินค้า</h1>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/adminpage/subcategory">
-                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่ม /แก้ไข หมวดหมู่ย่อยประเภทสินค้า</h1>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <button data-dropdown-toggle="dropdownNavbar" onClick={()=> {toggleBtn(toggle1, setToggle1)}} className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">จัดการประเภทของสินค้า <svg className="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg></button>
-                            
-                            <div id="dropdownNavbar" className={toggle1? "hidden": "" + "md:absolute z-10 w-50 mt-0.5 font-normal bg-[#333333] rounded divide-y divide-gray-100 shadow"}>
-                                <ul className="py-1 text-sm text-gray-300 " aria-labelledby="dropdownLargeButton">
-                                    <li>
-                                        <Link href="/adminpage/category">
-                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่ม /แก้ไข ประเภทสินค้า</h1>
+                                            <h1 className="block py-3 px-4 hover:bg-[#3F3F3F] hover:text-white">เพิ่ม /แก้ไข ประเภทสินค้า asdfasdfasdfasdf</h1>
                                         </Link>
                                     </li>
                                     <li>
