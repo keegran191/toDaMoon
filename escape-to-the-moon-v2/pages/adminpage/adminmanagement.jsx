@@ -1253,7 +1253,8 @@ function AdminManagement({ cookies }) {
                                                 {post.order_shipment == '' && <p className='text-lg font-semibold'>---</p>}
                                                 {post.order_shipment != '' && <p className='text-lg font-semibold'>{post.order_shipment}</p>}
                                                 <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                    <span className='text-sm mr-5'>{post.order_code}</span>
+                                                    {post.order_code == '' && <span className='text-sm mr-5'>---</span>}
+                                                    {post.order_code != '' && <span className='text-sm mr-5'>{post.order_code}</span>}
                                                 </div>
                                             </div>
 
@@ -1359,7 +1360,8 @@ function AdminManagement({ cookies }) {
                                                     {post.order_shipment == '' && <p className='text-sm font-semibold'>---</p>}
                                                     {post.order_shipment != '' && <p className='text-sm font-semibold'>{post.order_shipment}</p>}
                                                     <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                        <span className='text-xs'>{post.order_code}</span>
+                                                        {post.order_code == '' && <span className='text-sm mr-5'>---</span>}
+                                                        {post.order_code != '' && <span className='text-sm mr-5'>{post.order_code}</span>}
                                                     </div>
                                                 </div>
                                             </div>
