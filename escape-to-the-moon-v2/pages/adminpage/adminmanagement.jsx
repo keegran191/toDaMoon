@@ -841,7 +841,8 @@ function AdminManagement({ cookies }) {
                                             <div className='block xl:hidden w-full h-auto pt-5 px-10 mb-5'>
                                                 <div>
                                                     <p className='text-sm'>หมายเลขพัสดุ</p>
-                                                    <p className='text-sm font-semibold'>{post.order_shipment}</p>
+                                                    {post.order_shipment == '' &&  <p className='text-sm font-semibold'>---</p>}
+                                                    {post.order_shipment != '' &&  <p className='text-sm font-semibold'>{post.order_shipment}</p>}
                                                     <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
                                                         <span className='text-xs'>{post.order_code}</span>
                                                     </div>
@@ -1248,7 +1249,8 @@ function AdminManagement({ cookies }) {
                                         <div className='hidden xl:flex w-full h-auto pt-5 px-10 justify-between items-center'>
                                             <div>
                                                 <p>หมายเลขพัสดุ</p>
-                                                <p className='text-lg font-semibold'>{post.order_shipment}</p>
+                                                {post.order_shipment == '' && <p className='text-lg font-semibold'>---</p>}
+                                                {post.order_shipment != '' && <p className='text-lg font-semibold'>{post.order_shipment}</p>}
                                                 <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
                                                     <span className='text-sm mr-5'>{post.order_code}</span>
                                                 </div>
@@ -1353,7 +1355,8 @@ function AdminManagement({ cookies }) {
                                             <div className='block xl:hidden w-full h-auto pt-5 px-10 mb-5'>
                                                 <div>
                                                     <p className='text-sm'>หมายเลขพัสดุ</p>
-                                                    <p className='text-sm font-semibold'>{post.order_shipment}</p>
+                                                    {post.order_shipment == '' && <p className='text-sm font-semibold'>---</p>}
+                                                    {post.order_shipment != '' && <p className='text-sm font-semibold'>{post.order_shipment}</p>}
                                                     <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
                                                         <span className='text-xs'>{post.order_code}</span>
                                                     </div>
@@ -1453,11 +1456,13 @@ function AdminManagement({ cookies }) {
                                 <motion.div className='flex justify-around mt-10'>
                                     <motion.div className='w-52 h-auto'>
                                         <motion.p>หมายเลขพัสดุ</motion.p>
-                                        <motion.p>{orderShipment}</motion.p>
+                                        {orderShipment == '' && <motion.p>---</motion.p>}
+                                        {orderShipment != '' && <motion.p>{orderShipment}</motion.p>}
                                         <motion.div
                                             className='mt-1 flex item-center justify-between border-2 border-[#252525]'
                                         >
-                                            <span className='p-1'>{orderCode}</span>
+                                            {orderCode == "" && <span className='p-1'>---</span>}
+                                            {orderCode != "" && <span className='p-1'>{orderCode}</span>}
                                         </motion.div>
                                     </motion.div>
 
