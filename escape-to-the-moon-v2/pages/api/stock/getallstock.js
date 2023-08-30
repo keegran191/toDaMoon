@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const pool = await db.getConnection();
   
   try {
-    const [results] = await pool.query('SELECT * FROM stock WHERE Title LIKE ?', [`%${searchItem}%`]);
+    const [results] = await pool.query('SELECT * FROM stock WHERE Title LIKE ? AND deleteflag == 0', [`%${searchItem}%`]);
     pool.destroy();
     res.status(200).json(results);
   } catch (err) {
