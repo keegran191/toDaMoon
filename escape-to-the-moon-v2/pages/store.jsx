@@ -220,7 +220,7 @@ export default function Store({ cookies }) {
     return(
         <div className='select-none min-h-screen flex flex-col'>
             <Head>
-                <title>Home</title>
+                <title>Store</title>
                 <link rel="icon" href="/ttmLogo.png"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>

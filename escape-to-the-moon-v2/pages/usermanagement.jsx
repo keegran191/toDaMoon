@@ -277,7 +277,7 @@ function UserManagement ({ cookies }) {
     return (
         <div className='select-none min-h-screen flex flex-col overflow-hidden'>
             <Head>
-                <title>Home</title>
+                <title>User Management</title>
                 <link rel="icon" href="/ttmLogo.png"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"/>
