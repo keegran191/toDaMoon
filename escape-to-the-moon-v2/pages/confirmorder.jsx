@@ -144,7 +144,7 @@ export default function ConfirmOrder ({ cookies }) {
             </Head>
             <Nav name={fname} userid={userId} itemAmount={stockAmount.toString()}></Nav>
             <div className='px-20 text-xl flex justify-center mt-10'>
-                <h1 className='text-3xl'>ยืนยันที่อยู่ และ ลายละเอียดสินค้า</h1>
+                <h1 className='text-3xl'>ยืนยันที่อยู่ และ รายละเอียดสินค้า</h1>
             </div>
             <div className='w-full h-4/6 flex mt-auto mb-auto'>
                 <div className='w-2/6 mt-5 h-fit px-20'>

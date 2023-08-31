@@ -438,9 +438,9 @@ function StockConfig({ cookies }) {
                                             <input value={Title} maxLength={20} className="bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5" placeholder="ชื่อสินค้า" required onChange={(event) => {setTitle(event.target.value)}}></input>
                                         </div>
                                         <div className="mt-2">
-                                            <label className="">ลายละเอียดสินค้า</label>
+                                            <label className="">รายละเอียดสินค้า</label>
                                             <div className="w-full lg:w-96 overflow-hidden6">
-                                                <textarea value={Detail} rows="4"maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..." onChange={(event) => {setDetail(event.target.value)}}></textarea>
+                                                <textarea value={Detail} rows="4"maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-[#252525] text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="รายละเอียดสินค้า..." onChange={(event) => {setDetail(event.target.value)}}></textarea>
                                             </div>
                                         </div>
                                         <div className="container sm:flex sm:space-x-2 mt-2">

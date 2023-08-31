@@ -308,8 +308,8 @@ function Stock({ cookies }) {
                         </div>
 
                         <div className="detail-container mt-2">
-                            <label className="">ลายละเอียดสินค้า</label>
-                            <textarea ref={inputDetail} id="stockDetail" rows="4" maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="ลายละเอียดสินค้า..."></textarea>
+                            <label className="">รายละเอียดสินค้า</label>
+                            <textarea ref={inputDetail} id="stockDetail" rows="4" maxLength="180" className="resize-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 overflow-auto scrollbar-thumb-gray-300 scrollbar-track-gray-100" placeholder="รายละเอียดสินค้า..."></textarea>
                         </div>
 
                         <div className="container sm:flex sm:space-x-2 mt-2">
