@@ -107,7 +107,7 @@ function Navbar({
                                 <a className="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-white rounded md:border-0 md:text-white md:p-0 md:w-auto">ประวิติการขายสินค้า</a>
                             </Link>
                         </li>
-                        <li className='w-full justify-center sm:flex lg:hidden mt-10'>
+                        <li className='w-full justify-center sm:flex md:hidden mt-10'>
                             <Link href={`/adminpage/adminmanagement?UserLogout=${1}`} className='bg-[#3F3F3F] text-[#FFFFFF] w-6/12 py-3 rounded-lg'>
                                 <motion.button 
                                     className='bg-[#3F3F3F] text-[#FFFFFF] w-full rounded-lg'
