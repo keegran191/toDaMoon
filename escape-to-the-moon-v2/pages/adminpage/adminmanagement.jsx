@@ -320,11 +320,14 @@ function AdminManagement({ cookies }) {
         }
     }, [changePasswordMenu, changeProfileMenu]);
 
-    useEffect(async () => {
-        if (userlogout == 1) {
-            await Axios.get(`https://escapetothemoon.lol/api/logout`);
-            window.location.href = "/";
+    useEffect(() => {
+        const doLogout = async () => {
+            if (userlogout == 1) {
+                await Axios.get(`https://escapetothemoon.lol/api/logout`);
+                window.location.href = "/";
+            }
         }
+        doLogout();
 
     }, [userlogout]);
 
