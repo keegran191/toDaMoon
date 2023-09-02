@@ -73,6 +73,7 @@ export default async function handler(req, res) {
       }
 
       await updateStock(stockId, updatedStock);
+      pool.destroy();
       return res.status(200).json({ success: true, message: 'Update Stock Complete' });
     } catch (err) {
       console.error('Database Error:', err);
@@ -117,7 +118,6 @@ async function updateStock(stockId, updatedStock) {
         stockId
       ]
     );
-    pool.destroy();
   } catch (err) {
     throw err;
   }
