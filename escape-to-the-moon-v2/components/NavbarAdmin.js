@@ -24,7 +24,7 @@ function Navbar({
                 <div className='flex items-center'>
                     <img className='hidden lg:block cursor-pointer w-12 mr-5' src='/ttmLogo.png'></img>
                     <a className="flex items-center">
-                        <span className="text-white sm:ml-0 ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">Escape to the moon</span>
+                        <span className="text-white sm:ml-0 ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">ESCAPE to The MOON</span>
                     </a>
                 </div>
                 <div className="flex md:order-2">

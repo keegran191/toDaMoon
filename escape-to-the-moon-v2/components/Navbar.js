@@ -18,7 +18,7 @@ function Navbar({
                     </Link>
                     <Link href="/">
                         <a className="flex items-center">
-                            <span className="text-white sm:ml-0 ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">Escape to the moon</span>
+                            <span className="text-white sm:ml-0 ml-3 self-center text-xl font-semibold whitespace-nowrap dark:text-white">ESCAPE to The MOON</span>
                         </a>
                     </Link>
                 </div>
