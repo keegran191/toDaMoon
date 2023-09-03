@@ -672,7 +672,16 @@ function AdminManagement({ cookies }) {
                     <motion.div 
                         className='h-5/6 overflow-x-hidden overflow-y-auto'
                     >
-                        
+                        <div className='w-full h-1 border-b-2 border-[#252525]'></div>
+                        <div class='w-full h-auto grid grid-cols-6 px-5 py-3 xl:py-3 lg:px-10'>
+                            <div class='text-lg text-center col-span-2'>หมายเลขคำสั่งซื้อ</div> 
+                            <div class='text-lg text-center col-start-3'>ชื่อผู้รับ</div>
+                            <div class='text-lg text-center'>บริการจัดส่ง</div>
+                            <div class='text-lg text-center'>หมายเลขพัสดุ</div>
+                            <div class='text-lg text-center'>สถานะสินค้า</div>
+                        </div>
+
+                        <div className='w-full h-1 border-b-2 border-[#252525] mb-1'></div>
                         {/* {adminOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
                             ไม่พบรายการสั่งซื้อ
                         </motion.div>}
