@@ -672,7 +672,8 @@ function AdminManagement({ cookies }) {
                     <motion.div 
                         className='h-5/6 overflow-x-hidden overflow-y-auto'
                     >
-                        {adminOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
+                        
+                        {/* {adminOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
                             ไม่พบรายการสั่งซื้อ
                         </motion.div>}
                         <motion.div
@@ -686,7 +687,7 @@ function AdminManagement({ cookies }) {
                             }}
                         >
                             <motion.div className='text-xl'>คำสั่งซื้อหมายเลข 55555555555555</motion.div>
-                        </motion.div>
+                        </motion.div> */}
                         {/* {adminOrder.length > 0 && adminOrder.map((post) => {
                             return (
                                 <motion.div 

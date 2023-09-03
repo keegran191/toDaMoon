@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
   
   try {
-    const query = 'SELECT * FROM stock WHERE IsAdvise = 1 AND deleteflag = 0 LIMIT ? OFFSET ? ORDER BY stock.Id DESC';
+    const query = 'SELECT * FROM stock WHERE IsAdvise = 1 AND deleteflag = 0 ORDER BY stock.Id DESC LIMIT ? OFFSET ?';
     const [results] = await pool.query(query, [offset, startIndex]);
     pool.destroy();
     res.status(200).json(results);
