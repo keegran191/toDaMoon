@@ -211,18 +211,18 @@ export default function Store({ cookies }) {
 
             <div className='block px-5 xl:px-44 h-4/6'>
                 <div className='w-full h-1 border-b-2 border-[#252525]'></div>
-                <div class='w-full h-auto grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
-                    <div class='text-lg text-center col-span-2'>สินค้า</div> 
-                    <div class='text-lg text-center col-start-3'>ราคา</div>
-                    <div class='text-lg text-center'>จำนวน</div>
-                    <div class='text-lg text-center'>ราคารวม</div>
+                <div className='w-full h-auto grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
+                    <div className='text-lg text-center col-span-2'>สินค้า</div> 
+                    <div className='text-lg text-center col-start-3'>ราคา</div>
+                    <div className='text-lg text-center'>จำนวน</div>
+                    <div className='text-lg text-center'>ราคารวม</div>
                 </div>
 
                 <div className='w-full h-1 border-b-2 border-[#252525] mb-1'></div>
                 {basketList.length == 0 && <div className='w-full flex justify-center mt-28'>
                     <span className='text-2xl'>ไม่พบรายการสินค้า</span>    
                 </div>}
-                <div className={basketList.length == 1 ? `w-full`: `w-full overflow-x-hidden overflow-y-auto h-2/4`}>
+                <div className={basketList.length == 1 ? `w-full h-2/4`: `w-full overflow-x-hidden overflow-y-auto h-2/4`}>
                     {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
                         return <motion.div 
                             className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' 
