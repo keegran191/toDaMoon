@@ -222,7 +222,7 @@ export default function Store({ cookies }) {
                 {basketList.length == 0 && <div className='w-full flex justify-center mt-28'>
                     <span className='text-2xl'>ไม่พบรายการสินค้า</span>    
                 </div>}
-                <div className={basketList.length == 1 ? `w-full h-2/4`: `w-full overflow-x-hidden overflow-y-auto h-2/4`}>
+                <div className='w-full overflow-x-hidden overflow-y-auto h-2/4'>
                     {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
                         return <motion.div 
                             className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' 
