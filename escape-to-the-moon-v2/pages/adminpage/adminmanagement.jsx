@@ -676,7 +676,7 @@ function AdminManagement({ cookies }) {
                             ไม่พบรายการสั่งซื้อ
                         </motion.div>}
                         <motion.div
-                            className='mt-5 flex justify-center'
+                            className='mt-5 flex justify-center w-full h-24 p-4 shadow-lg rounded-full bg-[#FFFFFF]'
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{
@@ -685,7 +685,7 @@ function AdminManagement({ cookies }) {
                                 damping: 20
                             }}
                         >
-                            
+
                         </motion.div>
                         {/* {adminOrder.length > 0 && adminOrder.map((post) => {
                             return (
