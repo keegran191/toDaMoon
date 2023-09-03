@@ -685,9 +685,7 @@ function AdminManagement({ cookies }) {
                                 damping: 20
                             }}
                         >
-                            <motion.div>
-
-                            </motion.div>
+                            <motion.div className='text-xl'>คำสั่งซื้อหมายเลข 55555555555555</motion.div>
                         </motion.div>
                         {/* {adminOrder.length > 0 && adminOrder.map((post) => {
                             return (
