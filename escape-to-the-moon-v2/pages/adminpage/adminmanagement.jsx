@@ -716,8 +716,11 @@ function AdminManagement({ cookies }) {
                                     <motion.div className='text-lg text-center'>{post.orderRecipientName}</motion.div>
                                     <input 
                                         onChange={(e) => {
-                                            adminOrder[index].orderShipment = e.target.value
-                                            console.log(index + adminOrder[index].orderShipment)
+                                            const updatedAdminOrder = [...adminOrder];
+                                            updatedAdminOrder[index].orderShipment = e.target.value;
+                                            setAdminOrder(updatedAdminOrder);[index].orderShipment = e.target.value;
+                                            // adminOrder[index].orderShipment = e.target.value
+                                            // console.log(index + adminOrder[index].orderShipment)
                                         }} 
                                         placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
                                         value={adminOrder[index].orderShipment}>     
