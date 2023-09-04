@@ -742,7 +742,16 @@ function AdminManagement({ cookies }) {
                                             style={{
                                                 backgroundColor: adminOrder[index].orderStatusBgColor,
                                                 color: adminOrder[index].orderStatusFgColor
-                                            }} 
+                                            }}
+                                            onClick={()=> {
+                                                if(showStatusList) {
+                                                    setShowStatusList(false);
+                                                    setRotateStatus(0)
+                                                } else {
+                                                    setShowStatusList(true);
+                                                    setRotateStatus(180)
+                                                }
+                                            }}
                                         >
                                             {post.orderStatusLabel}
                                         </motion.div>
