@@ -206,7 +206,13 @@ function AdminManagement({ cookies }) {
 
     const GetAdminOrder = (orderStatus) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
-            setAdminOrder(response.data)
+            const data = response.data;
+            for (let i = 0; i < data.length; i++) {
+                itemShipment[i] = data[i].order_shipment == '' || data[i].order_shipment == '---' ? '' : data[i].order_shipment
+            }
+            
+            setItemShipment(itemShipment)
+            setAdminOrder(data)
         })
     }
 
@@ -711,12 +717,12 @@ function AdminManagement({ cookies }) {
                                             setItemShipment(itemShipment)
                                         }} 
                                         placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
-                                        value={post.order_shipment == '' || post.order_shipment == '---' ? '':post.order_shipment}>    
+                                        value={itemShipment[index]}>     
                                     </input>
                                 </motion.div>
                             )
                         })}
-                        
+                        {/* post.order_shipment == '' || post.order_shipment == '---' ? itemShipment[index]: */}
 
                         {/* {adminOrder.length > 0 && adminOrder.map((post) => {
                             return (
