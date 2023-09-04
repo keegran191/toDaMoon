@@ -691,6 +691,7 @@ function AdminManagement({ cookies }) {
                             return (
                                 <motion.div
                                     className='mt-5 grid grid-cols-6 items-center w-full h-14 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
+                                    key={post.order_Id}
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{
@@ -701,7 +702,7 @@ function AdminManagement({ cookies }) {
                                 >
                                     <motion.div className='text-lg text-center'>{post.refNumber}</motion.div>
                                     <motion.div className='text-lg text-center'>{post.recipient_name}</motion.div>
-                                    <input onChange={(e) => {setOrderShipment(e.target.value)}} placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' value={post.order_shipment == '' || post.order_shipment == '---' ? orderShipment:post.order_shipment}></input>
+                                    <input id={post.order_Id} onChange={(e) => {setOrderShipment(e.target.value)}} placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' value={post.order_shipment == '' || post.order_shipment == '---' ? orderShipment:post.order_shipment}></input>
                                 </motion.div>
                             )
                         })}
