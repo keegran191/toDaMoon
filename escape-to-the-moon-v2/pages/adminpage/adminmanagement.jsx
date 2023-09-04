@@ -738,11 +738,11 @@ function AdminManagement({ cookies }) {
                                         <motion.div
                                             className='ml-2 w-full h-5 text-sm text-center rounded-full px-2'
                                             style={{
-                                                backgroundColor: adminOrder.orderStatusBgColor,
-                                                color: adminOrder.orderStatusFgColor
+                                                backgroundColor: adminOrder[index].orderStatusBgColor,
+                                                color: adminOrder[index].orderStatusFgColor
                                             }} 
                                         >
-                                            {adminOrder.orderStatusLabel}
+                                            {adminOrder[index].orderStatusLabel}
                                         </motion.div>
                                     </motion.div>
                                 </motion.div>
