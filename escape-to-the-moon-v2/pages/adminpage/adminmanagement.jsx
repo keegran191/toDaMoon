@@ -714,27 +714,31 @@ function AdminManagement({ cookies }) {
                                 >
                                     <motion.div className='text-lg text-center'>{post.orderRefNumber}</motion.div>
                                     <motion.div className='text-lg text-center'>{post.orderRecipientName}</motion.div>
-                                    <input 
-                                        onChange={(e) => {
-                                            const updatedAdminOrder = [...adminOrder];
-                                            updatedAdminOrder[index].orderShipment = e.target.value;
-                                            setAdminOrder(updatedAdminOrder);[index].orderShipment = e.target.value;
-                                        }} 
-                                        placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
-                                        value={adminOrder[index].orderShipment}>     
-                                    </input>
+                                    <motion.div className='w-full px-2'>
+                                        <input 
+                                            onChange={(e) => {
+                                                const updatedAdminOrder = [...adminOrder];
+                                                updatedAdminOrder[index].orderShipment = e.target.value;
+                                                setAdminOrder(updatedAdminOrder);[index].orderShipment = e.target.value;
+                                            }} 
+                                            placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
+                                            value={adminOrder[index].orderShipment}>     
+                                        </input>
+                                    </motion.div>
+                                    
+                                    <motion.div className='w-full px-2'>
+                                        <input 
+                                            onChange={(e) => {
+                                                const updatedAdminOrder = [...adminOrder];
+                                                updatedAdminOrder[index].orderCode = e.target.value;
+                                                setAdminOrder(updatedAdminOrder);[index].orderCode = e.target.value;
+                                            }} 
+                                            placeholder='ใส่เลขพัสดุ' className='rounded-lg text-lg text-center px-3 py-1' 
+                                            value={adminOrder[index].orderCode}>     
+                                        </input>
+                                    </motion.div>
 
-                                    <input 
-                                        onChange={(e) => {
-                                            const updatedAdminOrder = [...adminOrder];
-                                            updatedAdminOrder[index].orderCode = e.target.value;
-                                            setAdminOrder(updatedAdminOrder);[index].orderCode = e.target.value;
-                                        }} 
-                                        placeholder='ใส่เลขพัสดุ' className='rounded-lg text-lg text-center px-3 py-1' 
-                                        value={adminOrder[index].orderCode}>     
-                                    </input>
-
-                                    <motion.div className='w-full relative items-center flex justify-center'>
+                                    <motion.div className='w-full relative items-center flex justify-center px-2'>
                                         <motion.div
                                             className='w-full h-8 text-lg text-center rounded-full px-2'
                                             style={{
