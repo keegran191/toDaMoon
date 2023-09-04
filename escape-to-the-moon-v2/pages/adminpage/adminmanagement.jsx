@@ -734,9 +734,9 @@ function AdminManagement({ cookies }) {
                                         value={adminOrder[index].orderCode}>     
                                     </input>
 
-                                    <motion.div className='w-full relative flex justify-center'>
+                                    <motion.div className='w-full relative items-center flex justify-center'>
                                         <motion.div
-                                            className='w-full h-10 text-lg text-center rounded-full px-2'
+                                            className='w-full h-8 text-lg text-center rounded-full px-2'
                                             style={{
                                                 backgroundColor: adminOrder[index].orderStatusBgColor,
                                                 color: adminOrder[index].orderStatusFgColor
