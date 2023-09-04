@@ -687,18 +687,24 @@ function AdminManagement({ cookies }) {
                         {adminOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
                             ไม่พบรายการสั่งซื้อ
                         </motion.div>}
-                        {/* <motion.div
-                            className='mt-5 flex justify-center w-full h-14 p-4 shadow-lg rounded-full bg-[#FFFFFF]'
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{
-                                type: "spring",
-                                stiffness: 260,
-                                damping: 20
-                            }}
-                        >
-                            <motion.div className='text-xl'>คำสั่งซื้อหมายเลข 55555555555555</motion.div>
-                        </motion.div> */}
+                        {adminOrder.length > 0 && adminOrder.map((post) => {
+                            return (
+                                <motion.div
+                                    className='mt-5 flex justify-center w-full h-14 p-4 shadow-lg rounded-full bg-[#FFFFFF]'
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20
+                                    }}
+                                >
+                                    <motion.div className='text-xl'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
+                                </motion.div>
+                            )
+                        })}
+                        
+
                         {/* {adminOrder.length > 0 && adminOrder.map((post) => {
                             return (
                                 <motion.div 
