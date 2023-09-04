@@ -716,7 +716,6 @@ function AdminManagement({ cookies }) {
                                     <motion.div className='text-lg text-center'>{post.orderRecipientName}</motion.div>
                                     <input 
                                         onChange={(e) => {
-                                            setAdminOrder[index](adminOrder[index].orderShipment = e.target.value)
                                             adminOrder[index].orderShipment = e.target.value
                                             console.log(index + adminOrder[index].orderShipment)
                                         }} 
