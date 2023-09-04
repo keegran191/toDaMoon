@@ -717,6 +717,7 @@ function AdminManagement({ cookies }) {
                                     <input 
                                         onChange={(e) => {
                                             adminOrder[index].orderShipment = e.target.value
+                                            console.log(adminOrder[index].orderShipment)
                                         }} 
                                         placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
                                         value={adminOrder[index].orderShipment}>     
