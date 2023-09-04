@@ -249,7 +249,7 @@ export default function Store({ cookies }) {
                                     <div className='text-sm mt-2'>
                                         {coffeeProcess.length == 0 && <p>การแปรรูป: Loading</p>}
                                         {coffeeProcess.length > 0 && <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>}
-                                        {coffeeRoast.length > 0 && <p>วิธีการคั่ว: Loading</p>}
+                                        {coffeeRoast.length == 0 && <p>วิธีการคั่ว: Loading</p>}
                                         {coffeeRoast.length > 0 && <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>}
                                         {coffeeFlavor.length == 0 && <p>กลิ่น รส: Loading</p>}
                                         {coffeeFlavor.length > 0 && <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>}
