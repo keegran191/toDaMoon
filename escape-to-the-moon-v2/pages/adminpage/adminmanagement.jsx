@@ -702,7 +702,7 @@ function AdminManagement({ cookies }) {
                         {adminOrder.length > 0 && adminOrder.map((post, index) => {
                             return (
                                 <motion.div
-                                    className='mt-5 grid grid-cols-6 items-center w-full h-14 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
+                                    className='mt-5 grid grid-cols-6 items-center w-full h-20 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
                                     key={post.orderId}
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
