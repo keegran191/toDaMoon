@@ -84,8 +84,6 @@ function AdminManagement({ cookies }) {
     const [rotateOrder, setRotateHistory] = useState(0);
     const [rotateStatus, setRotateStatus] = useState(0);
 
-    const [itemShipment, setItemShipment] = useState({});
-
     // show status list
     const [showStatusList, setShowStatusList] = useState(false);
 
@@ -747,6 +745,19 @@ function AdminManagement({ cookies }) {
                                             }} 
                                         >
                                             {post.orderStatusLabel}
+                                        </motion.div>
+                                        <motion.div
+                                            className='sm:w-4 sm:h-4 w-3 h-3 sm:ml-2'
+                                            animate={{
+                                                x: 0,
+                                                y: 0,
+                                                scale: 1,
+                                                rotate: rotateStatus,
+                                            }}
+                                        >
+                                            <svg className='fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                                <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>            
+                                            </svg>
                                         </motion.div>
                                     </motion.div>
                                 </motion.div>
