@@ -84,7 +84,7 @@ function AdminManagement({ cookies }) {
     const [rotateOrder, setRotateHistory] = useState(0);
     const [rotateStatus, setRotateStatus] = useState(0);
 
-    const [itemShipment, setItemShipment] = useState([]);
+    const [itemShipment, setItemShipment] = useState({});
 
     // show status list
     const [showStatusList, setShowStatusList] = useState(false);
@@ -210,7 +210,7 @@ function AdminManagement({ cookies }) {
             for (let i = 0; i < data.length; i++) {
                 itemShipment[i] = data[i].order_shipment == '' || data[i].order_shipment == '---' ? '' : data[i].order_shipment
             }
-            
+
             setItemShipment(itemShipment)
             setAdminOrder(data)
         })
