@@ -701,7 +701,7 @@ function AdminManagement({ cookies }) {
                                 >
                                     <motion.div className='text-lg text-center'>{post.refNumber}</motion.div>
                                     <motion.div className='text-lg text-center'>{post.recipient_name}</motion.div>
-                                    <input onChange={(e) => {setOrderShipment(e.target.value)}} placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' value={post.order_shipment == '' || post.order_shipment == '---' ? '':post.order_shipment}></input>
+                                    <input onChange={(e) => {setOrderShipment(e.target.value)}} placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' value={post.order_shipment == '' || post.order_shipment == '---' ? {orderShipment}:post.order_shipment}></input>
                                 </motion.div>
                             )
                         })}
