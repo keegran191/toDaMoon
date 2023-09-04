@@ -746,7 +746,7 @@ function AdminManagement({ cookies }) {
                                                 color: adminOrder[index].orderStatusFgColor
                                             }}
                                             onClick={()=> {
-                                                if(showStatusList) {
+                                                if(adminOrder[index].orderShowStatusList) {
                                                     adminOrder[index].orderShowStatusList = false
                                                     adminOrder[index].orderRotateStatus = 0
                                                 } else {
