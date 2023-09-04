@@ -747,9 +747,11 @@ function AdminManagement({ cookies }) {
                                             }}
                                             onClick={()=> {
                                                 if(adminOrder[index].orderShowStatusList) {
+                                                    console.log("true")
                                                     adminOrder[index].orderShowStatusList = false
                                                     adminOrder[index].orderRotateStatus = 0
                                                 } else {
+                                                    console.log("false")
                                                     adminOrder[index].orderShowStatusList = true
                                                     adminOrder[index].orderRotateStatus = 180
                                                 }
