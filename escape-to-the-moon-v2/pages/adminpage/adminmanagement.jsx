@@ -777,6 +777,16 @@ function AdminManagement({ cookies }) {
                                                 <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>            
                                             </svg>
                                         </motion.div>
+                                        {adminOrder[index].orderShowStatusList && (
+                                            <motion.div className='absolute w-full px-2 flex flex-col items-center mt-2 bg-[#252525]'>
+                                                <p>asdfasdfasdfasdfadf</p>
+                                                <p>asdfasdfasdfasdfadf</p>
+                                                <p>asdfasdfasdfasdfadf</p>
+                                                <p>asdfasdfasdfasdfadf</p>
+                                                <p>asdfasdfasdfasdfadf</p>
+                                                <p>asdfasdfasdfasdfadf</p>
+                                            </motion.div>
+                                        )}
                                     </motion.div>
                                 </motion.div>
                             )
