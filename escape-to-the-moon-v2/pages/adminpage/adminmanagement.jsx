@@ -733,6 +733,18 @@ function AdminManagement({ cookies }) {
                                         placeholder='ใส่เลขพัสดุ' className='rounded-lg text-lg text-center px-3 py-1' 
                                         value={adminOrder[index].orderCode}>     
                                     </input>
+
+                                    <motion.div className='w-full relative flex justify-center'>
+                                        <motion.div
+                                            style={{
+                                                backgroundColor: adminOrder.orderStatusBgColor,
+                                                color: adminOrder.orderStatusFgColor
+                                            }} 
+                                            className='ml-2 w-auto h-5 text-sm text-center rounded-full px-2'
+                                        >
+                                            {adminOrder.orderStatusLabel}
+                                        </motion.div>
+                                    </motion.div>
                                 </motion.div>
                             )
                         })}
