@@ -671,9 +671,9 @@ function AdminManagement({ cookies }) {
                     </motion.div>
 
                     <motion.div className='w-full h-1 border-b-2 border-[#252525]'></motion.div>
-                    <motion.div className='w-full h-auto grid grid-cols-7 px-5 py-3 xl:py-3 lg:px-10'>
-                        <div className='text-lg text-center col-span-2'>หมายเลขคำสั่งซื้อ</div> 
-                        <div className='text-lg text-center col-start-3'>ชื่อผู้รับ</div>
+                    <motion.div className='w-full h-auto grid grid-cols-6 px-5 py-3 xl:py-3 lg:px-10'>
+                        <div className='text-lg text-center'>หมายเลขคำสั่งซื้อ</div> 
+                        <div className='text-lg text-center'>ชื่อผู้รับ</div>
                         <div className='text-lg text-center'>บริการจัดส่ง</div>
                         <div className='text-lg text-center'>หมายเลขพัสดุ</div>
                         <div className='text-lg text-center'>สถานะสินค้า</div>
@@ -699,7 +699,7 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <motion.div className='col-span-2 text-lg'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
+                                    <motion.div className='text-lg'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
                                 </motion.div>
                             )
                         })}
