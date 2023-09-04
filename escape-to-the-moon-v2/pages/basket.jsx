@@ -223,7 +223,7 @@ export default function Store({ cookies }) {
                     <span className='text-2xl'>ไม่พบรายการสินค้า</span>    
                 </div>}
                 <div className={basketList.length == 1 ? `w-full`: `w-full overflow-x-hidden overflow-y-auto h-2/4`}>
-                    {optionSubCategory.length > 0 && optionCategory.length > 0 && coffeeProcess.length > 0 && coffeeRoast.length > 0 && coffeeFlavor.length > 0 && basketList.map((stock, index) => {
+                    {basketList.map((stock, index) => {
                         return <motion.div 
                             className='w-full h-auto grid grid-cols-5 px-5 py-2 lg:px-10 my-2 border-b-2 border-[#25252523]' 
                             key={index} 
@@ -247,15 +247,20 @@ export default function Store({ cookies }) {
 
                                     {stock.StockType == 1 && 
                                     <div className='text-sm mt-2'>
-                                        <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>
-                                        <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>
-                                        <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>
+                                        {coffeeProcess.length == 0 && <p>การแปรรูป: Loading</p>}
+                                        {coffeeProcess.length > 0 && <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>}
+                                        {coffeeRoast.length > 0 && <p>วิธีการคั่ว: Loading</p>}
+                                        {coffeeRoast.length > 0 && <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>}
+                                        {coffeeFlavor.length == 0 && <p>กลิ่น รส: Loading</p>}
+                                        {coffeeFlavor.length > 0 && <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>}
                                     </div>}
 
                                     {stock.StockType == 2 && 
                                     <div className='text-sm mt-2'>
-                                        <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(stock.CategoryId)].label}</p>
-                                        <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(stock.SubCategoryId)].label}</p>
+                                        {optionSubCategory.length == 0 && <p>ประเภทสินค้า: Loading</p>}
+                                        {optionSubCategory.length > 0 && <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(stock.CategoryId)].label}</p>}
+                                        {optionSubCategory.length == 0 && <p>หมวดหมู่สินค้า: Loading</p>}
+                                        {optionSubCategory.length > 0  && <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(stock.SubCategoryId)].label}</p>}
                                     </div>}
 
                                     <div className='mt-1'>
