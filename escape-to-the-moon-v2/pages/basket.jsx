@@ -182,13 +182,13 @@ export default function Store({ cookies }) {
 
     useEffect(() => {
         GetBasketAmount(userId)
-        GetBasket(userId)
         GetAddress(userId)
         GetCategory();
         GetSubCategory(0);
         GetProcess(42);
         GetRoast(40);
         GetFlavor(41);
+        GetBasket(userId)
     }, [userId]);
 
     useEffect(() => {
