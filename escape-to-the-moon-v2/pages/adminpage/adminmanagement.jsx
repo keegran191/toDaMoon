@@ -746,15 +746,12 @@ function AdminManagement({ cookies }) {
                                                 color: adminOrder[index].orderStatusFgColor
                                             }}
                                             onClick={()=> {
-                                                if(adminOrder[index].orderShowStatusList) {
-                                                    console.log("true")
-                                                    adminOrder[index].orderShowStatusList = false
-                                                    adminOrder[index].orderRotateStatus = 0
-                                                } else {
-                                                    console.log("false")
-                                                    adminOrder[index].orderShowStatusList = true
-                                                    adminOrder[index].orderRotateStatus = 180
-                                                }
+                                                setAdminOrder((adminOrder) => {
+                                                    const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
+                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
+                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 0 : 180; // Set rotation based on the toggle
+                                                    return updatedAdminOrder; // Return the updated state
+                                                });
                                             }}
                                         >
                                             {post.orderStatusLabel}
