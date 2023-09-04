@@ -690,7 +690,7 @@ function AdminManagement({ cookies }) {
                         {adminOrder.length > 0 && adminOrder.map((post) => {
                             return (
                                 <motion.div
-                                    className='mt-5 grid grid-cols-5 w-full h-14 p-4 shadow-lg rounded-full bg-[#FFFFFF]'
+                                    className='mt-5 grid grid-cols-6 w-full h-14 p-4 shadow-lg rounded-full bg-[#FFFFFF]'
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{
@@ -700,6 +700,7 @@ function AdminManagement({ cookies }) {
                                     }}
                                 >
                                     <motion.div className='text-lg'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
+                                    <motion.div className='text-lg'>ชื่อผู้รับ {post.recipient_name}</motion.div>
                                 </motion.div>
                             )
                         })}
