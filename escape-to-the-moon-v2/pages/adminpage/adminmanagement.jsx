@@ -768,7 +768,7 @@ function AdminManagement({ cookies }) {
                                                 setAdminOrder((adminOrder) => {
                                                     const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
                                                     updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
-                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 0 : 180; // Set rotation based on the toggle
+                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
                                                     return updatedAdminOrder; // Return the updated state
                                                 });
                                             }}
