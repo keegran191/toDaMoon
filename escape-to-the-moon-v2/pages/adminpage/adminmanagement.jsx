@@ -36,7 +36,7 @@ function AdminManagement({ cookies }) {
     const [lookHistory, setLookHistory] = useState(false)
 
     // Order List
-    const [adminOrder, setAdminOrder] = useState([]);
+    const [adminOrder, setAdminOrder] = useState({});
     const [adminHistory, setAdminHistory] = useState([]);
     const [orderItem, setOrderItem] = useState([]);
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
@@ -206,13 +206,17 @@ function AdminManagement({ cookies }) {
 
     const GetAdminOrder = (orderStatus) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
-            const data = response.data;
-            for (let i = 0; i < data.length; i++) {
-                itemShipment[i] = data[i].order_shipment == '' || data[i].order_shipment == '---' ? '' : data[i].order_shipment
-            }
-
-            setItemShipment(itemShipment)
-            setAdminOrder(data)
+            setAdminOrder(response.data.map((order) => ({
+                orderId: order.order_id,
+                orderCode: order.order_code,
+                orderShipment: order.order_shipment,
+                orderStatus: order.order_status,
+                orderStatusLabel: order.label,
+                orderStatusBgColor: order.bg_color,
+                orderStatusFgColor: order.text_color,
+                orderRefNumber: order.refNumber,
+                orderRecipientName: order.recipient_name
+            })))
         })
     }
 
@@ -699,7 +703,7 @@ function AdminManagement({ cookies }) {
                             return (
                                 <motion.div
                                     className='mt-5 grid grid-cols-6 items-center w-full h-14 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
-                                    key={post.order_Id}
+                                    key={post.orderId}
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{
@@ -708,16 +712,14 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <motion.div className='text-lg text-center'>{post.refNumber}</motion.div>
-                                    <motion.div className='text-lg text-center'>{post.recipient_name}</motion.div>
+                                    <motion.div className='text-lg text-center'>{post.orderRefNumber}</motion.div>
+                                    <motion.div className='text-lg text-center'>{post.orderRecipientName}</motion.div>
                                     <input 
-                                        id={post.order_Id} 
                                         onChange={(e) => {
-                                            itemShipment[index] = e.target.value
-                                            setItemShipment(itemShipment)
+                                            adminOrder[index].orderShipment = e.target.value
                                         }} 
                                         placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
-                                        value={itemShipment[index]}>     
+                                        value={adminOrder[index].orderShipment}>     
                                     </input>
                                 </motion.div>
                             )
