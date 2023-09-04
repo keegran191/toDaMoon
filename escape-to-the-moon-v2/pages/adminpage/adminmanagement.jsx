@@ -84,6 +84,8 @@ function AdminManagement({ cookies }) {
     const [rotateOrder, setRotateHistory] = useState(0);
     const [rotateStatus, setRotateStatus] = useState(0);
 
+    const [itemShipment, setItemShipment] = useState([]);
+
     // show status list
     const [showStatusList, setShowStatusList] = useState(false);
 
@@ -687,7 +689,7 @@ function AdminManagement({ cookies }) {
                         {adminOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
                             ไม่พบรายการสั่งซื้อ
                         </motion.div>}
-                        {adminOrder.length > 0 && adminOrder.map((post) => {
+                        {adminOrder.length > 0 && adminOrder.map((post, index) => {
                             return (
                                 <motion.div
                                     className='mt-5 grid grid-cols-6 items-center w-full h-14 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
@@ -702,7 +704,15 @@ function AdminManagement({ cookies }) {
                                 >
                                     <motion.div className='text-lg text-center'>{post.refNumber}</motion.div>
                                     <motion.div className='text-lg text-center'>{post.recipient_name}</motion.div>
-                                    <input id={post.order_Id} onChange={(e) => {setOrderShipment(e.target.value)}} placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' value={post.order_shipment == '' || post.order_shipment == '---' ? orderShipment:post.order_shipment}></input>
+                                    <input 
+                                        id={post.order_Id} 
+                                        onChange={(e) => {
+                                            itemShipment[index] = e.target.value
+                                            setItemShipment(itemShipment)
+                                        }} 
+                                        placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
+                                        value={post.order_shipment == '' || post.order_shipment == '---' ? itemShipment[index]:post.order_shipment}>    
+                                    </input>
                                 </motion.div>
                             )
                         })}
