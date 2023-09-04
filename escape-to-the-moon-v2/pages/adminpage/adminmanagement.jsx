@@ -642,7 +642,7 @@ function AdminManagement({ cookies }) {
                 </div>}
 
                 {/* order */}
-                {lookOrder && <div className='block w-8/12 lg:pl-10 h-auto'>
+                {lookOrder && <div className='block w-10/12 lg:pl-10 h-auto'>
                     <motion.div className='flex flex-col lg:flex-row lg:items-center mb-5'>
                         <motion.div className='w-full text-center md:text-left'>
                             <h1 className=' text-xl'>รายการสั่งซื้อ</h1>
@@ -699,7 +699,7 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <motion.div className='col-span-2 text-xl'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
+                                    <motion.div className='col-span-2 text-lg'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
                                 </motion.div>
                             )
                         })}
