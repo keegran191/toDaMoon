@@ -740,7 +740,7 @@ function AdminManagement({ cookies }) {
 
                                     <motion.div className='w-full relative items-center flex justify-center px-2'>
                                         <motion.div
-                                            className='w-full h-8 text-lg text-center rounded-full px-2'
+                                            className='z-10 w-full h-8 text-lg text-center rounded-full px-2'
                                             style={{
                                                 backgroundColor: adminOrder[index].orderStatusBgColor,
                                                 color: adminOrder[index].orderStatusFgColor
@@ -778,7 +778,7 @@ function AdminManagement({ cookies }) {
                                             </svg>
                                         </motion.div>
                                         {adminOrder[index].orderShowStatusList && (
-                                            <motion.div className='z-90 absolute w-full p-2 flex flex-col items-center top-20 bg-[#252525] rounded-lg'>
+                                            <motion.div className='z-50 absolute w-full p-2 flex flex-col items-center top-12 bg-[#252525] rounded-lg'>
                                                 <p>asdfasdfasdfasdfadf</p>
                                                 <p>asdfasdfasdfasdfadf</p>
                                                 <p>asdfasdfasdfasdfadf</p>
