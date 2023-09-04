@@ -213,7 +213,9 @@ function AdminManagement({ cookies }) {
                 orderStatusBgColor: order.bg_color,
                 orderStatusFgColor: order.text_color,
                 orderRefNumber: order.refNumber,
-                orderRecipientName: order.recipient_name
+                orderRecipientName: order.recipient_name,
+                orderRotateStatus: 0,
+                orderShowStatusList: false
             })))
         })
     }
@@ -745,11 +747,11 @@ function AdminManagement({ cookies }) {
                                             }}
                                             onClick={()=> {
                                                 if(showStatusList) {
-                                                    setShowStatusList(false);
-                                                    setRotateStatus(0)
+                                                    adminOrder[index].orderShowStatusList = false
+                                                    adminOrder[index].orderRotateStatus = 0
                                                 } else {
-                                                    setShowStatusList(true);
-                                                    setRotateStatus(180)
+                                                    adminOrder[index].orderShowStatusList = true
+                                                    adminOrder[index].orderRotateStatus = 180
                                                 }
                                             }}
                                         >
@@ -761,7 +763,7 @@ function AdminManagement({ cookies }) {
                                                 x: 0,
                                                 y: 0,
                                                 scale: 1,
-                                                rotate: rotateStatus,
+                                                rotate: adminOrder[index].orderRotateStatus,
                                             }}
                                         >
                                             <svg className='fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
