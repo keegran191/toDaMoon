@@ -757,12 +757,20 @@ function AdminManagement({ cookies }) {
                                             {post.orderStatusLabel}
                                         </motion.div>
                                         <motion.div
-                                            className='sm:w-4 sm:h-4 w-3 h-3 sm:ml-2'
+                                            className='sm:w-4 sm:h-4 w-4 h-4 sm:ml-2'
                                             animate={{
                                                 x: 0,
                                                 y: 0,
                                                 scale: 1,
                                                 rotate: adminOrder[index].orderRotateStatus,
+                                            }}
+                                            onClick={()=> {
+                                                setAdminOrder((adminOrder) => {
+                                                    const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
+                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
+                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 0 : 180; // Set rotation based on the toggle
+                                                    return updatedAdminOrder; // Return the updated state
+                                                });
                                             }}
                                         >
                                             <svg className='fill-[#252525]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
