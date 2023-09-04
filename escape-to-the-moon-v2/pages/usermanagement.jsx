@@ -1119,7 +1119,7 @@ function UserManagement ({ cookies }) {
                                             }
                                             return <div className='w-60'>
                                             <div className='flex'>
-                                                <div className='w-20 h-auto mb-1 mr-2'>
+                                                <div className='w-20 h-20 mb-1 mr-2'>
                                                     <img className='w-full h-full' src={`/uploads/${order_item.Image}`}></img>
                                                 </div>
                                                 <div className='w-40'>
