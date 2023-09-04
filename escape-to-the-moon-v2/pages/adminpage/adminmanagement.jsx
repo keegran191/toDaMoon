@@ -699,8 +699,8 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <motion.div className='text-lg'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
-                                    <motion.div className='text-lg'>ชื่อผู้รับ {post.recipient_name}</motion.div>
+                                    <motion.div className='text-lg text-center'>คำสั่งซื้อหมายเลข {post.refNumber}</motion.div>
+                                    <motion.div className='text-lg text-center'>ชื่อผู้รับ {post.recipient_name}</motion.div>
                                 </motion.div>
                             )
                         })}
