@@ -711,7 +711,7 @@ function AdminManagement({ cookies }) {
                                             setItemShipment(itemShipment)
                                         }} 
                                         placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
-                                        value={post.order_shipment == '' || post.order_shipment == '---' ? itemShipment[index]:post.order_shipment}>    
+                                        value={post.order_shipment == '' || post.order_shipment == '---' ? '':post.order_shipment}>    
                                     </input>
                                 </motion.div>
                             )
