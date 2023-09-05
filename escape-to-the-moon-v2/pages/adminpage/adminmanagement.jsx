@@ -215,7 +215,8 @@ function AdminManagement({ cookies }) {
                 orderRefNumber: order.refNumber,
                 orderRecipientName: order.recipient_name,
                 orderRotateStatus: 0,
-                orderShowStatusList: false
+                orderShowStatusList: false,
+                orderIsRead: order.isRead
             })))
         })
     }
@@ -713,7 +714,7 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <motion.div className='absolute w-2 h-2 bg-[#f34040] py-1 px-1 rounded-full left-12'></motion.div>
+                                    {adminOrder.orderIsRead == 0 && <motion.div className='absolute w-2 h-2 bg-[#f34040] py-1 px-1 rounded-full left-12'></motion.div>}
                                     <motion.div className='text-lg text-center col-start-1'>
                                         {post.orderRefNumber}
                                     </motion.div>
