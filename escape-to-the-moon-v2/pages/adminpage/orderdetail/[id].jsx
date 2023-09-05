@@ -20,6 +20,32 @@ function OrderDetail({ cookies }) {
     const [orderAmount, setOrderAmount] = useState(0)
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
     const [haveNewOrder, setHaveNewOrder] = useState()
+    const [adminOrder, setAdminOrder] = useState({});
+    const [orderTotal, setOrderTotal] = useState(0);
+
+    
+    const GetAdminOrder = (order_id) => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/getOrderByOrderId/${order_id}`).then((response) => {
+            setAdminOrder(response.data.map((order) => ({
+                orderId: order.order_Id,
+                orderCode: order.order_code,
+                orderShipment: order.order_shipment,
+                orderStatus: order.order_status,
+                orderStatusLabel: order.label,
+                orderStatusBgColor: order.bg_color,
+                orderStatusFgColor: order.text_color,
+                orderRefNumber: order.refNumber,
+                orderRecipientName: order.recipient_name,
+                orderPhone: order.recipient_phone,
+                orderOn: order.order_on,
+                orderAddressDetail: order.detail,
+                orderSubDistrict: order.subdistrict,
+                orderDistrict: order.district,
+                orderProvinces: order.province,
+                orderZipCode: order.zipCode
+            })))
+        })
+    }
 
     const GetAdminOrderAmount = () => {
         Axios.get("https://escapetothemoon.lol/api/Order/getadminorderamount")
@@ -63,6 +89,7 @@ function OrderDetail({ cookies }) {
         GetAdminHaveNewOrder()
         if (id != null || id != undefined) {
             GetOrderItemByOrder(id)
+            GetAdminOrder(id)
             console.log("call item order")
         }
     },[id])
@@ -78,8 +105,8 @@ function OrderDetail({ cookies }) {
             </Head>
             <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
-            <motion.div className='w-full px-14'>
-
+            <motion.div className='w-full px-14 flex justify-center'>
+                
             </motion.div>
         </div>
     )
