@@ -694,6 +694,15 @@ function AdminManagement({ cookies }) {
                     
                     <motion.div 
                         className='h-5/6 overflow-x-hidden overflow-y-auto'
+                        animate="visible"
+                        variants={{
+                            visible: {
+                                transition: {
+                                  delayChildren: 0.1,
+                                  staggerChildren: 0.1
+                                }
+                            }
+                        }}
                     >
                         {adminOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
                             ไม่พบรายการสั่งซื้อ
