@@ -842,8 +842,8 @@ function AdminManagement({ cookies }) {
                                             whileTap={{ scale: 0.95 }}
                                             onClick={async () => {
                                                 console.log(post.orderId, post.orderStatus, post.orderShipment, post.orderCode)
-                                                // await Axios.post(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${post.orderStatus}&orderShipment=${post.orderShipment}&orderCode=${post.orderCode}`);
-                                                // GetAdminOrder(status)
+                                                await Axios.post(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${post.orderStatus}&orderShipment=${post.orderShipment}&orderCode=${post.orderCode}`);
+                                                GetAdminOrder(status)
                                             }}
                                         >
                                             บันทึกรายการ
