@@ -104,8 +104,12 @@ function OrderDetail({ cookies }) {
             </Head>
             <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
-            <motion.div className='w-full px-14 flex justify-center'>
-                
+            <motion.div className='w-full px-14 flex justify-center mt-5'>
+                <motion.div
+                    className='w-fit h-auto'
+                >
+                    <p className='text-xl'>คำสั่งซื้อหมายเลข {adminOrder[0].orderRefNumber}</p>
+                </motion.div>
             </motion.div>
         </div>
     )
