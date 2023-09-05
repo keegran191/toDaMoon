@@ -694,15 +694,6 @@ function AdminManagement({ cookies }) {
                     
                     <motion.div 
                         className='h-5/6 overflow-x-hidden overflow-y-auto'
-                        animate="visible"
-                        variants={{
-                            visible: {
-                                transition: {
-                                  delayChildren: 0.1,
-                                  staggerChildren: 0.1
-                                }
-                            }
-                        }}
                     >
                         {adminOrder.length == 0 && <motion.div className='text-xl mt-20 w-full flex justify-center'>
                             ไม่พบรายการสั่งซื้อ
@@ -712,12 +703,12 @@ function AdminManagement({ cookies }) {
                                 <motion.div
                                     className='mt-5 grid grid-cols-6 items-center w-full h-16 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
                                     key={post.orderId}
-                                    variants = {{
-                                        hidden: { y: 20, opacity: 0 },
-                                        visible: {
-                                            y: 0,
-                                            opacity: 1
-                                        }
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20
                                     }}
                                 >
                                     <motion.div className='text-lg text-center'>{post.orderRefNumber}</motion.div>
