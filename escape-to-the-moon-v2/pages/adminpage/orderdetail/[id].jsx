@@ -96,11 +96,11 @@ function OrderDetail({ cookies }) {
                             >
                                 <motion.div className='w-auto h-auto'>
                                     <p className='text-3xl'>คำสั่งซื้อหมายเลข {order.refNumber}</p>
-                                    <motion.div className='flex justify-start'>
-                                    <svg className='fill-[#666666] mr-2 w-3 h-3' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                    <motion.div className='flex justify-start items-center'>
+                                    <svg className='fill-[#666666] mr-2 w-4 h-4' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                                         <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
                                     </svg>
-                                    <span>สั่งซิ้อเมื่อ {order.order_on}</span>
+                                    <span className='text-[#7A7A7A]'>สั่งซิ้อเมื่อ {order.order_on}</span>
                                     </motion.div>
                                 </motion.div>
                             </motion.div>
