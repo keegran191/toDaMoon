@@ -17,5 +17,5 @@ export default async function handler(req, res) {
     });
     
     pool.destroy();
-    res.status(200).json({"Status": "UpdateComplete"});
+    res.status(200).json({Status: "UpdateComplete"});
 }

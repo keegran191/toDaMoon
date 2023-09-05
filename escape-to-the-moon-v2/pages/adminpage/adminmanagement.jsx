@@ -72,6 +72,8 @@ function AdminManagement({ cookies }) {
     // Status Value
     const [status, setStatus] = useState(0);
 
+    const [popup, setPopup] = useState(false);
+
     const GetAdminHistory = (search) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getadminhistory?search=${search}`).then((response) => {
             setAdminHistory(response.data)
@@ -830,7 +832,11 @@ function AdminManagement({ cookies }) {
                                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                             whileTap={{ scale: 0.95 }}
                                             onClick={async () => {
-                                                await Axios.post(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${post.orderStatus}&orderShipment=${post.orderShipment}&orderCode=${post.orderCode}`);
+                                                await Axios.post(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${post.orderStatus}&orderShipment=${post.orderShipment}&orderCode=${post.orderCode}`).then((response) => {
+                                                    if(response.data.Status == "UpdateComplete") {
+                                                        setPopup(true);
+                                                    }
+                                                })
                                                 GetAdminOrder(status)
                                             }}
                                         >
@@ -845,6 +851,61 @@ function AdminManagement({ cookies }) {
                                 </motion.div>
                             )
                         })}
+
+                        {popup && <motion.div
+                            className='fixed top-0 left-0 w-full h-full flex p-4 items-center justify-center z-50'
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                            }}
+                        >
+                            <motion.div className="relative w-full shadow-2xl rounded-lg max-w-md md:h-auto">
+                                <motion.div className="relative bg-[#FFFFFF] rounded-lg shadow"> 
+                                    <motion.button
+                                        whileHover={{ 
+                                            scale: 1.05,
+                                            backgroundColor: '#252525',
+                                            color: 'white'
+                                        }}
+                                        whileTap={{ scale: 1.00 }}
+                                        onClick={() => {
+                                            setPopup(false);
+                                        }}
+                                        type="button" 
+                                        className="absolute top-3 right-2.5 text-gray-600 text-sm px-2 py-0.5 rounded-lg">
+                                        <span className="text-xl bold">✕</span>
+                                    </motion.button>
+
+                                    <motion.div className="p-6 text-center">
+                                        <motion.div className='w-full flex justify-center'>
+                                            <svg className="mx-auto mb-4 fill-[#0FC000] w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                                            </svg>
+                                        </motion.div>
+                                        <h4 className="mb-5 text-lg font-normal text-[#252525]">บันทึกรายการเสร็จสิ้น</h4>
+                                        <motion.div className='w-full flex justify-center'>
+                                            <motion.button
+                                                className='text-white bg-[#0FC000] font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2'
+                                                whileHover={{ 
+                                                    scale: 1.05,
+                                                    color: 'white'
+                                                }}
+                                                whileTap={{ scale: 1.00 }}
+                                                onClick={() => {
+                                                    setPopup(false);
+                                                }}
+                                                type="button" 
+                                            >
+                                                ตกลง
+                                            </motion.button>
+                                        </motion.div>
+                                    </motion.div>
+                                </motion.div>
+                            </motion.div>
+                        </motion.div>}
                     </motion.div>
                 </div>}
 
