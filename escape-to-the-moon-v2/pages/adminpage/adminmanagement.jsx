@@ -798,7 +798,8 @@ function AdminManagement({ cookies }) {
                                             >
                                                 {orderStatusList.length > 0 && orderStatusList.map((status) => {
                                                     return (
-                                                        <motion.div 
+                                                        <motion.div
+                                                            key={status.id}
                                                             className='cursor-pointer w-full h-8 text-lg text-center rounded-full px-2 my-1'
                                                             style={{
                                                                 backgroundColor: status.bg_color,
@@ -812,6 +813,18 @@ function AdminManagement({ cookies }) {
                                                                     y: 0,
                                                                     opacity: 1
                                                                 }
+                                                            }}
+                                                            onClick={() => {
+                                                                setAdminOrder((adminOrder) => {
+                                                                    const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
+                                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
+                                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
+                                                                    updatedAdminOrder[index].orderStatus = status.id;
+                                                                    updatedAdminOrder[index].orderStatusLabel = status.label;
+                                                                    updatedAdminOrder[index].orderStatusBgColor = status.bg_color;
+                                                                    updatedAdminOrder[index].orderStatusFgColor = status.text_color;
+                                                                    return updatedAdminOrder; // Return the updated state
+                                                                });
                                                             }}
                                                         >
                                                             {status.label}
