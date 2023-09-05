@@ -90,10 +90,14 @@ function OrderDetail({ cookies }) {
             <motion.div className='w-full px-14 flex justify-center mt-5'>
                 {adminOrder.map((order) => {
                     return (
-                        <motion.div
-                            className='w-full h-auto'
-                        >
-                            {order.refNumber}
+                        <motion.div className='w-full h-auto'>
+                            <motion.div
+                                className='w-full flex justify-center'
+                            >
+                                <motion.div className='w-auto h-auto'>
+                                    <p className='text-xl'>คำสั่งซื้อหมายเลข{order.refNumber}</p>
+                                </motion.div>
+                            </motion.div>
                         </motion.div>
                     )
                 })}
