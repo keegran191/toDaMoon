@@ -43,22 +43,7 @@ function AdminManagement({ cookies }) {
     const [orderStatusList, setOrderStatusList] = useState([]);
 
     // Order Val
-    const [selectOrder, setSelectOrder] = useState(false)
-    const [orderNo, setOrderNo] = useState('');
-    const [orderOn, setOrderOn] = useState('');
-    const [reciveName, setReciveName] = useState('');
-    const [orderAddressDetail, setOrderAddressDetail] = useState('');
-    const [orderSubdistrict, setOrderSubdistrict] = useState('');
-    const [orderDistrict, setOrderDistrict] = useState('');
-    const [orderProvince, setOrderProvince] = useState('');
-    const [orderZipcode, setOrderZipcode] = useState('');
-    const [orderShipment, setOrderShipment] = useState('');
-    const [orderCode, setOrderCode] = useState('');
     const [orderTotal, setOrderTotal] = useState(0);
-    const [orderStatus, setOrderStatus] = useState('');
-    const [orderStatusId, setOrderStatusId] = useState(0);
-    const [orderStatusBgColor, setOrderBgStatusColor] = useState('');
-    const [orderStatusTextColor, setOrderStatusTextColor] = useState('');
     const [orderStatusListForSelect , setOrderStatusListForSelect] = useState([]);
 
     //ERROR message
@@ -82,10 +67,6 @@ function AdminManagement({ cookies }) {
     //Rotare State
     const [rotateUser, setRotateUser] = useState(0);
     const [rotateOrder, setRotateHistory] = useState(0);
-    const [rotateStatus, setRotateStatus] = useState(0);
-
-    // show status list
-    const [showStatusList, setShowStatusList] = useState(false);
 
     // Status Value
     const [status, setStatus] = useState(0);
