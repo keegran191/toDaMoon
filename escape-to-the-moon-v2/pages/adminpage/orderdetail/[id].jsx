@@ -101,15 +101,6 @@ function OrderDetail({ cookies }) {
                         </motion.div>
                     )
                 })}
-                {/* {adminOrder.map((order)=> {
-                    return(
-                        <motion.div
-                            className='w-full h-auto'
-                        >
-                            {order.orderRefNumber}
-                        </motion.div>
-                    )
-                })} */}
             </motion.div>
         </div>
     )
