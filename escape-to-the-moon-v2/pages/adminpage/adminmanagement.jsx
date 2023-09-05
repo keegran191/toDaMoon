@@ -840,6 +840,10 @@ function AdminManagement({ cookies }) {
                                             className='bg-[#0FC000] text-[#FFFFFF] w-auto py-2 px-1 rounded-lg'
                                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                             whileTap={{ scale: 0.95 }}
+                                            onClick={async () => {
+                                                await Axios.push(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${updatedAdminOrder[index].orderStatus}&orderShipment=${adminOrder[index].orderShipment}&orderCode=${adminOrder[index].orderCode}`);
+                                                GetAdminOrder(status)
+                                            }}
                                         >
                                             บันทึกรายการ
                                         </motion.button>
