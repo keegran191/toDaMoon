@@ -837,7 +837,7 @@ function AdminManagement({ cookies }) {
 
                                     <motion.div className='w-full items-center flex justify-center'>
                                         <motion.button
-                                            className='bg-[#0FC000] text-[#FFFFFF] w-6/12 py-3 rounded-lg'
+                                            className='bg-[#0FC000] text-[#FFFFFF] w-6/12 rounded-lg'
                                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                             whileTap={{ scale: 0.95 }}
                                         >
