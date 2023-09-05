@@ -25,24 +25,7 @@ function OrderDetail({ cookies }) {
 
     const GetAdminOrder = (order_id) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getOrderByOrderId/${order_id}`).then((response) => {
-            setAdminOrder(response.data.map((order) => ({
-                orderId: order.order_Id,
-                orderCode: order.order_code,
-                orderShipment: order.order_shipment,
-                orderStatus: order.order_status,
-                orderStatusLabel: order.label,
-                orderStatusBgColor: order.bg_color,
-                orderStatusFgColor: order.text_color,
-                orderRefNumber: order.refNumber,
-                orderRecipientName: order.recipient_name,
-                orderPhone: order.recipient_phone,
-                orderOn: order.order_on,
-                orderAddressDetail: order.detail,
-                orderSubDistrict: order.subdistrict,
-                orderDistrict: order.district,
-                orderProvinces: order.province,
-                orderZipCode: order.zipCode
-            })))
+            setAdminOrder(response.data)
         })
     }
 
@@ -105,6 +88,15 @@ function OrderDetail({ cookies }) {
             <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
             <motion.div className='w-full px-14 flex justify-center mt-5'>
+                {adminOrder.map((order) => {
+                    return (
+                        <motion.div
+                            className='w-full h-auto'
+                        >
+                            {order.refNumber}
+                        </motion.div>
+                    )
+                })}
                 {/* {adminOrder.map((order)=> {
                     return(
                         <motion.div
@@ -114,7 +106,6 @@ function OrderDetail({ cookies }) {
                         </motion.div>
                     )
                 })} */}
-
             </motion.div>
         </div>
     )
