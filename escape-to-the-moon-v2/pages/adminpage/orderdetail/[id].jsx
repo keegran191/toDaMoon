@@ -87,7 +87,7 @@ function OrderDetail({ cookies }) {
             </Head>
             <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
-            <motion.div className='w-full px-14 flex justify-center mt-5'>
+            <motion.div className='w-full px-14 flex justify-center mt-16'>
                 {adminOrder.map((order) => {
                     return (
                         <motion.div className='w-full h-auto'>
@@ -95,7 +95,7 @@ function OrderDetail({ cookies }) {
                                 className='w-full flex justify-center'
                             >
                                 <motion.div className='w-auto h-auto'>
-                                    <p className='text-xl'>คำสั่งซื้อหมายเลข{order.refNumber}</p>
+                                    <p className='text-2xl'>คำสั่งซื้อหมายเลข{order.refNumber}</p>
                                 </motion.div>
                             </motion.div>
                         </motion.div>
