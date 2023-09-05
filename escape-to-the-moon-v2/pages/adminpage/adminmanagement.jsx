@@ -704,6 +704,7 @@ function AdminManagement({ cookies }) {
                                 <motion.div
                                     className='mt-5 grid grid-cols-6 items-center w-full h-16 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
                                     key={post.orderId}
+                                    layoutId={post.orderId}
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{
@@ -841,13 +842,14 @@ function AdminManagement({ cookies }) {
                                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                             whileTap={{ scale: 0.95 }}
                                             onClick={async () => {
-                                                console.log(post.orderId, post.orderStatus, post.orderShipment, post.orderCode)
                                                 await Axios.post(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${post.orderStatus}&orderShipment=${post.orderShipment}&orderCode=${post.orderCode}`);
                                                 GetAdminOrder(status)
                                             }}
                                         >
                                             บันทึกรายการ
                                         </motion.button>
+
+                                        
                                     </motion.div>
                                 </motion.div>
                             )
