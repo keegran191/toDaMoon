@@ -17,7 +17,21 @@ function OrderDetail({ cookies }) {
     const router = useRouter();
     const { id } = router.query;
 
+    const [orderAmount, setOrderAmount] = useState(0)
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
+    const [haveNewOrder, setHaveNewOrder] = useState()
+
+    const GetAdminOrderAmount = () => {
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminorderamount")
+        .then((response) => {
+            const {data} = response;
+            setOrderAmount(data.totalOrderAmount || 0);
+        })
+        .catch((error) => {
+            console.error('Error fetching order amount:', error);
+            setOrderAmount(0);
+        })
+    }
 
     const GetOrderItemByOrder = (selectOrder) => {
         Axios.get(`https://escapetothemoon.lol/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
@@ -34,7 +48,19 @@ function OrderDetail({ cookies }) {
         setOrderTotal(TotalPrice)
     }
 
+    const GetAdminHaveNewOrder = () => {
+        Axios.get("https://escapetothemoon.lol/api/Order/getadminhaveneworder").then((response) => {
+            if (response.data.IsRead == 0) {
+                setHaveNewOrder(0)
+            } else if (response.data.IsRead == 1) {
+                setHaveNewOrder(1)
+            }
+        });
+    }
+
     useEffect(() => {
+        GetAdminOrderAmount()
+        GetAdminHaveNewOrder()
         if (id != null || id != undefined) {
             GetOrderItemByOrder(id)
             console.log("call item order")
