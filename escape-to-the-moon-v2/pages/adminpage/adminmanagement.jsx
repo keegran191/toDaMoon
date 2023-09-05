@@ -713,7 +713,7 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <motion.div className='absolute w-15 h-8 bg-[#7A7A7A] py-1 px-1 rounded-lg'>ยังไม่ได้อ่าน</motion.div>
+                                    <motion.div className='absolute w-2 h-2 bg-[#f34040] py-1 px-1 rounded-full'></motion.div>
                                     <motion.div className='text-lg text-center col-start-1'>
                                         {post.orderRefNumber}
                                     </motion.div>
