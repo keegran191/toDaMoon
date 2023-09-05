@@ -40,7 +40,7 @@ function AdminManagement({ cookies }) {
     const [adminHistory, setAdminHistory] = useState([]);
     const [orderItem, setOrderItem] = useState([]);
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
-    const [orderStatusList, setOrderStatusList] = useState([]);
+    const [orderStatusList, setOrderStatusList] = useState({});
 
     // Order Val
     const [selectOrder, setSelectOrder] = useState(false)
@@ -59,7 +59,6 @@ function AdminManagement({ cookies }) {
     const [orderStatusId, setOrderStatusId] = useState(0);
     const [orderStatusBgColor, setOrderBgStatusColor] = useState('');
     const [orderStatusTextColor, setOrderStatusTextColor] = useState('');
-    const [orderStatusListForSelect , setOrderStatusListForSelect] = useState([]);
 
     //ERROR message
     const [errorMessage, setErrorMessage] = useState('');
@@ -99,12 +98,6 @@ function AdminManagement({ cookies }) {
     const GetOrderStatus = () => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getorderstatus`).then((response) => {
             setOrderStatusList(response.data)
-        });
-    }
-
-    const GetOrderStatusForSelect = () => {
-        Axios.get(`https://escapetothemoon.lol/api/Order/getorderstatuslistselect`).then((response) => {
-            setOrderStatusListForSelect(response.data.map((status) => ({ value: status.id, label: status.label })))
         });
     }
 
@@ -276,7 +269,6 @@ function AdminManagement({ cookies }) {
     }
 
     useEffect(() => {
-        GetOrderStatusForSelect()
         GetAdminHaveNewOrder();
         GetAdminOrderAmount();
         GetUserOrderItem();
@@ -747,10 +739,10 @@ function AdminManagement({ cookies }) {
                                             }}
                                             onClick={()=> {
                                                 setAdminOrder((adminOrder) => {
-                                                    const updatedAdminOrder = [...adminOrder];
-                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList;
-                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 0 : 180;
-                                                    return updatedAdminOrder;
+                                                    const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
+                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
+                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
+                                                    return updatedAdminOrder; // Return the updated state
                                                 });
                                             }}
                                         >
@@ -779,12 +771,9 @@ function AdminManagement({ cookies }) {
                                         </motion.div>
                                         {adminOrder[index].orderShowStatusList && (
                                             <motion.div className='z-50 absolute w-full p-2 flex flex-col items-center top-12 bg-[#252525] rounded-lg'>
-                                                <p>asdfasdfasdfasdfadf</p>
-                                                <p>asdfasdfasdfasdfadf</p>
-                                                <p>asdfasdfasdfasdfadf</p>
-                                                <p>asdfasdfasdfasdfadf</p>
-                                                <p>asdfasdfasdfasdfadf</p>
-                                                <p>asdfasdfasdfasdfadf</p>
+                                                {orderStatusList.length > 0 && orderStatusList.map((status) => {
+
+                                                })}
                                             </motion.div>
                                         )}
                                     </motion.div>
