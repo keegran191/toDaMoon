@@ -772,7 +772,9 @@ function AdminManagement({ cookies }) {
                                         {adminOrder[index].orderShowStatusList && (
                                             <motion.div className='z-50 absolute w-full p-2 flex flex-col items-center top-12 bg-[#252525] rounded-lg'>
                                                 {orderStatusList.length > 0 && orderStatusList.map((status) => {
-
+                                                    return (
+                                                        <motion.div></motion.div>
+                                                    )
                                                 })}
                                             </motion.div>
                                         )}
