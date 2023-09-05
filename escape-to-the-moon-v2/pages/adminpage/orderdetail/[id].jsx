@@ -9,7 +9,6 @@ import React from 'react'
 import Select from 'react-select'
 import { motion, AnimatePresence } from 'framer-motion';
 import { parse } from 'cookie';
-import { NIL } from 'uuid';
 
 function OrderDetail({ cookies }) {
 
@@ -23,7 +22,7 @@ function OrderDetail({ cookies }) {
     const [adminOrder, setAdminOrder] = useState({});
     const [orderTotal, setOrderTotal] = useState(0);
 
-    
+
     const GetAdminOrder = (order_id) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getOrderByOrderId/${order_id}`).then((response) => {
             setAdminOrder(response.data.map((order) => ({
