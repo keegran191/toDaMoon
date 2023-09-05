@@ -44,7 +44,6 @@ function AdminManagement({ cookies }) {
     const [orderStatusList, setOrderStatusList] = useState([]);
 
     // Order Val
-    const [orderTotal, setOrderTotal] = useState(0);
     const [orderStatusListForSelect , setOrderStatusListForSelect] = useState([]);
 
     //ERROR message
@@ -179,13 +178,6 @@ function AdminManagement({ cookies }) {
         setPhone(sanitizedValue);
     }
 
-    const GetOrderItemByOrder = (selectOrder) => {
-        Axios.get(`https://escapetothemoon.lol/api/orderitem/getorderitembyorder/${selectOrder}`).then((response) => {
-            setOrderItemByOrder(response.data)
-            TotalPrice(response.data)
-        })
-    }
-
     const GetAdminOrder = (orderStatus) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
             setAdminOrder(response.data.map((order) => ({
@@ -203,14 +195,6 @@ function AdminManagement({ cookies }) {
                 orderIsRead: order.isRead
             })))
         })
-    }
-
-    const TotalPrice = (arr) => {
-        let TotalPrice = 0
-        for (let i = 0; i < arr.length; i++) {
-            TotalPrice += (arr[i].total)
-        }
-        setOrderTotal(TotalPrice)
     }
 
     const customStyles = {
