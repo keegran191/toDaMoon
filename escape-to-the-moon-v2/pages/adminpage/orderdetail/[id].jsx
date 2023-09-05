@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import style from '../../styles/Admin.module.css'
+import style from '../../../styles/Admin.module.css'
 import NavAdmin from '../../components/NavbarAdmin.js'
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
