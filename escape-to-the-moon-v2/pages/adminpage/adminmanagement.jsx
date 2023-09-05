@@ -840,7 +840,7 @@ function AdminManagement({ cookies }) {
                                             className='bg-[#0FC000] text-[#FFFFFF] w-auto py-2 px-1 rounded-lg'
                                             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                                             whileTap={{ scale: 0.95 }}
-                                            onClick={() => {
+                                            onClick={async () => {
                                                 console.log(post.orderId, post.orderStatus, post.orderStatus, post.orderShipment, post.orderCode)
                                                 // await Axios.post(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${post.orderStatus}&orderShipment=${post.orderShipment}&orderCode=${post.orderCode}`);
                                                 // GetAdminOrder(status)
