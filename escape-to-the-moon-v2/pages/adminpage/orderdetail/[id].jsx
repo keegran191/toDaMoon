@@ -51,6 +51,10 @@ function OrderDetail({ cookies }) {
                 <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"/>
             </Head>
             <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
+
+            <motion.div className='w-full px-14'>
+
+            </motion.div>
         </div>
     )
 }
