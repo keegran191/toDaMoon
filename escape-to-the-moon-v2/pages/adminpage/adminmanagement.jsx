@@ -59,6 +59,7 @@ function AdminManagement({ cookies }) {
     const [orderStatusId, setOrderStatusId] = useState(0);
     const [orderStatusBgColor, setOrderBgStatusColor] = useState('');
     const [orderStatusTextColor, setOrderStatusTextColor] = useState('');
+    const [orderStatusListForSelect , setOrderStatusListForSelect] = useState([]);
 
     //ERROR message
     const [errorMessage, setErrorMessage] = useState('');
@@ -98,6 +99,12 @@ function AdminManagement({ cookies }) {
     const GetOrderStatus = () => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getorderstatus`).then((response) => {
             setOrderStatusList(response.data)
+        });
+    }
+
+    const GetOrderStatusForSelect = () => {
+        Axios.get(`https://escapetothemoon.lol/api/Order/getorderstatuslistselect`).then((response) => {
+            setOrderStatusListForSelect(response.data.map((status) => ({ value: status.id, label: status.label })))
         });
     }
 
