@@ -873,7 +873,7 @@ function AdminManagement({ cookies }) {
                             className='w-full'
                         >
                             <motion.input
-                                className='shadow-lg rounded-full w-full text-xl px-4 py-3 outline-none'
+                                className='shadow-lg rounded-full w-full text-xl px-4 py-4 outline-none'
                                 placeholder='หมายเลขคำสั่งซื้อ'
                                 onChange={(e) => {
                                     GetAdminHistory(e.target.value)
