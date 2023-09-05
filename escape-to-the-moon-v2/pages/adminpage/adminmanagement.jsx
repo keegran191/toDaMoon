@@ -864,7 +864,6 @@ function AdminManagement({ cookies }) {
                     </motion.div>
                 </div>}
 
-                {/* history */}
                 {lookHistory && <div className='block w-8/12 lg:pl-10 h-auto'>
                     <motion.div className='flex flex-col lg:flex-row lg:items-center mb-5'>
                         <motion.div className='w-full text-center md:text-left'>
@@ -883,6 +882,17 @@ function AdminManagement({ cookies }) {
                             </motion.input>
                         </motion.div>
                     </motion.div>
+
+                    <motion.div className='w-full h-1 border-b-2 border-[#252525]'></motion.div>
+                    <motion.div className='w-full h-auto grid grid-cols-6 px-5 py-3 xl:py-3 lg:px-10'>
+                        <div className='text-lg text-center'>หมายเลขคำสั่งซื้อ</div> 
+                        <div className='text-lg text-center'>ชื่อผู้รับ</div>
+                        <div className='text-lg text-center'>บริการจัดส่ง</div>
+                        <div className='text-lg text-center'>หมายเลขพัสดุ</div>
+                        <div className='text-lg text-center'>สถานะสินค้า</div>
+                    </motion.div>
+                    <motion.div className='w-full h-1 border-b-2 border-[#252525] mb-1'></motion.div>
+                    
                     <motion.div
                         className='h-5/6 overflow-x-hidden overflow-y-auto'
                     >
@@ -892,13 +902,10 @@ function AdminManagement({ cookies }) {
 
                         {adminHistory.length > 0 && adminHistory.map((post) => {
                             return (
-                                <motion.div 
-                                    className='mt-5 flex justify-center'
+                                <motion.div
+                                    className='mt-5 grid grid-cols-6 items-center w-full h-16 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
                                     key={post.order_Id}
                                     layoutId={post.order_Id}
-                                    style={{
-                                        opacity: selectOrder == post.order_Id ? 0 : 1,
-                                    }}
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{
@@ -907,178 +914,39 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <div className="w-full h-auto xl:w-10/12 xl:h-56 bg-[#FFFFFF] rounded-lg lg:rounded-xl overflow-hidden">
-                                        {/* pc */}
-                                        <div className='hidden xl:flex w-full h-20 bg-[#252525] p-3 justify-between'>
-                                            <div className='w-full pl-7'>
-                                                <div className='w-full flex items-center'>
-                                                    <div className='text-xl text-[#ECEBE8]'>คำสั่งซื้อหมายเลข {post.refNumber}</div>
-                                                    <div 
-                                                        style={{
-                                                            backgroundColor: post.bg_color,
-                                                            color: post.text_color
-                                                        }} 
-                                                        className={`ml-2 w-auto h-5 text-sm text-center rounded-full px-2`}
-                                                    >
-                                                        {post.label}
-                                                    </div>  
-                                                </div>
-                                                <div className='flex text-[#ECEBE8] items-center'>
-                                                    <svg className='fill-current' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                                                        <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/>
-                                                    </svg>
-                                                    <span className='ml-2 text-sm'>สั่งซื้อเมื่อ {post.order_on} ชื่อผู้รับ {post.recipient_name}</span>
-                                                </div>
-                                            </div>
-                                            <div className='w-full text-[#ECEBE8] self-center flex justify-end pr-7'>
-                                                <motion.button className='bg-[#ECEBE8] text-[#252525] py-3 px-5 rounded-full'
-                                                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                    onClick={async() => {
-                                                        await Axios.get(`https://escapetothemoon.lol/api/Order/updateisread?orderId=${post.order_Id}`)
-                                                        GetAdminHaveNewOrder()
-                                                        setOrderNo(post.refNumber);
-                                                        setOrderOn(post.order_on);
-                                                        setReciveName(post.recipient_name);
-                                                        setOrderAddressDetail(post.detail);
-                                                        setOrderSubdistrict(post.subdistrict);
-                                                        setOrderDistrict(post.district);
-                                                        setOrderProvince(post.province);
-                                                        setOrderZipcode(post.zipCode)
-                                                        setOrderStatus(post.label);
-                                                        setOrderBgStatusColor(post.bg_color);
-                                                        setOrderStatusTextColor(post.text_color);
-                                                        setOrderShipment(post.order_shipment)
-                                                        setOrderCode(post.order_code)
-                                                        setSelectOrder(post.order_Id)
-                                                        setOrderStatusId(post.order_status)
-                                                        GetOrderItemByOrder(post.order_Id)
-                                                    }}
-                                                >
-                                                    ดูรายละเอียด
-                                                </motion.button>
-                                            </div>
-                                        </div>
-                                        <div className='hidden xl:flex w-full h-auto pt-5 px-10 justify-between items-center'>
-                                            <div>
-                                                <p>หมายเลขพัสดุ</p>
-                                                {post.order_shipment == '' && <p className='text-lg font-semibold'>---</p>}
-                                                {post.order_shipment != '' && <p className='text-lg font-semibold'>{post.order_shipment}</p>}
-                                                <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                    {post.order_code == '' && <span className='text-sm mr-5'>---</span>}
-                                                    {post.order_code != '' && <span className='text-sm mr-5'>{post.order_code}</span>}
-                                                </div>
-                                            </div>
+                                    <motion.div className='text-lg text-center col-start-1'>
+                                        {post.refNumber}
+                                    </motion.div>
 
-                                            <div>
-                                                <p>รูปแบบการชำระเงิน</p>
-                                                <p className='font-semibold'>QR Payment</p>
-                                                <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-center items-center'>
-                                                    <svg className='mr-1 fill-[#0FC000]' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                                                        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
-                                                    </svg>
-                                                    <span className='text-sm'>ชำระเงินสำเร็จ</span>
-                                                </div>
-                                            </div>
+                                    <motion.div className='text-lg text-center'>
+                                        {post.recipient_name}
+                                    </motion.div>
 
-                                            {(() => {
-                                                let order_item = orderItem.find((item) => item.order_id == post.order_Id)
-                                                if (order_item == undefined) {
-                                                    return (
-                                                        <p>Loading</p>
-                                                    )
-                                                }
-                                                let total = 0
-                                                for (let i = 0; i < orderItem.length; i++) {
-                                                    if (orderItem[i].order_id == post.order_Id) {
-                                                        total += (order_item.total)
-                                                    }
-                                                }
-                                                return <div className='w-60'>
-                                                <div className='flex'>
-                                                    <div className='w-20 h-auto mb-1 mr-2'>
-                                                        <img className='w-full h-full' src={`/uploads/${order_item.Image}`}></img>
-                                                    </div>
-                                                    <div className='w-40'>
-                                                        <p className='overflow-hidden text-ellipsis whitespace-nowrap'>{order_item.Title}</p>
-                                                        <motion.p 
-                                                            className='cursor-pointer text-xs'
-                                                            whileHover={{ fontWeight: 'bold'}}
-                                                            whileTap={{ scale: 0.95 }}
-                                                            onClick={() => {
-                                                                setOrderNo(post.refNumber);
-                                                                setOrderOn(post.order_on);
-                                                                setReciveName(post.recipient_name);
-                                                                setOrderAddressDetail(post.detail);
-                                                                setOrderSubdistrict(post.subdistrict);
-                                                                setOrderDistrict(post.district);
-                                                                setOrderProvince(post.province);
-                                                                setOrderZipcode(post.zipCode)
-                                                                setSelectOrder(post.order_Id)
-                                                                setOrderStatus(post.label);
-                                                                setOrderBgStatusColor(post.bg_color);
-                                                                setOrderStatusTextColor(post.text_color);
-                                                                setOrderShipment(post.order_shipment)
-                                                                setOrderCode(post.order_code)
-                                                                setOrderStatusId(post.order_status)
-                                                                GetOrderItemByOrder(post.order_Id)
-                                                            }}
-                                                        >
-                                                            {`ดูรายละเอียดสินค้าทั้งหมด ->`}
-                                                        </motion.p>
-                                                    </div>
-                                                </div>
-                                                <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                    <span className='text-sm'>ยอดรวม</span>
-                                                    <span className='text-sm'>฿{total}</span>
-                                                </div>
-                                            </div>})()}
-                                        </div>
+                                    <motion.div className='text-lg text-center'>
+                                        {post.order_shipment}
+                                    </motion.div>
 
-                                        {/* mobile */}
+                                    <motion.div className='text-lg text-center'>
+                                        {post.order_code}
+                                    </motion.div>
+
+                                    <motion.div className='w-full relative items-center flex justify-center px-2'>
                                         <motion.div
-                                            onClick={async () => {
-                                                await Axios.get(`https://escapetothemoon.lol/api/Order/updateisread?orderId=${post.order_Id}`)
-                                                GetAdminHaveNewOrder()
-                                                setOrderNo(post.refNumber);
-                                                setOrderOn(post.order_on);
-                                                setReciveName(post.recipient_name);
-                                                setOrderAddressDetail(post.detail);
-                                                setSelectOrder(post.order_Id)
-                                                setOrderStatusId(post.order_status)
+                                            className='z-10 w-full h-8 text-lg text-center rounded-full px-2'
+                                            style={{
+                                                backgroundColor: post.bg_color,
+                                                color: post.text_color
                                             }}
                                         >
-                                            <div className='flex xl:hidden w-full h-auto bg-[#252525] p-3'>
-                                                <div className='w-full'>
-                                                    <div 
-                                                        style={{
-                                                            backgroundColor: post.bg_color,
-                                                            color: post.text_color
-                                                        }} 
-                                                        className={`ml-2 w-fit h-5 text-sm text-center rounded-full px-2`}
-                                                    >
-                                                        {post.label}
-                                                    </div>  
-                                                    <div className='text-xl text-[#ECEBE8]'>คำสั่งซื้อหมายเลข {post.refNumber}</div>
-                                                    <div className='text-[#ECEBE8] mt-2'>
-                                                        <p className='text-xs'>สั่งซื้อเมื่อ {post.order_on}</p>
-                                                        <p className='text-xs'>ชื่อผู้รับ {post.recipient_name}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='block xl:hidden w-full h-auto pt-5 px-10 mb-5'>
-                                                <div>
-                                                    <p className='text-sm'>หมายเลขพัสดุ</p>
-                                                    {post.order_shipment == '' && <p className='text-sm font-semibold'>---</p>}
-                                                    {post.order_shipment != '' && <p className='text-sm font-semibold'>{post.order_shipment}</p>}
-                                                    <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                        {post.order_code == '' && <span className='text-sm mr-5'>---</span>}
-                                                        {post.order_code != '' && <span className='text-sm mr-5'>{post.order_code}</span>}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {post.label}
                                         </motion.div>
-                                    </div>
+                                    </motion.div>
+
+                                    <motion.div className='w-full items-center flex justify-end'>
+                                        <svg className='cursor-pointer w-5 h-5 fill-[#252525] ml-auto' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                                            <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+                                        </svg>
+                                    </motion.div>
                                 </motion.div>
                             )
                         })}
