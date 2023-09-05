@@ -276,6 +276,7 @@ function AdminManagement({ cookies }) {
     }
 
     useEffect(() => {
+        GetOrderStatusForSelect()
         GetAdminHaveNewOrder();
         GetAdminOrderAmount();
         GetUserOrderItem();
@@ -712,7 +713,9 @@ function AdminManagement({ cookies }) {
                                     }}
                                 >
                                     <motion.div className='text-lg text-center'>{post.orderRefNumber}</motion.div>
+                                    
                                     <motion.div className='text-lg text-center'>{post.orderRecipientName}</motion.div>
+                                    
                                     <motion.div className='w-full px-2'>
                                         <input 
                                             onChange={(e) => {
@@ -817,6 +820,14 @@ function AdminManagement({ cookies }) {
                                                 })}
                                             </motion.div>
                                         )}
+                                    </motion.div>
+
+                                    <motion.div className='w-full items-center flex justify-center'>
+                                        <motion.button
+                                            className=''
+                                        >
+
+                                        </motion.button>
                                     </motion.div>
                                 </motion.div>
                             )
