@@ -719,9 +719,9 @@ function AdminManagement({ cookies }) {
                                     <motion.div className='w-full px-2'>
                                         <input 
                                             onChange={(e) => {
-                                                const updatedAdminOrder = [...adminOrder];
-                                                updatedAdminOrder[index].orderShipment = e.target.value;
-                                                setAdminOrder(updatedAdminOrder);[index].orderShipment = e.target.value;
+                                                const updatedShipmentAdminOrder = [...adminOrder];
+                                                updatedShipmentAdminOrder[index].orderShipment = e.target.value;
+                                                setAdminOrder(updatedShipmentAdminOrder);[index].orderShipment = e.target.value;
                                             }} 
                                             placeholder='ใส่บริการขนส่ง' className='rounded-lg text-lg text-center px-3 py-1' 
                                             value={adminOrder[index].orderShipment}>     
@@ -731,9 +731,9 @@ function AdminManagement({ cookies }) {
                                     <motion.div className='w-full px-2'>
                                         <input 
                                             onChange={(e) => {
-                                                const updatedAdminOrder = [...adminOrder];
-                                                updatedAdminOrder[index].orderCode = e.target.value;
-                                                setAdminOrder(updatedAdminOrder);[index].orderCode = e.target.value;
+                                                const updatedOrderCodeAdminOrder = [...adminOrder];
+                                                updatedOrderCodeAdminOrder[index].orderCode = e.target.value;
+                                                setAdminOrder(updatedOrderCodeAdminOrder);[index].orderCode = e.target.value;
                                             }} 
                                             placeholder='ใส่เลขพัสดุ' className='rounded-lg text-lg text-center px-3 py-1' 
                                             value={adminOrder[index].orderCode}>     
@@ -749,10 +749,10 @@ function AdminManagement({ cookies }) {
                                             }}
                                             onClick={()=> {
                                                 setAdminOrder((adminOrder) => {
-                                                    const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
-                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
-                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
-                                                    return updatedAdminOrder; // Return the updated state
+                                                    const updatedRotateStatusAdminOrder = [...adminOrder]; // Create a copy of the array
+                                                    updatedRotateStatusAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
+                                                    updatedRotateStatusAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
+                                                    return updatedRotateStatusAdminOrder; // Return the updated state
                                                 });
                                             }}
                                         >
@@ -768,10 +768,10 @@ function AdminManagement({ cookies }) {
                                             }}
                                             onClick={()=> {
                                                 setAdminOrder((adminOrder) => {
-                                                    const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
-                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
-                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
-                                                    return updatedAdminOrder; // Return the updated state
+                                                    const updatedRotateStatusSVGAdminOrder = [...adminOrder]; // Create a copy of the array
+                                                    updatedRotateStatusSVGAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
+                                                    updatedRotateStatusSVGAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
+                                                    return updatedRotateStatusSVGAdminOrder; // Return the updated state
                                                 });
                                             }}
                                         >
@@ -816,14 +816,14 @@ function AdminManagement({ cookies }) {
                                                             }}
                                                             onClick={() => {
                                                                 setAdminOrder((adminOrder) => {
-                                                                    const updatedAdminOrder = [...adminOrder]; // Create a copy of the array
-                                                                    updatedAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
-                                                                    updatedAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
-                                                                    updatedAdminOrder[index].orderStatus = status.id;
-                                                                    updatedAdminOrder[index].orderStatusLabel = status.label;
-                                                                    updatedAdminOrder[index].orderStatusBgColor = status.bg_color;
-                                                                    updatedAdminOrder[index].orderStatusFgColor = status.text_color;
-                                                                    return updatedAdminOrder; // Return the updated state
+                                                                    const updatedStatusAdminOrder = [...adminOrder]; // Create a copy of the array
+                                                                    updatedStatusAdminOrder[index].orderShowStatusList = !adminOrder[index].orderShowStatusList; // Toggle the property
+                                                                    updatedStatusAdminOrder[index].orderRotateStatus = adminOrder[index].orderShowStatusList ? 180 : 0; // Set rotation based on the toggle
+                                                                    updatedStatusAdminOrder[index].orderStatus = status.id;
+                                                                    updatedStatusAdminOrder[index].orderStatusLabel = status.label;
+                                                                    updatedStatusAdminOrder[index].orderStatusBgColor = status.bg_color;
+                                                                    updatedStatusAdminOrder[index].orderStatusFgColor = status.text_color;
+                                                                    return updatedStatusAdminOrder; // Return the updated state
                                                                 });
                                                             }}
                                                         >
