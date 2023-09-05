@@ -105,7 +105,7 @@ function OrderDetail({ cookies }) {
             <NavAdmin name={fname} userid={userId} orderCount={orderAmount} haveOrder={haveNewOrder}></NavAdmin>
 
             <motion.div className='w-full px-14 flex justify-center mt-5'>
-                {adminOrder.map((order)=> {
+                {/* {adminOrder.map((order)=> {
                     return(
                         <motion.div
                             className='w-full h-auto'
@@ -113,7 +113,7 @@ function OrderDetail({ cookies }) {
                             {order.orderRefNumber}
                         </motion.div>
                     )
-                })}
+                })} */}
 
             </motion.div>
         </div>
