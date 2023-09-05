@@ -19,7 +19,7 @@ function OrderDetail({ cookies }) {
     const [orderAmount, setOrderAmount] = useState(0)
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
     const [haveNewOrder, setHaveNewOrder] = useState()
-    const [adminOrder, setAdminOrder] = useState({});
+    const [adminOrder, setAdminOrder] = useState([]);
     const [orderTotal, setOrderTotal] = useState(0);
 
 
