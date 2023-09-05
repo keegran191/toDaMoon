@@ -777,14 +777,36 @@ function AdminManagement({ cookies }) {
                                             </svg>
                                         </motion.div>
                                         {adminOrder[index].orderShowStatusList && (
-                                            <motion.div className='z-50 absolute w-full p-2 flex flex-col items-center top-10 bg-[#252525] rounded-lg'>
+                                            <motion.div 
+                                                className='z-50 absolute w-full p-2 flex flex-col items-center top-10 bg-[#252525] rounded-lg'
+                                                initial="hidden"
+                                                animate="visible"
+                                                variants={{
+                                                    hidden: { opacity: 1, scale: 0 },
+                                                    visible: {
+                                                        opacity: 1,
+                                                        scale: 1,
+                                                        transition: {
+                                                          delayChildren: 0.3,
+                                                          staggerChildren: 0.2
+                                                        }
+                                                    }
+                                                }}
+                                            >
                                                 {orderStatusList.length > 0 && orderStatusList.map((status) => {
                                                     return (
                                                         <motion.div 
-                                                            className='w-full h-8 text-lg text-center rounded-full px-2 my-1'
+                                                            className='cursor-pointer w-full h-8 text-lg text-center rounded-full px-2 my-1'
                                                             style={{
                                                                 backgroundColor: status.bg_color,
                                                                 color: status.text_color
+                                                            }}
+                                                            variants = {{
+                                                                hidden: { y: 20, opacity: 0 },
+                                                                visible: {
+                                                                    y: 0,
+                                                                    opacity: 1
+                                                                }
                                                             }}
                                                         >
                                                             {status.label}
