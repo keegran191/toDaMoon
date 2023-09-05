@@ -95,7 +95,7 @@ function OrderDetail({ cookies }) {
                                 className='w-full flex justify-center'
                             >
                                 <motion.div className='w-auto h-auto'>
-                                    <p className='text-2xl'>คำสั่งซื้อหมายเลข{order.refNumber}</p>
+                                    <p className='text-2xl'>คำสั่งซื้อหมายเลข {order.refNumber}</p>
                                 </motion.div>
                             </motion.div>
                         </motion.div>
