@@ -781,7 +781,7 @@ function AdminManagement({ cookies }) {
                                                 {orderStatusList.length > 0 && orderStatusList.map((status) => {
                                                     return (
                                                         <motion.div 
-                                                            className='w-full h-8 text-lg text-center rounded-full px-2 my-2'
+                                                            className='w-full h-8 text-lg text-center rounded-full px-2 my-1'
                                                             style={{
                                                                 backgroundColor: status.bg_color,
                                                                 color: status.text_color
