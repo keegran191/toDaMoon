@@ -864,7 +864,7 @@ function AdminManagement({ cookies }) {
                     </motion.div>
                 </div>}
 
-                {lookHistory && <div className='block w-8/12 lg:pl-10 h-auto'>
+                {lookHistory && <div className='block w-10/12 lg:pl-10 h-auto'>
                     <motion.div className='flex flex-col lg:flex-row lg:items-center mb-5'>
                         <motion.div className='w-full text-center md:text-left'>
                             <h1 className='text-xl mb-2 xl:mb-0'>ประวัติรายการสั่งซื้อ</h1>
@@ -873,7 +873,7 @@ function AdminManagement({ cookies }) {
                             className='w-full'
                         >
                             <motion.input
-                                className='shadow-lg rounded-full w-full text-xl px-4 py-2 outline-none'
+                                className='shadow-lg rounded-full w-full text-xl px-4 py-3 outline-none'
                                 placeholder='หมายเลขคำสั่งซื้อ'
                                 onChange={(e) => {
                                     GetAdminHistory(e.target.value)
@@ -892,7 +892,7 @@ function AdminManagement({ cookies }) {
                         <div className='text-lg text-center'>สถานะสินค้า</div>
                     </motion.div>
                     <motion.div className='w-full h-1 border-b-2 border-[#252525] mb-1'></motion.div>
-                    
+
                     <motion.div
                         className='h-5/6 overflow-x-hidden overflow-y-auto'
                     >
