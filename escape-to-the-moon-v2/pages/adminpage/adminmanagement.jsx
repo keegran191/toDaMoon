@@ -204,10 +204,6 @@ function AdminManagement({ cookies }) {
 
     const GetAdminOrder = (orderStatus) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getadminorder?order_status=${orderStatus}`).then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
-                console.log(response.data[i].order_Id)
-            }
-            
             setAdminOrder(response.data.map((order) => ({
                 orderId: order.order_Id,
                 orderCode: order.order_code,
