@@ -702,7 +702,7 @@ function AdminManagement({ cookies }) {
                         {adminOrder.length > 0 && adminOrder.map((post, index) => {
                             return (
                                 <motion.div
-                                    className='mt-5 grid grid-cols-6 items-center w-full h-16 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
+                                    className='relative mt-5 grid grid-cols-6 items-center w-full h-16 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
                                     key={post.orderId}
                                     layoutId={post.orderId}
                                     initial={{ scale: 0 }}
@@ -713,9 +713,14 @@ function AdminManagement({ cookies }) {
                                         damping: 20
                                     }}
                                 >
-                                    <motion.div className='text-lg text-center'>{post.orderRefNumber}</motion.div>
+                                    <motion.div className='absolute w-15 h-8 bg-[#7A7A7A] py-1 px-1 rounded-lg'>ยังไม่ได้อ่าน</motion.div>
+                                    <motion.div className='text-lg text-center col-start-1'>
+                                        {post.orderRefNumber}
+                                    </motion.div>
                                     
-                                    <motion.div className='text-lg text-center'>{post.orderRecipientName}</motion.div>
+                                    <motion.div className='text-lg text-center'>
+                                        {post.orderRecipientName}
+                                    </motion.div>
                                     
                                     <motion.div className='w-full px-2'>
                                         <input 
