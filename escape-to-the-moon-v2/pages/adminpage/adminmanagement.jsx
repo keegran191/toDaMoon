@@ -835,9 +835,11 @@ function AdminManagement({ cookies }) {
                                         >
                                             บันทึกรายการ
                                         </motion.button>
-                                        <svg className='cursor-pointer w-5 h-5 fill-[#252525] ml-auto' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                                            <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
-                                        </svg>
+                                        <Link href={`/adminpage/orderdetail/${post.orderId}`}>
+                                            <svg className='cursor-pointer w-5 h-5 fill-[#252525] ml-auto' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                                                <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+                                            </svg>
+                                        </Link>
                                     </motion.div>
                                 </motion.div>
                             )
@@ -923,11 +925,13 @@ function AdminManagement({ cookies }) {
                                         </motion.div>
                                     </motion.div>
 
-                                    <motion.div className='w-full items-center flex justify-end'>
-                                        <svg className='cursor-pointer w-5 h-5 fill-[#252525] ml-auto' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                                            <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
-                                        </svg>
-                                    </motion.div>
+                                    <Link href={`/adminpage/orderdetail/${post.order_Id}`}>
+                                        <motion.div className='w-full items-center flex justify-end'>
+                                            <svg className='cursor-pointer w-5 h-5 fill-[#252525] ml-auto' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                                                <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+                                            </svg>
+                                        </motion.div>
+                                    </Link>
                                 </motion.div>
                             )
                         })}
