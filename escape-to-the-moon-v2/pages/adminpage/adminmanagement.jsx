@@ -40,7 +40,7 @@ function AdminManagement({ cookies }) {
     const [adminHistory, setAdminHistory] = useState([]);
     const [orderItem, setOrderItem] = useState([]);
     const [orderItemByOrder, setOrderItemByOrder] = useState([]);
-    const [orderStatusList, setOrderStatusList] = useState({});
+    const [orderStatusList, setOrderStatusList] = useState([]);
 
     // Order Val
     const [selectOrder, setSelectOrder] = useState(false)
@@ -780,7 +780,15 @@ function AdminManagement({ cookies }) {
                                             <motion.div className='z-50 absolute w-full p-2 flex flex-col items-center top-12 bg-[#252525] rounded-lg'>
                                                 {orderStatusList.length > 0 && orderStatusList.map((status) => {
                                                     return (
-                                                        <motion.div className='text-lg'>{status.label}</motion.div>
+                                                        <motion.div 
+                                                            className='w-full h-8 text-lg text-center rounded-full px-2'
+                                                            style={{
+                                                                backgroundColor: status.bg_color,
+                                                                color: status.text_color
+                                                            }}
+                                                        >
+                                                            {status.label}
+                                                        </motion.div>
                                                     )
                                                 })}
                                             </motion.div>
