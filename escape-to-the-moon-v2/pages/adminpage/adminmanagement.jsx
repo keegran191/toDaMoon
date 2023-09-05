@@ -9,6 +9,7 @@ import React from 'react'
 import Select from 'react-select'
 import { motion, AnimatePresence } from 'framer-motion';
 import { parse } from 'cookie';
+import Link from 'next/link'
 
 function AdminManagement({ cookies }) {
 
