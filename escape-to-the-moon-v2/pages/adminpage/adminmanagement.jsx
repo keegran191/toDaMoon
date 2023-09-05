@@ -842,6 +842,7 @@ function AdminManagement({ cookies }) {
                                             whileTap={{ scale: 0.95 }}
                                             onClick={async () => {
                                                 await Axios.push(`https://escapetothemoon.lol/api/Order/updateOrder?orderId=${post.orderId}&orderStatus=${updatedAdminOrder[index].orderStatus}&orderShipment=${adminOrder[index].orderShipment}&orderCode=${adminOrder[index].orderCode}`);
+                                                console.log("Update")
                                                 GetAdminOrder(status)
                                             }}
                                         >
