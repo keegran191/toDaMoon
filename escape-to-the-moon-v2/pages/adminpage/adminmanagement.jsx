@@ -712,12 +712,12 @@ function AdminManagement({ cookies }) {
                                 <motion.div
                                     className='mt-5 grid grid-cols-6 items-center w-full h-16 px-5 py-3 xl:py-3 lg:px-10 shadow-lg rounded-full bg-[#FFFFFF]'
                                     key={post.orderId}
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20
+                                    variants = {{
+                                        hidden: { y: 20, opacity: 0 },
+                                        visible: {
+                                            y: 0,
+                                            opacity: 1
+                                        }
                                     }}
                                 >
                                     <motion.div className='text-lg text-center'>{post.orderRefNumber}</motion.div>
