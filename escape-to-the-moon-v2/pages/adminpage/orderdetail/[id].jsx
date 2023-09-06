@@ -170,7 +170,7 @@ function OrderDetail({ cookies }) {
                                     <p className='text-2xl'>รายการสั่งซื้อ</p>
                                     <motion.div className='w-full h-1 border-b-2 border-[#252525]'></motion.div>
                                     
-                                    <motion.div className='w-full grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
+                                    <motion.div className='w-full grid grid-cols-5 m-2 py-2 px-3 '>
                                         <p className='text-center text-base col-span-2'>สินค้า</p>
                                         <p className='text-center text-base col-start-3'>ราคา</p>
                                         <p className='text-center text-base'>จำนวน</p>
