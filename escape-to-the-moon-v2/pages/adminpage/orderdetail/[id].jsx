@@ -123,6 +123,10 @@ function OrderDetail({ cookies }) {
                                 </motion.div>
                             </motion.div>
 
+                            <motion.div className='w-w-6/12 h-auto flex justify-start mt-10'>
+                                <p className='text-2xl'>รายการสั่งซื้อ</p>
+                                <p className='text-base'>สินค้า</p>
+                            </motion.div>
                             <motion.div className='w-full h-auto flex justify-center mt-5'>
                                 <motion.div 
                                     className='w-6/12 h-4/6 overflow-x-hidden overflow-y-auto'
@@ -139,8 +143,6 @@ function OrderDetail({ cookies }) {
                                         }
                                     }}
                                 >
-                                    <p className='text-2xl'>รายการสั่งซื้อ</p>
-                                    <p className='text-base'>สินค้า</p>
                                     {orderItemByOrder.map((orderItem) => {
                                         return (
                                             <motion.div 
