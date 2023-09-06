@@ -170,7 +170,7 @@ function OrderDetail({ cookies }) {
                                     <p className='text-2xl'>รายการสั่งซื้อ</p>
                                     <motion.div className='w-full h-1 border-b-2 border-[#252525]'></motion.div>
                                     
-                                    <motion.div className='w-full grid grid-cols-6 px-5 py-3 xl:py-3 lg:px-10'>
+                                    <motion.div className='w-full grid grid-cols-5 px-5 py-3 xl:py-3 lg:px-10'>
                                         <p className='text-base col-span-2'>สินค้า</p>
                                         <p className='text-basecol-start-3'>ราคา</p>
                                         <p className='text-base'>จำนวน</p>
@@ -200,7 +200,7 @@ function OrderDetail({ cookies }) {
                                         return (
                                             <motion.div 
                                                 layoutId={orderItem.id}
-                                                className='w-full grid grid-cols-6 h-auto m-2 py-2 px-3 border-b-2 border-[#25252523]'
+                                                className='w-full grid grid-cols-5 h-auto m-2 py-2 px-3 border-b-2 border-[#25252523]'
                                                 initial="hidden"
                                                 animate="visible"
                                                 variants = {{
@@ -236,6 +236,10 @@ function OrderDetail({ cookies }) {
                                                             </div>
                                                         }
                                                     </motion.div>
+                                                </motion.div>
+
+                                                <motion.div className='col-span-3'>
+
                                                 </motion.div>
                                             </motion.div>
                                         )
