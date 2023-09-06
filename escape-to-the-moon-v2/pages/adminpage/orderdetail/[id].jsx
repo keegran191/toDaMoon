@@ -200,7 +200,7 @@ function OrderDetail({ cookies }) {
                                         return (
                                             <motion.div 
                                                 layoutId={orderItem.id}
-                                                className='w-full grid grid-cols-5 h-auto m-2 py-2 px-3 border-b-2 border-[#25252523] items-center'
+                                                className='w-full grid grid-cols-5 h-auto m-2 px-5 py-2 xl:py-3 lg:px-10 border-b-2 border-[#25252523] items-center'
                                                 initial="hidden"
                                                 animate="visible"
                                                 variants = {{
@@ -239,7 +239,7 @@ function OrderDetail({ cookies }) {
                                                 </motion.div>
 
                                                 <motion.div className='col-start-3 w-full text-center text-base'>
-                                                    <p>{orderItem.price} ฿</p>
+                                                    <p>฿ {orderItem.price}</p>
                                                 </motion.div>
                                             </motion.div>
                                         )
