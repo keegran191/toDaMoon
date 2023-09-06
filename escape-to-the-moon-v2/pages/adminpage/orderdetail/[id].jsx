@@ -200,7 +200,7 @@ function OrderDetail({ cookies }) {
                                         return (
                                             <motion.div 
                                                 layoutId={orderItem.id}
-                                                className='w-full grid grid-cols-6 h-auto mt-3 py-2 px-3 border-b-2 border-[#25252523]'
+                                                className='w-full grid grid-cols-6 h-auto m-2 py-2 px-3 border-b-2 border-[#25252523]'
                                                 initial="hidden"
                                                 animate="visible"
                                                 variants = {{
@@ -218,7 +218,7 @@ function OrderDetail({ cookies }) {
                                                     <motion.div>
                                                         <p className='w-full ml-3'>{orderItem.Title}</p>
                                                         {orderItem.StockType == 1 && 
-                                                            <div className='text-sm mt-2'>
+                                                            <div className='text-sm mt-2 ml-3'>
                                                                 {coffeeProcess.length == 0 && <p>การแปรรูป: Loading</p>}
                                                                 {coffeeProcess.length > 0 && <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(orderItem.Process)].label}</p>}
                                                                 {coffeeRoast.length == 0 && <p>วิธีการคั่ว: Loading</p>}
@@ -228,7 +228,7 @@ function OrderDetail({ cookies }) {
                                                             </div>
                                                         }
                                                         {orderItem.StockType == 2 && 
-                                                            <div className='text-sm mt-2'>
+                                                            <div className='text-sm mt-2 ml-3'>
                                                                 {optionSubCategory.length == 0 && <p>ประเภทสินค้า: Loading</p>}
                                                                 {optionSubCategory.length > 0 && <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(orderItem.CategoryId)].label}</p>}
                                                                 {optionSubCategory.length == 0 && <p>หมวดหมู่สินค้า: Loading</p>}
