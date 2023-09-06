@@ -220,19 +220,19 @@ function OrderDetail({ cookies }) {
                                                         {orderItem.StockType == 1 && 
                                                             <div className='text-sm mt-2'>
                                                                 {coffeeProcess.length == 0 && <p>การแปรรูป: Loading</p>}
-                                                                {coffeeProcess.length > 0 && <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>}
+                                                                {coffeeProcess.length > 0 && <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(orderItem.Process)].label}</p>}
                                                                 {coffeeRoast.length == 0 && <p>วิธีการคั่ว: Loading</p>}
-                                                                {coffeeRoast.length > 0 && <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>}
+                                                                {coffeeRoast.length > 0 && <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(orderItem.Roast)].label}</p>}
                                                                 {coffeeFlavor.length == 0 && <p>กลิ่น รส: Loading</p>}
-                                                                {coffeeFlavor.length > 0 && <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>}
+                                                                {coffeeFlavor.length > 0 && <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(orderItem.Flavor)].label}</p>}
                                                             </div>
                                                         }
                                                         {orderItem.StockType == 2 && 
                                                             <div className='text-sm mt-2'>
                                                                 {optionSubCategory.length == 0 && <p>ประเภทสินค้า: Loading</p>}
-                                                                {optionSubCategory.length > 0 && <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(stock.CategoryId)].label}</p>}
+                                                                {optionSubCategory.length > 0 && <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(orderItem.CategoryId)].label}</p>}
                                                                 {optionSubCategory.length == 0 && <p>หมวดหมู่สินค้า: Loading</p>}
-                                                                {optionSubCategory.length > 0  && <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(stock.SubCategoryId)].label}</p>}
+                                                                {optionSubCategory.length > 0  && <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(orderItem.SubCategoryId)].label}</p>}
                                                             </div>
                                                         }
                                                     </motion.div>
