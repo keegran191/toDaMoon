@@ -108,9 +108,8 @@ function OrderDetail({ cookies }) {
                                 <motion.div className='w-auto'>
                                     <p className='text-2xl'>ที่อยู่จัดส่ง</p>
                                     <p className='text-lg'>ชื่อผู้รับ {order.recipient_name} เบอร์โทร {order.recipient_phone}</p>
-                                    <p className='text-lg'>{order.detail} ตำบล {order.subdistrict}</p>
-                                    <p className='text-lg'>อำเภอ {order.district} จังหวัด {order.province}</p>
-                                    <p className='text-lg'>{order.zipCode}</p>
+                                    <p className='text-lg'>{order.detail} ตำบล/แขวง {order.subdistrict}</p>
+                                    <p className='text-lg'>อำเภอ/เขต {order.district} จังหวัด {order.province} {order.zipCode}</p>
                                 </motion.div>
                             </motion.div>
                         </motion.div>
