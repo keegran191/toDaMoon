@@ -1087,9 +1087,11 @@ function UserManagement ({ cookies }) {
                                     <div className='hidden xl:flex w-full h-auto pt-5 px-10 justify-between items-center'>
                                         <div>
                                             <p>หมายเลขพัสดุ</p>
-                                            <p className='text-lg font-semibold'>{post.order_shipment}</p>
+                                            {post.order_shipment == '' && <p className='text-sm font-semibold'>---</p>}
+                                            {post.order_shipment != '' && <p className='text-sm font-semibold'>{post.order_shipment}</p>}
                                             <div className='w-full h-auto bg-[#ECEBE8] p-1 flex justify-between items-center'>
-                                                <span className='text-sm mr-5'>{post.order_code}</span>
+                                                {post.order_code == '' && <span className='text-xs'>---</span>}
+                                                {post.order_code != '' && <span className='text-xs'>{post.order_code}</span>}
                                             </div>
                                         </div>
 
