@@ -216,9 +216,9 @@ function OrderDetail({ cookies }) {
                                                         <img className='w-28 h-28 rounded-lg' src={`/uploads/${orderItem.Image}`}></img>
                                                     </motion.div>
                                                     <motion.div>
-                                                        <p className='w-full ml-3 text-lg font-bold'>{orderItem.Title}</p>
+                                                        <p className='w-full ml-3 text-md font-bold'>{orderItem.Title}</p>
                                                         {orderItem.StockType == 1 && 
-                                                            <div className='text-sm mt-2 ml-3'>
+                                                            <div className='text-sm mt-1 ml-3'>
                                                                 {coffeeProcess.length == 0 && <p>การแปรรูป: Loading</p>}
                                                                 {coffeeProcess.length > 0 && <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(orderItem.Process)].label}</p>}
                                                                 {coffeeRoast.length == 0 && <p>วิธีการคั่ว: Loading</p>}
@@ -228,7 +228,7 @@ function OrderDetail({ cookies }) {
                                                             </div>
                                                         }
                                                         {orderItem.StockType == 2 && 
-                                                            <div className='text-sm mt-2 ml-3'>
+                                                            <div className='text-sm mt-1 ml-3'>
                                                                 {optionSubCategory.length == 0 && <p>ประเภทสินค้า: Loading</p>}
                                                                 {optionSubCategory.length > 0 && <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(orderItem.CategoryId)].label}</p>}
                                                                 {optionSubCategory.length == 0 && <p>หมวดหมู่สินค้า: Loading</p>}
