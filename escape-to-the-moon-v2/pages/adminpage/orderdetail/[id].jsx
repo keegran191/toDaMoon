@@ -180,9 +180,9 @@ function OrderDetail({ cookies }) {
                                     <motion.div className='w-full h-1 border-b-2 border-[#252525]'></motion.div>
                                 </motion.div>
                             </motion.div>
-                            <motion.div className='w-full h-auto flex justify-center mt-5'>
+                            <motion.div className='w-full h-4/6 flex justify-center mt-5'>
                                 <motion.div 
-                                    className='w-6/12 h-2/6 overflow-x-hidden overflow-y-auto'
+                                    className='w-6/12 h-3/6 overflow-x-hidden overflow-y-auto'
                                     initial="hidden"
                                     animate="visible"
                                     variants={{
