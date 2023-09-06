@@ -122,6 +122,46 @@ function OrderDetail({ cookies }) {
                                     </motion.div>
                                 </motion.div>
                             </motion.div>
+
+                            <motion.div className='w-full h-auto flex justify-center mt-5'>
+                                <motion.div 
+                                    className='w-6/12 h4/6 overflow-x-hidden overflow-y-auto'
+                                    initial="hidden"
+                                    animate="visible"
+                                    variants={{
+                                        visible: {
+                                            opacity: 1,
+                                            scale: 1,
+                                            transition: {
+                                              delayChildren: 0.1,
+                                              staggerChildren: 0.1
+                                            }
+                                        }
+                                    }}
+                                >
+                                    <p className='text-2xl'>รายการสั่งซื้อ</p>
+                                    <p className='text-lg'>สินค้า</p>
+                                    {orderItemByOrder.map((orderItem) => {
+                                        return (
+                                            <motion.div 
+                                                layoutId={orderItem.id}
+                                                className='w-5/6 px-3 h-20 '
+                                                initial="hidden"
+                                                animate="visible"
+                                                variants = {{
+                                                    hidden: { y: 20, opacity: 0 },
+                                                    visible: {
+                                                        y: 0,
+                                                        opacity: 1
+                                                    }
+                                                }}
+                                            >
+                                                {orderItem.Title}
+                                            </motion.div>
+                                        )
+                                    })}
+                                </motion.div>
+                            </motion.div>
                         </motion.div>
                     )
                 })}
