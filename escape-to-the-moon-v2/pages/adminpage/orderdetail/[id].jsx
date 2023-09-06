@@ -145,7 +145,7 @@ function OrderDetail({ cookies }) {
                                         return (
                                             <motion.div 
                                                 layoutId={orderItem.id}
-                                                className='w-5/6 px-3 h-20 bg-[#FFFFF]'
+                                                className='w-5/6 px-3 h-20 bg-[#FFFFFF]'
                                                 initial="hidden"
                                                 animate="visible"
                                                 variants = {{
