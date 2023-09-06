@@ -140,7 +140,7 @@ function OrderDetail({ cookies }) {
                                     }}
                                 >
                                     <p className='text-2xl'>รายการสั่งซื้อ</p>
-                                    <p className='text-lg'>สินค้า</p>
+                                    <p className='text-base'>สินค้า</p>
                                     {orderItemByOrder.map((orderItem) => {
                                         return (
                                             <motion.div 
