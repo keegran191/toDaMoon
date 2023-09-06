@@ -123,9 +123,11 @@ function OrderDetail({ cookies }) {
                                 </motion.div>
                             </motion.div>
 
-                            <motion.div className='w-w-6/12 h-auto flex justify-start mt-10'>
-                                <p className='text-2xl'>รายการสั่งซื้อ</p>
-                                <p className='text-base'>สินค้า</p>
+                            <motion.div className='flex justify-center mt-10'>
+                                <motion.div className='w-6/12 h-auto'>
+                                    <p className='text-2xl'>รายการสั่งซื้อ</p>
+                                    <p className='text-base'>สินค้า</p>
+                                </motion.div>
                             </motion.div>
                             <motion.div className='w-full h-auto flex justify-center mt-5'>
                                 <motion.div 
