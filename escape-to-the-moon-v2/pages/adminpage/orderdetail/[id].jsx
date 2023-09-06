@@ -238,8 +238,8 @@ function OrderDetail({ cookies }) {
                                                     </motion.div>
                                                 </motion.div>
 
-                                                <motion.div className='col-start-3 '>
-
+                                                <motion.div className='col-start-3 w-full text-center text-base'>
+                                                    <p>{orderItem.price} ฿</p>
                                                 </motion.div>
                                             </motion.div>
                                         )
