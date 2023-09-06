@@ -105,15 +105,13 @@ function OrderDetail({ cookies }) {
                             </motion.div>
 
                             <motion.div className='w-full h-auto flex justify-center'>
-                                <motion.div className='w-56'>
+                                <motion.div className='w-64'>
                                     <p className='text-2xl'>ที่อยู่จัดส่ง</p>
                                     <p className='text-lg'>ชื่อผู้รับ {order.recipient_name}</p>
                                     <p className='text-lg'>เบอร์โทร {order.recipient_phone}</p>
                                     <p className='text-lg'>{order.detail}</p>
-                                    <p className='text-lg'>{order.subdistrict}</p>
-                                    <p className='text-lg'>{order.district}</p>
-                                    <p className='text-lg'>{order.province}</p>
-                                    <p className='text-lg'>{order.zipCode}</p>
+                                    <p className='text-lg'>{order.subdistrict} {order.district}</p>
+                                    <p className='text-lg'>{order.province} {order.zipCode}</p>
                                 </motion.div>
                             </motion.div>
                         </motion.div>
