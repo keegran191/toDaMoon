@@ -169,7 +169,7 @@ function OrderDetail({ cookies }) {
                                                     }
                                                 }}
                                             >
-                                                <motion.div className='good-container flex items-center w-full'>
+                                                <motion.div className='col-span-2 good-container flex items-center w-full'>
                                                     <motion.div className='w-full h-auto'>
                                                         <img className='w-24 h-24 rounded-lg' src={`/uploads/${orderItem.Image}`}></img>
                                                     </motion.div>
