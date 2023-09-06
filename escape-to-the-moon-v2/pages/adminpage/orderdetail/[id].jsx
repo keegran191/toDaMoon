@@ -255,14 +255,17 @@ function OrderDetail({ cookies }) {
                                     })}
                                 </motion.div>
                             </motion.div>
-
-                            <motion.div className='w-6/12 h-1 mt-1 border-b-2 border-[#252525]'></motion.div>
-
-                            <motion.div className='w-6/12 flex justify-end mt-3'>
-                                <p className='text-lg'>ราคารวมทั้งสิ้น {orderTotal}</p>
-                            </motion.div>
                             
-                            <motion.div className='w-6/12 h-1 mt-1 border-b-2 border-[#252525]'></motion.div>
+                            <motion.div className='flex justify-center w-full'>
+                                <motion.div className='w-6/12 h-1 mt-1 border-b-2 border-[#252525]'></motion.div>
+
+                                <motion.div className='w-6/12 flex justify-end mt-3'>
+                                    <p className='text-lg'>ราคารวมทั้งสิ้น {orderTotal}</p>
+                                </motion.div>
+
+                                <motion.div className='w-6/12 h-1 mt-1 border-b-2 border-[#252525]'></motion.div>
+                            </motion.div>
+
                         </motion.div>
                     )
                 })}
