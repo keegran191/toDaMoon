@@ -22,6 +22,43 @@ function OrderDetail({ cookies }) {
     const [adminOrder, setAdminOrder] = useState([]);
     const [orderTotal, setOrderTotal] = useState(0);
 
+    const [optionCategory, setOptionCategory] = useState([]);
+    const [optionSubCategory, setOptionSubCategory] = useState([]);
+    const [coffeeProcess, setCoffeeProcess] = useState([]);
+    const [coffeeRoast, setCoffeeRoast] = useState([]);
+    const [coffeeFlavor, setCoffeFlavor] = useState([]);
+
+    const GetCategory = () => {
+        Axios.get("https://escapetothemoon.lol/api/stock/category").then((response) => {
+            setOptionCategory(response.data.map((category) => ({ value: category.cat_id, label: category.cat_label })));
+        });
+    }
+    const GetSubCategory = () => {
+        Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${0}`).then((response) => {
+            setOptionSubCategory(response.data.map((subcategory) => ({ value: subcategory.sub_id, label: subcategory.sub_label})));
+        })
+    }
+    const GetProcess = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeeProcess(response.data.map((process) => ({ value: process.sub_id, label: process.sub_label})));
+            })
+        }
+    }
+    const GetRoast = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeeRoast(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
+            })
+        }
+    }
+    const GetFlavor = (categoryId) => {
+        if (categoryId) {
+            Axios.get(`https://escapetothemoon.lol/api/subcategory/get/${categoryId}`).then((response) => {
+                setCoffeFlavor(response.data.map((roast) => ({ value: roast.sub_id, label: roast.sub_label})));
+            })
+        }
+    }
 
     const GetAdminOrder = (order_id) => {
         Axios.get(`https://escapetothemoon.lol/api/Order/getOrderByOrderId/${order_id}`).then((response) => {
@@ -69,6 +106,11 @@ function OrderDetail({ cookies }) {
     useEffect(() => {
         GetAdminOrderAmount()
         GetAdminHaveNewOrder()
+        GetCategory();
+        GetSubCategory(0);
+        GetProcess(42);
+        GetRoast(40);
+        GetFlavor(41);
         if (id != null || id != undefined) {
             GetOrderItemByOrder(id)
             GetAdminOrder(id)
@@ -158,7 +200,7 @@ function OrderDetail({ cookies }) {
                                         return (
                                             <motion.div 
                                                 layoutId={orderItem.id}
-                                                className='w-full grid grid-cols-6 h-auto mt-3 py-2 px-3 border-b-2 border-[#252525]'
+                                                className='w-full grid grid-cols-6 h-auto mt-3 py-2 px-3 border-b-2 border-[#25252523]'
                                                 initial="hidden"
                                                 animate="visible"
                                                 variants = {{
@@ -170,10 +212,30 @@ function OrderDetail({ cookies }) {
                                                 }}
                                             >
                                                 <motion.div className='col-span-2 good-container flex items-center w-full'>
-                                                    <motion.div className='w-24 h-auto'>
-                                                        <img className='w-24 h-24 rounded-lg' src={`/uploads/${orderItem.Image}`}></img>
+                                                    <motion.div className='w-auto h-auto'>
+                                                        <img className='w-28 h-28 rounded-lg' src={`/uploads/${orderItem.Image}`}></img>
                                                     </motion.div>
-                                                    <p className='w-full ml-3'>{orderItem.Title}</p>
+                                                    <motion.div>
+                                                        <p className='w-full ml-3'>{orderItem.Title}</p>
+                                                        {orderItem.StockType == 1 && 
+                                                            <div className='text-sm mt-2'>
+                                                                {coffeeProcess.length == 0 && <p>การแปรรูป: Loading</p>}
+                                                                {coffeeProcess.length > 0 && <p>การแปรรูป: {coffeeProcess[coffeeProcess.map(e => e.value).indexOf(stock.Process)].label}</p>}
+                                                                {coffeeRoast.length == 0 && <p>วิธีการคั่ว: Loading</p>}
+                                                                {coffeeRoast.length > 0 && <p>วิธีการคั่ว: {coffeeRoast[coffeeRoast.map(e => e.value).indexOf(stock.Roast)].label}</p>}
+                                                                {coffeeFlavor.length == 0 && <p>กลิ่น รส: Loading</p>}
+                                                                {coffeeFlavor.length > 0 && <p>กลิ่น รส: {coffeeFlavor[coffeeFlavor.map(e => e.value).indexOf(stock.Flavor)].label}</p>}
+                                                            </div>
+                                                        }
+                                                        {orderItem.StockType == 2 && 
+                                                            <div className='text-sm mt-2'>
+                                                                {optionSubCategory.length == 0 && <p>ประเภทสินค้า: Loading</p>}
+                                                                {optionSubCategory.length > 0 && <p>ประเภทสินค้า: {optionCategory[optionCategory.map(e => e.value).indexOf(stock.CategoryId)].label}</p>}
+                                                                {optionSubCategory.length == 0 && <p>หมวดหมู่สินค้า: Loading</p>}
+                                                                {optionSubCategory.length > 0  && <p>หมวดหมู่สินค้า: {optionSubCategory[optionSubCategory.map(e => e.value).indexOf(stock.SubCategoryId)].label}</p>}
+                                                            </div>
+                                                        }
+                                                    </motion.div>
                                                 </motion.div>
                                             </motion.div>
                                         )
