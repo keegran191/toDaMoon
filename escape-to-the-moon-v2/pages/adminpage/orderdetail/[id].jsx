@@ -126,7 +126,16 @@ function OrderDetail({ cookies }) {
                             <motion.div className='flex justify-center mt-10'>
                                 <motion.div className='w-6/12 h-auto'>
                                     <p className='text-2xl'>รายการสั่งซื้อ</p>
-                                    <p className='text-base'>สินค้า</p>
+                                    <motion.div className='w-full h-1 border-b-2 border-[#252525]'></motion.div>
+                                    
+                                    <motion.div className='grid grid-cols-6 px-5 py-3 xl:py-3 lg:px-10'>
+                                        <p className='text-base col-span-2'>สินค้า</p>
+                                        <p className='text-basecol-start-3'>ราคา</p>
+                                        <p className='text-base'>จำนวน</p>
+                                        <p className='text-base'>ราคารวม</p>
+                                    </motion.div>
+                                    
+                                    <motion.div className='w-full h-1 border-b-2 border-[#252525]'></motion.div>
                                 </motion.div>
                             </motion.div>
                             <motion.div className='w-full h-auto flex justify-center mt-5'>
