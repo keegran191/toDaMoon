@@ -261,7 +261,7 @@ function OrderDetail({ cookies }) {
                                     <motion.div className='w-full h-1 mt-1 border-b-2 border-[#252525]'></motion.div>
 
                                     <motion.div className='w-full flex justify-end mt-3'>
-                                        <p className='text-lg'>ราคารวมทั้งสิ้น {orderTotal}</p>
+                                        <p className='text-lg'>ราคารวมทั้งสิ้น ฿ {orderTotal}</p>
                                     </motion.div>
 
                                     <motion.div className='w-full h-1 mt-1 border-b-2 border-[#252525]'></motion.div>
