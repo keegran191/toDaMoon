@@ -241,6 +241,15 @@ function OrderDetail({ cookies }) {
                                                 <motion.div className='col-start-3 w-full text-center text-lg'>
                                                     <p>฿ {orderItem.price}</p>
                                                 </motion.div>
+
+                                                <motion.div className='w-full text-center text-lg'>
+                                                    <p>{orderItem.amount}</p>
+                                                </motion.div>
+
+                                                <motion.div className='w-full text-center text-lg'>
+                                                    <p>฿ {orderItem.price * orderItem.amount}</p>
+                                                </motion.div>
+                                                
                                             </motion.div>
                                         )
                                     })}
