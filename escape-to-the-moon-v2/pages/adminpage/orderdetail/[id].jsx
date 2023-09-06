@@ -91,9 +91,7 @@ function OrderDetail({ cookies }) {
                 {adminOrder.map((order) => {
                     return (
                         <motion.div className='w-full h-auto'>
-                            <motion.div
-                                className='w-full flex justify-center'
-                            >
+                            <motion.div className='w-full flex justify-center'>
                                 <motion.div className='w-auto h-auto'>
                                     <p className='text-3xl'>คำสั่งซื้อหมายเลข {order.refNumber}</p>
                                     <motion.div className='flex justify-start items-center w-auto'>
@@ -106,7 +104,12 @@ function OrderDetail({ cookies }) {
                                 </motion.div>
                             </motion.div>
 
-                            
+                            <motion.div className='w-full h-auto flex justify-center'>
+                                <motion.div className='w-48'>
+                                    <p className='text-2xl'>ที่อยู่จัดส่ง</p>
+                                    <p className='text-lg'>{order.refNumber}</p>
+                                </motion.div>
+                            </motion.div>
                         </motion.div>
                     )
                 })}
