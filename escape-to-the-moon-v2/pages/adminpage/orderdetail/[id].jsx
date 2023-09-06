@@ -111,7 +111,7 @@ function OrderDetail({ cookies }) {
                                     <p className='text-lg'>{order.detail} ตำบล/แขวง {order.subdistrict}</p>
                                     <p className='text-lg'>อำเภอ/เขต {order.district} จังหวัด {order.province} {order.zipCode}</p>
                                 </motion.div>
-                                <motion.div className='w-4/12'>
+                                <motion.div className='w-auto'>
                                     <p className='text-2xl'>รูปแบบการชำระเงิน</p>
                                     <p className='text-lg'>QR Payment</p>
                                     <motion.div className='w-96 h-10 border-2 border-[#252525] flex items-center px-3'>
