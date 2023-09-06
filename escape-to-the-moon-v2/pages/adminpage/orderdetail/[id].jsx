@@ -158,7 +158,7 @@ function OrderDetail({ cookies }) {
                                         return (
                                             <motion.div 
                                                 layoutId={orderItem.id}
-                                                className='flex items-center w-5/6 px-3 py-1 h-auto bg-[#FFFFFF] rounded-lg'
+                                                className='w-full grid grid-cols-6 h-auto mt-3 py-2 px-3 border-b-2 border-[#252525]'
                                                 initial="hidden"
                                                 animate="visible"
                                                 variants = {{
@@ -169,10 +169,12 @@ function OrderDetail({ cookies }) {
                                                     }
                                                 }}
                                             >
-                                                <motion.div className='w-32 h-32'>
-                                                    <img className='w-full h-full rounded-lg' src={`/uploads/${orderItem.Image}`}></img>
+                                                <motion.div className='good-container flex items-center w-full'>
+                                                    <motion.div className='w-24 h-24'>
+                                                        <img className='w-full h-full rounded-lg' src={`/uploads/${orderItem.Image}`}></img>
+                                                    </motion.div>
+                                                    <p className='ml-3'>{orderItem.Title}</p>
                                                 </motion.div>
-                                                <p className='ml-3'>{orderItem.Title}</p>
                                             </motion.div>
                                         )
                                     })}
