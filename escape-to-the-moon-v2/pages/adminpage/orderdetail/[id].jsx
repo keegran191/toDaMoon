@@ -105,7 +105,7 @@ function OrderDetail({ cookies }) {
                             </motion.div>
 
                             <motion.div className='w-full h-auto flex justify-center'>
-                                <motion.div className='w-64'>
+                                <motion.div className='w-96'>
                                     <p className='text-2xl'>ที่อยู่จัดส่ง</p>
                                     <p className='text-lg'>ชื่อผู้รับ {order.recipient_name}</p>
                                     <p className='text-lg'>เบอร์โทร {order.recipient_phone}</p>
