@@ -182,7 +182,7 @@ function OrderDetail({ cookies }) {
                             </motion.div>
                             <motion.div className='w-full h-auto flex justify-center mt-5'>
                                 <motion.div 
-                                    className='w-6/12 h-4/6 overflow-x-hidden overflow-y-auto'
+                                    className='w-6/12 h-3/6 overflow-x-hidden overflow-y-auto'
                                     initial="hidden"
                                     animate="visible"
                                     variants={{
