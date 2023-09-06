@@ -216,7 +216,7 @@ function OrderDetail({ cookies }) {
                                                         <img className='w-28 h-28 rounded-lg' src={`/uploads/${orderItem.Image}`}></img>
                                                     </motion.div>
                                                     <motion.div>
-                                                        <p className='w-full ml-3'>{orderItem.Title}</p>
+                                                        <p className='w-full ml-3 text-lg font-bold'>{orderItem.Title}</p>
                                                         {orderItem.StockType == 1 && 
                                                             <div className='text-sm mt-2 ml-3'>
                                                                 {coffeeProcess.length == 0 && <p>การแปรรูป: Loading</p>}
